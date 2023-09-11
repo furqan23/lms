@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
+import '../../values/auth_api.dart';
 import '../../widget/option_widget.dart';
 
-class QuizzView extends StatelessWidget {
+class QuizzView extends StatefulWidget {
   const QuizzView({super.key});
+
+  @override
+  State<QuizzView> createState() => _QuizzViewState();
+}
+
+class _QuizzViewState extends State<QuizzView> {
+  
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +20,6 @@ class QuizzView extends StatelessWidget {
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: Scaffold(
         appBar: AppBar(
-
           title: const Text('Quizz'),
         ),
         body: Column(
@@ -48,7 +55,8 @@ class QuizzView extends StatelessWidget {
               margin: const EdgeInsets.only(left: 30, bottom: 10, right: 30),
               padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 20),
               decoration: const BoxDecoration(color: Colors.white, boxShadow: [
-                BoxShadow(offset: Offset(0, 0), color: Colors.grey, blurRadius: 5)
+                BoxShadow(
+                    offset: Offset(0, 0), color: Colors.grey, blurRadius: 5)
               ]),
               child: const Text(
                 'What does this Sign mean?',
