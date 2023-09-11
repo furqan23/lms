@@ -11,7 +11,7 @@ class QuizzView extends StatefulWidget {
 }
 
 class _QuizzViewState extends State<QuizzView> {
-  
+
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class _QuizzViewState extends State<QuizzView> {
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Quizz'),
+          title: const Text('Quizzzzz'),
         ),
         body: Column(
           children: [
