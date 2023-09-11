@@ -20,7 +20,7 @@ class _QuizzViewState extends State<QuizzView> {
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Quizzzzz'),
+          title: const Text('Quizzzzz again test furqan'),
         ),
         body: Column(
           children: [
