@@ -6,44 +6,84 @@ import 'package:http/http.dart' as http;
 import 'package:splashapp/model/myresult.dart';
 import '../../Controller/login_controller.dart';
 import '../../values/auth_api.dart';
+class MyResult extends StatefulWidget {
 
-class MyResults extends StatefulWidget {
-  const MyResults({super.key});
+  const MyResult({super.key,});
 
   @override
-  State<MyResults> createState() => _MyResultsState();
+  State<MyResult> createState() => _MyResultState();
 }
 
-class _MyResultsState extends State<MyResults> {
-  LoginController _loginController = Get.put(LoginController());
-  List<MyResultModel> resultsList = [];
+class _MyResultState extends State<MyResult> {
+  /* ------------- declare  variable token and Model ------------*/
+  String? token;
+  List<MyResultModel> getresultsModelList = [];
   bool boolData = false;
 
+  /*---------- InitState Call -----------------*/
   @override
   void initState() {
-    // TODO: implement initState
-   getMyResultAPI();
     super.initState();
+    getTokenAndFetchInvoice();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+      child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Quizz'),
+          ),
+          body: boolData
+              ? ListView.builder(
+              itemCount: getresultsModelList[0].data?.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    const SizedBox(height: 15),
+                Text(getresultsModelList[0].data![index].name.toString()),
+
+
+                  ],
+                );
+              })
+              : Center(
+            child: CircularProgressIndicator(),
+          )),
+    );
+  }
 
   /*------------------ Fetch Token ----------------*/
   Future<void> getTokenAndFetchInvoice() async {
     token = await LoginController().getTokenFromHive();
     print('Token: $token');
-    getTestQuestionAPI();
+    getMyTestAPI();
   }
 
-  void getMyResultAPI() async {
+
+  /*------------------ Call GetTestQuestionApi  ----------------*/
+  void getMyTestAPI() async {
     try {
-      final res = await http.get(Uri.parse(AuthApi.getMyResult1));
+
+
+      final res = await http.get(Uri.parse(AuthApi.getMyResultApi),
+          headers: {
+            'Authorization': 'Bearer $token', // Use the retrieved token
+            'Content-Type': 'application/json',
+          },
+         );
+
       print('Response Status Code: ${res.statusCode}');
-      print('Response Body: ${res.body.toString()}');
+      print('Response Body: ${res.body}');
 
       if (res.statusCode == 200) {
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);
-          resultsList.add(MyResultModel.fromJson(mydata));
+          print('Parsed Data: $mydata');
+        getresultsModelList.add(MyResultModel.fromJson(mydata));
+
           setState(() {
             boolData = true;
           });
@@ -51,24 +91,11 @@ class _MyResultsState extends State<MyResults> {
           throw Exception('Empty response');
         }
       } else {
-        throw Exception('Failed to load data');
+        print('Error: ${res.statusCode}');
       }
     } catch (e) {
-      print('Error: $e');
-      throw Exception('Failed to load data $e');
+      print(e.toString());
     }
   }
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("My Results"),
-      ),
-      body: Column(
-        children: [
-
-        ],
-      ),
-    );
   }
-}
+

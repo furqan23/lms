@@ -30,5 +30,5 @@ class AuthApi {
       "https://dav.binshaharts.com/api/v1/student/getCourseTests";
   static const String getQuestionTestApi =
       "https://dav.binshaharts.com/api/v1/student/getTestQuestions";
-  static const String getMyResult1 ="https://dav.binshaharts.com/api/v1/student/myResultsCourses";
+  static const String getMyResultApi ="https://dav.binshaharts.com/api/v1/student/myResultsCourses";
 }

@@ -267,7 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.blueAccent.shade100,
               titleText: 'My Result',
               onTap: () {
-                Get.to(()=>const MyResults());
+                Get.to(()=>const MyResult());
               },
             ),
             CustomListTile(
