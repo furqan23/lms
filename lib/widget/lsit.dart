@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:splashapp/values/colors.dart';
+import 'package:splashapp/view/cart/cart.dart';
 
+import '../model/cart_model.dart';
 import '../model/course_model.dart';
 
-class lsit extends StatelessWidget {
+class lsit extends StatefulWidget {
   String ePass;
   String status;
   String dateAndTime;
@@ -23,10 +26,16 @@ class lsit extends StatelessWidget {
   });
 
   @override
+  State<lsit> createState() => _lsitState();
+}
+
+class _lsitState extends State<lsit> {
+  List<CartModel> cartList = [];
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    print("date and time  $dateAndTime");
+    print("date and time  ${widget.dateAndTime}");
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -44,7 +53,7 @@ class lsit extends StatelessWidget {
                   children: <Widget>[
                     Text.rich(
                       TextSpan(
-                        text: "Category: $ePass ",
+                        text: "Category: ${widget.ePass} ",
                         style: TextStyle(
                           color: AppColors.primaryColor,
                           fontSize: 18,
@@ -73,7 +82,7 @@ class lsit extends StatelessWidget {
                       children: <Widget>[
                         const SizedBox(height: 5),
                         Text(
-                          "Group Name:  ${status}",
+                          "Group Name:  ${widget.status}",
                           style: TextStyle(
                             color: AppColors.blackColor,
                             fontSize: 15,
@@ -82,7 +91,7 @@ class lsit extends StatelessWidget {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          "Registration Method:  ${regMethod}",
+                          "Registration Method:  ${widget.regMethod}",
                           style: TextStyle(
                             color: AppColors.blackColor,
                             fontSize: 15,
@@ -102,7 +111,7 @@ class lsit extends StatelessWidget {
                     //    style: textStyleWithFontGrey,
                     children: <TextSpan>[
                       TextSpan(
-                        text: dateAndTime,
+                        text: widget.dateAndTime,
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 15,
@@ -121,7 +130,7 @@ class lsit extends StatelessWidget {
                   crossAxisSpacing: 0.0,
                   mainAxisSpacing: 0.0,
                   childAspectRatio: (1 / .15),
-                  children: List.generate(map!.length, (index) {
+                  children: List.generate(widget.map!.length, (index) {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -134,24 +143,30 @@ class lsit extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              map![index].courseTitle!,
+                              widget.map![index].courseTitle!,
                               style: TextStyle(color: Colors.grey),
                             ),
                           ],
                         ),
-                        regMethod == "single"
-                            ? Container(
-                                alignment: Alignment.center,
-                                width: 110,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(14),
-                                  color: AppColors.primaryColor.withOpacity(.8),
-                                ),
-                                child: const Text(
-                                  'Add To Cart',
-                                  style: TextStyle(
-                                    color: Colors.white,
+                        widget.regMethod == "single"
+                            ? InkWell(
+                                onTap: () {
+                                  widget.onAddToCart();
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: 110,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(14),
+                                    color:
+                                        AppColors.primaryColor.withOpacity(.8),
+                                  ),
+                                  child: const Text(
+                                    'Add To Cart',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               )
@@ -162,11 +177,11 @@ class lsit extends StatelessWidget {
                 ),
               ),
 
-              regMethod == "whole"
+              widget.regMethod == "whole"
                   ? Center(
                       child: InkWell(
-                        onTap: (){
-                          onAddToCart();
+                        onTap: () {
+                          widget.onAddToCart();
                         },
                         child: Container(
                           alignment: Alignment.center,

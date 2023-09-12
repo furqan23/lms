@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:splashapp/model/get_test_model.dart';
-import 'package:splashapp/view/quizz/quizz_view.dart';
+import 'package:splashapp/view/quizz/get_testquestion_view.dart';
 import 'package:splashapp/widget/testcard_widget.dart';
 
 import '../../Controller/login_controller.dart';
@@ -47,7 +47,7 @@ class _GetTestState extends State<GetTest> {
               itemCount: getTestList[0].data?.length,
               itemBuilder: (context, index) {
                 final test = getTestList[0].data![index];
-                final testStart = test.testStart ?? ""; // Use an empty string as the default value if testStart is null
+                final testStart = test.testStart ?? "";
                 final testStartDateTime = DateTime.tryParse(testStart);
                 final currentDateTime = DateTime.now();
                 return InkWell(

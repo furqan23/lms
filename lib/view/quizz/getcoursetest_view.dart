@@ -6,20 +6,17 @@ import 'package:splashapp/Controller/login_controller.dart';
 import 'package:splashapp/model/my_courses_model.dart';
 import 'package:splashapp/values/auth_api.dart';
 import 'package:http/http.dart' as http;
-import 'package:splashapp/view/mycourses/my_course_detail.dart';
-import 'package:splashapp/view/mycourses/my_videos.dart';
 import 'package:splashapp/view/my_test/gettest.dart';
-import 'package:splashapp/widget/dasbhoard_card.dart';
 import 'package:splashapp/widget/dasbhoard_card_two.dart';
 
-class MyQuizz extends StatefulWidget {
-  const MyQuizz({super.key});
+class GetCourseTest extends StatefulWidget {
+  const GetCourseTest({super.key});
 
   @override
-  State<MyQuizz> createState() => _MyQuizzState();
+  State<GetCourseTest> createState() => _GetCourseTestState();
 }
 
-class _MyQuizzState extends State<MyQuizz> {
+class _GetCourseTestState extends State<GetCourseTest> {
   /*----------------------- token and Model -------------*/
   String? token;
   List<MyCoursesModel> myCoursesList = [];
@@ -31,6 +28,7 @@ class _MyQuizzState extends State<MyQuizz> {
     super.initState();
     getTokenAndFetchInvoice();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +64,6 @@ class _MyQuizzState extends State<MyQuizz> {
             ),
     );
   }
-
 
 /*------------------ get token   ----------------*/
   Future<void> getTokenAndFetchInvoice() async {

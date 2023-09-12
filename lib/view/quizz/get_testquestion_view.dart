@@ -130,10 +130,11 @@ class _QuizzViewState extends State<QuizzView> {
                         OptionWidget(
                             option:
                                 getquestionTestList[0].data!.opt1.toString(),
-                            title: ' Left stop '),
-                        const OptionWidget(
-                            option: 'B: ', title: ' No Right Turn'),
-                        const OptionWidget(option: 'C: ', title: ' Right Turn'),
+                         ),
+                     OptionWidget(
+                            option:    getquestionTestList[0].data!.opt2.toString(),),
+                       OptionWidget(option:    getquestionTestList[0].data!.opt3.toString(),),
+                        OptionWidget(option:    getquestionTestList[0].data!.opt4.toString(),),
                       ],
                     );
                   })

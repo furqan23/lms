@@ -26,7 +26,7 @@ class _VideoViewState extends State<HomeDetail> {
   List<CourseModel> courseList = [];
   List<CartModel> cartList = [];
   bool boolData = false;
-
+  int singleCartIndex = 0;
   /*------------------ InitState Call ----------------------*/
   @override
   void initState() {
@@ -75,8 +75,13 @@ class _VideoViewState extends State<HomeDetail> {
                       if (courseList[0].data![index].registrationMethod ==
                           "whole") {
                         onAddToCart(index);
+                      } else if (courseList[0]
+                              .data![index]
+                              .registrationMethod ==
+                          "single") {
+                        onAddToSingleCart(index, singleCartIndex);
+                        singleCartIndex++;
                       }
-
                       navigateToCartScreen();
                     },
                   );
@@ -149,5 +154,42 @@ class _VideoViewState extends State<HomeDetail> {
         content: Text('Items added to cart'),
       ),
     );
+  }
+
+  void onAddToSingleCart(int dataIndex, int courseIndex) {
+    final dataEntry = courseList[0].data![dataIndex];
+
+    if (courseIndex >= 0 && courseIndex < dataEntry.courses!.length) {
+      final course = dataEntry.courses![courseIndex];
+      final cartItem = CartModel(
+        courseId: course.id.toString(),
+        courseTitle: course.courseTitle.toString(),
+        price: double.parse(course.price.toString()),
+      );
+
+      // Check if the item is not already in the cart
+      if (!cartList.contains(cartItem)) {
+        setState(() {
+          cartList.add(cartItem);
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Item added to cart'),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Item is already in the cart'),
+          ),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Invalid course index'),
+        ),
+      );
+    }
   }
 }
