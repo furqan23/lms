@@ -9,7 +9,6 @@ import '../values/auth_api.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class LoginController extends GetxController {
   final emailController = TextEditingController().obs;
   final passwordController = TextEditingController().obs;
@@ -54,7 +53,6 @@ class LoginController extends GetxController {
           loading.value = false;
           Get.snackbar('Login Successful', 'Congratulations');
 
-
           Get.off(() => const HomeScreen());
         } else {
           loading.value = false;
@@ -79,18 +77,15 @@ class LoginController extends GetxController {
     emailController.value.clear();
     passwordController.value.clear();
 
-
+    ////////////token///////////////////
     final box = await Hive.openBox<String>('tokenBox');
     await box.delete('token');
-
-
     Get.off(() => LoginView(), transition: Transition.noTransition);
   }
 
+  //// get Hive token from hive
   Future<String?> getTokenFromHive() async {
     final box = await Hive.openBox<String>('tokenBox');
     return box.get('token');
   }
-
-
 }

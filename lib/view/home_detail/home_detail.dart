@@ -5,13 +5,18 @@ import 'package:splashapp/model/course_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:splashapp/values/colors.dart';
 import 'package:splashapp/widget/lsit.dart';
+import '../../model/cart_model.dart';
 import '../../values/auth_api.dart';
 import '../../widget/videocard_widget.dart';
+import '../cart/cart.dart';
 
 class HomeDetail extends StatefulWidget {
   String mscatId;
 
-  HomeDetail({super.key, required this.mscatId});
+  HomeDetail({
+    super.key,
+    required this.mscatId,
+  });
 
   @override
   State<HomeDetail> createState() => _VideoViewState();
@@ -19,8 +24,10 @@ class HomeDetail extends StatefulWidget {
 
 class _VideoViewState extends State<HomeDetail> {
   List<CourseModel> courseList = [];
+  List<CartModel> cartList = [];
   bool boolData = false;
 
+  /*------------------ InitState Call ----------------------*/
   @override
   void initState() {
     // TODO: implement initState
@@ -28,6 +35,69 @@ class _VideoViewState extends State<HomeDetail> {
     super.initState();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Detail'),
+        ),
+        body: boolData
+            ? ListView.builder(
+                shrinkWrap: true,
+                itemCount: courseList[0].data?.length,
+                itemBuilder: (context, index) {
+                  final selectedItem = courseList[0].data![index].courses![0];
+                  // return VideoCardWidget(image: 'bio.png',
+                  //     title: courseList[0].data![index].catName.toString(),
+                  //     subtitle1: courseList[0].data![index].name.toString(),
+                  //     subtitle2: courseList[0].data![index].totalSeat.toString(),
+                  //     subtitle3: courseList[0].data![index].courses![0].price.toString(),
+                  //
+                  // );
+
+                  return lsit(
+                    //image: 'bio.png',
+                    regMethod: courseList[0]
+                        .data![index]
+                        .registrationMethod
+                        .toString(),
+                    ePass: courseList[0].data![index].catName.toString(),
+                    status: courseList[0].data![index].name.toString(),
+                    dateAndTime:
+                        courseList[0].data![index].totalSeat.toString(),
+                    department:
+                        courseList[0].data![index].courses![0].price.toString(),
+                    map: courseList[0].data![index].courses,
+                    onAddToCart: () {
+                      if (courseList[0].data![index].registrationMethod ==
+                          "whole") {
+                        onAddToCart(index);
+                      }
+
+                      navigateToCartScreen();
+                    },
+                  );
+                })
+            : const Center(
+                child: CircularProgressIndicator(
+                color: AppColors.primaryColor,
+              )),
+      ),
+    );
+  }
+
+  void navigateToCartScreen() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => CartScreen(cartList: cartList),
+      ),
+    );
+  }
+
+  /*---------------------- Call getCourseApi ------------------------*/
   void getCourseAPI() async {
     try {
       final res = await http.post(Uri.parse(AuthApi.courseApi), body: {
@@ -55,45 +125,28 @@ class _VideoViewState extends State<HomeDetail> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Detail'),
-        ),
-        body: boolData
-            ? ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: courseList[0].data?.length,
-                itemBuilder: (context, index) {
-                  // return VideoCardWidget(image: 'bio.png',
-                  //     title: courseList[0].data![index].catName.toString(),
-                  //     subtitle1: courseList[0].data![index].name.toString(),
-                  //     subtitle2: courseList[0].data![index].totalSeat.toString(),
-                  //     subtitle3: courseList[0].data![index].courses![0].price.toString(),
-                  //
-                  // );
+  /*--------------------------- onAddToCart -------------------*/
+  void onAddToCart(int dataIndex) {
+    final dataEntry = courseList[0].data![dataIndex];
 
-                  return lsit(
-                    //image: 'bio.png',
-                    regMethod: courseList[0].data![index].registrationMethod.toString(),
-                    ePass: courseList[0].data![index].catName.toString(),
-                    status: courseList[0].data![index].name.toString(),
-                    dateAndTime:
-                        courseList[0].data![index].totalSeat.toString(),
-                    department:
-                        courseList[0].data![index].courses![0].price.toString(),
-                    map: courseList[0].data![index].courses,
-                  );
-                })
-            : const Center(
-                child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
-              )),
+    for (final course in dataEntry.courses!) {
+      final cartItem = CartModel(
+        courseId: course.id.toString(),
+        courseTitle: course.courseTitle.toString(),
+        price: double.parse(course.price.toString()),
+      );
+
+      // Check if the item is not already in the cart
+      if (!cartList.contains(cartItem)) {
+        setState(() {
+          cartList.add(cartItem);
+        });
+      }
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Items added to cart'),
       ),
     );
   }

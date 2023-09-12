@@ -47,6 +47,7 @@ class _MyCoursesState extends State<MyCourses> {
                     slug: myCoursesList[0].data![index].name,
                     seat: myCoursesList[0].data![index].totalSeat,
                     registermethod: myCoursesList[0].data![index].registrationMethod,
+                    buttonText:     'Video Lectures >',
                   ),
                 );
               })

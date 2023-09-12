@@ -5,20 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:splashapp/Controller/login_controller.dart';
-import 'package:splashapp/cart.dart';
+
 import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/values/my_imgs.dart';
 import 'package:splashapp/view/home_detail/home_detail.dart';
 import 'package:splashapp/view/mycourses/my_courses.dart';
 import 'package:splashapp/view/payment/payment.dart';
+import 'package:splashapp/view/quizz/myquizz_view.dart';
 import 'package:splashapp/view/quizz/quizz_view.dart';
+import 'package:splashapp/view/results/myresult_view.dart';
 import 'package:splashapp/widget/carousel_widget.dart';
 
 import '../../model/DashboardModel.dart';
 import '../../values/colors.dart';
 import '../../widget/customlisttile_widget.dart';
 import '../../widget/dasbhoard_card.dart';
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -41,8 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void getDashboardAPI() async {
     try {
-      final res = await http
-          .get(Uri.parse(AuthApi.getDashboardApi));
+      final res = await http.get(Uri.parse(AuthApi.getDashboardApi));
       print('Response Status Code: ${res.statusCode}');
       print('Response Body: ${res.body.toString()}');
 
@@ -73,11 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         appBar: AppBar(
           actions: [
-            IconButton(
-                onPressed: () {
-                  Get.to(() => Cart());
-                },
-                icon: Icon(Icons.shopping_cart))
+            IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart))
           ],
         ),
         drawer: Drawer(
@@ -164,14 +160,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             //   dashboardList[0].data![index].mscatId!,
                             // );
                             Get.to(() => HomeDetail(
-                              mscatId:
-                              dashboardList[0].data!.category![index].mscatId!,
-                            ));
+                                  mscatId: dashboardList[0]
+                                      .data!
+                                      .category![index]
+                                      .mscatId!,
+                                ));
                           },
                           child: DashbaordCard(
                             id: dashboardList[0].data!.category![index].id!,
-                            catName: dashboardList[0].data!.category![index].catName!,
-
+                            catName: dashboardList[0]
+                                .data!
+                                .category![index]
+                                .catName!,
                           ),
                         );
                       })
@@ -259,28 +259,30 @@ class _HomeScreenState extends State<HomeScreen> {
               titleText: 'My Courses',
               color: Colors.pink.shade100,
               onTap: () {
-              Get.to(()=>MyCourses());
+                Get.to(() => const MyCourses());
               },
             ),
             CustomListTile(
               leadingIcon: Icons.bookmark_outline_rounded,
               color: Colors.blueAccent.shade100,
               titleText: 'My Result',
-              onTap: () {},
+              onTap: () {
+                Get.to(()=>const MyResults());
+              },
             ),
             CustomListTile(
                 leadingIcon: Icons.quiz_outlined,
                 titleText: 'My Test',
                 color: Colors.cyan.shade100,
                 onTap: () {
-                Get.to(()=>QuizzView());
+                  Get.to(() => const MyQuizz());
                 }),
             CustomListTile(
               leadingIcon: Icons.payments_outlined,
               titleText: 'Payments',
               color: Colors.blue.shade400,
               onTap: () {
-                Get.to(() => Payment());
+                Get.to(() => const Payment());
               },
             ),
             CustomListTile(

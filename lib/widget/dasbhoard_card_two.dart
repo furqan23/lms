@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:splashapp/values/colors.dart';
 
 class DashbaordCardTwo extends StatefulWidget {
-  String? id, catName, description, slug, seat, name, registermethod;
+  String? id, catName, description, slug, seat, name, registermethod, buttonText;
 
   DashbaordCardTwo({
     super.key,
@@ -13,6 +13,8 @@ class DashbaordCardTwo extends StatefulWidget {
     required this.slug,
     required this.seat,
     required this.registermethod,
+    required this.buttonText,
+
   });
 
   @override
@@ -39,7 +41,7 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(top: 5),
                 child: Container(
                   alignment: Alignment.center,
                   width: 100,
@@ -124,7 +126,8 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                     // ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
-                      child: Row(mainAxisAlignment: MainAxisAlignment.end,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           // const Text(
                           //   "Total Seat:  ",
@@ -134,7 +137,7 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                           //   widget.seat!,
                           //   style: TextStyle(fontWeight: FontWeight.bold),
                           // ),
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                           Container(
                             alignment: Alignment.center,
                             width: 140,
@@ -143,8 +146,8 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                               borderRadius: BorderRadius.circular(14),
                               color: AppColors.primaryColor,
                             ),
-                            child: const Text(
-                              'Video Lectures >',
+                            child:  Text(
+                          widget.buttonText!,
                               style: TextStyle(
                                 color: Colors.white,
                               ),

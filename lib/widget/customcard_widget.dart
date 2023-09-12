@@ -45,7 +45,7 @@ class CustomCardWidget extends StatelessWidget {
                 Text(inv),
               ],
             ),
-            SizedBox(width: w * 0.05),
+            SizedBox(width: w * 0.03),
 
             Column(
               children: [
@@ -55,7 +55,7 @@ class CustomCardWidget extends StatelessWidget {
               ],
             ),
 
-            SizedBox(width: w * 0.05),
+            SizedBox(width: w * 0.04),
             Column(
               children: [
                 Text("Amount"),
@@ -100,7 +100,7 @@ class CustomCardWidget extends StatelessWidget {
               //   ],
               // ),
 
-              SizedBox(width: w * 0.05),
+              SizedBox(width: w * 0.04),
               Column(
                 children: [
 

@@ -7,27 +7,35 @@ import 'package:splashapp/model/my_courses_model.dart';
 import 'package:splashapp/values/auth_api.dart';
 import 'package:http/http.dart' as http;
 import 'package:splashapp/view/mycourses/my_course_detail.dart';
+import 'package:splashapp/view/mycourses/my_videos.dart';
+import 'package:splashapp/view/my_test/gettest.dart';
 import 'package:splashapp/widget/dasbhoard_card.dart';
 import 'package:splashapp/widget/dasbhoard_card_two.dart';
 
-class MyCourses extends StatefulWidget {
-  const MyCourses({super.key});
+class MyQuizz extends StatefulWidget {
+  const MyQuizz({super.key});
 
   @override
-  State<MyCourses> createState() => _MyCoursesState();
+  State<MyQuizz> createState() => _MyQuizzState();
 }
 
-class _MyCoursesState extends State<MyCourses> {
+class _MyQuizzState extends State<MyQuizz> {
+  /*----------------------- token and Model -------------*/
   String? token;
   List<MyCoursesModel> myCoursesList = [];
   bool boolData = false;
 
-
+  /*------------ Call InitState ------------*/
+  @override
+  void initState() {
+    super.initState();
+    getTokenAndFetchInvoice();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("My Courses"),
+        title: Text("My Test Courses"),
       ),
       body: boolData
           ? ListView.builder(
@@ -35,47 +43,42 @@ class _MyCoursesState extends State<MyCourses> {
               itemCount: myCoursesList[0].data?.length,
               itemBuilder: (context, index) {
                 return InkWell(
-                  onTap: (){
-                    Get.to(()=>MyCourseDetail(myCoursesList[0].data![index].courseId!));
+                  onTap: () {
+                    Get.to(() =>
+                        GetTest(id: myCoursesList[0].data![index].courseId!));
                   },
                   child: DashbaordCardTwo(
                     id: myCoursesList[0].data![index].name,
                     catName: myCoursesList[0].data![index].courseTitle,
-                    name:"${myCoursesList[0].data![index].firstName} ${myCoursesList[0].data![index].lastName}",
+                    name:
+                        "${myCoursesList[0].data![index].firstName} ${myCoursesList[0].data![index].lastName}",
                     description: myCoursesList[0].data![index].name,
                     slug: myCoursesList[0].data![index].name,
                     seat: myCoursesList[0].data![index].totalSeat,
-                    registermethod: myCoursesList[0].data![index].registrationMethod,
-                    buttonText:     'Video Lectures >',
+                    registermethod:
+                        myCoursesList[0].data![index].registrationMethod,
+                    buttonText: 'Process',
                   ),
                 );
               })
-          :const Center(
+          : const Center(
               child: CircularProgressIndicator(),
             ),
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    getTokenAndFetchInvoice();
-  }
 
+/*------------------ get token   ----------------*/
   Future<void> getTokenAndFetchInvoice() async {
     token = await LoginController().getTokenFromHive();
     print('Token: $token');
     getMyCourseAPI();
   }
 
+  /*------------------ Call GetMyCourseApi  ----------------*/
+
   void getMyCourseAPI() async {
     try {
-      // final Map<String, dynamic> requestData = {
-      //   "invoice_id": widget.invoice_id,
-      // };
-
-      // final String requestBody = jsonEncode(requestData);
-
       final res = await http.get(
         Uri.parse(AuthApi.getstudentCourse),
         headers: {
