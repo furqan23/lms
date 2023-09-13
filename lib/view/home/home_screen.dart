@@ -8,17 +8,15 @@ import 'package:splashapp/Controller/login_controller.dart';
 
 import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/values/my_imgs.dart';
-import 'package:splashapp/view/cart/cart.dart';
 import 'package:splashapp/view/home_detail/home_detail.dart';
 import 'package:splashapp/view/mycourses/my_courses.dart';
 import 'package:splashapp/view/payment/payment.dart';
-import 'package:splashapp/view/quizz/getcoursetest_view.dart';
-import 'package:splashapp/view/quizz/get_testquestion_view.dart';
-import 'package:splashapp/view/results/myresultcourse_view.dart';
+import 'package:splashapp/view/quizz/myquizz_view.dart';
+import 'package:splashapp/view/quizz/quizz_view.dart';
+import 'package:splashapp/view/results/myresult_view.dart';
 import 'package:splashapp/widget/carousel_widget.dart';
 
 import '../../model/DashboardModel.dart';
-import '../../model/cart_model.dart';
 import '../../values/colors.dart';
 import '../../widget/customlisttile_widget.dart';
 import '../../widget/dasbhoard_card.dart';
@@ -74,7 +72,9 @@ class _HomeScreenState extends State<HomeScreen> {
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: Scaffold(
         appBar: AppBar(
-
+          actions: [
+            IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart))
+          ],
         ),
         drawer: Drawer(
             child: SingleChildScrollView(
@@ -267,7 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.blueAccent.shade100,
               titleText: 'My Result',
               onTap: () {
-                Get.to(()=>const MyResultsCourse());
+                Get.to(()=>const MyResults());
               },
             ),
             CustomListTile(
@@ -275,7 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 titleText: 'My Test',
                 color: Colors.cyan.shade100,
                 onTap: () {
-                  Get.to(() => const GetCourseTest());
+                  Get.to(() => const MyQuizz());
                 }),
             CustomListTile(
               leadingIcon: Icons.payments_outlined,
