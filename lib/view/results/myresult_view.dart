@@ -18,6 +18,7 @@ class _MyResultsState extends State<MyResults> {
   LoginController _loginController = Get.put(LoginController());
   List<MyResultModel> resultsList = [];
   bool boolData = false;
+  String? token;
 
   @override
   void initState() {
@@ -31,7 +32,7 @@ class _MyResultsState extends State<MyResults> {
   Future<void> getTokenAndFetchInvoice() async {
     token = await LoginController().getTokenFromHive();
     print('Token: $token');
-    getTestQuestionAPI();
+    getMyResultAPI();
   }
 
   void getMyResultAPI() async {

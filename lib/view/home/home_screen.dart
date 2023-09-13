@@ -8,15 +8,17 @@ import 'package:splashapp/Controller/login_controller.dart';
 
 import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/values/my_imgs.dart';
+import 'package:splashapp/view/cart/cart.dart';
 import 'package:splashapp/view/home_detail/home_detail.dart';
 import 'package:splashapp/view/mycourses/my_courses.dart';
 import 'package:splashapp/view/payment/payment.dart';
-import 'package:splashapp/view/quizz/myquizz_view.dart';
-import 'package:splashapp/view/quizz/quizz_view.dart';
-import 'package:splashapp/view/results/myresult_view.dart';
+import 'package:splashapp/view/quizz/getcoursetest_view.dart';
+import 'package:splashapp/view/quizz/get_testquestion_view.dart';
+import 'package:splashapp/view/results/myresultcourse_view.dart';
 import 'package:splashapp/widget/carousel_widget.dart';
 
 import '../../model/DashboardModel.dart';
+import '../../model/cart_model.dart';
 import '../../values/colors.dart';
 import '../../widget/customlisttile_widget.dart';
 import '../../widget/dasbhoard_card.dart';
@@ -72,19 +74,17 @@ class _HomeScreenState extends State<HomeScreen> {
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: Scaffold(
         appBar: AppBar(
-          actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart))
-          ],
+
         ),
         drawer: Drawer(
             child: SingleChildScrollView(
-          child: Column(
-            children: [
-              buildHeader(context),
-              buildMenu(context),
-            ],
-          ),
-        )),
+              child: Column(
+                children: [
+                  buildHeader(context),
+                  buildMenu(context),
+                ],
+              ),
+            )),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -122,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     builder: (BuildContext context) {
                       return const CarouselWidget(
                         title:
-                            'MDCAT 2023 top \n karo  aur future \n doctor bano!',
+                        'MDCAT 2023 top \n karo  aur future \n doctor bano!',
                         image: "assets/images/logo.png",
                         btntitle: 'Unlock MDCAT',
                         color: Color(0xffF1C9EC),
@@ -134,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     builder: (BuildContext context) {
                       return const CarouselWidget(
                         title:
-                            'ETEA 2023 top \n karo aur future \n engineer bano!',
+                        'ETEA 2023 top \n karo aur future \n engineer bano!',
                         image: MyImgs.onBoardingtwo,
                         btntitle: 'Unlock ETEA',
                         color: Color(0xffb2f6f6),
@@ -148,37 +148,37 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 10),
               boolData
                   ? GridView.builder(
-                      shrinkWrap: true,
-                      itemCount: dashboardList[0].data?.category!.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2),
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            // Get.snackbar(
-                            //   "iii",
-                            //   dashboardList[0].data![index].mscatId!,
-                            // );
-                            Get.to(() => HomeDetail(
-                                  mscatId: dashboardList[0]
-                                      .data!
-                                      .category![index]
-                                      .mscatId!,
-                                ));
-                          },
-                          child: DashbaordCard(
-                            id: dashboardList[0].data!.category![index].id!,
-                            catName: dashboardList[0]
-                                .data!
-                                .category![index]
-                                .catName!,
-                          ),
-                        );
-                      })
+                  shrinkWrap: true,
+                  itemCount: dashboardList[0].data?.category!.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        // Get.snackbar(
+                        //   "iii",
+                        //   dashboardList[0].data![index].mscatId!,
+                        // );
+                        Get.to(() => HomeDetail(
+                          mscatId: dashboardList[0]
+                              .data!
+                              .category![index]
+                              .mscatId!,
+                        ));
+                      },
+                      child: DashbaordCard(
+                        id: dashboardList[0].data!.category![index].id!,
+                        catName: dashboardList[0]
+                            .data!
+                            .category![index]
+                            .catName!,
+                      ),
+                    );
+                  })
                   : Center(
-                      child: CircularProgressIndicator(
-                      color: AppColors.primaryColor,
-                    )),
+                  child: CircularProgressIndicator(
+                    color: AppColors.primaryColor,
+                  )),
             ],
           ),
         ),
@@ -187,155 +187,155 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget buildHeader(BuildContext context) => Container(
-        width: double.infinity,
-        color: Colors.white,
-        padding: EdgeInsets.only(
-          top: MediaQuery.of(context).padding.top,
-        ),
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 30),
-              width: 400,
-              height: 140,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 70,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      color: Colors.pink,
-                      borderRadius: BorderRadius.circular(50),
-                      image: const DecorationImage(
-                        image: AssetImage(MyImgs.profileImage),
-                      ),
-                    ),
+    width: double.infinity,
+    color: Colors.white,
+    padding: EdgeInsets.only(
+      top: MediaQuery.of(context).padding.top,
+    ),
+    child: Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(top: 30),
+          width: 400,
+          height: 140,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 70,
+                height: 70,
+                decoration: BoxDecoration(
+                  color: Colors.pink,
+                  borderRadius: BorderRadius.circular(50),
+                  image: const DecorationImage(
+                    image: AssetImage(MyImgs.profileImage),
                   ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    'Imane fh',
-                    style: TextStyle(
-                      fontFamily: 'BandaBold',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 25,
-                      color: AppColors.blackColor,
-                    ),
-                  ),
-                  const Text(
-                    'Imane@gmail.com',
-                    style: TextStyle(
-                      fontFamily: 'BandaBold',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                      color: AppColors.orangeColor,
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: 10),
+              const Text(
+                'Imane fh',
+                style: TextStyle(
+                  fontFamily: 'BandaBold',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 25,
+                  color: AppColors.blackColor,
+                ),
+              ),
+              const Text(
+                'Imane@gmail.com',
+                style: TextStyle(
+                  fontFamily: 'BandaBold',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                  color: AppColors.orangeColor,
+                ),
+              ),
+            ],
+          ),
         ),
-      );
+      ],
+    ),
+  );
 
   Widget buildMenu(BuildContext context) => Container(
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-            color: const Color(0xffFFFFFF),
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: const [
-              BoxShadow(
-                offset: Offset(2, 2),
-                blurRadius: 2,
-                color: Color(0xffBDC6D3),
-              )
-            ]),
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            CustomListTile(
-              leadingIcon: Icons.person_outline,
-              titleText: 'My Courses',
-              color: Colors.pink.shade100,
-              onTap: () {
-                Get.to(() => const MyCourses());
-              },
-            ),
-            CustomListTile(
-              leadingIcon: Icons.bookmark_outline_rounded,
-              color: Colors.blueAccent.shade100,
-              titleText: 'My Result',
-              onTap: () {
-                Get.to(()=>const MyResults());
-              },
-            ),
-            CustomListTile(
-                leadingIcon: Icons.quiz_outlined,
-                titleText: 'My Test',
-                color: Colors.cyan.shade100,
-                onTap: () {
-                  Get.to(() => const MyQuizz());
-                }),
-            CustomListTile(
-              leadingIcon: Icons.payments_outlined,
-              titleText: 'Payments',
-              color: Colors.blue.shade400,
-              onTap: () {
-                Get.to(() => const Payment());
-              },
-            ),
-            CustomListTile(
-                leadingIcon: Icons.exit_to_app,
-                titleText: 'Logout',
-                color: Colors.red.shade400,
-                onTap: () {
-                  Get.dialog(AlertDialog(
-                    backgroundColor: Colors.white,
-                    title: const Text('Are you Sure you want to Logout!'),
-                    content: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            _loginController.logout();
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            width: 90,
-                            height: 40,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.blueAccent),
-                            child: const Text(
-                              'Yes',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            width: 90,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.blueAccent,
-                            ),
-                            child: const Text(
-                              'No',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ));
-                }),
-          ],
+    width: double.infinity,
+    height: MediaQuery.of(context).size.height,
+    decoration: BoxDecoration(
+        color: const Color(0xffFFFFFF),
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: const [
+          BoxShadow(
+            offset: Offset(2, 2),
+            blurRadius: 2,
+            color: Color(0xffBDC6D3),
+          )
+        ]),
+    child: Column(
+      children: [
+        const SizedBox(height: 20),
+        CustomListTile(
+          leadingIcon: Icons.person_outline,
+          titleText: 'My Courses',
+          color: Colors.pink.shade100,
+          onTap: () {
+            Get.to(() => const MyCourses());
+          },
         ),
-      );
+        CustomListTile(
+          leadingIcon: Icons.bookmark_outline_rounded,
+          color: Colors.blueAccent.shade100,
+          titleText: 'My Result',
+          onTap: () {
+            Get.to(()=>const MyResultsCourse());
+          },
+        ),
+        CustomListTile(
+            leadingIcon: Icons.quiz_outlined,
+            titleText: 'My Test',
+            color: Colors.cyan.shade100,
+            onTap: () {
+              Get.to(() => const GetCourseTest());
+            }),
+        CustomListTile(
+          leadingIcon: Icons.payments_outlined,
+          titleText: 'Payments',
+          color: Colors.blue.shade400,
+          onTap: () {
+            Get.to(() => const Payment());
+          },
+        ),
+        CustomListTile(
+            leadingIcon: Icons.exit_to_app,
+            titleText: 'Logout',
+            color: Colors.red.shade400,
+            onTap: () {
+              Get.dialog(AlertDialog(
+                backgroundColor: Colors.white,
+                title: const Text('Are you Sure you want to Logout!'),
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        _loginController.logout();
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: 90,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.blueAccent),
+                        child: const Text(
+                          'Yes',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: 90,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.blueAccent,
+                        ),
+                        child: const Text(
+                          'No',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ));
+            }),
+      ],
+    ),
+  );
 }

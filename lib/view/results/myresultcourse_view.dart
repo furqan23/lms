@@ -209,7 +209,7 @@ class _MyResultsCourseState extends State<MyResultsCourse> {
   void getMyTestAPI() async {
     try {
       final res = await http.get(
-        Uri.parse(AuthApi.getMyResultApi),
+        Uri.parse(AuthApi.getMyResult1),
         headers: {
           'Authorization': 'Bearer $token', // Use the retrieved token
           'Content-Type': 'application/json',
