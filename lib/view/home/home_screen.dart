@@ -86,7 +86,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             )),
-        body: SingleChildScrollView(
+        body:boolData
+            ? SingleChildScrollView(
           child: Column(
             children: [
               const SizedBox(height: 5),
@@ -174,8 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
               //   // ],
               // ),
               const SizedBox(height: 10),
-              boolData
-                  ? GridView.builder(
+               GridView.builder(
                   shrinkWrap: true,
                   itemCount: dashboardList[0].data?.category!.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -202,14 +202,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             .catName!,
                       ),
                     );
-                  })
-                  : Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.primaryColor,
-                  )),
+                  }),
+
             ],
           ),
-        ),
+        ): Center(
+            child: CircularProgressIndicator(
+              color: AppColors.primaryColor,
+            )),
       ),
     );
   }
