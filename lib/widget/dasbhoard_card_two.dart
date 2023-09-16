@@ -148,7 +148,7 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                             ),
                             child:  Text(
                           widget.buttonText!,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                               ),
                             ),
