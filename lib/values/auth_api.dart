@@ -35,4 +35,6 @@ class AuthApi {
       "https://dav.binshaharts.com/api/v1/student/myResultsTests";
   static const String getMyfinalResultApi =
       "https://dav.binshaharts.com/api/v1/student/myFinalResults";
+
+  static const String baseUrlSliderImage="https://dav.binshaharts.com/public/slide/";
 }
