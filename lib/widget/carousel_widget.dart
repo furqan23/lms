@@ -56,7 +56,7 @@ class CarouselWidget extends StatelessWidget {
             Positioned(
                 top: 60,
                 left: 164,
-                child: Image.asset(
+                child: Image.network(
                   image,
                   width: 100,
                   height: 100,

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:splashapp/Controller/login_controller.dart';
+import 'package:splashapp/model/DashboardModelWithSlider.dart';
 
 import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/values/my_imgs.dart';
@@ -32,7 +33,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   LoginController _loginController = Get.put(LoginController());
-  List<DashboardModel> dashboardList = [];
+  List<DashboardModelWithSlider> dashboardList = [];
   bool boolData = false;
 
   @override
@@ -51,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (res.statusCode == 200) {
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);
-          dashboardList.add(DashboardModel.fromJson(mydata));
+          dashboardList.add(DashboardModelWithSlider.fromJson(mydata));
           setState(() {
             boolData = true;
           });
@@ -89,62 +90,89 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               const SizedBox(height: 5),
-              CarouselSlider(
-                options: CarouselOptions(
-                  aspectRatio: 15 / 9,
-                  viewportFraction: 0.8,
-                  initialPage: 0,
-                  enableInfiniteScroll: true,
-                  reverse: false,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 3),
-                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  enlargeCenterPage: true,
-                  enlargeFactor: 0.3,
-                  scrollDirection: Axis.horizontal,
-                ),
-                items: [
-                  // Item 1
-                  Builder(
-                    builder: (BuildContext context) {
-                      return const CarouselWidget(
-                        title: "The journey of 1st \n year ",
-                        image: MyImgs.study,
-                        btntitle: 'Get Started',
-                        color: Color(0xffFFCAA6),
-                      );
-                    },
+              CarouselSlider.builder(
+                itemCount: dashboardList[0].data?.slides!.length,
+                itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
+                CarouselWidget(
+                          title: "The journey of 1st \n year ",
+                          image: AuthApi.baseUrlSliderImage+"${dashboardList[0].data?.slides![itemIndex].filePath.toString()}",
+                          btntitle: 'Get Started',
+                          color: Color(0xffFFCAA6),
+                        ), options: CarouselOptions(
+                    aspectRatio: 15 / 9,
+                    viewportFraction: 0.8,
+                    initialPage: 0,
+                    enableInfiniteScroll: true,
+                    reverse: false,
+                    autoPlay: true,
+                    autoPlayInterval: const Duration(seconds: 3),
+                    autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                    enlargeCenterPage: true,
+                    enlargeFactor: 0.3,
+                    scrollDirection: Axis.horizontal,
                   ),
 
-                  // Item 2 - Different text and image
-                  Builder(
-                    builder: (BuildContext context) {
-                      return const CarouselWidget(
-                        title:
-                        'MDCAT 2023 top \n karo  aur future \n doctor bano!',
-                        image: "assets/images/logo.png",
-                        btntitle: 'Unlock MDCAT',
-                        color: Color(0xffF1C9EC),
-                      );
-                    },
-                  ),
-
-                  Builder(
-                    builder: (BuildContext context) {
-                      return const CarouselWidget(
-                        title:
-                        'ETEA 2023 top \n karo aur future \n engineer bano!',
-                        image: MyImgs.onBoardingtwo,
-                        btntitle: 'Unlock ETEA',
-                        color: Color(0xffb2f6f6),
-                      );
-                    },
-                  ),
-
-                  // You can add more items with different text and images here
-                ],
               ),
+
+              // CarouselSlider(
+              //   options: CarouselOptions(
+              //     aspectRatio: 15 / 9,
+              //     viewportFraction: 0.8,
+              //     initialPage: 0,
+              //     enableInfiniteScroll: true,
+              //     reverse: false,
+              //     autoPlay: true,
+              //     autoPlayInterval: const Duration(seconds: 3),
+              //     autoPlayAnimationDuration: const Duration(milliseconds: 800),
+              //     autoPlayCurve: Curves.fastOutSlowIn,
+              //     enlargeCenterPage: true,
+              //     enlargeFactor: 0.3,
+              //     scrollDirection: Axis.horizontal,
+              //   ),
+              //
+              //   items: [],
+              //   // items: [
+              //   //   // Item 1
+              //   //   Builder(
+              //   //     builder: (BuildContext context) {
+              //   //       return const CarouselWidget(
+              //   //         title: "The journey of 1st \n year ",
+              //   //         image: MyImgs.study,
+              //   //         btntitle: 'Get Started',
+              //   //         color: Color(0xffFFCAA6),
+              //   //       );
+              //   //     },
+              //   //   ),
+              //   //
+              //   //   // Item 2 - Different text and image
+              //   //   Builder(
+              //   //     builder: (BuildContext context) {
+              //   //       return const CarouselWidget(
+              //   //         title:
+              //   //         'MDCAT 2023 top \n karo  aur future \n doctor bano!',
+              //   //         image: "assets/images/logo.png",
+              //   //         btntitle: 'Unlock MDCAT',
+              //   //         color: Color(0xffF1C9EC),
+              //   //       );
+              //   //     },
+              //   //   ),
+              //   //
+              //   //   Builder(
+              //   //     builder: (BuildContext context) {
+              //   //       return const CarouselWidget(
+              //   //         title:
+              //   //         'ETEA 2023 top \n karo aur future \n engineer bano!',
+              //   //         image: AuthApi.baseUrlSliderImage,
+              //   //         btntitle: 'Unlock ETEA',
+              //   //         color: Color(0xffb2f6f6),
+              //   //       );
+              //   //     },
+              //   //   ),
+              //   //
+              //   //   // You can add more items with different text and images here
+              //   // ],
+              // ),
               const SizedBox(height: 10),
               boolData
                   ? GridView.builder(
