@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -46,50 +47,50 @@ class _VideoViewState extends State<HomeDetail> {
         ),
         body: boolData
             ? ListView.builder(
-                shrinkWrap: true,
-                itemCount: courseList[0].data?.length,
-                itemBuilder: (context, index) {
-                  final selectedItem = courseList[0].data![index].courses![0];
-                  // return VideoCardWidget(image: 'bio.png',
-                  //     title: courseList[0].data![index].catName.toString(),
-                  //     subtitle1: courseList[0].data![index].name.toString(),
-                  //     subtitle2: courseList[0].data![index].totalSeat.toString(),
-                  //     subtitle3: courseList[0].data![index].courses![0].price.toString(),
-                  //
-                  // );
+            shrinkWrap: true,
+            itemCount: courseList[0].data?.length,
+            itemBuilder: (context, index) {
+              final selectedItem = courseList[0].data![index].courses![0];
+              // return VideoCardWidget(image: 'bio.png',
+              //     title: courseList[0].data![index].catName.toString(),
+              //     subtitle1: courseList[0].data![index].name.toString(),
+              //     subtitle2: courseList[0].data![index].totalSeat.toString(),
+              //     subtitle3: courseList[0].data![index].courses![0].price.toString(),
+              //
+              // );
 
-                  return lsit(
-                    //image: 'bio.png',
-                    regMethod: courseList[0]
-                        .data![index]
-                        .registrationMethod
-                        .toString(),
-                    ePass: courseList[0].data![index].catName.toString(),
-                    status: courseList[0].data![index].name.toString(),
-                    dateAndTime:
-                        courseList[0].data![index].totalSeat.toString(),
-                    department:
-                        courseList[0].data![index].courses![0].price.toString(),
-                    map: courseList[0].data![index].courses,
-                    onAddToCart: () {
-                      if (courseList[0].data![index].registrationMethod ==
-                          "whole") {
-                        onAddToCart(index);
-                      } else if (courseList[0]
-                              .data![index]
-                              .registrationMethod ==
-                          "single") {
-                        onAddToSingleCart(index, singleCartIndex);
-                        singleCartIndex++;
-                      }
-                      navigateToCartScreen();
-                    },
-                  );
-                })
+              return lsit(
+                //image: 'bio.png',
+                regMethod: courseList[0]
+                    .data![index]
+                    .registrationMethod
+                    .toString(),
+                ePass: courseList[0].data![index].catName.toString(),
+                status: courseList[0].data![index].name.toString(),
+                dateAndTime:
+                courseList[0].data![index].totalSeat.toString(),
+                department:
+                courseList[0].data![index].courses![0].price.toString(),
+                map: courseList[0].data![index].courses,
+                onAddToCart: () {
+                  if (courseList[0].data![index].registrationMethod ==
+                      "whole") {
+                    onAddToCart(index);
+                  } else if (courseList[0]
+                      .data![index]
+                      .registrationMethod ==
+                      "single") {
+                    onAddToSingleCart(index, singleCartIndex);
+                    singleCartIndex++;
+                  }
+                  navigateToCartScreen();
+                },
+              );
+            })
             : const Center(
-                child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
-              )),
+            child: CircularProgressIndicator(
+              color: AppColors.primaryColor,
+            )),
       ),
     );
   }
