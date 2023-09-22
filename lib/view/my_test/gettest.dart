@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:splashapp/model/get_test_model.dart';
-import 'package:splashapp/test.dart';
+import 'package:splashapp/demo.dart';
 import 'package:splashapp/view/quizz/get_testquestion_view.dart';
 import 'package:splashapp/widget/testcard_widget.dart';
 
