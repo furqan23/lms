@@ -1,16 +1,17 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:splashapp/model/get_test_model.dart';
 import 'package:splashapp/demo.dart';
+import 'package:splashapp/model/my_courses_model.dart';
 import 'package:splashapp/view/quizz/get_testquestion_view.dart';
 import 'package:splashapp/widget/testcard_widget.dart';
 
 import '../../Controller/login_controller.dart';
 import '../../values/auth_api.dart';
-import '../../values/colors.dart';
-import '../../widget/dasbhoard_card_two.dart';
 
 class GetTest extends StatefulWidget {
   String id;
@@ -23,6 +24,7 @@ class GetTest extends StatefulWidget {
 class _GetTestState extends State<GetTest> {
   String? token;
   List<GetTestModel> getTestList = [];
+   List<MyCoursesModel> myCoursesList = [];
   bool boolData = false;
   @override
   void initState() {
@@ -40,7 +42,7 @@ class _GetTestState extends State<GetTest> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("GetTest"),
+        title: Text("Available Test"),
       ),
       body: boolData
           ? ListView.builder(
@@ -54,8 +56,8 @@ class _GetTestState extends State<GetTest> {
                 return InkWell(
 
                   onTap: () {
-                    Get.to(()=>DemoApp());
-                   // Get.to(()=>QuizzView(id: getTestList[0].data![index].id.toString()));
+                  //  Get.to(()=>DemoApp());
+                   Get.to(()=>QuizzView(id: getTestList[0].data![index].id.toString()));
                   },
                   child: TestCard(
                     id: getTestList[0].data![index].courseId.toString(),
