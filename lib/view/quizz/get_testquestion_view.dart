@@ -14,6 +14,7 @@ import '../../widget/option_widget.dart';
 
 class QuizzView extends StatefulWidget {
   final String id;
+
   const QuizzView({super.key, required this.id});
 
   @override
@@ -31,6 +32,7 @@ class _QuizzViewState extends State<QuizzView> {
   String opt_3 = "";
   String opt_4 = "";
   var htmlData = """""";
+
   /*---------- InitState Call -----------------*/
   @override
   void initState() {
@@ -46,11 +48,11 @@ class _QuizzViewState extends State<QuizzView> {
     setState(() {
       selectedRadio = value;
       print(selectedRadio);
-      int aaa=int.parse(getquestionTestList[0].data!.questionNo.toString()) + 1;
+      int aaa =
+          int.parse(getquestionTestList[0].data!.questionNo.toString()) + 1;
       print("aaaaaaaaaaaaaaa  $aaa");
       getTestQuestionAPI(aaa);
     });
-   
   }
 
   @override
@@ -72,11 +74,11 @@ class _QuizzViewState extends State<QuizzView> {
                       Container(
                         height: MediaQuery.of(context).size.height * 0.5,
                         child: Html(data: """
-   <h3>${getquestionTestList[0].data!.questionName!}</h3>
-    ${getquestionTestList[0].data!.opt1!}
-  ${getquestionTestList[0].data!.opt2!}
-  ${getquestionTestList[0].data!.opt3!}
-${getquestionTestList[0].data!.opt4!}
+                            <h3>${getquestionTestList[0].data!.questionName!}</h3>
+                            ${getquestionTestList[0].data!.opt1!}
+                            ${getquestionTestList[0].data!.opt2!}
+                             ${getquestionTestList[0].data!.opt3!}
+                              ${getquestionTestList[0].data!.opt4!}
 
 """),
                       ),
@@ -137,7 +139,7 @@ ${getquestionTestList[0].data!.opt4!}
     try {
       final Map<String, dynamic> requestData = {
         "test_id": widget.id,
-        "question_no":questionNUmber.toString()
+        "question_no": questionNUmber.toString()
       };
 
       final String requestBody = jsonEncode(requestData);
@@ -168,6 +170,7 @@ ${getquestionTestList[0].data!.opt4!}
 // """;
           setState(() {
             boolData = true;
+            selectedRadio=null;
           });
         } else {
           throw Exception('Empty response');
