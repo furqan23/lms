@@ -43,14 +43,36 @@ class _QuizzViewState extends State<QuizzView> {
   }
 
   int? selectedRadio;
+  List<String> question_id = [];
+  List<String> givenAnswerList = [];
+  List<String> CorrectAnswerList = [];
+
 
   void handleRadioValueChange(int? value) {
     setState(() {
       selectedRadio = value;
       print(selectedRadio);
+      String? slted;
+      if(selectedRadio==1){
+        slted ="A";
+      }
+      else if(selectedRadio==2){
+        slted ="B";
+      }
+      else if(selectedRadio==3){
+        slted ="C";
+      }
+      else if(selectedRadio==4){
+        slted ="D";
+      }
+      print(slted);
+      question_id.add(getquestionTestList[0].data!.questionNo.toString());
+      givenAnswerList.add(slted??"D");
+      CorrectAnswerList.add(getquestionTestList[0].data!.correctAnswer.toString());
       int aaa =
           int.parse(getquestionTestList[0].data!.questionNo.toString()) + 1;
-      print("aaaaaaaaaaaaaaa  $aaa");
+      print("aaaaaaaaaaaaaaaa  $aaa");
+
       getTestQuestionAPI(aaa);
     });
   }
@@ -116,6 +138,11 @@ class _QuizzViewState extends State<QuizzView> {
                           const Text('Option 4'),
                         ],
                       ),
+
+                      Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: ElevatedButton(onPressed: (){postAnswerAPI(1);}, child: Text("Submit")),
+                      ),
                     ],
                   );
                 },
@@ -168,6 +195,59 @@ class _QuizzViewState extends State<QuizzView> {
 //     $opt_3
 //     $opt_4
 // """;
+          setState(() {
+            boolData = true;
+            selectedRadio=null;
+          });
+        } else {
+          throw Exception('Empty response');
+        }
+      } else {
+        print('Error: ${res.statusCode}');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+
+  // ************************** Result Api *******************
+  void postAnswerAPI(int questionNUmber) async {
+    try {
+      final Map<String, dynamic> requestData = {
+        "test_id": widget.id,
+      };
+
+      for(int i=0;i<question_id.length;i++){
+        requestData.addAll({"q_id[$i]" : question_id[i]});
+      }
+
+      for(int i=0;i<givenAnswerList.length;i++){
+        requestData.addAll({"given_answer[$i]" : givenAnswerList[i]});
+      }
+
+      for(int i=0;i<CorrectAnswerList.length;i++){
+        requestData.addAll({"corrected_answer[$i]" : CorrectAnswerList[i]});
+      }
+
+
+      // final String requestBody = jsonEncode(requestData);
+
+      final res = await http.post(Uri.parse(AuthApi.getQuestionTestApi),
+          headers: {
+            'Authorization': 'Bearer $token', // Use the retrieved token
+            'Content-Type': 'application/json',
+          },
+          body: requestData);
+
+      print('Response Status Code: ${res.statusCode}');
+      print('Response Body: ${res.body}');
+      // getquestionTestList.clear();
+      if (res.statusCode == 200) {
+        if (res.body.isNotEmpty) {
+          final mydata = jsonDecode(res.body);
+          print('Parsed Data: $mydata');
+          getquestionTestList.add(TestQuestionModel.fromJson(mydata));
           setState(() {
             boolData = true;
             selectedRadio=null;
