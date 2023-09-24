@@ -8,17 +8,10 @@ class DemoApp extends StatefulWidget {
 
 class _DemoAppState extends State<DemoApp> {
   static const htmlData = """
-<h1>Header 1</h1>
-<h2>Header 2</h2>
-<h3>Header 3</h3>
-<h4>Header 4</h4>
-<h5>Header 5</h5>
-<h6>Header 6</h6>
-<h3>Ruby Support:</h3>
       <p>
         <ruby>
-          漢<rt>かん</rt>
-          字<rt>じ</rt>
+         <p>What is your name ?</p>
+         <p>a) Khan</p>
         </ruby>
         &nbsp;is Japanese Kanji.
       </p>
