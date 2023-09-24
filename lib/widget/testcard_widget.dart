@@ -30,23 +30,13 @@ class TestCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Row(
                         children: [
                           Text(
-                            'hhh',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Row(
-                        children: [
-                          Text(
-                            "Test_title: ",
+                            "Testtitle: ",
                             style: TextStyle(color: Colors.grey, fontSize: 14),
                           ),
                           Text(
@@ -61,7 +51,7 @@ class TestCard extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(
-                            "Test_start: ",
+                            "Teststart: ",
                             style: TextStyle(color: Colors.grey, fontSize: 14),
                           ),
                           Text(

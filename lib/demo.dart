@@ -88,13 +88,78 @@ class _DemoAppState extends State<DemoApp> {
       </p>
 """;
 
+  int? selectedRadio; 
+
+  @override
+  void initState() {
+    super.initState();
+    selectedRadio = 0;
+  }
+
+  void handleRadioValueChange(int? value) {
+    setState(() {
+      selectedRadio = value;
+      print(selectedRadio);
+    });
+  
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Html Demo'),
       ),
-      body: SingleChildScrollView(child: Html(data: htmlData)),
+      body: ListView(
+        children: [
+        
+          Container(
+            height: MediaQuery.of(context).size.height * 0.5,
+            child: Html(data: htmlData),
+          ),
+
+          Row(
+            children: [
+              Radio(
+                value: 1,
+                groupValue: selectedRadio,
+                onChanged: handleRadioValueChange,
+              ),
+              const Text('Option 1'),
+              const SizedBox(
+                  width: 20), 
+              Radio(
+                value: 2,
+                groupValue: selectedRadio, 
+                onChanged: handleRadioValueChange,
+              ),
+              const Text('Option 2'),
+            ],
+          ),
+       
+          Row(
+            children: [
+              Radio(
+                value: 3,
+                groupValue: selectedRadio, 
+                onChanged: handleRadioValueChange,
+              ),
+              const Text('Option 3'),
+              const SizedBox(
+                  width: 20), 
+              Radio(
+                value: 4,
+                groupValue: selectedRadio, 
+                onChanged: handleRadioValueChange,
+              ),
+              const Text('Option 4'),
+            ],
+          ),
+
+          ElevatedButton(onPressed: () {}, child: Text("Next"))
+        ],
+      ),
     );
   }
+  /*------------------ Call GetTestQuestionApi  ----------------*/
 }
