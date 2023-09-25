@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, non_constant_identifier_names
 
 import 'dart:convert';
 
@@ -38,7 +38,7 @@ class _QuizzViewState extends State<QuizzView> {
   void initState() {
     super.initState();
     selectedRadio =
-        null; // Initialize to null, no radio button selected initially
+        null;
     getTokenAndFetchInvoice();
   }
 
