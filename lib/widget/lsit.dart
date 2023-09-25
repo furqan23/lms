@@ -41,7 +41,7 @@ class _lsitState extends State<lsit> {
       child: Card(
         elevation: 5,
         child: Container(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
