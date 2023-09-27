@@ -4,9 +4,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:splashapp/demo.dart';
 import 'package:splashapp/model/test_question_model.dart';
+import 'package:splashapp/view/home/home_screen.dart';
 import '../../Controller/login_controller.dart';
 import '../../model/get_test_model.dart';
 import '../../values/auth_api.dart';
@@ -14,8 +16,9 @@ import '../../widget/option_widget.dart';
 
 class QuizzView extends StatefulWidget {
   final String id;
+  int totalTime,totalQuestions;
 
-  const QuizzView({super.key, required this.id});
+   QuizzView({super.key, required this.id, required this.totalTime, required this.totalQuestions});
 
   @override
   State<QuizzView> createState() => _QuizzViewState();
@@ -73,7 +76,14 @@ class _QuizzViewState extends State<QuizzView> {
           int.parse(getquestionTestList[0].data!.questionNo.toString()) + 1;
       print("aaaaaaaaaaaaaaaa  $aaa");
 
-      getTestQuestionAPI(aaa);
+
+      widget.totalQuestions--;
+      print("total question     ${widget.totalQuestions   }");
+      if(widget.totalQuestions==0){
+        postAnswerAPI();
+        print("*********** here post answer");
+      }else{
+      getTestQuestionAPI(aaa);}
     });
   }
 
@@ -141,7 +151,7 @@ class _QuizzViewState extends State<QuizzView> {
 
                       Padding(
                         padding: const EdgeInsets.all(18.0),
-                        child: ElevatedButton(onPressed: (){postAnswerAPI(1);}, child: Text("Submit")),
+                        child: ElevatedButton(onPressed: (){postAnswerAPI();}, child: Text("Submit")),
                       ),
                     ],
                   );
@@ -212,7 +222,7 @@ class _QuizzViewState extends State<QuizzView> {
 
 
   // ************************** Result Api *******************
-  void postAnswerAPI(int questionNUmber) async {
+  void postAnswerAPI() async {
     try {
       final Map<String, dynamic> requestData = {
         "test_id": widget.id,
@@ -233,21 +243,51 @@ class _QuizzViewState extends State<QuizzView> {
 
       // final String requestBody = jsonEncode(requestData);
 
-      final res = await http.post(Uri.parse(AuthApi.getQuestionTestApi),
+      final res = await http.post(Uri.parse(AuthApi.postAnswerApi),
           headers: {
             'Authorization': 'Bearer $token', // Use the retrieved token
-            'Content-Type': 'application/json',
+
           },
           body: requestData);
 
+
+      print("************* body post answer  $requestData");
       print('Response Status Code: ${res.statusCode}');
       print('Response Body: ${res.body}');
       // getquestionTestList.clear();
       if (res.statusCode == 200) {
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);
-          print('Parsed Data: $mydata');
-          getquestionTestList.add(TestQuestionModel.fromJson(mydata));
+          print('**************Parsed Data: $mydata');
+          bool success=mydata['success'];
+          String message=mydata['message'];
+
+          if(message=='Action Completed'){
+            Get.defaultDialog(
+                title: "Test Complete",
+                middleText: "Attempt of the test is complete. Result will be available in result section",
+                backgroundColor: Colors.green,
+                titleStyle: TextStyle(color: Colors.white),
+                middleTextStyle: TextStyle(color: Colors.white),
+                textConfirm: "      okay      ",
+                // textCancel: "Cancel",
+                // cancelTextColor: Colors.white,
+                confirmTextColor: Colors.green,
+                buttonColor: Colors.white,
+                barrierDismissible: false,
+                radius: 30,
+                onConfirm: () => Get.offAll(HomeScreen()),
+                // content: Column(
+                //   children: [
+                //     Container(child:Text("Hello 1")),
+                //     Container(child:Text("Hello 2")),
+                //     Container(child:Text("Hello 3")),
+                //   ],
+                // )
+            );
+          }
+
+
           setState(() {
             boolData = true;
             selectedRadio=null;
