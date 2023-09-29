@@ -28,8 +28,12 @@ class AuthApi {
       "https://dav.binshaharts.com/api/v1/student/getCourseVideos";
   static const String getTestApi =
       "https://dav.binshaharts.com/api/v1/student/getCourseTests";
+  static const String startTestApi =
+      "https://dav.binshaharts.com/api/v1/student/startTest";
   static const String getQuestionTestApi =
       "https://dav.binshaharts.com/api/v1/student/getTestQuestions";
+  static const String postAnswerApi =
+      "https://dav.binshaharts.com/api/v1/student/postAnswers";
   static const String getMyResult1 ="https://dav.binshaharts.com/api/v1/student/myResultsCourses";
   static const String getMyResultsTestApi =
       "https://dav.binshaharts.com/api/v1/student/myResultsTests";

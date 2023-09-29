@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:splashapp/model/get_test_model.dart';
 import 'package:splashapp/demo.dart';
 import 'package:splashapp/model/my_courses_model.dart';
+import 'package:splashapp/values/colors.dart';
+import 'package:splashapp/values/constants.dart';
 import 'package:splashapp/view/quizz/get_testquestion_view.dart';
 import 'package:splashapp/widget/testcard_widget.dart';
 
@@ -57,7 +59,10 @@ class _GetTestState extends State<GetTest> {
 
                   onTap: () {
                   //  Get.to(()=>DemoApp());
-                   Get.to(()=>QuizzView(id: getTestList[0].data![index].id.toString()));
+                  //  Get.to(()=>QuizzView(id: getTestList[0].data![index].id.toString()));
+
+                    getTestDetailAPI();
+
                   },
                   child: TestCard(
                     id: getTestList[0].data![index].courseId.toString(),
@@ -109,4 +114,168 @@ class _GetTestState extends State<GetTest> {
       print(e.toString());
     }
   }
+
+  void getTestDetailAPI() async {
+    showDialog(context: context, builder: (context){return Center(child: CircularProgressIndicator());});
+    try {
+      final Map<String, dynamic> requestData = {
+        "test_id": widget.id,
+      };
+
+      final String requestBody = jsonEncode(requestData);
+
+      final res = await http.post(Uri.parse(AuthApi.startTestApi),
+          headers: {
+            'Authorization': 'Bearer $token', // Use the retrieved token
+            'Content-Type': 'application/json',
+          },
+          body: requestBody);
+
+      print('Response Status Code: ${res.statusCode}');
+      print('Response Body: ${res.body}');
+
+      if (res.statusCode == 200) {
+        Get.back();
+        if (res.body.isNotEmpty) {
+          final mydata = jsonDecode(res.body);
+          print('Parsed Data: $mydata');
+          // getTestList.add(GetTestModel.fromJson(mydata));
+
+          int total_time=int.parse(mydata['data']['total_time']);
+          int total_question=mydata['data']['total_question'];
+         String test_title=mydata['data']['test_title'];
+
+
+
+          Get.dialog(
+              barrierDismissible: false,
+              Dialog(
+                backgroundColor: Colors.transparent,
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: Text("Text Name: $test_title",style: textBoldStyle,),
+                      ),
+                      SizedBox(height:4,),
+                      // Image.asset(AppImage.internetConnection,height:30),
+                      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Total Questions: ",),
+                          Text("$total_question",),
+                        ],
+                      ),
+                      Divider(
+                        color: AppColors.greyshade100,
+                        thickness: 1,
+                      ),
+
+
+                      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Total Time:",),
+                          Text("$total_time min",),
+                        ],
+                      ),
+                      Divider(
+                        color: AppColors.greyshade100,
+                        thickness: 1,
+                      ),
+
+
+                      // Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     Text("Total Time:   $total_time",),
+                      //     Text("   $total_time",),
+                      //   ],
+                      // ),
+                      // Divider(
+                      //   color: AppColors.greyshade100,
+                      //   thickness: 1,
+                      // ),
+
+                      Row(mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+
+                          InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Center(
+                            child: Container(
+                              height:40,
+                              width: 100,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: AppColors.primaryColor,
+                                  borderRadius: const BorderRadius.all(Radius.circular(10))
+                              ),
+                              child: Text(
+                                "Not Now",style: TextStyle(color: Colors.white),
+
+                              ),
+                            ),
+                          ),),
+
+                          SizedBox(width: 20,),
+                          InkWell(
+                            onTap: () {
+                              Get.to(()=>QuizzView(id: widget.id.toString(),totalTime:total_time,totalQuestions:total_question) );
+                            },
+                            child: Center(
+                              child: Container(
+                                height:40,
+                                width: 100,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    color: AppColors.primaryColor,
+                                    borderRadius: const BorderRadius.all(Radius.circular(10))
+                                ),
+                                child: Text(
+                                    "Start",style: TextStyle(color: Colors.white)
+
+                                ),
+                              ),
+                            ),)
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              )
+          );
+
+
+
+
+          
+          setState(() {
+            boolData = true;
+          });
+        } else {
+          throw Exception('Empty response');
+        }
+      } else {
+        print('Error: ${res.statusCode}');
+        Get.back();
+      }
+    } catch (e) {
+      print(e.toString());
+      Get.back();
+    }
+  }
+
+
+
+
+
+
+
+
 }
