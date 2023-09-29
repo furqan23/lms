@@ -36,6 +36,8 @@ class _QuizzViewState extends State<QuizzView> {
   String opt_4 = "";
   var htmlData = """""";
 
+
+
   /*---------- InitState Call -----------------*/
   @override
   void initState() {
@@ -57,16 +59,16 @@ class _QuizzViewState extends State<QuizzView> {
       print(selectedRadio);
       String? slted;
       if(selectedRadio==1){
-        slted ="A";
+        slted ="opt_1";
       }
       else if(selectedRadio==2){
-        slted ="B";
+        slted ="opt_2";
       }
       else if(selectedRadio==3){
-        slted ="C";
+        slted ="opt_3";
       }
       else if(selectedRadio==4){
-        slted ="D";
+        slted ="opt_4";
       }
       print(slted);
       question_id.add(getquestionTestList[0].data!.questionNo.toString());
@@ -89,6 +91,8 @@ class _QuizzViewState extends State<QuizzView> {
 
   @override
   Widget build(BuildContext context) {
+
+    print("total question ${widget.totalQuestions}");
     final textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
