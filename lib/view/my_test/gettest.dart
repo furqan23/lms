@@ -233,11 +233,11 @@ class _GetTestState extends State<GetTest> {
                                 height:40,
                                 width: 100,
                                 alignment: Alignment.center,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     color: AppColors.primaryColor,
-                                    borderRadius: const BorderRadius.all(Radius.circular(10))
+                                    borderRadius: BorderRadius.all(Radius.circular(10))
                                 ),
-                                child: Text(
+                                child: const Text(
                                     "Start",style: TextStyle(color: Colors.white)
 
                                 ),

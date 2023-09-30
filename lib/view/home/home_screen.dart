@@ -87,133 +87,79 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         )),
-        body: boolData
+        body:  boolData
             ? SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 5),
-                    CarouselSlider.builder(
-                      itemCount: dashboardList[0].data?.slides!.length,
-                      itemBuilder: (BuildContext context, int itemIndex,
-                              int pageViewIndex) =>
-                          CarouselWidget(
+          child: Column(
+            children: [
+              const SizedBox(height: 5),
+              if (dashboardList.isNotEmpty &&
+                  dashboardList[0].data != null &&
+                  dashboardList[0].data!.slides != null &&
+                  dashboardList[0].data!.slides!.isNotEmpty)
+                CarouselSlider.builder(
+                  itemCount: dashboardList[0].data!.slides!.length,
+                  itemBuilder: (BuildContext context, int itemIndex,
+                      int pageViewIndex) =>
+                      CarouselWidget(
                         title: "The journey of 1st \n year ",
                         image: AuthApi.baseUrlSliderImage +
-                            "${dashboardList[0].data?.slides![itemIndex].filePath.toString()}",
+                            "${dashboardList[0].data!.slides![itemIndex].filePath.toString()}",
                         btntitle: 'Get Started',
                         color: Color(0xffFFCAA6),
                       ),
-                      options: CarouselOptions(
-                        aspectRatio: 15 / 9,
-                        viewportFraction: 0.8,
-                        initialPage: 0,
-                        enableInfiniteScroll: true,
-                        reverse: false,
-                        autoPlay: true,
-                        autoPlayInterval: const Duration(seconds: 3),
-                        autoPlayAnimationDuration:
-                            const Duration(milliseconds: 800),
-                        autoPlayCurve: Curves.fastOutSlowIn,
-                        enlargeCenterPage: true,
-                        enlargeFactor: 0.3,
-                        scrollDirection: Axis.horizontal,
-                      ),
-                    ),
-
-                    // CarouselSlider(
-                    //   options: CarouselOptions(
-                    //     aspectRatio: 15 / 9,
-                    //     viewportFraction: 0.8,
-                    //     initialPage: 0,
-                    //     enableInfiniteScroll: true,
-                    //     reverse: false,
-                    //     autoPlay: true,
-                    //     autoPlayInterval: const Duration(seconds: 3),
-                    //     autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                    //     autoPlayCurve: Curves.fastOutSlowIn,
-                    //     enlargeCenterPage: true,
-                    //     enlargeFactor: 0.3,
-                    //     scrollDirection: Axis.horizontal,
-                    //   ),
-                    //
-                    //   items: [],
-                    //   // items: [
-                    //   //   // Item 1
-                    //   //   Builder(
-                    //   //     builder: (BuildContext context) {
-                    //   //       return const CarouselWidget(
-                    //   //         title: "The journey of 1st \n year ",
-                    //   //         image: MyImgs.study,
-                    //   //         btntitle: 'Get Started',
-                    //   //         color: Color(0xffFFCAA6),
-                    //   //       );
-                    //   //     },
-                    //   //   ),
-                    //   //
-                    //   //   // Item 2 - Different text and image
-                    //   //   Builder(
-                    //   //     builder: (BuildContext context) {
-                    //   //       return const CarouselWidget(
-                    //   //         title:
-                    //   //         'MDCAT 2023 top \n karo  aur future \n doctor bano!',
-                    //   //         image: "assets/images/logo.png",
-                    //   //         btntitle: 'Unlock MDCAT',
-                    //   //         color: Color(0xffF1C9EC),
-                    //   //       );
-                    //   //     },
-                    //   //   ),
-                    //   //
-                    //   //   Builder(
-                    //   //     builder: (BuildContext context) {
-                    //   //       return const CarouselWidget(
-                    //   //         title:
-                    //   //         'ETEA 2023 top \n karo aur future \n engineer bano!',
-                    //   //         image: AuthApi.baseUrlSliderImage,
-                    //   //         btntitle: 'Unlock ETEA',
-                    //   //         color: Color(0xffb2f6f6),
-                    //   //       );
-                    //   //     },
-                    //   //   ),
-                    //   //
-                    //   //   // You can add more items with different text and images here
-                    //   // ],
-                    // ),
-                    const SizedBox(height: 10),
-                    GridView.builder(
-                        shrinkWrap: true,
-                        itemCount: dashboardList[0].data?.category!.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2),
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              // Get.snackbar(
-                              //   "iii",
-                              //   dashboardList[0].data![index].mscatId!,
-                              // );
-                              Get.to(() => HomeDetail(
-                                    mscatId: dashboardList[0]
-                                        .data!
-                                        .category![index]
-                                        .mscatId!,
-                                  ));
-                            },
-                            child: DashbaordCard(
-                              id: dashboardList[0].data!.category![index].id!,
-                              catName: dashboardList[0]
-                                  .data!
-                                  .category![index]
-                                  .catName!,
-                            ),
-                          );
-                        }),
-                  ],
+                  options: CarouselOptions(
+                    aspectRatio: 15 / 9,
+                    viewportFraction: 0.8,
+                    initialPage: 0,
+                    enableInfiniteScroll: true,
+                    reverse: false,
+                    autoPlay: true,
+                    autoPlayInterval: const Duration(seconds: 3),
+                    autoPlayAnimationDuration:
+                    const Duration(milliseconds: 800),
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                    enlargeCenterPage: true,
+                    enlargeFactor: 0.3,
+                    scrollDirection: Axis.horizontal,
+                  ),
+                )
+              else
+                Container( ),
+              const SizedBox(height: 10),
+              GridView.builder(
+                shrinkWrap: true,
+                itemCount: dashboardList[0].data?.category?.length ?? 0,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
                 ),
-              )
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      Get.to(() => HomeDetail(
+                        mscatId: dashboardList[0]
+                            .data!
+                            .category![index]
+                            .mscatId!,
+                      ));
+                    },
+                    child: DashbaordCard(
+                      id: dashboardList[0].data!.category![index].id!,
+                      catName: dashboardList[0]
+                          .data!
+                          .category![index]
+                          .catName!,
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        )
             : Center(
-                child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
-              )),
+          child: CircularProgressIndicator(
+            color: AppColors.primaryColor,
+          ),
+        ),
       ),
     );
   }

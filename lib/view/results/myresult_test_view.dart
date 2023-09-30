@@ -81,7 +81,7 @@ class _MyResultsTestState extends State<MyResultsTest> {
                       Text(getresultList[0].data![index].testStart.toString()),
 
                       ElevatedButton(onPressed: (){
-                        Get.to(()=>MyFinalResult(id: getresultList[0].data![index].id.toString()));
+                   //     Get.to(()=>MyFinalResult(id: getresultList[0].data![index].id!));
                       }, child: Text("next"))
                     ],
                   ),
