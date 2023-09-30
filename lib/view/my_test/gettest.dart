@@ -61,7 +61,7 @@ class _GetTestState extends State<GetTest> {
                   //  Get.to(()=>DemoApp());
                   //  Get.to(()=>QuizzView(id: getTestList[0].data![index].id.toString()));
 
-                    getTestDetailAPI();
+                    getTestDetailAPI(getTestList[0].data![index].id.toString());
 
                   },
                   child: TestCard(
@@ -115,11 +115,11 @@ class _GetTestState extends State<GetTest> {
     }
   }
 
-  void getTestDetailAPI() async {
+  void getTestDetailAPI(String id) async {
     showDialog(context: context, builder: (context){return Center(child: CircularProgressIndicator());});
     try {
       final Map<String, dynamic> requestData = {
-        "test_id": widget.id,
+        "test_id": id,
       };
 
       final String requestBody = jsonEncode(requestData);
@@ -131,7 +131,7 @@ class _GetTestState extends State<GetTest> {
           },
           body: requestBody);
 
-      print('Response Status Code: ${res.statusCode}');
+      print('Response Status Code: ${res.statusCode} widget id ${widget.id}');
       print('Response Body: ${res.body}');
 
       if (res.statusCode == 200) {
@@ -226,7 +226,7 @@ class _GetTestState extends State<GetTest> {
                           SizedBox(width: 20,),
                           InkWell(
                             onTap: () {
-                              Get.to(()=>QuizzView(id: widget.id.toString(),totalTime:total_time,totalQuestions:total_question) );
+                              Get.to(()=>QuizzView(id: id.toString(),totalTime:total_time,totalQuestions:total_question) );
                             },
                             child: Center(
                               child: Container(

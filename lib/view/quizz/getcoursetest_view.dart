@@ -49,7 +49,7 @@ class _GetCourseTestState extends State<GetCourseTest> {
                     id: myCoursesList[0].data![index].name,
                     catName: myCoursesList[0].data![index].courseTitle,
                     name:
-                        "${myCoursesList[0].data![index].firstName} ${myCoursesList[0].data![index].lastName}",
+                        "${myCoursesList[0].data![index].firstName} ",
                     description: myCoursesList[0].data![index].name,
                     slug: myCoursesList[0].data![index].name,
                     seat: myCoursesList[0].data![index].totalSeat,
