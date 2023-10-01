@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:splashapp/view/quizz/viewanswer_view.dart';
 import '../../Controller/login_controller.dart';
 import '../../model/finalresult_model.dart';
 import '../../values/auth_api.dart';
@@ -195,7 +197,7 @@ class _MyFinalResultState extends State<MyFinalResult> {
                         elevation: 5,
                         child: Container(
                           width: double.infinity,
-                          height: 150,
+                          height: 160,
                           decoration: BoxDecoration(
                               color: Colors.white12,
                               borderRadius: BorderRadius.circular(5),
@@ -295,7 +297,7 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                     ),
 
 
-
+                                    
 
 
 
@@ -316,6 +318,26 @@ class _MyFinalResultState extends State<MyFinalResult> {
                         ),
                       ),
                     ),
+
+                    SizedBox(height: 20),
+                    InkWell(
+                      onTap: (){
+                        
+                        Get.to(()=>ViewAnswer(finalResultList: getfinalresultList));
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        width:120,
+                        height: 60,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.red
+                        ),
+                        child: Text("Test Answer"),
+                      ),
+                    )
+
+
                   ],
                 );
               })
