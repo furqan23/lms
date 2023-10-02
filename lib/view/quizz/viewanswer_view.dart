@@ -139,7 +139,7 @@ class _ViewAnswerState extends State<ViewAnswer> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           border:
-                                              Border.all(color: Colors.black45),
+                                              Border.all(color: Colors.black),
                                         ),
                                         child: Html(
                                           data: """
@@ -186,7 +186,7 @@ class _ViewAnswerState extends State<ViewAnswer> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           border:
-                                              Border.all(color: Colors.black45),
+                                              Border.all(color: Colors.black),
                                         ),
                                         child: Html(
                                           data: """
@@ -233,7 +233,7 @@ class _ViewAnswerState extends State<ViewAnswer> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           border:
-                                              Border.all(color: Colors.black45),
+                                              Border.all(color:  Colors.black),
                                         ),
                                         child: Html(
                                           data: """
