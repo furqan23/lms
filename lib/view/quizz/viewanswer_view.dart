@@ -13,60 +13,278 @@ class ViewAnswer extends StatefulWidget {
 }
 
 class _ViewAnswerState extends State<ViewAnswer> {
-  int currentIndex = 0;
-
-  void goToNextQuestion() {
-    if (currentIndex < widget.finalResultList.length ) {
-      setState(() {
-        currentIndex++;
-        print(currentIndex);
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (currentIndex >= widget.finalResultList.length) {
-      return Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: const Text('View Answer'),
         ),
-        body: const Center(
-          child: Text('All questions have been displayed.'),
-        ),
-      );
-    }
+        body: ListView.builder(
+          itemCount: widget.finalResultList.length,
+          itemBuilder: (context, index) {
+            FinalResultModels result = widget.finalResultList[index];
+            return Column(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * 1,
+                  padding: const EdgeInsets.all(10),
+                  child: ListView.builder(
+                    itemCount: result.data!.resultDetails!.length,
+                    itemBuilder: (context, subIndex) {
+                      ResultDetails resultDetail =
+                          result.data!.resultDetails![subIndex];
 
-    final resultDetails = widget.finalResultList[currentIndex].data!.resultDetails![0];
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('View Answer'),
-      ),
-      body: Column(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.8,
-            padding: const EdgeInsets.all(10),
-            child: Html(
-              data: """
-                <h2>Question No ${resultDetails.questionNo.toString()}</h2>
-                <p>${resultDetails.questionName.toString()}</p>
-                <p>${resultDetails.opt1.toString()}</p>
-                <p>${resultDetails.opt2.toString()}</p>
-                <p>${resultDetails.opt3.toString()}</p>
-                <p>${resultDetails.opt4.toString()}</p>
-                Given Answer: ${resultDetails.givenAnswer.toString()}
-                Correct Answer: ${resultDetails.correctedAnswer.toString()}
-              """,
-            ),
-          ),
-          ElevatedButton(
-            onPressed: goToNextQuestion,
-            child: Text('Next Question'),
-          ),
-        ],
-      ),
-    );
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: Colors.red)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    Html(
+                                      data: """
+                                    <style>
+                                    h2 {
+                                    font-size: 24px;
+                                    color: #333; 
+                                    border: 1px solid #ffff;
+                                    text-decoration: underline; 
+                                     }
+                                    p {
+                                     font-size: 18px;
+                                     margin: 10px 0; 
+         
+                                     }
+                                    p.opt {
+       
+                                   padding: 5px; 
+     
+                                }
+                                  p.opt.bold {
+                                   font-weight: bold; 
+                                }
+                                p.correct-answer {
+                                color: green; 
+                                 }
+                                p.given-answer {
+                                color: red; 
+                                }
+     
+    </style>
+    <h2>Question No ${resultDetail.questionNo.toString()}</h2>
+    <p >${resultDetail.questionName.toString()}</p>
+   
+    <p class="given-answer">Given Answer: ${resultDetail.givenAnswer.toString()}</p>
+    <p class="correct-answer">Correct Answer: ${resultDetail.correctedAnswer.toString()}</p>
+    
+  """,
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border:
+                                              Border.all(color: Colors.black),
+                                        ),
+                                        child: Html(
+                                          data: """
+    <style>
+      h2 {
+        font-size: 24px;
+        color: #333; 
+          border: 1px solid #ffff;
+        text-decoration: underline; 
+      }
+      p {
+        font-size: 18px;
+        margin: 10px 0; 
+        
+      }
+      p.opt {
+       
+        padding: 5px; 
+     
+      }
+      p.opt.bold {
+        font-weight: bold; 
+      }
+      p.correct-answer {
+        color: green; 
+      }
+      p.given-answer {
+        color: red; 
+      }
+     
+    </style>
+  
+    <p class="opt">${resultDetail.opt1.toString()}</p>
+ 
+  """,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border:
+                                              Border.all(color: Colors.black45),
+                                        ),
+                                        child: Html(
+                                          data: """
+    <style>
+      h2 {
+        font-size: 24px;
+        color: #333; 
+          border: 1px solid #ffff;
+        text-decoration: underline; 
+      }
+      p {
+        font-size: 18px;
+        margin: 10px 0; 
+        
+      }
+      p.opt {
+       
+        padding: 5px; 
+     
+      }
+      p.opt.bold {
+        font-weight: bold; 
+      }
+      p.correct-answer {
+        color: green; 
+      }
+      p.given-answer {
+        color: red; 
+      }
+     
+    </style>
+  
+    <p class="opt">${resultDetail.opt2.toString()}</p>
+ 
+  """,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border:
+                                              Border.all(color: Colors.black45),
+                                        ),
+                                        child: Html(
+                                          data: """
+    <style>
+      h2 {
+        font-size: 24px;
+        color: #333; 
+          border: 1px solid #ffff;
+        text-decoration: underline; 
+      }
+      p {
+        font-size: 18px;
+        margin: 10px 0; 
+        
+      }
+      p.opt {
+       
+        padding: 5px; 
+     
+      }
+      p.opt.bold {
+        font-weight: bold; 
+      }
+      p.correct-answer {
+        color: green; 
+      }
+      p.given-answer {
+        color: red; 
+      }
+     
+    </style>
+  
+    <p class="opt">${resultDetail.opt3.toString()}</p>
+ 
+  """,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border:
+                                              Border.all(color: Colors.black45),
+                                        ),
+                                        child: Html(
+                                          data: """
+    <style>
+      h2 {
+        font-size: 24px;
+        color: #333; 
+          border: 1px solid #ffff;
+        text-decoration: underline; 
+      }
+      p {
+        font-size: 18px;
+        margin: 10px 0; 
+        
+      }
+      p.opt {
+       
+        padding: 5px; 
+     
+      }
+      p.opt.bold {
+        font-weight: bold; 
+      }
+      p.correct-answer {
+        color: green; 
+      }
+      p.given-answer {
+        color: red; 
+      }
+     
+    </style>
+  
+    <p class="opt">${resultDetail.opt4.toString()}</p>
+ 
+  """,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ],
+            );
+          },
+        ));
   }
 }

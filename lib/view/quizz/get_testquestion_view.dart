@@ -122,7 +122,7 @@ class _QuizzViewState extends State<QuizzView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomRadioButton(
-                              title: "a",
+                              title: "Option a",
                               isSelected: selectedRadio == 1,
                               onSelect: (bool selected) {
                                 handleRadioValueChange(selected ? 1 : null);
@@ -130,7 +130,7 @@ class _QuizzViewState extends State<QuizzView> {
                             ),
                             const SizedBox(width: 20),
                             CustomRadioButton(
-                              title: "b",
+                              title: "Option b",
                               isSelected: selectedRadio == 2,
                               onSelect: (bool selected) {
                                 handleRadioValueChange(selected ? 2 : null);
@@ -145,7 +145,7 @@ class _QuizzViewState extends State<QuizzView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomRadioButton(
-                              title: "c",
+                              title: "Option c",
                               isSelected: selectedRadio == 3,
                               onSelect: (bool selected) {
                                 handleRadioValueChange(selected ? 3 : null);
@@ -153,7 +153,7 @@ class _QuizzViewState extends State<QuizzView> {
                             ),
                             const SizedBox(width: 20),
                             CustomRadioButton(
-                              title: "d",
+                              title: "Option d",
                               isSelected: selectedRadio == 4,
                               onSelect: (bool selected) {
                                 handleRadioValueChange(selected ? 4 : null);
