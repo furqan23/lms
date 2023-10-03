@@ -38,9 +38,10 @@ class _ViewAnswerState extends State<ViewAnswer> {
                   child: ListView.builder(
                     itemCount: result.data!.resultDetails!.length,
                     itemBuilder: (context, subIndex) {
+
                       ResultDetails resultDetail =
                           result.data!.resultDetails![subIndex];
-                      // log("check::${ resultDetail.givenAnswer}");
+   // log("check::${ resultDetail.givenAnswer}");
 
                       bool isOpt1 = false;
                       bool isOpt2 = false;
@@ -57,23 +58,29 @@ class _ViewAnswerState extends State<ViewAnswer> {
                         isOpt4 = true;
                       }
 
-                      Color borderColor =
-                          Colors.black26; // Default border color
+                      Color borderColor = Colors.black26; // Default border color
 
-                      if (resultDetail.givenAnswer!.contains(opt1.toString())) {
+
+
+                      if(resultDetail.givenAnswer!.contains(opt1.toString())) {
                         isOpt1 = true;
-                      } else if (resultDetail.givenAnswer!
-                          .contains(opt2.toString())) {
+
+                      }else if(resultDetail.givenAnswer!.contains(opt2.toString())){
                         isOpt2 = true;
-                      } else if (resultDetail.givenAnswer!
-                          .contains(opt3.toString())) {
+                      }else if(resultDetail.givenAnswer!.contains(opt3.toString())){
                         isOpt3 = true;
-                      } else if (resultDetail.givenAnswer!
-                          .contains(opt4.toString())) {
+                      }else if(resultDetail.givenAnswer!.contains(opt4.toString())){
                         isOpt4 = true;
                       }
 
+
+
+
+
+
                       log("chec value222::${isOpt4}");
+
+
 
                       return Column(
                         children: [
@@ -132,10 +139,7 @@ class _ViewAnswerState extends State<ViewAnswer> {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          border: Border.all(
-                                              color: isOpt1 == true
-                                                  ? Colors.red
-                                                  : Colors.black),
+                                          border: Border.all(color: isOpt1 == true ? Colors.red : Colors.black ),
                                         ),
                                         child: Html(
                                           data: """
@@ -181,10 +185,7 @@ class _ViewAnswerState extends State<ViewAnswer> {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          border: Border.all(
-                                              color: isOpt2 == true
-                                                  ? Colors.red
-                                                  : Colors.black),
+                                          border: Border.all(color: isOpt2 == true ? Colors.red : Colors.black ),
                                         ),
                                         child: Html(
                                           data: """
@@ -224,23 +225,51 @@ class _ViewAnswerState extends State<ViewAnswer> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(bottom: 10),
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          border: Border.all(
-                                            color: (isOpt3 == true) ? Colors.green : (resultDetail.givenAnswer!.contains(opt3.toString()) ? Colors.red : Colors.black),
-                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border: Border.all(color: isOpt3 == true ? Colors.red : Colors.black ),
                                         ),
                                         child: Html(
                                           data: """
-      <!-- Your HTML content here -->
-      <p class="opt">${resultDetail.opt3.toString()}</p>
-      """,
+    <style>
+      h2 {
+        font-size: 24px;
+        color: #333; 
+          border: 1px solid #ffff;
+        text-decoration: underline; 
+      }
+      p {
+        font-size: 18px;
+        margin: 10px 0; 
+        
+      }
+      p.opt {
+       
+        padding: 5px; 
+     
+      }
+      p.opt.bold {
+        font-weight: bold; 
+      }
+      p.correct-answer {
+        color: green; 
+      }
+      p.given-answer {
+        color: red; 
+      }
+     
+    </style>
+  
+    <p class="opt">${resultDetail.opt3.toString()}</p>
+ 
+  """,
                                         ),
                                       ),
                                     ),
-
                                     Padding(
                                       padding:
                                           const EdgeInsets.only(bottom: 10),
@@ -248,21 +277,42 @@ class _ViewAnswerState extends State<ViewAnswer> {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          border: Border.all(
-                                            color: (isOpt4 == true)
-                                                ? Colors.green
-                                                : (resultDetail.givenAnswer!
-                                                        .contains(
-                                                            opt4.toString())
-                                                    ? Colors.red
-                                                    : Colors.black),
-                                          ),
+                                          border: Border.all(color: isOpt4 == true ? Colors.green : Colors.black ),
                                         ),
                                         child: Html(
                                           data: """
-      <!-- Your HTML content here -->
-      <p class="opt">${resultDetail.opt4.toString()}</p>
-      """,
+    <style>
+      h2 {
+        font-size: 24px;
+        color: #333; 
+          border: 1px solid #ffff;
+        text-decoration: underline; 
+      }
+      p {
+        font-size: 18px;
+        margin: 10px 0; 
+        
+      }
+      p.opt {
+       
+        padding: 5px; 
+     
+      }
+      p.opt.bold {
+        font-weight: bold; 
+      }
+      p.correct-answer {
+        color: green; 
+      }
+      p.given-answer {
+        color: red; 
+      }
+     
+    </style>
+  
+    <p class="opt">${resultDetail.opt4.toString()}</p>
+ 
+  """,
                                         ),
                                       ),
                                     ),
