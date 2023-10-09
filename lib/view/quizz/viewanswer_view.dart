@@ -1,8 +1,6 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-
 import '../../model/finalresult_model.dart';
 
 class ViewAnswer extends StatefulWidget {
@@ -38,10 +36,9 @@ class _ViewAnswerState extends State<ViewAnswer> {
                   child: ListView.builder(
                     itemCount: result.data!.resultDetails!.length,
                     itemBuilder: (context, subIndex) {
-
                       ResultDetails resultDetail =
                           result.data!.resultDetails![subIndex];
-   // log("check::${ resultDetail.givenAnswer}");
+                      // log("check::${ resultDetail.givenAnswer}");
 
                       bool isOpt1 = false;
                       bool isOpt2 = false;
@@ -58,29 +55,23 @@ class _ViewAnswerState extends State<ViewAnswer> {
                         isOpt4 = true;
                       }
 
-                      Color borderColor = Colors.black26; // Default border color
+                      Color borderColor =
+                          Colors.black26; // Default border color
 
-
-
-                      if(resultDetail.givenAnswer!.contains(opt1.toString())) {
+                      if (resultDetail.givenAnswer!.contains(opt1.toString())) {
                         isOpt1 = true;
-
-                      }else if(resultDetail.givenAnswer!.contains(opt2.toString())){
+                      } else if (resultDetail.givenAnswer!
+                          .contains(opt2.toString())) {
                         isOpt2 = true;
-                      }else if(resultDetail.givenAnswer!.contains(opt3.toString())){
+                      } else if (resultDetail.givenAnswer!
+                          .contains(opt3.toString())) {
                         isOpt3 = true;
-                      }else if(resultDetail.givenAnswer!.contains(opt4.toString())){
+                      } else if (resultDetail.givenAnswer!
+                          .contains(opt4.toString())) {
                         isOpt4 = true;
                       }
 
-
-
-
-
-
                       log("chec value222::${isOpt4}");
-
-
 
                       return Column(
                         children: [
@@ -139,7 +130,10 @@ class _ViewAnswerState extends State<ViewAnswer> {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          border: Border.all(color: isOpt1 == true ? Colors.red : Colors.black ),
+                                          border: Border.all(
+                                              color: isOpt1 == true
+                                                  ? Colors.red
+                                                  : Colors.black),
                                         ),
                                         child: Html(
                                           data: """
@@ -185,7 +179,10 @@ class _ViewAnswerState extends State<ViewAnswer> {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          border: Border.all(color: isOpt2 == true ? Colors.red : Colors.black ),
+                                          border: Border.all(
+                                              color: isOpt2 == true
+                                                  ? Colors.red
+                                                  : Colors.black),
                                         ),
                                         child: Html(
                                           data: """
@@ -231,7 +228,10 @@ class _ViewAnswerState extends State<ViewAnswer> {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          border: Border.all(color: isOpt3 == true ? Colors.red : Colors.black ),
+                                          border: Border.all(
+                                              color: isOpt3 == true
+                                                  ? Colors.red
+                                                  : Colors.black),
                                         ),
                                         child: Html(
                                           data: """
@@ -277,7 +277,10 @@ class _ViewAnswerState extends State<ViewAnswer> {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          border: Border.all(color: isOpt4 == true ? Colors.green : Colors.black ),
+                                          border: Border.all(
+                                              color: isOpt4 == true
+                                                  ? Colors.green
+                                                  : Colors.black),
                                         ),
                                         child: Html(
                                           data: """

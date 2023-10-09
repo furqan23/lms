@@ -24,9 +24,10 @@ class GetTest extends StatefulWidget {
 }
 
 class _GetTestState extends State<GetTest> {
+  bool canStartQuiz = true;
   String? token;
   List<GetTestModel> getTestList = [];
-   List<MyCoursesModel> myCoursesList = [];
+  List<MyCoursesModel> myCoursesList = [];
   bool boolData = false;
   @override
   void initState() {
@@ -56,13 +57,11 @@ class _GetTestState extends State<GetTest> {
                 final testStartDateTime = DateTime.tryParse(testStart);
                 final currentDateTime = DateTime.now();
                 return InkWell(
-
                   onTap: () {
-                  //  Get.to(()=>DemoApp());
-                  //  Get.to(()=>QuizzView(id: getTestList[0].data![index].id.toString()));
+                    //  Get.to(()=>DemoApp());
+                    //  Get.to(()=>QuizzView(id: getTestList[0].data![index].id.toString()));
 
                     getTestDetailAPI(getTestList[0].data![index].id.toString());
-
                   },
                   child: TestCard(
                     id: getTestList[0].data![index].courseId.toString(),
@@ -116,7 +115,11 @@ class _GetTestState extends State<GetTest> {
   }
 
   void getTestDetailAPI(String id) async {
-    showDialog(context: context, builder: (context){return Center(child: CircularProgressIndicator());});
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Center(child: CircularProgressIndicator());
+        });
     try {
       final Map<String, dynamic> requestData = {
         "test_id": id,
@@ -141,11 +144,9 @@ class _GetTestState extends State<GetTest> {
           print('Parsed Data: $mydata');
           // getTestList.add(GetTestModel.fromJson(mydata));
 
-          int total_time=int.parse(mydata['data']['total_time']);
-          int total_question=mydata['data']['total_question'];
-         String test_title=mydata['data']['test_title'];
-
-
+          int total_time = int.parse(mydata['data']['total_time']);
+          int total_question = mydata['data']['total_question'];
+          String test_title = mydata['data']['test_title'];
 
           Get.dialog(
               barrierDismissible: false,
@@ -161,14 +162,24 @@ class _GetTestState extends State<GetTest> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Center(
-                        child: Text("Text Name: $test_title",style: textBoldStyle,),
+                        child: Text(
+                          "Text Name: $test_title",
+                          style: textBoldStyle,
+                        ),
                       ),
-                      SizedBox(height:4,),
+                      SizedBox(
+                        height: 4,
+                      ),
                       // Image.asset(AppImage.internetConnection,height:30),
-                      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Total Questions: ",),
-                          Text("$total_question",),
+                          Text(
+                            "Total Questions: ",
+                          ),
+                          Text(
+                            "$total_question",
+                          ),
                         ],
                       ),
                       Divider(
@@ -176,18 +187,21 @@ class _GetTestState extends State<GetTest> {
                         thickness: 1,
                       ),
 
-
-                      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Total Time:",),
-                          Text("$total_time min",),
+                          Text(
+                            "Total Time:",
+                          ),
+                          Text(
+                            "$total_time min",
+                          ),
                         ],
                       ),
                       Divider(
                         color: AppColors.greyshade100,
                         thickness: 1,
                       ),
-
 
                       // Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       //   children: [
@@ -200,61 +214,65 @@ class _GetTestState extends State<GetTest> {
                       //   thickness: 1,
                       // ),
 
-                      Row(mainAxisAlignment: MainAxisAlignment.center,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-
                           InkWell(
                             onTap: () {
                               Get.back();
                             },
                             child: Center(
-                            child: Container(
-                              height:40,
-                              width: 100,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  color: AppColors.primaryColor,
-                                  borderRadius: const BorderRadius.all(Radius.circular(10))
-                              ),
-                              child: Text(
-                                "Not Now",style: TextStyle(color: Colors.white),
-
+                              child: Container(
+                                height: 40,
+                                width: 100,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    color: AppColors.primaryColor,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10))),
+                                child: Text(
+                                  "Not Now",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ),
-                          ),),
-
-                          SizedBox(width: 20,),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
                           InkWell(
-                            onTap: () {
-                              Get.to(()=>QuizzView(id: id.toString(),totalTime:total_time,totalQuestions:total_question) );
+                            onTap: () async {
+
+                              if (canStartQuiz) {
+
+                               getTestinfoAPI(id.toString());
+                              } else {
+                                Get.to(() => QuizzView(id: id.toString(), totalTime: total_time, totalQuestions: total_question));
+                              }
                             },
                             child: Center(
                               child: Container(
-                                height:40,
+                                height: 40,
                                 width: 100,
                                 alignment: Alignment.center,
-                                decoration: const BoxDecoration(
-                                    color: AppColors.primaryColor,
-                                    borderRadius: BorderRadius.all(Radius.circular(10))
+                                decoration: BoxDecoration(
+                                  color: AppColors.primaryColor,
+                                  borderRadius: BorderRadius.all(Radius.circular(10)),
                                 ),
-                                child: const Text(
-                                    "Start",style: TextStyle(color: Colors.white)
-
+                                child: Text(
+                                  "Start",
+                                  style: TextStyle(color: Colors.white),
                                 ),
                               ),
-                            ),)
+                            ),
+                          )
                         ],
                       ),
                     ],
                   ),
                 ),
-              )
-          );
+              ));
 
-
-
-
-          
           setState(() {
             boolData = true;
           });
@@ -271,11 +289,49 @@ class _GetTestState extends State<GetTest> {
     }
   }
 
+  void getTestinfoAPI(String id) async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Center(child: CircularProgressIndicator());
+        });
+    try {
+      final Map<String, dynamic> requestData = {
+        "test_id": id,
+      };
+
+      final String requestBody = jsonEncode(requestData);
+
+      final res = await http.post(Uri.parse(AuthApi.testinfo),
+          headers: {
+            'Authorization': 'Bearer $token', // Use the retrieved token
+            'Content-Type': 'application/json',
+          },
+          body: requestBody);
+
+      print('Response Status Code: ${res.statusCode} widget id ${widget.id}');
+      print('Response Body: ${res.body}');
+
+      if (res.statusCode == 200) {
+        Get.back();
+        if (res.body.isNotEmpty) {
+          final mydata = jsonDecode(res.body);
+          print('Parsed Data: $mydata');
 
 
-
-
-
-
-
+          setState(() {
+            boolData = true;
+          });
+        } else {
+          throw Exception('Empty response');
+        }
+      } else {
+        print('Error: ${res.statusCode}');
+        Get.back();
+      }
+    } catch (e) {
+      print(e.toString());
+      Get.back();
+    }
+  }
 }
