@@ -42,7 +42,7 @@ class _MyResultsCourseState extends State<MyResultsCourse> {
             title: const Text('Quizz'),
           ),
           body: boolData
-              ? ListView.builder(
+              ? getresultsModelList[0].data?.length==0?Center(child: Text("No Record Found"),): ListView.builder(
                   itemCount: getresultsModelList[0].data?.length,
                   itemBuilder: (context, index) {
                     return Padding(

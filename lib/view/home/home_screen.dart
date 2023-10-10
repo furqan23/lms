@@ -3,22 +3,19 @@ import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:splashapp/Controller/login_controller.dart';
 import 'package:splashapp/model/DashboardModelWithSlider.dart';
-
 import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/values/my_imgs.dart';
-import 'package:splashapp/view/cart/cart.dart';
 import 'package:splashapp/view/home_detail/home_detail.dart';
 import 'package:splashapp/view/mycourses/my_courses.dart';
 import 'package:splashapp/view/payment/payment.dart';
 import 'package:splashapp/view/quizz/getcoursetest_view.dart';
-import 'package:splashapp/view/quizz/get_testquestion_view.dart';
 import 'package:splashapp/view/results/myresultcourse_view.dart';
 import 'package:splashapp/widget/carousel_widget.dart';
 
-import '../../model/DashboardModel.dart';
 import '../../model/cart_model.dart';
 import '../../values/colors.dart';
 import '../../widget/customlisttile_widget.dart';
@@ -36,12 +33,21 @@ class _HomeScreenState extends State<HomeScreen> {
   List<DashboardModelWithSlider> dashboardList = [];
   bool boolData = false;
   List<CartModel> cartList = [];
-
+  Box<String>? namee;
+   String userName="";
+   String emaill="";
   @override
   void initState() {
     // TODO: implement initState
-    getDashboardAPI();
     super.initState();
+
+    namee = Hive.box("tokenBox");
+    userName = namee!.get('username') ??" ";
+    emaill = namee!.get('email') ??" ";
+
+    // final String? token = box.get('token');
+     getDashboardAPI();
+
   }
 
   void getDashboardAPI() async {
@@ -101,10 +107,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (BuildContext context, int itemIndex,
                       int pageViewIndex) =>
                       CarouselWidget(
-                        title: "The journey of 1st \n year ",
+                        title: "${dashboardList[0].data!.slides![itemIndex].title.toString()}",
                         image: AuthApi.baseUrlSliderImage +
                             "${dashboardList[0].data!.slides![itemIndex].filePath.toString()}",
-                        btntitle: 'Get Started',
+                        btntitle: '',
                         color: Color(0xffFFCAA6),
                       ),
                   options: CarouselOptions(
@@ -183,16 +189,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 70,
                     height: 70,
                     decoration: BoxDecoration(
-                      color: Colors.pink,
+                      color: Colors.greenAccent,
                       borderRadius: BorderRadius.circular(50),
                       image: const DecorationImage(
-                        image: AssetImage(MyImgs.profileImage),
+                        image: AssetImage(MyImgs.profileImage2),
                       ),
                     ),
                   ),
                   const SizedBox(height: 10),
-                  const Text(
-                    'Imane fh',
+                   Text(
+                    userName  ,
                     style: TextStyle(
                       fontFamily: 'BandaBold',
                       fontWeight: FontWeight.w600,
@@ -200,8 +206,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: AppColors.blackColor,
                     ),
                   ),
-                  const Text(
-                    'Imane@gmail.com',
+                   Text(
+                     emaill,
                     style: TextStyle(
                       fontFamily: 'BandaBold',
                       fontWeight: FontWeight.w600,

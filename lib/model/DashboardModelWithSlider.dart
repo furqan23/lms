@@ -114,19 +114,21 @@ class Category {
 
 class Slides {
   int? id;
-  String? filePath;
+  String? filePath,title;
 
-  Slides({this.id, this.filePath});
+  Slides({this.id, this.filePath,this.title});
 
   Slides.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     filePath = json['file_path'];
+    title = json['title'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['file_path'] = this.filePath;
+    data['title'] = this.title;
     return data;
   }
 }

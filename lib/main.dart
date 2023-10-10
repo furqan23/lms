@@ -22,6 +22,7 @@ void main() async {
   // Initialize Hive and open the settings box
   await Hive.initFlutter();
   await Hive.openBox(HiveBoxes.settingsBox);
+  await Hive.openBox<String>('tokenBox');
 
   runApp(const MyApp());
 }

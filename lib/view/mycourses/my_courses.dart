@@ -31,7 +31,7 @@ class _MyCoursesState extends State<MyCourses> {
         title: Text("My Courses"),
       ),
       body: boolData
-          ? ListView.builder(
+          ? myCoursesList[0].data?.length==0?Center(child: Text("No Record Found"),): ListView.builder(
               shrinkWrap: true,
               itemCount: myCoursesList[0].data?.length,
               itemBuilder: (context, index) {

@@ -163,13 +163,8 @@ class _LoginViewState extends State<LoginView> {
                                 );
                               }
                             },
-                            child: _loginController.loading.value
-                                ? const Center(
-                              child: CircularProgressIndicator(
-                                color: AppColors.primaryColor,
-                              ),
-                            )
-                                : Padding(
+                            child:
+                                 Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: Container(
                               alignment: Alignment.center,
@@ -180,7 +175,12 @@ class _LoginViewState extends State<LoginView> {
                                   BorderRadius.circular(10),
                                 color: AppColors.primaryColor,
                               ),
-                              child: const Text(
+                              child: _loginController.loading.value
+                                  ? const Center(
+                                child: CircularProgressIndicator(
+                                  color: AppColors.whiteColor,
+                                ),
+                              ):const Text(
                                   'Login',
                                   style: TextStyle(
                                     color: Colors.white,

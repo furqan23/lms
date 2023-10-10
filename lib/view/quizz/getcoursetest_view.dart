@@ -21,6 +21,7 @@ class _GetCourseTestState extends State<GetCourseTest> {
   String? token;
   List<MyCoursesModel> myCoursesList = [];
   bool boolData = false;
+  bool boolNoData = false;
 
   /*------------ Call InitState ------------*/
   @override
@@ -36,7 +37,7 @@ class _GetCourseTestState extends State<GetCourseTest> {
         title: Text("My Test Courses"),
       ),
       body: boolData
-          ? ListView.builder(
+          ? myCoursesList[0].data?.length==0?Center(child: Text("No Record Found"),): ListView.builder(
               shrinkWrap: true,
               itemCount: myCoursesList[0].data?.length,
               itemBuilder: (context, index) {
@@ -92,6 +93,7 @@ class _GetCourseTestState extends State<GetCourseTest> {
           final mydata = jsonDecode(res.body);
           print('Parsed Data: $mydata');
           myCoursesList.add(MyCoursesModel.fromJson(mydata));
+
           setState(() {
             boolData = true;
           });

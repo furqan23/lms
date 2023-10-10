@@ -35,8 +35,8 @@ class LoginController extends GetxController {
 
     try {
       final res = await http.post(Uri.parse(AuthApi.loginApi), body: {
-        'email': emailController.value.text,
-        'password': passwordController.value.text,
+        'email': emailController.value.text.toString().trim(),
+        'password': passwordController.value.text.toString().trim(),
       });
       var data = jsonDecode(res.body);
       //print(res.body);
@@ -44,16 +44,20 @@ class LoginController extends GetxController {
         if (data['success'] == true) {
           // Extract the token from the response
           String token = data['message']['token'];
+          String userName = data['message']['name'];
 
           // Store the token in the Hive box
           final box = await Hive.openBox<String>('tokenBox');
           await box.put('token', token);
+          await box.put('email',emailController.value.text.toString().trim());
+          await box.put('username',userName);
           // Print the saved token
-          print('Token saved: $token');
+          // print('Token saved: $token');
+          print('Token saved: $userName     ');
           loading.value = false;
           Get.snackbar('Login Successful', 'Congratulations');
 
-          Get.off(() => const HomeScreen());
+          Get.offAll(() => const HomeScreen());
         } else {
           loading.value = false;
           Get.snackbar('Login Failed', data['message']['name']);

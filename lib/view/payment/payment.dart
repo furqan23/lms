@@ -69,7 +69,7 @@ class _PaymentState extends State<Payment> {
     return Scaffold(
       appBar: AppBar(title: Text("My Payments"),),
       body: boolData
-          ? ListView.builder(
+          ? paymentList[0].data?.length==0?Center(child: Text("No Record Found"),):ListView.builder(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: paymentList[0].data?.length,

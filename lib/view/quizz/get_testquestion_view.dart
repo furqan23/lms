@@ -72,7 +72,6 @@ class _QuizzViewState extends State<QuizzView> {
       int aaa =
           int.parse(getquestionTestList[0].data!.questionNo.toString()) + 1;
       print("aaaaaaaaaaaaaaaa  $aaa");
-
       widget.totalQuestions--;
       print("total question     ${widget.totalQuestions}");
       if (widget.totalQuestions == 0) {
