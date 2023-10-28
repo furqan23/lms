@@ -1,21 +1,19 @@
-
+// ignore_for_file: deprecated_member_use, non_constant_identifier_names
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:splashapp/model/course_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:splashapp/values/colors.dart';
 import 'package:splashapp/widget/lsit.dart';
 import '../../model/cart_model.dart';
 import '../../values/auth_api.dart';
-import '../../widget/videocard_widget.dart';
 import '../cart/cart.dart';
 
 class HomeDetail extends StatefulWidget {
   final String mscatId;
 
-  HomeDetail({
+  const HomeDetail({
     Key? key,
     required this.mscatId,
   });
@@ -29,7 +27,7 @@ class _VideoViewState extends State<HomeDetail> {
   List<CartModel> cartList = [];
   bool boolData = false;
   int singleCartIndex = 0;
- bool isAdded= false;
+  bool isAdded = false;
   @override
   void initState() {
     super.initState();
@@ -43,58 +41,55 @@ class _VideoViewState extends State<HomeDetail> {
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Detail'),
-          actions: [IconButton(onPressed: (){
-            Get.to(()=>CartScreen(cartList: cartList));
-          }, icon: Icon(Icons.shopping_cart))],
+          title: const Text('Detail'),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Get.to(() => CartScreen(cartList: cartList));
+                },
+                icon: const Icon(Icons.shopping_cart))
+          ],
         ),
         body: boolData
             ? ListView.builder(
-          shrinkWrap: true,
-          itemCount: courseList[0].data?.length,
-          itemBuilder: (context, index) {
-            final selectedItem =
-            courseList[0].data![index].courses![0];
+                shrinkWrap: true,
+                itemCount: courseList[0].data?.length,
+                itemBuilder: (context, index) {
+                  final selectedItem = courseList[0].data![index].courses![0];
 
-            return lsit(
-              regMethod: courseList[0]
-                  .data![index]
-                  .registrationMethod
-                  .toString(),
-              ePass: courseList[0].data![index].catName.toString(),
-              status: courseList[0].data![index].name.toString(),
-              dateAndTime:
-              courseList[0].data![index].totalSeat.toString(),
-              department: courseList[0]
-                  .data![index]
-                  .courses![0]
-                  .price
-                  .toString(),
-              map: courseList[0].data![index].courses,
-              onAddToCart: () {
-
-                if (courseList[0]
-                    .data![index]
-                    .registrationMethod ==
-                    "whole") {
-                  onAddToCart(index);
-                } else if (courseList[0]
-                    .data![index]
-                    .registrationMethod ==
-                    "single") {
-                  onAddToSingleCart(index, singleCartIndex);
-                  singleCartIndex++;
-                }
-                navigateToCartScreen();
-              },
-            );
-          },
-        )
+                  return lsit(
+                    regMethod: courseList[0]
+                        .data![index]
+                        .registrationMethod
+                        .toString(),
+                    ePass: courseList[0].data![index].catName.toString(),
+                    status: courseList[0].data![index].name.toString(),
+                    dateAndTime:
+                        courseList[0].data![index].totalSeat.toString(),
+                    department:
+                        courseList[0].data![index].courses![0].price.toString(),
+                    map: courseList[0].data![index].courses,
+                    onAddToCart: () {
+                      if (courseList[0].data![index].registrationMethod ==
+                          "whole") {
+                        onAddToCart(index);
+                      } else if (courseList[0]
+                              .data![index]
+                              .registrationMethod ==
+                          "single") {
+                        //  onAddToSingleCart(index, singleCartIndex);
+                        singleCartIndex++;
+                      }
+                     // navigateToCartScreen();
+                    },
+                  );
+                },
+              )
             : const Center(
-          child: CircularProgressIndicator(
-            color: AppColors.primaryColor,
-          ),
-        ),
+                child: CircularProgressIndicator(
+                  color: AppColors.primaryColor,
+                ),
+              ),
       ),
     );
   }
@@ -139,6 +134,8 @@ class _VideoViewState extends State<HomeDetail> {
 
     for (final course in dataEntry.courses!) {
       final cartItem = CartModel(
+        groupId: courseList[0].data![dataIndex].id.toString(),
+        categoryid: course.categoryId.toString(),
         courseId: course.id.toString(),
         courseTitle: course.courseTitle.toString(),
         price: double.parse(course.price.toString()),
@@ -156,16 +153,16 @@ class _VideoViewState extends State<HomeDetail> {
         content: Text('Items added to cart'),
       ),
     );
-
-
   }
 
-  void onAddToSingleCart(int dataIndex, int courseIndex) {
-    final dataEntry = courseList[0].data![dataIndex];
+  void onAddToSingleCart(int Index, int courseIndex) {
+    final dataEntry = courseList[0].data![Index];
 
     if (courseIndex >= 0 && courseIndex < dataEntry.courses!.length) {
       final course = dataEntry.courses![courseIndex];
       final cartItem = CartModel(
+        groupId: courseList[0].data![Index].id.toString(),
+        categoryid: course.categoryId.toString(),
         courseId: course.id.toString(),
         courseTitle: course.courseTitle.toString(),
         price: double.parse(course.price.toString()),
@@ -187,17 +184,6 @@ class _VideoViewState extends State<HomeDetail> {
           ),
         );
       }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Invalid course index'),
-        ),
-      );
     }
-
-
   }
-
-
-
 }

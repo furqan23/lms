@@ -42,5 +42,6 @@ class AuthApi {
   static const String getMyfinalResultApi =
       "https://cmi.edu.pk/qca/api/v1/student/myFinalResults";
 
+  static const String createInvoiceid = 'https://cmi.edu.pk/qca/api/v1/student/createInvoice';
   static const String baseUrlSliderImage="https://cmi.edu.pk/qca/public/slide/";
 }

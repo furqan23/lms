@@ -281,8 +281,8 @@ class _QuizzViewState extends State<QuizzView> {
               middleText:
                   "Attempt of the test is complete. Result will be available in result section",
               backgroundColor: Colors.green,
-              titleStyle: TextStyle(color: Colors.white),
-              middleTextStyle: TextStyle(color: Colors.white),
+              titleStyle: const TextStyle(color: Colors.white),
+              middleTextStyle: const TextStyle(color: Colors.white),
               textConfirm: "      okay      ",
               // textCancel: "Cancel",
               // cancelTextColor: Colors.white,

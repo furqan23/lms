@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:splashapp/values/colors.dart';
 import 'package:splashapp/view/walk.dart';
-
 import '../../main.dart';
 import '../auth/login/login_view.dart';
 import '../home/home_screen.dart';
@@ -25,13 +24,9 @@ class _SplachScreenState extends State<SplachScreen> {
       Get.to(() => const HomeScreen());
       print('User is in the Home screen');
     } else {
-      Get.to(() =>  LoginView());
+      Get.to(() =>  const LoginView());
       print('User is in the Login screen');
     }
-  }
-  Future<void> _loadData() async {
-    // Add any asynchronous tasks you need to perform during the loading
-    await Future.delayed(Duration(seconds: 4)); // Simulating a loading task
   }
   void checkLoginStatus() async {
     final box = await Hive.openBox<String>('tokenBox');
@@ -46,7 +41,7 @@ class _SplachScreenState extends State<SplachScreen> {
 
     return AnimatedSplashScreen(
       backgroundColor: AppColors.primaryColor,
-      nextScreen: isUserLoggedIn ? HomeScreen(): OnboardingScreen(),
+      nextScreen: isUserLoggedIn ? const HomeScreen(): OnboardingScreen(),
       splashIconSize: 360,
       duration: 3,
       animationDuration: const Duration(milliseconds: 1000),
