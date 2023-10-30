@@ -80,7 +80,7 @@ class _VideoViewState extends State<HomeDetail> {
                         //  onAddToSingleCart(index, singleCartIndex);
                         singleCartIndex++;
                       }
-                     // navigateToCartScreen();
+                      navigateToCartScreen();
                     },
                   );
                 },
@@ -128,7 +128,6 @@ class _VideoViewState extends State<HomeDetail> {
       throw Exception('Failed to load data');
     }
   }
-
   void onAddToCart(int dataIndex) {
     final dataEntry = courseList[0].data![dataIndex];
 
@@ -145,14 +144,19 @@ class _VideoViewState extends State<HomeDetail> {
         setState(() {
           cartList.add(cartItem);
         });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Item added to cart'),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Item is already in the cart'),
+          ),
+        );
       }
     }
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Items added to cart'),
-      ),
-    );
   }
 
   void onAddToSingleCart(int Index, int courseIndex) {
@@ -186,4 +190,11 @@ class _VideoViewState extends State<HomeDetail> {
       }
     }
   }
+
+
+
+
+
+
+
 }
