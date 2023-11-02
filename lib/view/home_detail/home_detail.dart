@@ -186,11 +186,4 @@ class _VideoViewState extends State<HomeDetail> {
       }
     }
   }
-
-
-
-
-
-
-
 }
