@@ -27,7 +27,7 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   List<InvoiceModel> invoiceList = [];
-  String course = 'course';
+  String course = 'kkk';
   bool boolData = false;
   String? token;
   @override
@@ -183,7 +183,7 @@ class _CartScreenState extends State<CartScreen> {
 
           InkWell(
             onTap: () {
-              getInvoiceID();
+              //  getInvoiceID();
             },
             child: Container(
               width: double.infinity,
@@ -206,7 +206,7 @@ class _CartScreenState extends State<CartScreen> {
   Future<void> getTokenAndFetchInvoice() async {
     token = await LoginController().getTokenFromHive();
     print('Token: $token');
-
+    getInvoiceID();
   }
 
   void getInvoiceID() async {
@@ -214,37 +214,30 @@ class _CartScreenState extends State<CartScreen> {
       List<Map<String, dynamic>> requestDataList = [];
 
       for (int i = 0; i < widget.cartList.length; i++) {
-
-        requestDataList.add( {"course_id": widget.cartList[i].courseId,"group_id": widget.cartList[i].groupId,"category_id": widget.cartList[i].categoryid,'fee_type': course});
-
-
-        // requestDataList.add(cartData);
+        Map<String, dynamic> cartData = {
+          "course_id[$i]": widget.cartList[i].courseId,
+          "group_id[$i]": widget.cartList[i].groupId,
+          "category_id[$i]": widget.cartList[i].categoryid,
+          'fee_type[$i]': course,
+        };
+        requestDataList.add(cartData);
       }
 
-
-      print("body $requestDataList");
       final String requestBody = jsonEncode(requestDataList);
-      print("body reques $requestBody");
 
-      Map<String, dynamic> abc={"bodyy":requestDataList};
-
-      final String requestBodyy = jsonEncode(abc);
-      print("may   $requestBodyy");
       final res = await http.post(
         Uri.parse(AuthApi.createInvoiceid),
         headers: {
           'Authorization': 'Bearer $token', // Use the retrieved token
           'Content-Type': 'application/json',
         },
-        body: requestBodyy,
+        body: requestBody,
       );
 
       print('Response Status Code: ${res.statusCode}');
       print('Response Body: ${res.body}');
 
-      Get.defaultDialog(title: "${res.statusCode}   ",middleText: " ${res.body}  ");
       if (res.statusCode == 200) {
-
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);
           print('Parsed Data: $mydata');

@@ -45,7 +45,7 @@ class _GetTestState extends State<GetTest> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Available Test"),
+        title: Text("Available Tests"),
       ),
       body: boolData
           ? ListView.builder(
