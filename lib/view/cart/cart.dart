@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:splashapp/model/createinvoice_model.dart';
 import 'package:splashapp/values/colors.dart';
 
-import '../../Controller/cart_controller.dart';
 import '../../Controller/login_controller.dart';
 import '../../model/cart_model.dart';
 import '../../values/auth_api.dart';
@@ -20,20 +19,15 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  final CartController cartController = Get.put(CartController());
   int quantity = 1;
-  List<String> course_id = [];
-  List<String> group_id = [];
-  List<String> category_id = [];
   @override
   void initState() {
     super.initState();
     getTokenAndFetchInvoice();
-    //postAnswerAPI();
   }
 
   List<InvoiceModel> invoiceList = [];
-  String course = 'course';
+  String course = 'kkk';
   bool boolData = false;
   String? token;
   @override
@@ -48,6 +42,7 @@ class _CartScreenState extends State<CartScreen> {
       appBar: AppBar(
         title: const Text('Cart'),
       ),
+
       body: Column(
         children: <Widget>[
           Expanded(
@@ -77,10 +72,6 @@ class _CartScreenState extends State<CartScreen> {
               ),
             ),
           ),
-
-// ...
-
-// Inside your widget
           Expanded(
             flex: 0,
             child: Align(
@@ -89,6 +80,10 @@ class _CartScreenState extends State<CartScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: () {
+                    int tempQuantity = quantity; // Create a temporary variable
+                    double tempTotalBalance =
+                        totalBalance * quantity; // Create a temporary variable
+
                     showDialog(
                       context: context,
                       builder: (_) {
@@ -96,48 +91,52 @@ class _CartScreenState extends State<CartScreen> {
                           content: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Obx(() => Text(
-                                    'Total Amount: \$${cartController.totalBalance.value.toStringAsFixed(0)}',
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  )),
-                              const SizedBox(height: 10),
+                              Text(
+                                'Total Amount: \$${tempTotalBalance.toStringAsFixed(0)}',
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 10),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      cartController.decrementQuantity(
-                                          widget.cartList[0].price);
+                                      if (tempQuantity > 1) {
+                                        tempQuantity--;
+                                        tempTotalBalance -=
+                                            widget.cartList[0].price;
+                                      }
                                     },
                                     child: Container(
                                       width: 40,
                                       height: 40,
-                                      decoration: const BoxDecoration(
+                                      decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: Colors.red,
                                       ),
-                                      child: const Icon(Icons.remove),
+                                      child: Icon(Icons.remove),
                                     ),
                                   ),
-                                  Obx(() => Text(cartController.quantity.value
-                                      .toString())), // Display the quantity from the controller
+                                  Text(tempQuantity
+                                      .toString()), // Display the temporary quantity
                                   InkWell(
                                     onTap: () {
-                                      cartController.incrementQuantity(
-                                          widget.cartList[0].price);
+                                      tempQuantity++;
+                                      tempTotalBalance +=
+                                          widget.cartList[0].price;
                                     },
                                     child: Container(
                                       width: 40,
                                       height: 40,
-                                      decoration: const BoxDecoration(
+                                      decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: Colors.green,
                                       ),
-                                      child: const Icon(Icons.add),
+                                      child: Icon(Icons.add),
                                     ),
                                   ),
                                 ],
@@ -147,24 +146,29 @@ class _CartScreenState extends State<CartScreen> {
                         );
                       },
                     ).then((value) {
-                      // No need to update the actual quantity and totalBalance here
+                      // Update the actual quantity and totalBalance after the dialog is closed
+                      if (tempQuantity != quantity) {
+                        setState(() {
+                          quantity = tempQuantity;
+                          totalBalance = tempTotalBalance;
+                        });
+                      }
                     });
                   },
                   child: Container(
                     alignment: Alignment.center,
                     width: 50,
                     height: 50,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.red,
                     ),
-                    child: const Text('Test'),
+                    child: Text('Test'),
                   ),
                 ),
               ),
             ),
           ),
-
           // Display the total balance at the bottom of the screen
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -202,109 +206,56 @@ class _CartScreenState extends State<CartScreen> {
   Future<void> getTokenAndFetchInvoice() async {
     token = await LoginController().getTokenFromHive();
     print('Token: $token');
-    postInvoiceAPI();
+    getInvoiceID();
   }
 
-  // void getInvoiceID() async {
-  //   try {
-  //     List<Map<String, dynamic>> requestDataList = [];
-  //
-  //     for (int i = 0; i < widget.cartList.length; i++) {
-  //       Map<String, dynamic> cartData = {
-  //         "course_id[$i]": widget.cartList[i].courseId,
-  //         "group_id[$i]": widget.cartList[i].groupId,
-  //         "category_id[$i]": widget.cartList[i].categoryid,
-  //         'fee_type[$i]': course,
-  //       };
-  //       requestDataList.add(cartData);
-  //
-  //  Add this print statement to see the cartData for each item
-  // print('Cart Data for Item $i: $cartData');
-  // }
-  //
-  // final String requestBody = jsonEncode(requestDataList);
-  //
-  // final res = await http.post(
-  //   Uri.parse(AuthApi.createInvoiceid),
-  //   headers: {
-  //     'Authorization': 'Bearer $token', // Use the retrieved token
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: requestBody,
-  // );
-  //
-  // print('Response Status Code: ${res.statusCode}');
-  // print('Response Body: ${res.body}');
-  //
-  // if (res.statusCode == 200) {
-  //   if (res.body.isNotEmpty) {
-  //     final mydata = jsonDecode(res.body);
-  //     print('Parsed Data: $mydata');
-  //     invoiceList.add(InvoiceModel.fromJson(mydata));
-  //     setState(() {
-  //       boolData = true;
-  //     });
-  //   } else {
-  //     print('Error: Empty response');
-  //        Handle empty response here
-  // }
-  // } else {
-  //   print('Error: ${res.statusCode}');
-  //    Handle other HTTP status codes here
-  // }
-  // } catch (e) {
-  //   print('Error: $e');
-//      Handle exceptions here
-  // }
-  // }
-
-  void postInvoiceAPI() async {
+  void getInvoiceID() async {
     try {
-      Map<String, dynamic> requestData = {
-        "course_id[0]": widget.cartList[0].courseId,
-        "group_id[0]": widget.cartList[0].groupId,
-        "category_id[0]": widget.cartList[0].categoryid,
-        'fee_type[0]': course,
-      };
+      List<Map<String, dynamic>> requestDataList = [];
 
-      for (int i = 0; i < course_id.length; i++) {
-        requestData.addAll({"q_id[$i]": course_id[i]});
+      for (int i = 0; i < widget.cartList.length; i++) {
+        Map<String, dynamic> cartData = {
+          "course_id[$i]": widget.cartList[i].courseId,
+          "group_id[$i]": widget.cartList[i].groupId,
+          "category_id[$i]": widget.cartList[i].categoryid,
+          'fee_type[$i]': course,
+        };
+        requestDataList.add(cartData);
       }
 
-      for (int i = 0; i < category_id.length; i++) {
-        requestData.addAll({"category_id[$i]": category_id[i]});
-      }
+      final String requestBody = jsonEncode(requestDataList);
 
-      for (int i = 0; i < group_id.length; i++) {
-        requestData.addAll({"group_id[$i]": group_id[i]});
-      }
+      final res = await http.post(
+        Uri.parse(AuthApi.createInvoiceid),
+        headers: {
+          'Authorization': 'Bearer $token', // Use the retrieved token
+          'Content-Type': 'application/json',
+        },
+        body: requestBody,
+      );
 
-      // final String requestBody = jsonEncode(requestData);
-
-      final res = await http.post(Uri.parse(AuthApi.createInvoiceid),
-          headers: {
-            'Authorization': 'Bearer $token', // Use the retrieved token
-          },
-          body: requestData);
-
-      print("************* body Create Invoice Id $requestData");
       print('Response Status Code: ${res.statusCode}');
       print('Response Body: ${res.body}');
-      // getquestionTestList.clear();
+
       if (res.statusCode == 200) {
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);
-          print('**************Parsed Data: $mydata');
-          bool success = mydata['success'];
-          String message = mydata['message'];
+          print('Parsed Data: $mydata');
+          invoiceList.add(InvoiceModel.fromJson(mydata));
+          setState(() {
+            boolData = true;
+          });
         } else {
-          throw Exception('Empty response');
+          print('Error: Empty response');
+          // Handle empty response here
         }
       } else {
         print('Error: ${res.statusCode}');
+        // Handle other HTTP status codes here
       }
     } catch (e) {
-      print(e.toString());
+      print('Error: $e');
+      // Handle exceptions here
     }
   }
 }
