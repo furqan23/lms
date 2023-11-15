@@ -84,7 +84,7 @@ class LoginController extends GetxController {
     ////////////token///////////////////
     final box = await Hive.openBox<String>('tokenBox');
     await box.delete('token');
-    Get.off(() => LoginView(), transition: Transition.noTransition);
+    Get.off(() => LoginView(), transition: Transition.fade);
   }
 
   //// get Hive token from hive

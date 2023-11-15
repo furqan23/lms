@@ -23,7 +23,7 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
     super.initState();
-    getTokenAndFetchInvoice();
+
   }
 
   List<InvoiceModel> invoiceList = [];
@@ -184,6 +184,7 @@ class _CartScreenState extends State<CartScreen> {
           InkWell(
             onTap: () {
               //  getInvoiceID();
+              getTokenAndFetchInvoice();
             },
             child: Container(
               width: double.infinity,
@@ -215,24 +216,34 @@ class _CartScreenState extends State<CartScreen> {
 
       for (int i = 0; i < widget.cartList.length; i++) {
         Map<String, dynamic> cartData = {
-          "course_id[$i]": widget.cartList[i].courseId,
-          "group_id[$i]": widget.cartList[i].groupId,
-          "category_id[$i]": widget.cartList[i].categoryid,
-          'fee_type[$i]': course,
+          "course_id": widget.cartList[i].courseId,
+          "group_id": widget.cartList[i].groupId,
+          "category_id": widget.cartList[i].categoryid,
+          'fee_type': course,
         };
         requestDataList.add(cartData);
       }
 
+
       final String requestBody = jsonEncode(requestDataList);
 
+      List<Map<String, dynamic>> requestDataBody ;
+      Map<String, dynamic> requestDataBodyy = {
+        "body": requestDataList,
+
+      };
+
+      print(requestDataBodyy);
+      print("${requestBody}");
       final res = await http.post(
         Uri.parse(AuthApi.createInvoiceid),
         headers: {
           'Authorization': 'Bearer $token', // Use the retrieved token
           'Content-Type': 'application/json',
         },
-        body: requestBody,
+        body: jsonEncode(requestDataBodyy),
       );
+
 
       print('Response Status Code: ${res.statusCode}');
       print('Response Body: ${res.body}');

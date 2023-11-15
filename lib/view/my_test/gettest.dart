@@ -221,23 +221,23 @@ class _GetTestState extends State<GetTest> {
                             onTap: () {
                               Get.back();
                             },
-                            child: Center(
+                            child:  Center(
                               child: Container(
                                 height: 40,
                                 width: 100,
                                 alignment: Alignment.center,
-                                decoration: BoxDecoration(
+                                decoration:const BoxDecoration(
                                     color: AppColors.primaryColor,
-                                    borderRadius: const BorderRadius.all(
+                                    borderRadius:  BorderRadius.all(
                                         Radius.circular(10))),
-                                child: Text(
+                                child:const Text(
                                   "Not Now",
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const  SizedBox(
                             width: 20,
                           ),
                           InkWell(
@@ -255,11 +255,11 @@ class _GetTestState extends State<GetTest> {
                                 height: 40,
                                 width: 100,
                                 alignment: Alignment.center,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: AppColors.primaryColor,
                                   borderRadius: BorderRadius.all(Radius.circular(10)),
                                 ),
-                                child: Text(
+                                child:const Text(
                                   "Start",
                                   style: TextStyle(color: Colors.white),
                                 ),
