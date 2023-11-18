@@ -102,48 +102,48 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                               ),
                               SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      if (tempQuantity > 1) {
-                                        tempQuantity--;
-                                        tempTotalBalance -=
-                                            widget.cartList[0].price;
-                                      }
-                                    },
-                                    child: Container(
-                                      width: 40,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.red,
-                                      ),
-                                      child: Icon(Icons.remove),
-                                    ),
-                                  ),
-                                  Text(tempQuantity
-                                      .toString()), // Display the temporary quantity
-                                  InkWell(
-                                    onTap: () {
-                                      tempQuantity++;
-                                      tempTotalBalance +=
-                                          widget.cartList[0].price;
-                                    },
-                                    child: Container(
-                                      width: 40,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.green,
-                                      ),
-                                      child: Icon(Icons.add),
-                                    ),
-                                  ),
-                                ],
-                              )
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceEvenly,
+                              //   children: [
+                              //     InkWell(
+                              //       onTap: () {
+                              //         if (tempQuantity > 1) {
+                              //           tempQuantity--;
+                              //           tempTotalBalance -=
+                              //               widget.cartList[0].price;
+                              //         }
+                              //       },
+                              //       child: Container(
+                              //         width: 40,
+                              //         height: 40,
+                              //         decoration: BoxDecoration(
+                              //           shape: BoxShape.circle,
+                              //           color: Colors.red,
+                              //         ),
+                              //         child: Icon(Icons.remove),
+                              //       ),
+                              //     ),
+                              //     Text(tempQuantity
+                              //         .toString()), // Display the temporary quantity
+                              //     InkWell(
+                              //       onTap: () {
+                              //         tempQuantity++;
+                              //         tempTotalBalance +=
+                              //             widget.cartList[0].price;
+                              //       },
+                              //       child: Container(
+                              //         width: 40,
+                              //         height: 40,
+                              //         decoration: BoxDecoration(
+                              //           shape: BoxShape.circle,
+                              //           color: Colors.green,
+                              //         ),
+                              //         child: Icon(Icons.add),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // )
                             ],
                           ),
                         );
