@@ -60,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);
           dashboardList.add(DashboardModelWithSlider.fromJson(mydata));
+          // print("${dashboardList[0].data!.slides!.length}");
           setState(() {
             boolData = true;
           });
@@ -82,7 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: Scaffold(
         appBar: AppBar(
-
+          title: Text("Dashboard"),
+          centerTitle: true,
         ),
         drawer: Drawer(
             child: SingleChildScrollView(
@@ -107,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (BuildContext context, int itemIndex,
                       int pageViewIndex) =>
                       CarouselWidget(
-                        title: "${dashboardList[0].data!.slides![itemIndex].title.toString()}",
+                        title: "${dashboardList[0].data!.slides![itemIndex].title.toString()}   ${dashboardList[0].data!.slides!.length}",
                         image: AuthApi.baseUrlSliderImage +
                             "${dashboardList[0].data!.slides![itemIndex].filePath.toString()}",
                         btntitle: '',

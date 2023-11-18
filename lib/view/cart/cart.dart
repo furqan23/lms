@@ -27,7 +27,7 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   List<InvoiceModel> invoiceList = [];
-  String course = 'kkk';
+  String course = 'course';
   bool boolData = false;
   String? token;
   @override
@@ -58,10 +58,10 @@ class _CartScreenState extends State<CartScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("group_id : ${cartItem.groupId.toString()}"),
-                          Text("course_id :  ${cartItem.courseId.toString()}"),
+                          Text("Group id : ${cartItem.groupId.toString()}"),
+                          Text("Course id :  ${cartItem.courseId.toString()}"),
                           Text(
-                              "category_Id : ${cartItem.categoryid.toString()}"),
+                              "Category id : ${cartItem.categoryid.toString()}"),
                           Text("Course_title: ${cartItem.courseTitle}"),
                           Text('Price: \$${cartItem.price.toStringAsFixed(2)}'),
                         ],
@@ -194,7 +194,7 @@ class _CartScreenState extends State<CartScreen> {
                 color: AppColors.tprimaryColor,
               ),
               child: const Text(
-                'Invoice ID',
+                'Create Invoice',
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
@@ -206,7 +206,7 @@ class _CartScreenState extends State<CartScreen> {
 
   Future<void> getTokenAndFetchInvoice() async {
     token = await LoginController().getTokenFromHive();
-    print('Token: $token');
+    // print('Token: $token');
     getInvoiceID();
   }
 
@@ -220,6 +220,7 @@ class _CartScreenState extends State<CartScreen> {
           "group_id": widget.cartList[i].groupId,
           "category_id": widget.cartList[i].categoryid,
           'fee_type': course,
+          "qty":1
         };
         requestDataList.add(cartData);
       }
@@ -229,12 +230,12 @@ class _CartScreenState extends State<CartScreen> {
 
       List<Map<String, dynamic>> requestDataBody ;
       Map<String, dynamic> requestDataBodyy = {
-        "body": requestDataList,
+        "bodyy": requestDataList,
 
       };
 
       print(requestDataBodyy);
-      print("${requestBody}");
+      // print("${requestBody}");
       final res = await http.post(
         Uri.parse(AuthApi.createInvoiceid),
         headers: {
