@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         : '/splachScreen';
 
     return GetMaterialApp(
-      title: 'QCA',
+      title: 'QCAaagit',
       theme: ThemeData(
         primaryColor: AppColors.primaryColor,
         primarySwatch: Colors.green,
