@@ -30,6 +30,7 @@ class CourseModel {
 class Data {
   String? id;
   String? name;
+  String? groupcode;
   String? registrationMethod;
   Null? description;
   String? isActive;
@@ -43,6 +44,7 @@ class Data {
         this.name,
         this.registrationMethod,
         this.description,
+        this.groupcode,
         this.isActive,
         this.totalSeat,
         this.expireOn,
@@ -57,6 +59,7 @@ class Data {
     isActive = json['is_active'];
     totalSeat = json['total_seat'];
     expireOn = json['expire_on'];
+    groupcode = json['group_code'];
     catName = json['cat_name'];
     if (json['courses'] != null) {
       courses = <Courses>[];
@@ -74,6 +77,7 @@ class Data {
     data['description'] = this.description;
     data['is_active'] = this.isActive;
     data['total_seat'] = this.totalSeat;
+    data['group_code'] = this.groupcode;
     data['expire_on'] = this.expireOn;
     data['cat_name'] = this.catName;
     if (this.courses != null) {
@@ -85,6 +89,7 @@ class Data {
 
 class Courses {
   String? id;
+  String? classtime;
   String? instructorId;
   String? categoryId;
   String? masterCourseId;
@@ -112,6 +117,7 @@ class Courses {
         this.masterCourseId,
         this.instructionLevelId,
         this.courseTitle,
+        this.classtime,
         this.courseSlug,
         this.keywords,
         this.overview,
@@ -134,6 +140,7 @@ class Courses {
     masterCourseId = json['master_course_id'];
     instructionLevelId = json['instruction_level_id'];
     courseTitle = json['course_title'];
+    classtime =json['class_time'];
     courseSlug = json['course_slug'];
     keywords = json['keywords'];
     overview = json['overview'];
@@ -158,6 +165,7 @@ class Courses {
     data['master_course_id'] = this.masterCourseId;
     data['instruction_level_id'] = this.instructionLevelId;
     data['course_title'] = this.courseTitle;
+    data['class_time']= this.classtime;
     data['course_slug'] = this.courseSlug;
     data['keywords'] = this.keywords;
     data['overview'] = this.overview;

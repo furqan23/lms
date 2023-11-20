@@ -64,9 +64,15 @@ class _VideoViewState extends State<HomeDetail> {
                         .toString(),
                     ePass: courseList[0].data![index].catName.toString(),
                     status: courseList[0].data![index].name.toString(),
+                    groupcode: courseList[0].data![index].groupcode.toString(),
                     dateAndTime:
-                        courseList[0].data![index].totalSeat.toString(),
-                    department:
+                        courseList[0].data![index].courses![0].classtime.toString(),
+                    teacher: courseList[0]
+                        .data![index]
+                        .courses![0]
+                        .firstName
+                        .toString(),
+                    price:
                         courseList[0].data![index].courses![0].price.toString(),
                     map: courseList[0].data![index].courses,
                     onAddToCart: () {
@@ -80,7 +86,7 @@ class _VideoViewState extends State<HomeDetail> {
                         //  onAddToSingleCart(index, singleCartIndex);
                         singleCartIndex++;
                       }
-                     // navigateToCartScreen();
+                      // navigateToCartScreen();
                     },
                   );
                 },
