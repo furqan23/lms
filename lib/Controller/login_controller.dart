@@ -39,7 +39,7 @@ class LoginController extends GetxController {
         'password': passwordController.value.text.toString().trim(),
       });
       var data = jsonDecode(res.body);
-      //print(res.body);
+      print("login res ${res.body}  ${res.statusCode}");
       if (res.statusCode == 200) {
         if (data['success'] == true) {
           // Extract the token from the response
@@ -84,7 +84,7 @@ class LoginController extends GetxController {
     ////////////token///////////////////
     final box = await Hive.openBox<String>('tokenBox');
     await box.delete('token');
-    Get.off(() => LoginView(), transition: Transition.noTransition);
+    Get.off(() => LoginView(), transition: Transition.fade);
   }
 
   //// get Hive token from hive
