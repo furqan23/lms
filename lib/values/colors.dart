@@ -23,6 +23,8 @@ class AppColors {
   static const tWhiteColor = Colors.white;
   static const tDarkColor = Color(0xff000000);
   static const tCardBgColor = Color(0xFFF7F6F1);
+  static const tbtn1 = Color(0xFF07EA07);
+  static const tbtn2 = Color(0xFF015601);
 
 
 

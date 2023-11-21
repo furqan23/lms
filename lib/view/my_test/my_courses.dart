@@ -90,7 +90,7 @@ class _MyCoursesState extends State<MyCourses> {
       if (res.statusCode == 200) {
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);
-          print('Parsed Data: $mydata');
+          print('test info Data: $mydata');
           myCoursesList.add(MyCoursesModel.fromJson(mydata));
           setState(() {
             boolData = true;

@@ -9,7 +9,9 @@ import 'package:splashapp/demo.dart';
 import 'package:splashapp/model/my_courses_model.dart';
 import 'package:splashapp/values/colors.dart';
 import 'package:splashapp/values/constants.dart';
+import 'package:splashapp/values/my_imgs.dart';
 import 'package:splashapp/view/quizz/get_testquestion_view.dart';
+import 'package:splashapp/widget/incoming_job_dialog.dart';
 import 'package:splashapp/widget/testcard_widget.dart';
 
 import '../../Controller/login_controller.dart';
@@ -17,6 +19,7 @@ import '../../values/auth_api.dart';
 
 class GetTest extends StatefulWidget {
   String id;
+
   GetTest({super.key, required this.id});
 
   @override
@@ -29,6 +32,7 @@ class _GetTestState extends State<GetTest> {
   List<GetTestModel> getTestList = [];
   List<MyCoursesModel> myCoursesList = [];
   bool boolData = false;
+
   @override
   void initState() {
     super.initState();
@@ -97,7 +101,8 @@ class _GetTestState extends State<GetTest> {
       if (res.statusCode == 200) {
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);
-          print('Parsed Data: $mydata');
+
+          print('gettest: $mydata');
           getTestList.add(GetTestModel.fromJson(mydata));
 
           setState(() {
@@ -134,16 +139,17 @@ class _GetTestState extends State<GetTest> {
           },
           body: requestBody);
 
-      print('Response Status Code: ${res.statusCode} widget id ${widget.id}');
+      print('Response Status Codeeee: ${res.statusCode} widget id ${widget.id}');
       print('Response Body: ${res.body}');
-
+      // final mydata;
+      final mydata = jsonDecode(res.body);
       if (res.statusCode == 200) {
-        Get.back();
-        if (res.body.isNotEmpty) {
-          final mydata = jsonDecode(res.body);
-          print('Parsed Data: $mydata');
-          // getTestList.add(GetTestModel.fromJson(mydata));
 
+
+
+          print('gettest api: $mydata');
+          // getTestList.add(GetTestModel.fromJson(mydata));
+          if(mydata["success"]==true){
           int total_time = int.parse(mydata['data']['total_time']);
           int total_question = mydata['data']['total_question'];
           String test_title = mydata['data']['test_title'];
@@ -167,14 +173,14 @@ class _GetTestState extends State<GetTest> {
                           style: textBoldStyle,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 4,
                       ),
                       // Image.asset(AppImage.internetConnection,height:30),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             "Total Questions: ",
                           ),
                           Text(
@@ -182,7 +188,7 @@ class _GetTestState extends State<GetTest> {
                           ),
                         ],
                       ),
-                      Divider(
+                      const Divider(
                         color: AppColors.greyshade100,
                         thickness: 1,
                       ),
@@ -190,7 +196,7 @@ class _GetTestState extends State<GetTest> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             "Total Time:",
                           ),
                           Text(
@@ -198,21 +204,10 @@ class _GetTestState extends State<GetTest> {
                           ),
                         ],
                       ),
-                      Divider(
+                      const Divider(
                         color: AppColors.greyshade100,
                         thickness: 1,
                       ),
-
-                      // Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: [
-                      //     Text("Total Time:   $total_time",),
-                      //     Text("   $total_time",),
-                      //   ],
-                      // ),
-                      // Divider(
-                      //   color: AppColors.greyshade100,
-                      //   thickness: 1,
-                      // ),
 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -221,33 +216,36 @@ class _GetTestState extends State<GetTest> {
                             onTap: () {
                               Get.back();
                             },
-                            child:  Center(
+                            child: Center(
                               child: Container(
                                 height: 40,
                                 width: 100,
                                 alignment: Alignment.center,
-                                decoration:const BoxDecoration(
+                                decoration: const BoxDecoration(
                                     color: AppColors.primaryColor,
-                                    borderRadius:  BorderRadius.all(
-                                        Radius.circular(10))),
-                                child:const Text(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                                child: const Text(
                                   "Not Now",
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),
                             ),
                           ),
-                          const  SizedBox(
+                          const SizedBox(
                             width: 20,
                           ),
                           InkWell(
                             onTap: () async {
-
                               if (canStartQuiz) {
-
-                               getTestinfoAPI(id.toString());
+                                print("here test info api button click");
+                                getTestinfoAPI(id.toString());
                               } else {
-                                Get.to(() => QuizzView(id: id.toString(), totalTime: total_time, totalQuestions: total_question));
+                                Get.to(() =>
+                                    QuizzView(
+                                        id: id.toString(),
+                                        totalTime: total_time,
+                                        totalQuestions: total_question));
                               }
                             },
                             child: Center(
@@ -257,9 +255,10 @@ class _GetTestState extends State<GetTest> {
                                 alignment: Alignment.center,
                                 decoration: const BoxDecoration(
                                   color: AppColors.primaryColor,
-                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
                                 ),
-                                child:const Text(
+                                child: const Text(
                                   "Start",
                                   style: TextStyle(color: Colors.white),
                                 ),
@@ -276,10 +275,30 @@ class _GetTestState extends State<GetTest> {
           setState(() {
             boolData = true;
           });
-        } else {
-          throw Exception('Empty response');
-        }
-      } else {
+        }else {
+
+            print("here low balance");
+            Get.back();
+            Get.dialog(
+                IncomingJob(
+                  icon: MyImgs.dialogIcon,
+                  text: mydata["message"],
+                ),
+                barrierDismissible: false);
+          }
+
+
+      } else if(res.statusCode == 422){
+        print("here low balance");
+        Get.back();
+        Get.dialog(
+            IncomingJob(
+              icon: MyImgs.dialogIcon,
+              text: mydata["message"],
+            ),
+            barrierDismissible: false);
+      }
+      else {
         print('Error: ${res.statusCode}');
         Get.back();
       }
@@ -310,18 +329,36 @@ class _GetTestState extends State<GetTest> {
           body: requestBody);
 
       print('Response Status Code: ${res.statusCode} widget id ${widget.id}');
-      print('Response Body: ${res.body}');
+      print('Response Body test info: ${res.body}');
 
       if (res.statusCode == 200) {
         Get.back();
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);
-          print('Parsed Data: $mydata');
+          print('test info api Data: $mydata');
+          // if (mydata["success"] == true) {
+            int total_time = int.parse(mydata['data']['total_time']);
+            int total_question = mydata['data']['total_question'];
+            String test_title = mydata['data']['test_title'];
+            Get.to(() => QuizzView(
+                id: id.toString(),
+                totalTime: total_time,
+                totalQuestions: total_question));
 
-
-          setState(() {
-            boolData = true;
-          });
+            setState(() {
+              boolData = true;
+            });
+          // } else {
+          //   // Get.dialog(IncomingJob(text: mydata["message"],icon: MyImgs.dialogIcon,));
+          //   print("here low balance");
+          //   Get.back();
+          //   Get.dialog(
+          //       IncomingJob(
+          //         icon: MyImgs.dialogIcon,
+          //         text: mydata["message"],
+          //       ),
+          //       barrierDismissible: false);
+          // }
         } else {
           throw Exception('Empty response');
         }

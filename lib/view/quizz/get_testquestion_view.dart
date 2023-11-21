@@ -121,7 +121,7 @@ class _QuizzViewState extends State<QuizzView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomRadioButton(
-                              title: "Option a",
+                              title: "Option A",
                               isSelected: selectedRadio == 1,
                               onSelect: (bool selected) {
                                 handleRadioValueChange(selected ? 1 : null);
@@ -129,7 +129,7 @@ class _QuizzViewState extends State<QuizzView> {
                             ),
                             const SizedBox(width: 20),
                             CustomRadioButton(
-                              title: "Option b",
+                              title: "Option B",
                               isSelected: selectedRadio == 2,
                               onSelect: (bool selected) {
                                 handleRadioValueChange(selected ? 2 : null);
@@ -144,7 +144,7 @@ class _QuizzViewState extends State<QuizzView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomRadioButton(
-                              title: "Option c",
+                              title: "Option C",
                               isSelected: selectedRadio == 3,
                               onSelect: (bool selected) {
                                 handleRadioValueChange(selected ? 3 : null);
@@ -152,7 +152,7 @@ class _QuizzViewState extends State<QuizzView> {
                             ),
                             const SizedBox(width: 20),
                             CustomRadioButton(
-                              title: "Option d",
+                              title: "Option D",
                               isSelected: selectedRadio == 4,
                               onSelect: (bool selected) {
                                 handleRadioValueChange(selected ? 4 : null);
@@ -266,7 +266,7 @@ class _QuizzViewState extends State<QuizzView> {
 
       print("************* body post answer  $requestData");
       print('Response Status Code: ${res.statusCode}');
-      print('Response Body: ${res.body}');
+      print('Response Body quiz view: ${res.body}');
       // getquestionTestList.clear();
       if (res.statusCode == 200) {
         if (res.body.isNotEmpty) {
@@ -290,10 +290,10 @@ class _QuizzViewState extends State<QuizzView> {
               buttonColor: Colors.white,
               barrierDismissible: false,
               radius: 30,
-              onConfirm: () => Get.to(()=>MyFinalResult(
-               id: getquestionTestList[0].data!.id!,
-                //question: getquestionTestList[0]!.data!.questionNo,
-                )),
+              onConfirm: () => Get.to(() => MyFinalResult(
+                    id: getquestionTestList[0].data!.id!,
+                    //question: getquestionTestList[0]!.data!.questionNo,
+                  )),
               // content: Column(
               //   children: [
               //     Container(child:Text("Hello 1")),

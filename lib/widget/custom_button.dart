@@ -1,62 +1,59 @@
+// ignore_for_file: non_constant_identifier_names
+
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
+import 'package:google_fonts/google_fonts.dart';
 import 'package:splashapp/values/colors.dart';
 
+Widget CustomButton({
+  required String title,
+  required VoidCallback onPressed,
+  required Color colorOne,
+  required Color colorTwo,
 
-class CustomButton extends StatelessWidget {
-  final double height;
-  final double width;
-  final double? roundCorner;
-  final String text;
-  final double? fontSize;
-  final Color? color;
-  final Color? textColor;
-  final Color? borderColor;
-  void Function() onPressed;
-  CustomButton({
-    required this.height,
-    required this.width,
-    required this.text,
-    this.fontSize,
-    this.borderColor,
-    this.textColor,
-    this.roundCorner,
-    this.color,
-    required this.onPressed,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-
-    var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-    var mediaQuery = MediaQuery.of(context).size;
-    return MaterialButton(
-      color: color == null ? AppColors.primaryColor : color,
-      height: height,
-      minWidth: width,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-            color: borderColor == null
-                ? AppColors.primaryColor
-                : borderColor!),
-        borderRadius:
-            BorderRadius.circular(roundCorner == null ? 5 : roundCorner!),
-      ),
-      onPressed: onPressed,
-      child: Center(
-        child: Text(
-          text,
-          style: TextStyle(
-              color:
-                  textColor == null ? AppColors.whiteColor : textColor!,
-              fontSize: fontSize == null ? 16 : fontSize,
-
-              fontWeight: FontWeight.w500),
+}) {
+  return SizedBox(
+    width: double.infinity,
+    height: 58,
+    child: Padding(
+      padding: EdgeInsets.fromLTRB(4,0,4,8.0),
+      child: DecoratedBox(
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
+            color: colorOne.withOpacity(0.3),
+            blurRadius: 2,
+            offset: Offset(2, 3), // Shadow position
+          ),
+        ],
+          borderRadius: BorderRadius.circular(15),
+          gradient:  LinearGradient(
+            colors: [
+              colorOne,
+              colorTwo,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.transparent, backgroundColor: Colors.transparent, shadowColor: Colors.transparent,
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),// <-- Radius
+          ),
+        ),
+          onPressed: () { onPressed(); },
+          child: Text(
+            title,
+            style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w400,
+                fontSize: 16,
+                color: AppColors.whiteColor),
+          ),
         ),
       ),
-    );
-  }
+    ),
+  );
 }

@@ -46,7 +46,6 @@ class _VideoViewState extends State<HomeDetail> {
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Badge(
-
                 label: Text(
                   cartList.length.toString(),
                   style: const TextStyle(color: Colors.white),

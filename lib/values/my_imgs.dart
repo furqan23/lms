@@ -6,6 +6,7 @@ class MyImgs {
   static const String profileImage="assets/images/Ellipse906.png";
   static const String profileImage2="assets/images/profile_avatar.png";
   static const String study = "assets/images/study.png";
+  static const String dialogIcon = "assets/images/exclamation.png";
 
   static const String onBoardingOne = "assets/images/on_boarding_image/learning.png";
   static const String onBoardingtwo = "assets/images/on_boarding_image/learning_one.png";
