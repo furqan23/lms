@@ -43,11 +43,24 @@ class _VideoViewState extends State<HomeDetail> {
         appBar: AppBar(
           title: const Text('Detail'),
           actions: [
-            IconButton(
-                onPressed: () {
-                  Get.to(() => CartScreen(cartList: cartList));
-                },
-                icon: const Icon(Icons.shopping_cart))
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Badge(
+
+                label: Text(
+                  cartList.length.toString(),
+                  style: const TextStyle(color: Colors.white),
+                ),
+                backgroundColor: Colors.red,
+                isLabelVisible: true,
+                child: IconButton(
+                  onPressed: () {
+                    Get.to(() => CartScreen(cartList: cartList));
+                  },
+                  icon: const Icon(Icons.shopping_cart),
+                ),
+              ),
+            ),
           ],
         ),
         body: boolData
@@ -77,10 +90,10 @@ class _VideoViewState extends State<HomeDetail> {
                               .data![index]
                               .registrationMethod ==
                           "single") {
-                        //  onAddToSingleCart(index, singleCartIndex);
+                        onAddToSingleCart(index, singleCartIndex);
                         singleCartIndex++;
                       }
-                     // navigateToCartScreen();
+                      // navigateToCartScreen();
                     },
                   );
                 },
