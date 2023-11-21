@@ -101,7 +101,7 @@ class _CartScreenState extends State<CartScreen> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               // Row(
                               //   mainAxisAlignment:
                               //       MainAxisAlignment.spaceEvenly,
@@ -162,11 +162,11 @@ class _CartScreenState extends State<CartScreen> {
                     alignment: Alignment.center,
                     width: 50,
                     height: 50,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.red,
                     ),
-                    child: Text('Test'),
+                    child: const Text('Test'),
                   ),
                 ),
               ),
