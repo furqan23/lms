@@ -45,5 +45,5 @@ class AuthApi {
   static const String createInvoiceid = 'https://cmi.edu.pk/qca/api/v1/student/createInvoice';
   static const String showBankInvoice = 'https://cmi.edu.pk/qca/api/v1/student/paymentGateWay/posting_url/';
   static const String getInvoiceByIdApi = 'https://cmi.edu.pk/qca/api/v1/student/getInvoiceById';
-  static const String baseUrlSliderImage="https://cmi.edu.pk/qca/public/slide/";
+  static const String baseUrlSliderImage="https://cmi.edu.pk/qca/slide/1700060672.png";
 }

@@ -37,7 +37,7 @@ class _GetTestState extends State<GetTest> {
 
   Future<void> getTokenAndFetchInvoice() async {
     token = await LoginController().getTokenFromHive();
-    print('Token: $token');
+    print('Tokens: $token');
     getMyCourseAPI();
   }
 

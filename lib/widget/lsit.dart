@@ -10,19 +10,24 @@ class lsit extends StatefulWidget {
   String ePass;
   String status;
   String dateAndTime;
-  String department;
+
+  String price;
   String regMethod;
+  String groupcode;
   List<Courses>? map;
+  String teacher;
   final Function() onAddToCart;
 
   lsit({
     required this.ePass,
+    required this.price,
+    required this.groupcode,
     required this.status,
     required this.dateAndTime,
-    required this.department,
     required this.regMethod,
     required this.map,
     required this.onAddToCart,
+    required this.teacher,
   });
 
   @override
@@ -42,24 +47,29 @@ class _lsitState extends State<lsit> {
         elevation: 5,
         child: Container(
           padding: const EdgeInsets.all(20.0),
+
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
                 padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text.rich(
-                      TextSpan(
-                        text: "Category: ${widget.ePass} ",
-                        style: TextStyle(
-                          color: AppColors.primaryColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text.rich(
+                          TextSpan(
+                            text: "${widget.ePass} ",
+                            style: const TextStyle(
+                              color: AppColors.primaryColor,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ],
                 ),
@@ -73,7 +83,7 @@ class _lsitState extends State<lsit> {
                 color: Colors.green[100],
               ),
               Container(
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -81,18 +91,30 @@ class _lsitState extends State<lsit> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         const SizedBox(height: 5),
-                        Text(
-                          "Group Name:  ${widget.status}",
-                          style: TextStyle(
-                            color: AppColors.blackColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              "${widget.groupcode}",
+                              style: const TextStyle(
+                                color: AppColors.blackColor,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              " /${widget.status}",
+                              style: const TextStyle(
+                                color: AppColors.blackColor,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Text(
-                          "Registration Method:  ${widget.regMethod}",
-                          style: TextStyle(
+                          "${widget.regMethod}",
+                          style: const TextStyle(
                             color: AppColors.blackColor,
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -103,80 +125,107 @@ class _lsitState extends State<lsit> {
                   ],
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
-                child: Text.rich(
-                  TextSpan(
-                    text: "Total Seat: ",
-                    //    style: textStyleWithFontGrey,
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: widget.dateAndTime,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+
               Container(
                 child: GridView.count(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   crossAxisCount: 1,
                   crossAxisSpacing: 0.0,
                   mainAxisSpacing: 0.0,
-                  childAspectRatio: (1 / .15),
+                  childAspectRatio: (1 / .24),
                   children: List.generate(widget.map!.length, (index) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    return Column(
                       children: [
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              height: 9,
-                              child: CircleAvatar(
-                                backgroundColor: AppColors.primaryColor,
-                              ),
-                            ),
-                            Text(
-                              widget.map![index].courseTitle!,
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ],
-                        ),
-                        widget.regMethod == "single"
-                            ? InkWell(
-                                onTap: () {
-                                  widget.onAddToCart();
-                                },
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  width: 110,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(14),
-                                    color:
-                                        AppColors.primaryColor.withOpacity(.8),
-                                  ),
-                                  child: const Text(
-                                    'Add To Cart',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
+                            Row(
+
+                              children: [
+                                Container(
+                                  height: 8,
+                                  child: const CircleAvatar(
+                                    backgroundColor: AppColors.primaryColor,
                                   ),
                                 ),
-                              )
-                            : Container(),
+                                Text(
+                                  widget.map![index].courseTitle!,
+                                  style: const TextStyle(color: Colors.grey),
+                                ),
+
+                              ],
+                            ),
+
+                            SizedBox(width: 50),
+                            Text(
+                              "Rs.${widget.price}",
+                              style:
+                              const TextStyle(fontWeight: FontWeight.w500),
+                            ),
+                            widget.regMethod == "single"
+                                ? InkWell(
+                                    onTap: () {
+                                      widget.onAddToCart();
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      width: 80,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(14),
+                                        color: AppColors.primaryColor
+                                            .withOpacity(.8),
+                                      ),
+                                      child: const Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Add',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          SizedBox(width: 5),
+                                          Icon(
+                                            Icons.shopping_cart,
+                                            size: 18,
+                                            color: Colors.white,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
+                          ],
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 36,vertical: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${widget.teacher}",
+                                style:
+                                    const TextStyle(fontWeight: FontWeight.w400),
+                              ),
+                              Text(
+                                "${widget.dateAndTime.padLeft(2)}",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 14),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     );
                   }),
                 ),
               ),
 
+              const SizedBox(height: 10),
               widget.regMethod == "whole"
                   ? Center(
                       child: InkWell(
@@ -185,7 +234,7 @@ class _lsitState extends State<lsit> {
                         },
                         child: Container(
                           alignment: Alignment.center,
-                          width: 130,
+                          width: 150,
                           height: 40,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(22),
