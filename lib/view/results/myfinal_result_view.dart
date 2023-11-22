@@ -37,23 +37,21 @@ class _MyFinalResultState extends State<MyFinalResult> {
 
   /*------------------ Call GetTestQuestionApi  ----------------*/
   void getFinalResutAPI() async {
+    print("test id ${widget.id}");
     try {
       final Map<String, dynamic> requestData = {
-        "test_id": 1,
+        "test_id": widget.id,
       };
 
       final String requestBody = jsonEncode(requestData);
-
       final res = await http.post(Uri.parse(AuthApi.getMyfinalResultApi),
           headers: {
             'Authorization': 'Bearer $token', // Use the retrieved token
             'Content-Type': 'application/json',
           },
           body: requestBody);
-
-      print('Response Status Code: ${res.statusCode}');
-      print('Response Body: ${res.body}');
-
+      // print('Response Status Code: ${res.statusCode}');
+      // print('Response Body: ${res.body}');
       if (res.statusCode == 200) {
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);
@@ -78,7 +76,7 @@ class _MyFinalResultState extends State<MyFinalResult> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('MyFinalResult'),
+        title: Text('Result'),
       ),
       body: boolData
           ? ListView.builder(
@@ -111,15 +109,17 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Row(
                                         children: [
-                                          Text(
-                                            "cat_name : ",
+                                         const Text(
+                                            "Catagory Name : ",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           Text(
                                             getfinalresultList[0]
-                                                .data!.testDetails!.catName.toString(),
-
+                                                .data!
+                                                .testDetails!
+                                                .catName
+                                                .toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -131,14 +131,16 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                       child: Row(
                                         children: [
                                           Text(
-                                            "name : ",
+                                            "Name : ",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           Text(
                                             getfinalresultList[0]
-                                                .data!.testDetails!.name.toString(),
-
+                                                .data!
+                                                .testDetails!
+                                                .name
+                                                .toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -149,7 +151,8 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
                                           Text(
                                             "Course Title  : ",
@@ -157,30 +160,18 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
-
                                           Text(
                                             getfinalresultList[0]
-                                                .data!.testDetails!.courseTitle.toString(),
-
+                                                .data!
+                                                .testDetails!
+                                                .courseTitle
+                                                .toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ],
                                       ),
                                     ),
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                                     ///
                                   ],
@@ -216,15 +207,17 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Row(
                                         children: [
-                                       const   Text(
-                                            "total_questions : ",
+                                          const Text(
+                                            "Total Questions : ",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           Text(
                                             getfinalresultList[0]
-                                                .data!.resultSummery!.totalQuestions.toString(),
-
+                                                .data!
+                                                .resultSummery!
+                                                .totalQuestions
+                                                .toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -236,14 +229,16 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                       child: Row(
                                         children: [
                                           Text(
-                                            "given_answers : ",
+                                            "Given Answers : ",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           Text(
                                             getfinalresultList[0]
-                                                .data!.resultSummery!.givenAnswers.toString(),
-
+                                                .data!
+                                                .resultSummery!
+                                                .givenAnswers
+                                                .toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -254,19 +249,21 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
                                           Text(
-                                            "corrected_answers  : ",
+                                            "Corrected Answers  : ",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
-
                                           Text(
                                             getfinalresultList[0]
-                                                .data!.resultSummery!.correctedAnswers.toString(),
-
+                                                .data!
+                                                .resultSummery!
+                                                .correctedAnswers
+                                                .toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -276,38 +273,27 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
                                           const Text(
-                                            "wrong_answers : ",
+                                            "Wrong Answers : ",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
-
                                           Text(
                                             getfinalresultList[0]
-                                                .data!.resultSummery!.wrongAnswers.toString(),
-
+                                                .data!
+                                                .resultSummery!
+                                                .wrongAnswers
+                                                .toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ],
                                       ),
                                     ),
-
-
-                                    
-
-
-
-
-
-
-
-
-
-
 
                                     ///
                                   ],
@@ -318,26 +304,22 @@ class _MyFinalResultState extends State<MyFinalResult> {
                         ),
                       ),
                     ),
-
                     SizedBox(height: 20),
                     InkWell(
-                      onTap: (){
-                        
-                        Get.to(()=>ViewAnswer(finalResultList: getfinalresultList));
+                      onTap: () {
+                        Get.to(() =>
+                            ViewAnswer(finalResultList: getfinalresultList));
                       },
                       child: Container(
                         alignment: Alignment.center,
-                        width:120,
+                        width: 120,
                         height: 60,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: Colors.red
-                        ),
+                            color: Colors.red),
                         child: Text("Test Answer"),
                       ),
                     )
-
-
                   ],
                 );
               })

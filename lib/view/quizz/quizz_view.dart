@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:splashapp/model/test_question_model.dart';
 import 'package:splashapp/view/home/home_screen.dart';
 import 'package:splashapp/view/results/myfinal_result_view.dart';
+import 'package:splashapp/widget/show_load_indicator.dart';
 import '../../Controller/login_controller.dart';
 import '../../values/auth_api.dart';
 
@@ -65,7 +66,7 @@ class _QuizzViewState extends State<QuizzView> {
       }
 
       print(slted);
-      question_id.add(getquestionTestList[0].data!.questionNo.toString());
+      question_id.add(getquestionTestList[0].data!.id.toString());
       givenAnswerList.add(slted ?? "D");
       CorrectAnswerList.add(
           getquestionTestList[0].data!.correctAnswer.toString());
@@ -116,7 +117,7 @@ class _QuizzViewState extends State<QuizzView> {
 """),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(18.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -139,7 +140,7 @@ class _QuizzViewState extends State<QuizzView> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(18.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -190,6 +191,7 @@ class _QuizzViewState extends State<QuizzView> {
 
   /*------------------ Call GetTestQuestionApi  ----------------*/
   void getTestQuestionAPI(int questionNUmber) async {
+    showLoadingIndicator(context);
     try {
       final Map<String, dynamic> requestData = {
         "test_id": widget.id,
@@ -209,6 +211,7 @@ class _QuizzViewState extends State<QuizzView> {
       print('Response Body: ${res.body}');
       getquestionTestList.clear();
       if (res.statusCode == 200) {
+        Get.back();
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);
           print('Parsed Data: $mydata');
@@ -230,9 +233,11 @@ class _QuizzViewState extends State<QuizzView> {
           throw Exception('Empty response');
         }
       } else {
+        Get.back();
         print('Error: ${res.statusCode}');
       }
     } catch (e) {
+      Get.back();
       print(e.toString());
     }
   }
@@ -290,8 +295,10 @@ class _QuizzViewState extends State<QuizzView> {
               buttonColor: Colors.white,
               barrierDismissible: false,
               radius: 30,
-              onConfirm: () => Get.to(() => MyFinalResult(
-                    id: getquestionTestList[0].data!.id!,
+              // onConfirm: () => Get.off(() => MyFinalResult(
+              //       id: getquestionTestList[0].data!.id!,
+                onConfirm: () => Get.off(() => MyFinalResult(
+                    id: widget.id,
                     //question: getquestionTestList[0]!.data!.questionNo,
                   )),
               // content: Column(

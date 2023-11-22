@@ -17,8 +17,12 @@ class _ViewAnswerState extends State<ViewAnswer> {
   var opt2 = 'opt_2';
   var opt3 = 'opt_3';
   var opt4 = 'opt_4';
+
   @override
   Widget build(BuildContext context) {
+    print("length ${widget.finalResultList[0].data?.resultDetails?.length}");
+    // print("length ${widget.finalResultList[0].data?.resultSummery?.length}");
+    // print("length ${widget.finalResultList[0].data?.resultDetails?.length}");
     return Scaffold(
         appBar: AppBar(
           title: const Text('View Answer'),
@@ -27,7 +31,6 @@ class _ViewAnswerState extends State<ViewAnswer> {
           itemCount: widget.finalResultList.length,
           itemBuilder: (context, index) {
             FinalResultModels result = widget.finalResultList[index];
-
             return Column(
               children: [
                 Container(

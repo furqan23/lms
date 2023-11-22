@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import '../values/colors.dart';
 
 class TestCard extends StatelessWidget {
-  final String id, title, start;
+  final String id, title, start,total;
+
   const TestCard(
-      {super.key, required this.id, required this.title, required this.start});
+      {super.key, required this.id, required this.title, required this.start, required this.total});
 
   @override
   Widget build(BuildContext context) {
@@ -30,28 +31,12 @@ class TestCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Row(
                         children: [
-                          Text(
-                            "Testtitle: ",
-                            style: TextStyle(color: Colors.grey, fontSize: 14),
-                          ),
-                          Text(
-                            title,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Row(
-                        children: [
-                          Text(
-                            "Teststart: ",
+                          const Text(
+                            "Test Date: ",
                             style: TextStyle(color: Colors.grey, fontSize: 14),
                           ),
                           Text(
@@ -61,6 +46,38 @@ class TestCard extends StatelessWidget {
                         ],
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Row(
+                        children: [
+                          const Text(
+                            "Title: ",
+                            style: TextStyle(color: Colors.grey, fontSize: 14),
+                          ),
+                          Text(
+                            title,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Row(
+                        children: [
+                          const Text(
+                            "Duration: ",
+                            style: TextStyle(color: Colors.grey, fontSize: 14),
+                          ),
+                          Text(
+                            "$total Min",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Row(

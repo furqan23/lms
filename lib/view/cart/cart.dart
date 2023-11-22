@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:splashapp/model/createinvoice_model.dart';
 import 'package:splashapp/model/get_invoice_id_model.dart';
 import 'package:splashapp/values/colors.dart';
+import 'package:splashapp/values/my_imgs.dart';
 import 'package:splashapp/view/cart/confirmation_mesg.dart';
+import 'package:splashapp/widget/incoming_payment_method_dialog.dart';
+import 'package:splashapp/widget/show_load_indicator.dart';
 
 import '../../Controller/login_controller.dart';
 import '../../model/cart_model.dart';
@@ -22,17 +25,18 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   int quantity = 1;
+
   @override
   void initState() {
     super.initState();
-
   }
 
   List<InvoiceModel> invoiceList = [];
   List<GetInvoiceByIdModel> invoiceByIdList = [];
-  String course = 'course';
+  String course = 'course';// test
   bool boolData = false;
   String? token;
+
   @override
   Widget build(BuildContext context) {
     // Calculate the total balance by summing up the prices of all items in the cart
@@ -45,7 +49,6 @@ class _CartScreenState extends State<CartScreen> {
       appBar: AppBar(
         title: const Text('Cart'),
       ),
-
       body: Column(
         children: <Widget>[
           Expanded(
@@ -214,6 +217,7 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   void getInvoiceID() async {
+    showLoadingIndicator(context);
     try {
       List<Map<String, dynamic>> requestDataList = [];
 
@@ -223,18 +227,16 @@ class _CartScreenState extends State<CartScreen> {
           "group_id": widget.cartList[i].groupId,
           "category_id": widget.cartList[i].categoryid,
           'fee_type': course,
-          "qty":1
+          "qty": 1
         };
         requestDataList.add(cartData);
       }
 
-
       final String requestBody = jsonEncode(requestDataList);
 
-      List<Map<String, dynamic>> requestDataBody ;
+      List<Map<String, dynamic>> requestDataBody;
       Map<String, dynamic> requestDataBodyy = {
         "bodyy": requestDataList,
-
       };
 
       print(requestDataBodyy);
@@ -248,89 +250,85 @@ class _CartScreenState extends State<CartScreen> {
         body: jsonEncode(requestDataBodyy),
       );
 
-
       print('Response Status Code: ${res.statusCode}');
       print('Response Body: ${res.body}');
 
       if (res.statusCode == 200) {
+        // Get.back();
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);
           print('Parsed Data: $mydata');
           invoiceList.add(InvoiceModel.fromJson(mydata));
-          getShowBankInvoiceApi(invoiceList[0].data?.invoiceId.toString()??"na");
+          getShowBankInvoiceApi(
+              invoiceList[0].data?.invoiceId.toString() ?? "na");
           setState(() {
             boolData = true;
           });
         } else {
+          Get.back();
           print('Error: Empty response');
           // Handle empty response here
         }
       } else {
+        // Get.back();
         print('Error: ${res.statusCode}');
         // Handle other HTTP status codes here
       }
     } catch (e) {
+      Get.back();
       print('Error: $e');
       // Handle exceptions here
     }
   }
 
-
-
   void getShowBankInvoiceApi(String _invoiceId) async {
     try {
-      // List<Map<String, dynamic>> requestDataList = [];
-      // final String requestBody = jsonEncode(requestDataList);
-      //
-      // List<Map<String, dynamic>> requestDataBody ;
-      // Map<String, dynamic> requestDataBodyy = {
-      //   "bodyy": requestDataList,
-      //
-      // };
-      // print(requestDataBodyy);
-      // print("${requestBody}");
-
-      final bodyy={
-          'invoice_id':_invoiceId,
+      final bodyy = {
+        'invoice_id': _invoiceId,
       };
 
       final res = await http.post(
         Uri.parse("${AuthApi.getInvoiceByIdApi}"),
-
         headers: {
           'Authorization': 'Bearer $token', // Use the retrieved token
           'Content-Type': 'application/json',
         },
-         body: jsonEncode(bodyy),
+        body: jsonEncode(bodyy),
       );
-
 
       print('Response Status Code: ${res.statusCode}');
       print('Response Body: ${res.body}');
 
       if (res.statusCode == 200) {
+        Get.back();
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);
           // print('Parsed Data: $mydata');
           invoiceByIdList.add(GetInvoiceByIdModel.fromJson(mydata));
-          Get.to(()=>ConfirmationMesg(data:invoiceByIdList[0].data?.pMethods?[0].description??"na"));
+          Get.dialog(IncomingPaymentMethodDialog(
+            icon: MyImgs.dialogIcon,
+            text: mydata["message"],
+            invoiceByIdList: invoiceByIdList,
+          ));
+
           //
           // setState(() {
           //   boolData = true;
           // });
         } else {
+          Get.back();
           print('Error: Empty response');
           // Handle empty response here
         }
       } else {
+        Get.back();
         print('Error: ${res.statusCode}');
         // Handle other HTTP status codes here
       }
     } catch (e) {
+      Get.back();
       print('Error: $e');
       // Handle exceptions here
     }
   }
-
-
 }

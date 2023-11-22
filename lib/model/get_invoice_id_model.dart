@@ -58,11 +58,11 @@ class Inv {
   String? createdAt;
   String? createFromPlace;
   String? updatedAt;
-  Null? uploadedReceipt;
-  Null? uploadedReceiptDate;
+  var uploadedReceipt;
+  var uploadedReceiptDate;
   String? invoiceAmount;
   String? otherCharges;
-  Null? otherChargesDesc;
+  var otherChargesDesc;
   String? discount;
   String? invoiceTotalAmount;
   User? user;
@@ -144,12 +144,12 @@ class User {
   String? isActive;
   String? createdAt;
   String? updatedAt;
-  Null? regNo;
-  Null? retriveUniqCode;
-  Null? cardExpireAt;
-  Null? contactNo;
+  var regNo;
+  var retriveUniqCode;
+  var cardExpireAt;
+  var contactNo;
   String? commission;
-  Null? image;
+  var image;
 
   User(
       {this.id,
@@ -208,8 +208,8 @@ class InvoiceDetil {
   String? price;
   String? discount;
   String? feeType;
-  Null? createdAt;
-  Null? updatedAt;
+  var createdAt;
+  var updatedAt;
   Category? category;
   Groups? groups;
   Course? course;
@@ -283,10 +283,10 @@ class Category {
   String? groupId;
   String? name;
   String? slug;
-  Null? iconClass;
+  var iconClass;
   String? isActive;
-  Null? createdAt;
-  Null? updatedAt;
+  var createdAt;
+  var updatedAt;
   MasterCategory? masterCategory;
 
   Category(
@@ -379,10 +379,10 @@ class Groups {
   int? id;
   String? name;
   String? registrationMethod;
-  Null? description;
+  var description;
   String? isActive;
   String? totalSeat;
-  Null? expireOn;
+  var expireOn;
 
   Groups(
       {this.id,
@@ -421,18 +421,18 @@ class Course {
   String? instructorId;
   String? categoryId;
   String? masterCourseId;
-  Null? instructionLevelId;
+  var instructionLevelId;
   String? courseTitle;
   String? courseSlug;
-  Null? keywords;
-  Null? overview;
-  Null? courseImage;
-  Null? thumbImage;
-  Null? courseVideo;
-  Null? duration;
+  var keywords;
+  var overview;
+  var courseImage;
+  var thumbImage;
+  var courseVideo;
+  var duration;
   String? price;
   String? classTime;
-  Null? strikeOutPrice;
+  var strikeOutPrice;
   String? isActive;
   String? createdAt;
   String? updatedAt;
@@ -515,19 +515,19 @@ class Course {
 
 class MasterCourse {
   int? id;
-  Null? instructorId;
-  Null? categoryId;
-  Null? instructionLevelId;
+  var instructorId;
+  var categoryId;
+  var instructionLevelId;
   String? courseTitle;
   String? courseSlug;
-  Null? keywords;
-  Null? overview;
-  Null? courseImage;
-  Null? thumbImage;
-  Null? courseVideo;
-  Null? duration;
-  Null? price;
-  Null? strikeOutPrice;
+  var keywords;
+  var overview;
+  var courseImage;
+  var thumbImage;
+  var courseVideo;
+  var duration;
+  var price;
+  var strikeOutPrice;
   String? isActive;
   String? createdAt;
   String? updatedAt;

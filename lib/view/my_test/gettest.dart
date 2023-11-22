@@ -10,7 +10,7 @@ import 'package:splashapp/model/my_courses_model.dart';
 import 'package:splashapp/values/colors.dart';
 import 'package:splashapp/values/constants.dart';
 import 'package:splashapp/values/my_imgs.dart';
-import 'package:splashapp/view/quizz/get_testquestion_view.dart';
+import 'package:splashapp/view/quizz/quizz_view.dart';
 import 'package:splashapp/widget/incoming_job_dialog.dart';
 import 'package:splashapp/widget/testcard_widget.dart';
 
@@ -71,6 +71,7 @@ class _GetTestState extends State<GetTest> {
                     id: getTestList[0].data![index].courseId.toString(),
                     title: getTestList[0].data![index].testTitle.toString(),
                     start: getTestList[0].data![index].testStart.toString(),
+                    total: getTestList[0].data![index].totalTime.toString(),
                   ),
                 );
               })
@@ -139,17 +140,16 @@ class _GetTestState extends State<GetTest> {
           },
           body: requestBody);
 
-      print('Response Status Codeeee: ${res.statusCode} widget id ${widget.id}');
+      print(
+          'Response Status Codeeee: ${res.statusCode} widget id ${widget.id}');
       print('Response Body: ${res.body}');
       // final mydata;
       final mydata = jsonDecode(res.body);
       if (res.statusCode == 200) {
-
-
-
-          print('gettest api: $mydata');
-          // getTestList.add(GetTestModel.fromJson(mydata));
-          if(mydata["success"]==true){
+        Get.back();
+        print('gettest api: $mydata');
+        // getTestList.add(GetTestModel.fromJson(mydata));
+        if (mydata["success"] == true) {
           int total_time = int.parse(mydata['data']['total_time']);
           int total_question = mydata['data']['total_question'];
           String test_title = mydata['data']['test_title'];
@@ -169,7 +169,7 @@ class _GetTestState extends State<GetTest> {
                     children: [
                       Center(
                         child: Text(
-                          "Text Name: $test_title",
+                          "Title: $test_title",
                           style: textBoldStyle,
                         ),
                       ),
@@ -200,7 +200,7 @@ class _GetTestState extends State<GetTest> {
                             "Total Time:",
                           ),
                           Text(
-                            "$total_time min",
+                            "$total_time Min",
                           ),
                         ],
                       ),
@@ -224,9 +224,9 @@ class _GetTestState extends State<GetTest> {
                                 decoration: const BoxDecoration(
                                     color: AppColors.primaryColor,
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
+                                        BorderRadius.all(Radius.circular(10))),
                                 child: const Text(
-                                  "Not Now",
+                                  "Close",
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),
@@ -241,11 +241,11 @@ class _GetTestState extends State<GetTest> {
                                 print("here test info api button click");
                                 getTestinfoAPI(id.toString());
                               } else {
-                                Get.to(() =>
-                                    QuizzView(
-                                        id: id.toString(),
-                                        totalTime: total_time,
-                                        totalQuestions: total_question));
+                                Get.back();
+                                Get.to(() => QuizzView(
+                                    id: id.toString(),
+                                    totalTime: total_time,
+                                    totalQuestions: total_question));
                               }
                             },
                             child: Center(
@@ -256,7 +256,7 @@ class _GetTestState extends State<GetTest> {
                                 decoration: const BoxDecoration(
                                   color: AppColors.primaryColor,
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
+                                      BorderRadius.all(Radius.circular(10)),
                                 ),
                                 child: const Text(
                                   "Start",
@@ -275,20 +275,17 @@ class _GetTestState extends State<GetTest> {
           setState(() {
             boolData = true;
           });
-        }else {
-
-            print("here low balance");
-            Get.back();
-            Get.dialog(
-                IncomingJob(
-                  icon: MyImgs.dialogIcon,
-                  text: mydata["message"],
-                ),
-                barrierDismissible: false);
-          }
-
-
-      } else if(res.statusCode == 422){
+        } else {
+          print("here low balance");
+          Get.back();
+          Get.dialog(
+              IncomingJob(
+                icon: MyImgs.dialogIcon,
+                text: mydata["message"],
+              ),
+              barrierDismissible: false);
+        }
+      } else if (res.statusCode == 422) {
         print("here low balance");
         Get.back();
         Get.dialog(
@@ -297,8 +294,7 @@ class _GetTestState extends State<GetTest> {
               text: mydata["message"],
             ),
             barrierDismissible: false);
-      }
-      else {
+      } else {
         print('Error: ${res.statusCode}');
         Get.back();
       }
@@ -337,17 +333,17 @@ class _GetTestState extends State<GetTest> {
           final mydata = jsonDecode(res.body);
           print('test info api Data: $mydata');
           // if (mydata["success"] == true) {
-            int total_time = int.parse(mydata['data']['total_time']);
-            int total_question = mydata['data']['total_question'];
-            String test_title = mydata['data']['test_title'];
-            Get.to(() => QuizzView(
-                id: id.toString(),
-                totalTime: total_time,
-                totalQuestions: total_question));
+          int total_time = int.parse(mydata['data']['total_time']);
+          int total_question = mydata['data']['total_question'];
+          String test_title = mydata['data']['test_title'];
+          Get.to(() => QuizzView(
+              id: id.toString(),
+              totalTime: total_time,
+              totalQuestions: total_question));
 
-            setState(() {
-              boolData = true;
-            });
+          setState(() {
+            boolData = true;
+          });
           // } else {
           //   // Get.dialog(IncomingJob(text: mydata["message"],icon: MyImgs.dialogIcon,));
           //   print("here low balance");

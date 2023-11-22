@@ -67,42 +67,44 @@ class TestDetails {
   String? instructorId;
   String? categoryId;
   String? masterCourseId;
-  Null? instructionLevelId;
+  var instructionLevelId;
   String? courseTitle;
   String? courseSlug;
-  Null? keywords;
-  Null? overview;
-  Null? courseImage;
-  Null? thumbImage;
-  Null? courseVideo;
-  Null? duration;
+  var keywords;
+  var overview;
+  var courseImage;
+  var thumbImage;
+  String? courseVideo;
+  var duration;
   String? price;
-  Null? strikeOutPrice;
+  String? classTime;
+  var strikeOutPrice;
   String? isActive;
   String? createdAt;
   String? updatedAt;
 
   TestDetails(
       {this.name,
-        this.catName,
-        this.id,
-        this.instructorId,
-        this.categoryId,
-        this.masterCourseId,
-        this.instructionLevelId,
-        this.courseTitle,
-        this.courseSlug,
-        this.keywords,
-        this.overview,
-        this.courseImage,
-        this.thumbImage,
-        this.courseVideo,
-        this.duration,
-        this.price,
-        this.strikeOutPrice,
-        this.isActive,
-        this.createdAt,
-        this.updatedAt});
+      this.catName,
+      this.id,
+      this.instructorId,
+      this.categoryId,
+      this.masterCourseId,
+      this.instructionLevelId,
+      this.courseTitle,
+      this.courseSlug,
+      this.keywords,
+      this.overview,
+      this.courseImage,
+      this.thumbImage,
+      this.courseVideo,
+      this.duration,
+      this.price,
+      this.classTime,
+      this.strikeOutPrice,
+      this.isActive,
+      this.createdAt,
+      this.updatedAt});
 
   TestDetails.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -121,6 +123,7 @@ class TestDetails {
     courseVideo = json['course_video'];
     duration = json['duration'];
     price = json['price'];
+    classTime = json['class_time'];
     strikeOutPrice = json['strike_out_price'];
     isActive = json['is_active'];
     createdAt = json['created_at'];
@@ -145,6 +148,7 @@ class TestDetails {
     data['course_video'] = this.courseVideo;
     data['duration'] = this.duration;
     data['price'] = this.price;
+    data['class_time'] = this.classTime;
     data['strike_out_price'] = this.strikeOutPrice;
     data['is_active'] = this.isActive;
     data['created_at'] = this.createdAt;
@@ -160,14 +164,16 @@ class ResultSummery {
   String? givenAnswers;
   String? correctedAnswers;
   String? wrongAnswers;
+  String? createdAt;
 
   ResultSummery(
       {this.taId,
-        this.stId,
-        this.totalQuestions,
-        this.givenAnswers,
-        this.correctedAnswers,
-        this.wrongAnswers});
+      this.stId,
+      this.totalQuestions,
+      this.givenAnswers,
+      this.correctedAnswers,
+      this.wrongAnswers,
+      this.createdAt});
 
   ResultSummery.fromJson(Map<String, dynamic> json) {
     taId = json['ta_id'];
@@ -176,6 +182,7 @@ class ResultSummery {
     givenAnswers = json['given_answers'];
     correctedAnswers = json['corrected_answers'];
     wrongAnswers = json['wrong_answers'];
+    createdAt = json['created_at'];
   }
 
   Map<String, dynamic> toJson() {
@@ -186,6 +193,7 @@ class ResultSummery {
     data['given_answers'] = this.givenAnswers;
     data['corrected_answers'] = this.correctedAnswers;
     data['wrong_answers'] = this.wrongAnswers;
+    data['created_at'] = this.createdAt;
     return data;
   }
 }
@@ -211,22 +219,22 @@ class ResultDetails {
 
   ResultDetails(
       {this.id,
-        this.testId,
-        this.questionNo,
-        this.questionName,
-        this.opt1,
-        this.opt2,
-        this.opt3,
-        this.opt4,
-        this.correctAnswer,
-        this.createdAt,
-        this.updatedAt,
-        this.taId,
-        this.userId,
-        this.qId,
-        this.givenAnswer,
-        this.correctedAnswer,
-        this.isCorrect});
+      this.testId,
+      this.questionNo,
+      this.questionName,
+      this.opt1,
+      this.opt2,
+      this.opt3,
+      this.opt4,
+      this.correctAnswer,
+      this.createdAt,
+      this.updatedAt,
+      this.taId,
+      this.userId,
+      this.qId,
+      this.givenAnswer,
+      this.correctedAnswer,
+      this.isCorrect});
 
   ResultDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];

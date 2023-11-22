@@ -2,12 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:splashapp/Controller/login_controller.dart';
 import 'package:splashapp/model/my_courses_model.dart';
 import 'package:splashapp/values/auth_api.dart';
-import 'package:http/http.dart' as http;
 import 'package:splashapp/view/mycourses/my_course_detail.dart';
-import 'package:splashapp/widget/dasbhoard_card.dart';
 import 'package:splashapp/widget/dasbhoard_card_two.dart';
 
 class MyCourses extends StatefulWidget {
@@ -22,12 +21,11 @@ class _MyCoursesState extends State<MyCourses> {
   List<MyCoursesModel> myCoursesList = [];
   bool boolData = false;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("My Courses"),
+        title:const Text("My Courses"),
       ),
       body: boolData
           ? ListView.builder(
@@ -35,22 +33,25 @@ class _MyCoursesState extends State<MyCourses> {
               itemCount: myCoursesList[0].data?.length,
               itemBuilder: (context, index) {
                 return InkWell(
-                  onTap: (){
-                    Get.to(()=>MyCourseDetail(myCoursesList[0].data![index].courseId!));
+                  onTap: () {
+                    Get.to(() => MyCourseDetail(
+                        myCoursesList[0].data![index].courseId!));
                   },
                   child: DashbaordCardTwo(
                     id: myCoursesList[0].data![index].name,
                     catName: myCoursesList[0].data![index].courseTitle,
-                    name:"${myCoursesList[0].data![index].firstName} ${myCoursesList[0].data![index].lastName}",
+                    name:
+                        "${myCoursesList[0].data![index].firstName} ${myCoursesList[0].data![index].lastName}",
                     description: myCoursesList[0].data![index].name,
                     slug: myCoursesList[0].data![index].name,
                     seat: myCoursesList[0].data![index].totalSeat,
-                    registermethod: myCoursesList[0].data![index].registrationMethod,
-                    buttonText:     'Video Lectures >',
+                    registermethod:
+                        myCoursesList[0].data![index].registrationMethod,
+                    buttonText: 'Video Lectures >',
                   ),
                 );
               })
-          :const Center(
+          : const Center(
               child: CircularProgressIndicator(),
             ),
     );

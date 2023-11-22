@@ -31,6 +31,7 @@ class Data {
   String? id;
   String? courseId;
   String? testTitle;
+  String? totalTime;
   String? testStart;
   String? testEnd;
   String? timeStart;
@@ -42,21 +43,23 @@ class Data {
 
   Data(
       {this.id,
-      this.courseId,
-      this.testTitle,
-      this.testStart,
-      this.testEnd,
-      this.timeStart,
-      this.timeEnd,
-      this.userId,
-      this.status,
-      this.createdAt,
-      this.updatedAt});
+        this.courseId,
+        this.testTitle,
+        this.totalTime,
+        this.testStart,
+        this.testEnd,
+        this.timeStart,
+        this.timeEnd,
+        this.userId,
+        this.status,
+        this.createdAt,
+        this.updatedAt});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     courseId = json['course_id'];
     testTitle = json['test_title'];
+    totalTime = json['total_time'];
     testStart = json['test_start'];
     testEnd = json['test_end'];
     timeStart = json['time_start'];
@@ -72,6 +75,7 @@ class Data {
     data['id'] = this.id;
     data['course_id'] = this.courseId;
     data['test_title'] = this.testTitle;
+    data['total_time'] = this.totalTime;
     data['test_start'] = this.testStart;
     data['test_end'] = this.testEnd;
     data['time_start'] = this.timeStart;
