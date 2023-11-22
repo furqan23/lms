@@ -34,10 +34,10 @@ class _GetCourseTestState extends State<GetCourseTest> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("My Test Courses"),
+        title: const Text("My Test Courses"),
       ),
       body: boolData
-          ? myCoursesList[0].data?.length==0?Center(child: Text("No Record Found"),): ListView.builder(
+          ? myCoursesList[0].data?.length==0?const Center(child: Text("No Record Found"),): ListView.builder(
               shrinkWrap: true,
               itemCount: myCoursesList[0].data?.length,
               itemBuilder: (context, index) {

@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Dashboard"),
+          title: const Text("Dashboard"),
           centerTitle: true,
         ),
         drawer: Drawer(
@@ -113,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         image: AuthApi.baseUrlSliderImage +
                             "${dashboardList[0].data!.slides![itemIndex].filePath.toString()}",
                         btntitle: '',
-                        color: Color(0xffFFCAA6),
+                        color: const Color(0xffFFCAA6),
                       ),
                   options: CarouselOptions(
                     aspectRatio: 15 / 9,
@@ -163,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         )
-            : Center(
+            : const Center(
           child: CircularProgressIndicator(
             color: AppColors.primaryColor,
           ),
@@ -201,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 10),
                    Text(
                     userName  ,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'BandaBold',
                       fontWeight: FontWeight.w600,
                       fontSize: 25,
@@ -210,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                    Text(
                      emaill,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'BandaBold',
                       fontWeight: FontWeight.w600,
                       fontSize: 14,

@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -39,10 +41,10 @@ class _MyResultsCourseState extends State<MyResultsCourse> {
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: Scaffold(
           appBar: AppBar(
-            title: const Text('Quizz'),
+            title: const Text('My Results'),
           ),
           body: boolData
-              ? getresultsModelList[0].data?.length==0?Center(child: Text("No Record Found"),): ListView.builder(
+              ? getresultsModelList[0].data?.length==0?const Center(child: Text("No Record Found"),): ListView.builder(
                   itemCount: getresultsModelList[0].data?.length,
                   itemBuilder: (context, index) {
                     return Padding(
@@ -71,7 +73,7 @@ class _MyResultsCourseState extends State<MyResultsCourse> {
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Row(
                                         children: [
-                                          Text(
+                                          const Text(
                                             "Id: ",
                                             style: TextStyle(
                                                 color: Colors.grey,
@@ -82,7 +84,7 @@ class _MyResultsCourseState extends State<MyResultsCourse> {
                                                 .data![index]
                                                 .id
                                                 .toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ],
@@ -92,7 +94,7 @@ class _MyResultsCourseState extends State<MyResultsCourse> {
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Row(
                                         children: [
-                                          Text(
+                                          const Text(
                                             "Name: ",
                                             style: TextStyle(
                                                 color: Colors.grey,
@@ -114,7 +116,7 @@ class _MyResultsCourseState extends State<MyResultsCourse> {
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Row(
                                         children: [
-                                          Text(
+                                          const Text(
                                             "Category: ",
                                             style: TextStyle(
                                                 color: Colors.grey,
@@ -125,7 +127,7 @@ class _MyResultsCourseState extends State<MyResultsCourse> {
                                                 .data![index]
                                                 .catName
                                                 .toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ],
@@ -135,7 +137,7 @@ class _MyResultsCourseState extends State<MyResultsCourse> {
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Row(
                                         children: [
-                                          Text(
+                                          const Text(
                                             "Course: ",
                                             style: TextStyle(
                                                 color: Colors.grey,
@@ -146,7 +148,7 @@ class _MyResultsCourseState extends State<MyResultsCourse> {
                                                 .data![index]
                                                 .courseTitle
                                                 .toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ],
@@ -192,7 +194,7 @@ class _MyResultsCourseState extends State<MyResultsCourse> {
                       ),
                     );
                   })
-              : Center(
+              : const Center(
                   child: CircularProgressIndicator(),
                 )),
     );

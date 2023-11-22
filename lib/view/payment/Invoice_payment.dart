@@ -95,11 +95,11 @@ class _InvoicePaymentState extends State<InvoicePayment> {
           // Respond to button press
           dialogue(context);
         },
-        icon: Icon(Icons.upload_file_outlined),
-        label: Text('Upload Receipt'),
+        icon: const Icon(Icons.upload_file_outlined),
+        label: const Text('Upload Receipt'),
       ),
-      appBar: AppBar(title: Text("Payment Detail"),),
-      body: boolData==false ?Center(child: CircularProgressIndicator())
+      appBar: AppBar(title: const Text("Payment Detail"),),
+      body: boolData==false ?const Center(child: CircularProgressIndicator())
           :Card(
         elevation: 5,
             child: Column(
@@ -109,7 +109,7 @@ class _InvoicePaymentState extends State<InvoicePayment> {
               padding: const EdgeInsets.fromLTRB(12,8.0,12,0),
               child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Invoice #: '),
+                  const Text('Invoice #: '),
                   Text(widget.invoice_id),
                 ],
               ),
@@ -118,7 +118,7 @@ class _InvoicePaymentState extends State<InvoicePayment> {
               padding: const EdgeInsets.fromLTRB(12,8.0,12,0),
               child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Total Amount: '),
+                  const Text('Total Amount: '),
                   Text("PKR: ${totalAmountMethod()}"),
                 ],
               ),
@@ -127,7 +127,7 @@ class _InvoicePaymentState extends State<InvoicePayment> {
               padding: const EdgeInsets.fromLTRB(12,8.0,12,0),
               child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Payment Status: '),
+                  const Text('Payment Status: '),
                   Container(
                     alignment: Alignment.center,
                     width: w.width * .18,
@@ -138,7 +138,7 @@ class _InvoicePaymentState extends State<InvoicePayment> {
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
-                      invoiceList[0].data!.status.toString(), style: TextStyle(color: Colors.white),),),
+                      invoiceList[0].data!.status.toString(), style: const TextStyle(color: Colors.white),),),
                 ],
               ),
             ),
@@ -165,7 +165,7 @@ class _InvoicePaymentState extends State<InvoicePayment> {
                                     children: [
 
                                       Text(invoiceList[0].data!.invoiceDetil![index].category!.name!.toString()),
-                                      Text(" /",style: textGreyStyle),
+                                      const Text(" /",style: textGreyStyle),
                                       Text(invoiceList[0].data!.invoiceDetil![index].groups!.name!.toString()),
                                     ],
                                   ),
@@ -185,14 +185,14 @@ class _InvoicePaymentState extends State<InvoicePayment> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("Course Title:  ",style: textGreyStyle,),
+                                      const Text("Course Title:  ",style: textGreyStyle,),
                                       Text(invoiceList[0].data!.invoiceDetil![index].course!.courseTitle!.toString()),
                                     ],
                                   ),
 
                                   Row(
                                     children: [
-                                      Text("Price:  ",style: textGreyStyle,),
+                                      const Text("Price:  ",style: textGreyStyle,),
                                       Text(invoiceList[0].data!.invoiceDetil![index].course!.price!.toString()),
                                     ],
                                   ),
@@ -287,7 +287,7 @@ class _InvoicePaymentState extends State<InvoicePayment> {
           ),
           content: Container(
             height: size.height * 0.10,
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children:
