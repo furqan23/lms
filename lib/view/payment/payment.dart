@@ -67,10 +67,10 @@ class _PaymentState extends State<Payment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("My Payments"),),
+      appBar: AppBar(title: const Text("My Payments"),),
       body: boolData
-          ? paymentList[0].data?.length==0?Center(child: Text("No Record Found"),):ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
+          ? paymentList[0].data?.length==0?const Center(child: Text("No Record Found"),):ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: paymentList[0].data?.length,
               itemBuilder: (context, index) {
@@ -108,7 +108,7 @@ class _PaymentState extends State<Payment> {
                     ),
                 );
               })
-          : Center(
+          : const Center(
               child: CircularProgressIndicator(),
             ),
     );

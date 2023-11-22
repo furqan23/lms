@@ -40,7 +40,7 @@ class CustomCardWidget extends StatelessWidget {
           children: [
             Column(
               children: [
-                Text("Inv"),
+                const Text("Inv"),
                 SizedBox(height: h * 0.02),
                 Text(inv),
               ],
@@ -49,7 +49,7 @@ class CustomCardWidget extends StatelessWidget {
 
             Column(
               children: [
-                Text("createDate"),
+                const Text("createDate"),
                 SizedBox(height: h * 0.02),
                 Text(createDate),
               ],
@@ -58,7 +58,7 @@ class CustomCardWidget extends StatelessWidget {
             SizedBox(width: w * 0.04),
             Column(
               children: [
-                Text("Amount"),
+                const Text("Amount"),
                 SizedBox(height: h * 0.02),
                 Text(Amount),
               ],
@@ -68,7 +68,7 @@ class CustomCardWidget extends StatelessWidget {
           ],
         ),
 
-        childrenPadding: EdgeInsets.all(20),
+        childrenPadding: const EdgeInsets.all(20),
         //expandedAlignment: Alignment.,
         expandedCrossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -88,7 +88,7 @@ class CustomCardWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
-                      Status, style: TextStyle(color: Colors.white),),),
+                      Status, style: const TextStyle(color: Colors.white),),),
                 ],
               ),
               // SizedBox(width: w * 0.05),
@@ -104,7 +104,7 @@ class CustomCardWidget extends StatelessWidget {
               Column(
                 children: [
 
-                  Text("Actions"),
+                  const Text("Actions"),
                   SizedBox(height: h * 0.01),
                   Row(
                     children: [
@@ -112,13 +112,13 @@ class CustomCardWidget extends StatelessWidget {
                           width: 30,
                           height: 30,
                           color: Colors.green,
-                          child: Icon(Icons.note,color: AppColors.whiteColor,)),
+                          child: const Icon(Icons.note,color: AppColors.whiteColor,)),
                       SizedBox(width: w * 0.01),
                       Container(
                           width: 30,
                           height: 30,
                           color: Colors.red,
-                          child: Icon(Icons.upload_rounded,color: AppColors.whiteColor,))
+                          child: const Icon(Icons.upload_rounded,color: AppColors.whiteColor,))
                     ],
                   ),
                 ],

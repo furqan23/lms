@@ -7,9 +7,11 @@ import 'package:splashapp/model/get_invoice_id_model.dart';
 import 'package:splashapp/values/colors.dart';
 import 'package:splashapp/values/my_imgs.dart';
 import 'package:splashapp/view/cart/confirmation_mesg.dart';
+import 'package:splashapp/view/test_pay/test_pay.dart';
 import 'package:splashapp/widget/incoming_payment_method_dialog.dart';
 import 'package:splashapp/widget/show_load_indicator.dart';
 
+import '../../Controller/cart_controller.dart';
 import '../../Controller/login_controller.dart';
 import '../../model/cart_model.dart';
 import '../../values/auth_api.dart';
@@ -24,16 +26,16 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  int quantity = 1;
+  final CartController cartController = Get.put(CartController());
 
   @override
   void initState() {
     super.initState();
   }
-
+  List<CartModel> cartList = [];
   List<InvoiceModel> invoiceList = [];
   List<GetInvoiceByIdModel> invoiceByIdList = [];
-  String course = 'course';// test
+  String course = 'course'; // test
   bool boolData = false;
   String? token;
 
@@ -48,6 +50,14 @@ class _CartScreenState extends State<CartScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cart'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.to(() => TestPay(cartList: cartList));
+            },
+            icon: const Icon(Icons.add),
+          ),
+        ],
       ),
       body: Column(
         children: <Widget>[
@@ -78,103 +88,101 @@ class _CartScreenState extends State<CartScreen> {
               ),
             ),
           ),
-          Expanded(
-            flex: 0,
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () {
-                    int tempQuantity = quantity; // Create a temporary variable
-                    double tempTotalBalance =
-                        totalBalance * quantity; // Create a temporary variable
-
-                    showDialog(
-                      context: context,
-                      builder: (_) {
-                        return AlertDialog(
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'Total Amount: \$${tempTotalBalance.toStringAsFixed(0)}',
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              // Row(
-                              //   mainAxisAlignment:
-                              //       MainAxisAlignment.spaceEvenly,
-                              //   children: [
-                              //     InkWell(
-                              //       onTap: () {
-                              //         if (tempQuantity > 1) {
-                              //           tempQuantity--;
-                              //           tempTotalBalance -=
-                              //               widget.cartList[0].price;
-                              //         }
-                              //       },
-                              //       child: Container(
-                              //         width: 40,
-                              //         height: 40,
-                              //         decoration: BoxDecoration(
-                              //           shape: BoxShape.circle,
-                              //           color: Colors.red,
-                              //         ),
-                              //         child: Icon(Icons.remove),
-                              //       ),
-                              //     ),
-                              //     Text(tempQuantity
-                              //         .toString()), // Display the temporary quantity
-                              //     InkWell(
-                              //       onTap: () {
-                              //         tempQuantity++;
-                              //         tempTotalBalance +=
-                              //             widget.cartList[0].price;
-                              //       },
-                              //       child: Container(
-                              //         width: 40,
-                              //         height: 40,
-                              //         decoration: BoxDecoration(
-                              //           shape: BoxShape.circle,
-                              //           color: Colors.green,
-                              //         ),
-                              //         child: Icon(Icons.add),
-                              //       ),
-                              //     ),
-                              //   ],
-                              // )
-                            ],
-                          ),
-                        );
-                      },
-                    ).then((value) {
-                      // Update the actual quantity and totalBalance after the dialog is closed
-                      if (tempQuantity != quantity) {
-                        setState(() {
-                          quantity = tempQuantity;
-                          totalBalance = tempTotalBalance;
-                        });
-                      }
-                    });
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: 50,
-                    height: 50,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.red,
-                    ),
-                    child: const Text('Test'),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // Expanded(
+          //   flex: 0,
+          //   child: Align(
+          //     alignment: Alignment.topRight,
+          //     child: Padding(
+          //       padding: const EdgeInsets.all(8.0),
+          //       child: InkWell(
+          //         onTap: () {
+          //           int tempQuantity = cartController
+          //               .quantity.value; // Create a temporary variable
+          //           double tempTotalBalance = totalBalance *
+          //               cartController
+          //                   .quantity.value; // Create a temporary variable
+          //
+          //           showDialog(
+          //             context: context,
+          //             builder: (_) {
+          //               return AlertDialog(
+          //                 content: Column(
+          //                   mainAxisSize: MainAxisSize.min,
+          //                   children: [
+          //                     Obx(() => Text(
+          //                           'Total Amount: \$${cartController.totalBalance.value.toStringAsFixed(0)}',
+          //                           style: const TextStyle(
+          //                             fontSize: 20,
+          //                             fontWeight: FontWeight.bold,
+          //                           ),
+          //                         )),
+          //                     const SizedBox(height: 10),
+          //                     Row(
+          //                       mainAxisAlignment:
+          //                           MainAxisAlignment.spaceEvenly,
+          //                       children: [
+          //                         InkWell(
+          //                           onTap: () {
+          //                             cartController.decrementQuantity(
+          //                                 widget.cartList[0].price);
+          //                           },
+          //                           child: Container(
+          //                             width: 40,
+          //                             height: 40,
+          //                             decoration: const BoxDecoration(
+          //                               shape: BoxShape.circle,
+          //                               color: Colors.red,
+          //                             ),
+          //                             child: const Icon(Icons.remove),
+          //                           ),
+          //                         ),
+          //                         Obx(() => Text(cartController.quantity.value
+          //                             .toString())), // Display the quantity from the controller
+          //                         InkWell(
+          //                           onTap: () {
+          //                             cartController.incrementQuantity(
+          //                                 widget.cartList[0].price);
+          //                           },
+          //                           child: Container(
+          //                             width: 40,
+          //                             height: 40,
+          //                             decoration: const BoxDecoration(
+          //                               shape: BoxShape.circle,
+          //                               color: Colors.green,
+          //                             ),
+          //                             child: const Icon(Icons.add),
+          //                           ),
+          //                         ),
+          //                       ],
+          //                     )
+          //                   ],
+          //                 ),
+          //               );
+          //             },
+          //           ).then((value) {
+          //             // Update the actual quantity and totalBalance after the dialog is closed
+          //             if (tempQuantity != cartController.quantity.value) {
+          //               setState(() {
+          //                 cartController.quantity.value = tempQuantity;
+          //                 totalBalance = tempTotalBalance;
+          //               });
+          //             }
+          //           });
+          //         },
+          //         child: Container(
+          //           alignment: Alignment.center,
+          //           width: 50,
+          //           height: 50,
+          //           decoration: const BoxDecoration(
+          //             shape: BoxShape.circle,
+          //             color: Colors.red,
+          //           ),
+          //           child: const Text('Test'),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           // Display the total balance at the bottom of the screen
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -230,6 +238,8 @@ class _CartScreenState extends State<CartScreen> {
           "qty": 1
         };
         requestDataList.add(cartData);
+
+        print(requestDataList);
       }
 
       final String requestBody = jsonEncode(requestDataList);

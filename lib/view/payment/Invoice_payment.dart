@@ -84,9 +84,7 @@ class _InvoicePaymentState extends State<InvoicePayment> {
 
   @override
   Widget build(BuildContext context) {
-    final w = MediaQuery
-        .of(context)
-        .size;
+    final w = MediaQuery.of(context).size;
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: AppColors.primaryColor,
@@ -98,16 +96,19 @@ class _InvoicePaymentState extends State<InvoicePayment> {
         icon: const Icon(Icons.upload_file_outlined),
         label: const Text('Upload Receipt'),
       ),
-      appBar: AppBar(title: const Text("Payment Detail"),),
-      body: boolData==false ?const Center(child: CircularProgressIndicator())
-          :Card(
+      appBar: AppBar(
+        title: const Text("Payment Detail"),
+      ),
+      body: boolData == false
+          ? const Center(child: CircularProgressIndicator())
+          : Card(
         elevation: 5,
-            child: Column(
-        children: [
-
+        child: Column(
+          children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(12,8.0,12,0),
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Invoice #: '),
                   Text(widget.invoice_id),
@@ -115,17 +116,19 @@ class _InvoicePaymentState extends State<InvoicePayment> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(12,8.0,12,0),
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Total Amount: '),
-                  Text("PKR: ${totalAmountMethod()}"),
+                  //Text("PKR: ${totalAmountMethod()}"),
                 ],
               ),
-            ),// Display the token
+            ), // Display the token
             Padding(
-              padding: const EdgeInsets.fromLTRB(12,8.0,12,0),
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Payment Status: '),
                   Container(
@@ -133,12 +136,17 @@ class _InvoicePaymentState extends State<InvoicePayment> {
                     width: w.width * .18,
                     height: w.height * .030,
                     decoration: BoxDecoration(
-                      color:invoiceList[0].data!.status.toString()=="un-paid" ? AppColors.redColor : Colors
-                          .green,
+                      color: invoiceList[0].data!.status.toString() ==
+                          "un-paid"
+                          ? AppColors.redColor
+                          : Colors.green,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
-                      invoiceList[0].data!.status.toString(), style: const TextStyle(color: Colors.white),),),
+                      invoiceList[0].data!.status.toString()??"0",
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -146,54 +154,67 @@ class _InvoicePaymentState extends State<InvoicePayment> {
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: invoiceList[0].data!.invoiceDetil!.length,
+                itemCount: invoiceList[0].data!.invoiceDetil?.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.fromLTRB(0,8.0,0,3),
+                    padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 3),
                     child: Card(
                       elevation: 5,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           children: [
-                          //  Text('Token: $token'),
+                            //  Text('Token: $token'),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
-
-                                      Text(invoiceList[0].data!.invoiceDetil![index].category!.name!.toString()),
-                                      const Text(" /",style: textGreyStyle),
-                                      Text(invoiceList[0].data!.invoiceDetil![index].groups!.name!.toString()),
+                                      Text(invoiceList[0]
+                                          .data!
+                                          .id
+                                          .toString()),
+                                      Text(invoiceList[0].data!.invoiceDetil?[index].category!.name!.toString()??"kkk"),
+                                      const Text(" /",
+                                          style: textGreyStyle),
+                                       Text(invoiceList[0].data!.invoiceDetil?[index].groups!.name!.toString()??"kkk"),
                                     ],
                                   ),
-                        //           Row(
-                        //             children: [
-                        //               Text('/',style: textGreyStyle),
-                        // Text(invoiceList[0].data!.invoiceDetil![index].groups!.name!.toString()),
-                        //             ],
-                        //           ),
+                                  //           Row(
+                                  //             children: [
+                                  //               Text('/',style: textGreyStyle),
+                                  // Text(invoiceList[0].data!.invoiceDetil![index].groups!.name!.toString()),
+                                  //             ],
+                                  //           ),
                                 ],
                               ),
                             ), // Display the invoice_id
 
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
-                                      const Text("Course Title:  ",style: textGreyStyle,),
-                                      Text(invoiceList[0].data!.invoiceDetil![index].course!.courseTitle!.toString()),
+                                      const Text(
+                                        "Course Title:  ",
+                                        style: textGreyStyle,
+                                      ),
+                                      Text(invoiceList[0].data!.invoiceDetil?[index].course!.courseTitle!.toString()?? "Eata"),
                                     ],
                                   ),
-
                                   Row(
                                     children: [
-                                      const Text("Price:  ",style: textGreyStyle,),
-                                      Text(invoiceList[0].data!.invoiceDetil![index].course!.price!.toString()),
+                                      const Text(
+                                        "Price:  ",
+                                        style: textGreyStyle,
+                                      ),
+                                     Text(invoiceList[0].data!.invoiceDetil?[index].course!.price!.toString()?? "000"),
                                     ],
                                   ),
                                 ],
@@ -207,16 +228,15 @@ class _InvoicePaymentState extends State<InvoicePayment> {
                 },
               ),
             ),
-        ],
+          ],
+        ),
       ),
-          ),
     );
   }
 
-
-
   Future pickImageFromGallery() async {
-    final pickedImage = await ImagePicker.platform.getImageFromSource(source: ImageSource.gallery);
+    final pickedImage = await ImagePicker.platform
+        .getImageFromSource(source: ImageSource.gallery);
 
     if (pickedImage == null) return;
     setState(() {
@@ -224,9 +244,10 @@ class _InvoicePaymentState extends State<InvoicePayment> {
     });
     uploadReceipt();
   }
+
   Future pickImageFromCamera() async {
-    final pickedImage =
-    await ImagePicker.platform.getImageFromSource(source: ImageSource.camera);
+    final pickedImage = await ImagePicker.platform
+        .getImageFromSource(source: ImageSource.camera);
 
     if (pickedImage == null) return;
 
@@ -235,6 +256,7 @@ class _InvoicePaymentState extends State<InvoicePayment> {
     });
     uploadReceipt();
   }
+
   void dialogue(context) {
     showDialog(
       context: context,
@@ -252,18 +274,16 @@ class _InvoicePaymentState extends State<InvoicePayment> {
                     pickImageFromCamera();
                     Navigator.pop(context);
                   },
-                  leading:const Icon(Icons.camera_alt_rounded),
-                  title:const Text("Camera"),
+                  leading: const Icon(Icons.camera_alt_rounded),
+                  title: const Text("Camera"),
                 ),
                 ListTile(
-                  onTap: (){
-
+                  onTap: () {
                     pickImageFromGallery();
                     Navigator.pop(context);
-
                   },
-                  leading:const Icon(Icons.photo_library),
-                  title:const Text("Gallery"),
+                  leading: const Icon(Icons.photo_library),
+                  title: const Text("Gallery"),
                 ),
               ],
             ),
@@ -273,9 +293,7 @@ class _InvoicePaymentState extends State<InvoicePayment> {
     );
   }
 
-
-  void uploadReceipt()async
-  {
+  void uploadReceipt() async {
     FocusScope.of(context).unfocus();
     Size size = Get.size;
     showDialog(
@@ -290,8 +308,7 @@ class _InvoicePaymentState extends State<InvoicePayment> {
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children:
-              [
+              children: [
                 CircularProgressIndicator(),
                 Text("please wait..."),
               ],
@@ -302,24 +319,25 @@ class _InvoicePaymentState extends State<InvoicePayment> {
     );
     const String url = AuthApi.uploadReceiptApi;
 
-
     final response = http.MultipartRequest("POST", Uri.parse(url));
-    File _filee=file!;
+    File _filee = file!;
     response.headers['Authorization'] = "Bearer $token";
     response.headers['Content-Type'] = 'application/json';
     response.fields['invoice_id'] = widget.invoice_id;
     // response.fields['insuring_expiry'] = formController.issuingExpiryController.text;
     // response.files.add(await http.MultipartFile.fromPath("file", File(file).path),),);
-    response.files.add(await http.MultipartFile("file",_filee.readAsBytes().asStream(),_filee.lengthSync(),filename: _filee.path.toString().split("/").last),);
+    response.files.add(
+      await http.MultipartFile(
+          "file", _filee.readAsBytes().asStream(), _filee.lengthSync(),
+          filename: _filee.path.toString().split("/").last),
+    );
 
-
-    try{
+    try {
       var request = await response.send();
       print("${request.statusCode}");
       // Get.snackbar(request.statusCode.toString(), request.headers.toString());
-      if(request.statusCode == 200)
-      {
-        Map map=jsonDecode(await request.stream.bytesToString());
+      if (request.statusCode == 200) {
+        Map map = jsonDecode(await request.stream.bytesToString());
         print("resp  **************  $map");
         Get.back();
         Get.back();
@@ -327,26 +345,20 @@ class _InvoicePaymentState extends State<InvoicePayment> {
         // formController.insuranceImage.value = '';
         // formController.issuingExpiryController.clear();
         // formController.issuingAuthorityController.clear();
-      Get.snackbar("Successful", map["message"]);
-
-      }
-      else
-      {
+        Get.snackbar("Successful", map["message"]);
+      } else {
         Get.snackbar("Failed", "Failed Uploading ");
       }
-    }
-    catch(e)
-    {
+    } catch (e) {
       print(e.toString());
     }
   }
 
-  double totalAmountMethod(){
+  double totalAmountMethod() {
     double totalAmount = 0.0;
     for (var invoice in invoiceList[0].data!.invoiceDetil!) {
-      totalAmount +=
-          double.tryParse(invoice.price.toString()) ?? 0.0;
+      totalAmount += double.tryParse(invoice.price.toString()) ?? 0.0;
     }
-return totalAmount;
+    return totalAmount;
   }
 }
