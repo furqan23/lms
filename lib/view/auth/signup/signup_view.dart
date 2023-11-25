@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:splashapp/Controller/signup_controller.dart';
+import 'package:splashapp/test_screen.dart';
 import 'package:splashapp/values/constants.dart';
 import 'package:splashapp/view/auth/login/login_view.dart';
 
@@ -226,6 +227,16 @@ class _SignUpViewState extends State<SignUpView> {
                                 child: const Text('Sign In',style: textPrimaryStyle,)),
                           ],
                         ),
+
+
+
+
+                        TextButton(
+                            onPressed: () {
+                              Get.to(() => const TestScreen());
+                            },
+                            child: const Text('.',style: textPrimaryStyle,)),
+
                       ]
                   )
                 ),

@@ -9,6 +9,7 @@ import 'package:splashapp/Controller/login_controller.dart';
 import 'package:splashapp/model/DashboardModelWithSlider.dart';
 import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/values/my_imgs.dart';
+import 'package:splashapp/view/home/my_wallet.dart';
 import 'package:splashapp/view/home_detail/home_detail.dart';
 import 'package:splashapp/view/mycourses/my_courses.dart';
 import 'package:splashapp/view/payment/payment.dart';
@@ -134,6 +135,15 @@ class _HomeScreenState extends State<HomeScreen> {
               else
                 Container( ),
               const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(width: MediaQuery.of(context).size.width,
+                  child: ElevatedButton(onPressed: (){
+                    Get.to(()=>MyWallet());
+                  }, child: Text("My Wallet")),
+                ),
+              ),
+
               GridView.builder(
                 shrinkWrap: true,
                 itemCount: dashboardList[0].data?.category?.length ?? 0,
