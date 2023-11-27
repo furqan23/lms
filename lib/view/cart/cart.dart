@@ -163,7 +163,7 @@ class _CartScreenState extends State<CartScreen> {
       body: Column(
         children: <Widget>[
           Expanded(
-            flex: 8,
+            flex: 6,
             child: Container(
               child: ListView.builder(
                 shrinkWrap: true,
@@ -210,6 +210,8 @@ class _CartScreenState extends State<CartScreen> {
               getTokenAndFetchInvoice();
             },
             child: Container(
+
+              margin: const EdgeInsets.only(bottom: 10),
               width: double.infinity,
               alignment: Alignment.center,
               height: 50,
