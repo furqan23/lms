@@ -26,7 +26,7 @@ class MyWallet extends StatefulWidget {
 
 class _MyWallletState extends State<MyWallet> {
   String walletBalanceStr = "";
-    CartController? cartController;
+  CartController? cartController;
 
   int testfee = 0;
   String? tokenn;
@@ -39,15 +39,13 @@ class _MyWallletState extends State<MyWallet> {
   bool boolData = false;
   String? token;
 
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getTokenFromHive();
     log('befre passing test feee $testfee');
-cartController=  Get.find<CartController>();
-
+    cartController = Get.find<CartController>();
   }
 
   void getInvoiceID2() async {
@@ -178,12 +176,11 @@ cartController=  Get.find<CartController>();
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text("My Wallet"),
       ),
-      floatingActionButton:  Stack(
+      floatingActionButton: Stack(
         children: [
           Positioned(
             bottom: 40,
@@ -206,23 +203,27 @@ cartController=  Get.find<CartController>();
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
                               children: [
-                           Obx(() => Text(
-                             'Total Amount: ${currency} ${cartController!.totalBalance.value }',
-                             style: const TextStyle(
-                               fontSize: 20,
-                               fontWeight: FontWeight.bold,
-                             ),
-                           ),),
+                                Obx(
+                                  () => Text(
+                                    'Total Amount: ${currency} ${cartController!.totalBalance.value}',
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
 
                                 // Text( 'Total Amount: ${currency}${_cartController.totalBalance.value.toStringAsFixed(0)}'),
                                 const SizedBox(height: 10),
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     InkWell(
                                       onTap: () {
-                                        cartController!.decrementQuantity(testfee);cartController!.update();
+                                        cartController!
+                                            .decrementQuantity(testfee);
+                                        cartController!.update();
                                       },
                                       child: Container(
                                         width: 40,
@@ -234,12 +235,14 @@ cartController=  Get.find<CartController>();
                                         child: const Icon(Icons.remove),
                                       ),
                                     ),
-                                   Obx(() =>  Text(cartController
-                                   !.quantity.value
-                                       .toString()),), // Display the quantity from the controller
+                                    Obx(
+                                      () => Text(cartController!.quantity.value
+                                          .toString()),
+                                    ), // Display the quantity from the controller
                                     InkWell(
                                       onTap: () {
-                                        cartController!.incrementQuantity(testfee);
+                                        cartController!
+                                            .incrementQuantity(testfee);
                                         cartController!.update();
                                       },
                                       child: Container(
@@ -266,7 +269,7 @@ cartController=  Get.find<CartController>();
                                     decoration: BoxDecoration(
                                         color: Colors.red,
                                         borderRadius:
-                                        BorderRadius.circular(10)),
+                                            BorderRadius.circular(10)),
                                     child: const Text("create"),
                                   ),
                                 ),
@@ -331,7 +334,6 @@ cartController=  Get.find<CartController>();
     getWalletApi();
     getTestFee();
     return "ok";
-
   }
 
   void getWalletApi() async {
@@ -366,7 +368,6 @@ cartController=  Get.find<CartController>();
     }
   }
 
-
   void getTestFee() async {
     try {
       final res = await http.post(
@@ -398,6 +399,4 @@ cartController=  Get.find<CartController>();
       throw Exception('Failed to load data');
     }
   }
-
-
 }

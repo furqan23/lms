@@ -49,8 +49,8 @@ class LoginController extends GetxController {
           // Store the token in the Hive box
           final box = await Hive.openBox<String>('tokenBox');
           await box.put('token', token);
-          await box.put('email',emailController.value.text.toString().trim());
-          await box.put('username',userName);
+          await box.put('email', emailController.value.text.toString().trim());
+          await box.put('username', userName);
           // Print the saved token
           // print('Token saved: $token');
           print('Token saved: $userName     ');

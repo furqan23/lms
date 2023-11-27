@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -8,7 +10,7 @@ import 'package:splashapp/view/auth/login/login_view.dart';
 import 'package:splashapp/view/home/home_screen.dart';
 import 'package:splashapp/view/splash/splach_screen.dart';
 import 'package:splashapp/view/walk.dart';
-
+import 'dart:developer' as developer;
 // Define your HiveBoxes class as before
 class HiveBoxes {
   static const String settingsBox = 'settingsBox';
@@ -25,7 +27,12 @@ void main() async {
   await Hive.openBox(HiveBoxes.settingsBox);
   await Hive.openBox<String>('tokenBox');
   Get.put(CartController());
-  runApp(const MyApp());
+
+  runZonedGuarded(() {
+    runApp(const MyApp());
+  }, (dynamic error, dynamic stack) {
+    developer.log("Something went wrong!", error: error, stackTrace: stack);
+  });
 }
 
 class MyApp extends StatelessWidget {

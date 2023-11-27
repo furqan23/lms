@@ -15,6 +15,7 @@ import 'package:splashapp/view/mycourses/my_courses.dart';
 import 'package:splashapp/view/payment/payment.dart';
 import 'package:splashapp/view/quizz/getcoursetest_view.dart';
 import 'package:splashapp/view/results/myresultcourse_view.dart';
+import 'package:splashapp/view/test_pay/test_pay.dart';
 import 'package:splashapp/widget/carousel_widget.dart';
 
 import '../../model/cart_model.dart';
@@ -31,6 +32,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   LoginController _loginController = Get.put(LoginController());
+
+
   List<DashboardModelWithSlider> dashboardList = [];
   bool boolData = false;
   List<CartModel> cartList = [];
@@ -101,6 +104,9 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               const SizedBox(height: 5),
+              ElevatedButton(onPressed: (){
+                Get.to(()=>TestApp());
+              }, child: Text("data")),
               if (dashboardList.isNotEmpty &&
                   dashboardList[0].data != null &&
                   dashboardList[0].data!.slides != null &&
@@ -170,6 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
+
             ],
           ),
         )
@@ -331,6 +338,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ));
                 }),
+
+
+
           ],
         ),
       );
