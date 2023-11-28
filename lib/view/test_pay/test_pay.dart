@@ -83,43 +83,43 @@ class _TestAppState extends State<TestApp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               Text('$_platformVersion\n'),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text('IMEI Number: $_imeiNo\n'),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text('Device Model: $_modelName\n'),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text('API Level: $_apiLevel\n'),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text('Manufacture Name: $_manufacturerName\n'),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text('Device Name: $_deviceName\n'),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text('Product Name: $_productName\n'),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text('CPU Type: $_cpuType\n'),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text('Hardware Name: $_hardware\n'),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
             ],

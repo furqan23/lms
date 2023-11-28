@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -9,30 +7,47 @@ import 'package:splashapp/values/colors.dart';
 import 'package:splashapp/view/auth/login/login_view.dart';
 import 'package:splashapp/view/home/home_screen.dart';
 import 'package:splashapp/view/splash/splach_screen.dart';
-import 'package:splashapp/view/walk.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'dart:developer' as developer;
-// Define your HiveBoxes class as before
+
 class HiveBoxes {
   static const String settingsBox = 'settingsBox';
 }
 
-// Define your authentication logic here (replace this with your actual logic)
 bool isUserLoggedIn = false;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeApp();
+  runApp(const MyApp());
+}
 
-  // Initialize Hive and open the settings box
+Future<void> initializeApp() async {
   await Hive.initFlutter();
   await Hive.openBox(HiveBoxes.settingsBox);
   await Hive.openBox<String>('tokenBox');
   Get.put(CartController());
 
-  runZonedGuarded(() {
-    runApp(const MyApp());
-  }, (dynamic error, dynamic stack) {
-    developer.log("Something went wrong!", error: error, stackTrace: stack);
-  });
+  await _requestPermissions();
+}
+
+Future<void> _requestPermissions() async {
+  final PermissionStatus cameraPermissionStatus =
+      await Permission.camera.status;
+  final PermissionStatus storagePermissionStatus =
+      await Permission.storage.status;
+  final PermissionStatus phonePermissionStatus = await Permission.phone.status;
+
+  if (!cameraPermissionStatus.isGranted) {
+    await Permission.camera.request();
+  }
+
+  if (!storagePermissionStatus.isGranted) {
+    await Permission.storage.request();
+  }
+  if (!phonePermissionStatus.isGranted) {
+    await Permission.phone.request();
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -40,12 +55,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Check whether the user has seen onboarding
     final settingsBox = Hive.box(HiveBoxes.settingsBox);
     final hasSeenOnboarding =
         settingsBox.get('hasSeenOnboarding', defaultValue: false);
 
-    // Determine the initial route based on whether the user is logged in
     final initialRoute = hasSeenOnboarding
         ? (isUserLoggedIn ? '/main' : '/login')
         : '/splachScreen';
@@ -61,7 +74,6 @@ class MyApp extends StatelessWidget {
         '/main': (context) => const HomeScreen(),
         '/splachScreen': (context) => const SplachScreen(),
         '/login': (context) => LoginView(),
-        // Replace with your login screen widget
       },
       debugShowCheckedModeBanner: false,
     );

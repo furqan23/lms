@@ -49,7 +49,7 @@ class _GetTestState extends State<GetTest> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Available Tests"),
+        title: const Text("Available Tests"),
       ),
       body: boolData
           ? ListView.builder(
@@ -124,7 +124,7 @@ class _GetTestState extends State<GetTest> {
     showDialog(
         context: context,
         builder: (context) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         });
     try {
       final Map<String, dynamic> requestData = {
@@ -159,7 +159,7 @@ class _GetTestState extends State<GetTest> {
               Dialog(
                 backgroundColor: Colors.transparent,
                 child: Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20)),
@@ -308,7 +308,7 @@ class _GetTestState extends State<GetTest> {
     showDialog(
         context: context,
         builder: (context) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         });
     try {
       final Map<String, dynamic> requestData = {

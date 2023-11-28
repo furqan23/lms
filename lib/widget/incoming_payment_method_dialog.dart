@@ -5,29 +5,33 @@ import 'package:splashapp/model/get_invoice_id_model.dart';
 import 'package:splashapp/values/colors.dart';
 import 'package:splashapp/view/cart/confirmation_mesg.dart';
 
-
 import 'custom_button.dart';
 
 class IncomingPaymentMethodDialog extends StatefulWidget {
   final String? text;
   final Color? color;
   final Color? textColor;
-  final String? icon;
-
+  final String? invoiceId;
+  final String? status;
   List<GetInvoiceByIdModel> invoiceByIdList = [];
 
-  IncomingPaymentMethodDialog({super.key, this.text, this.color, this.textColor,this.icon,required this.invoiceByIdList});
+  IncomingPaymentMethodDialog({
+    super.key,
+    this.text,
+    this.color,
+    this.textColor,
+    this.invoiceId,
+    this.status,
+    required this.invoiceByIdList,
+  });
 
   @override
   State<IncomingPaymentMethodDialog> createState() => _IncomingJobState();
 }
 
 class _IncomingJobState extends State<IncomingPaymentMethodDialog> {
-
-
-
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var textTheme = theme.textTheme;
     var mediaQuery = MediaQuery.of(context).size;
@@ -44,52 +48,72 @@ class _IncomingJobState extends State<IncomingPaymentMethodDialog> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Text(
-                //   "Status",
-                //   style: textTheme.headlineSmall!
-                //       .copyWith(fontWeight: FontWeight.w500),
-                // ),
-
-                Image.asset(
-                  widget.icon!,width: 130,height: 130,
-
+                Text(
+                  "invoice Id ${widget.invoiceByIdList[0].data?.inv!.invoiceDetil?[0].invoiceId}",
+                  textAlign: TextAlign.center,
+                  style: textTheme.headlineSmall!
+                      .copyWith(fontWeight: FontWeight.w100),
                 ),
+                Text(
+                  "Price ${widget.invoiceByIdList[0].data?.inv!.invoiceDetil?[0].price}",
+                  textAlign: TextAlign.center,
+                  style: textTheme.headlineSmall!
+                      .copyWith(fontWeight: FontWeight.w100),
+                ),
+
 
                 const SizedBox(
                   height: 10,
                 ),
                 Text(
-                 "Payment Methods",
+                  "Payment Methods",
                   textAlign: TextAlign.center,
                   style: textTheme.headlineSmall!
                       .copyWith(fontWeight: FontWeight.w100),
                 ),
-               const SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
 
                 CustomButton(
-                title: "${widget.invoiceByIdList[0].data?.pMethods?[0].paymentTitle}",colorOne: AppColors.tbtn1, colorTwo: AppColors.tbtn2,
-                onPressed: ()  {
-                // Get.back();
-                Get.to(()=>ConfirmationMesg(data:widget.invoiceByIdList[0].data?.pMethods?[0].description??"na"));
-                },
-                ),
-
-                CustomButton(
-                  title: "${widget.invoiceByIdList[0].data?.pMethods?[1].paymentTitle}",colorOne: AppColors.tbtn1, colorTwo: AppColors.tbtn2,
-                  onPressed: ()  {
+                  title:
+                      "${widget.invoiceByIdList[0].data?.pMethods?[0].paymentTitle}",
+                  colorOne: AppColors.tbtn1,
+                  colorTwo: AppColors.tbtn2,
+                  onPressed: () {
                     // Get.back();
-                    Get.to(()=>ConfirmationMesg(data:widget.invoiceByIdList[0].data?.pMethods?[1].description??"na"));
+                    Get.to(() => ConfirmationMesg(
+                        data: widget.invoiceByIdList[0].data?.pMethods?[0]
+                                .description ??
+                            "na"));
                   },
                 ),
 
+                CustomButton(
+                  title:
+                      "${widget.invoiceByIdList[0].data?.pMethods?[1].paymentTitle}",
+                  colorOne: AppColors.tbtn1,
+                  colorTwo: AppColors.tbtn2,
+                  onPressed: () {
+                    // Get.back();
+                    Get.to(() => ConfirmationMesg(
+                        data: widget.invoiceByIdList[0].data?.pMethods?[1]
+                                .description ??
+                            "na"));
+                  },
+                ),
 
                 CustomButton(
-                  title: "${widget.invoiceByIdList[0].data?.pMethods?[2].paymentTitle}",colorOne: AppColors.tbtn1, colorTwo: AppColors.tbtn2,
-                  onPressed: ()  {
+                  title:
+                      "${widget.invoiceByIdList[0].data?.pMethods?[2].paymentTitle}",
+                  colorOne: AppColors.tbtn1,
+                  colorTwo: AppColors.tbtn2,
+                  onPressed: () {
                     // Get.back();
-                    Get.to(()=>ConfirmationMesg(data:widget.invoiceByIdList[0].data?.pMethods?[2].description??"na"));
+                    Get.to(() => ConfirmationMesg(
+                        data: widget.invoiceByIdList[0].data?.pMethods?[2]
+                                .description ??
+                            "na"));
                   },
                 ),
               ],

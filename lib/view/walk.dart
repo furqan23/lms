@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -76,10 +78,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     await settingsBox.put('hasSeenOnboarding', true);
 
     if (isUserLoggedIn) {
-      Get.to(() => const HomeScreen());
+      Get.offAll(() => HomeScreen());
       print('User is in the Home screen');
     } else {
-      Get.to(() =>   LoginView());
+      Get.offAll(() =>   const LoginView());
       print('User is in the Login screen');
     }
   }
@@ -97,7 +99,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: [
                 Expanded(
                   child: PageView.builder(
-                    physics: ClampingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     controller: _pageController,
                     itemCount: onboardingPages.length,
                     onPageChanged: _onPageChanged,
@@ -124,7 +126,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             child: FloatingActionButton(
                               onPressed: _onGetStartedPressed,
                               backgroundColor: AppColors.blackColor,
-                              child: Icon(
+                              child: const Icon(
                                 Icons.arrow_forward,
                                 color: AppColors.whiteColor,
                               ),
@@ -202,7 +204,7 @@ class OnboardingPage extends StatelessWidget {
                   fit: BoxFit.fill,
                 )),
           ),
-          SizedBox(height: Dimens.size30),
+          const SizedBox(height: Dimens.size30),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: Dimens.size15),
             child: Text(
@@ -215,7 +217,7 @@ class OnboardingPage extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(height: Dimens.size10),
+          const SizedBox(height: Dimens.size10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: Dimens.size15),
             child: Text(

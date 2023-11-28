@@ -21,7 +21,7 @@ class _SplachScreenState extends State<SplachScreen> {
     await settingsBox.put('hasSeenOnboarding', true);
 
     if (isUserLoggedIn) {
-      Get.to(() => const HomeScreen());
+      Get.to(() => HomeScreen());
       print('User is in the Home screen');
     } else {
       Get.to(() =>  const LoginView());

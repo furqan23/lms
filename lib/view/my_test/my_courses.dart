@@ -39,6 +39,7 @@ class _MyCoursesState extends State<MyCourses> {
                     Get.to(()=>MyCourseDetail(myCoursesList[0].data![index].courseId!));
                   },
                   child: DashbaordCardTwo(
+                    group: myCoursesList[0].data![index].groupId,
                     id: myCoursesList[0].data![index].name,
                     catName: myCoursesList[0].data![index].courseTitle,
                     name:"${myCoursesList[0].data![index].firstName} ${myCoursesList[0].data![index].lastName} ",

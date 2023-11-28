@@ -52,7 +52,22 @@ class _CartScreenState extends State<CartScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cart'),
-
+        actions: [
+          // IconButton(
+          //   onPressed: () {
+          //     if (widget.cartList.isNotEmpty) {
+          //       print('before sending let' + widget.cartList.length.toString());
+          //          Get.to(() => Khushal(
+          //              cartList: widget.cartList,
+          //          ));
+          //     } else {
+          //       // Handle the case when the cart list is empty
+          //       // For example, show a snackbar or an alert to inform the user.
+          //     }
+          //   },
+          //   icon: const Icon(Icons.payments_outlined),
+          // ),
+        ],
       ),
       // floatingActionButton: Stack(
       //   children: [
@@ -210,7 +225,6 @@ class _CartScreenState extends State<CartScreen> {
               getTokenAndFetchInvoice();
             },
             child: Container(
-
               margin: const EdgeInsets.only(bottom: 10),
               width: double.infinity,
               alignment: Alignment.center,
@@ -234,7 +248,7 @@ class _CartScreenState extends State<CartScreen> {
     token = await LoginController().getTokenFromHive();
     // print('Token: $token');
     getInvoiceID();
-   // getInvoiceID2();
+    // getInvoiceID2();
   }
 
   void getInvoiceID() async {
@@ -329,7 +343,8 @@ class _CartScreenState extends State<CartScreen> {
           // print('Parsed Data: $mydata');
           invoiceByIdList.add(GetInvoiceByIdModel.fromJson(mydata));
           Get.dialog(IncomingPaymentMethodDialog(
-            icon: MyImgs.dialogIcon,
+            invoiceId: mydata["id"],
+            status: mydata["status"],
             text: mydata["message"],
             invoiceByIdList: invoiceByIdList,
           ));

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:splashapp/values/colors.dart';
 
 class DashbaordCardTwo extends StatefulWidget {
-  String? id, catName, description, slug, seat, name, registermethod, buttonText;
+  String? id, catName, description, slug, seat, name, registermethod, buttonText,group;
 
   DashbaordCardTwo({
     super.key,
@@ -13,6 +13,7 @@ class DashbaordCardTwo extends StatefulWidget {
     required this.slug,
     required this.seat,
     required this.registermethod,
+    required this.group,
     required this.buttonText,
 
   });
@@ -30,7 +31,7 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
         elevation: 5,
         child: Container(
           width: double.infinity,
-          height: 130,
+          height: 150,
           decoration: BoxDecoration(
               color: Colors.white12,
               borderRadius: BorderRadius.circular(5),
@@ -45,13 +46,14 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                 child: Container(
                   alignment: Alignment.center,
                   width: 100,
-                  height: 100,
+                  height: 130,
                   decoration: BoxDecoration(
                     color: AppColors.lightColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
                     children: [
+
                       // SizedBox(
                       //     height: MediaQuery.of(context).size.height * 0.05),
                       // Center(
@@ -69,7 +71,7 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
 
                       Center(
                           child: Image.network(
-                              "https://dav.binshaharts.com/frontend/img/learning.png")),
+                              "https://dav.binshaharts.com/frontend/img/learning.png",),),
                     ],
                   ),
                 ),
@@ -79,13 +81,18 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                      "${widget.group!}",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Row(
                         children: [
+
                           Text(
                             "${widget.catName!}/${widget.slug}",
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           // Text(
                           //   widget.name!,
@@ -98,13 +105,13 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                       padding: const EdgeInsets.only(top: 10),
                       child: Row(
                         children: [
-                          Text(
+                          const Text(
                             "Lecturer: ",
                             style: TextStyle(color: Colors.grey, fontSize: 14),
                           ),
                           Text(
                             widget.name!,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           )
                         ],
                       ),
@@ -137,6 +144,7 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                           //   widget.seat!,
                           //   style: TextStyle(fontWeight: FontWeight.bold),
                           // ),
+
                           const SizedBox(width: 20),
                           Container(
                             alignment: Alignment.center,

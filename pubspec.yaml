@@ -54,6 +54,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   device_info_plus: ^9.1.1
   device_information: ^0.0.4
+  permission_handler:
 
 
 

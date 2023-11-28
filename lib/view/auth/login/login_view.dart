@@ -38,21 +38,20 @@ class _LoginViewState extends State<LoginView> {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0.0,
-          ),
-          body: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 0),
-                child: Image(
-                  image: AssetImage(tSplachLogo),
-                  width: size.width * 0.57,
+          body: Container(
+            child: ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Container(
+
+                    margin: const EdgeInsets.only(bottom: 0),
+                    child: Image(
+                      image: AssetImage(tSplachLogo),
+                    ),
+                  ),
                 ),
-              ),
-              Expanded(
-                child: Container(
+                Container(
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(
@@ -69,144 +68,144 @@ class _LoginViewState extends State<LoginView> {
                     ],
                   ),
                   margin: const EdgeInsets.only(
-                    top: 30,
+                    top: 10,
                   ),
                   alignment: Alignment.topCenter,
                   child: Form(
-                    key: _formKey,
+                      key: _formKey,
                       child: SingleChildScrollView(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: size.height * 0.03,
-                      ),
-                      Text(
-                        "Login",
-                        style: TextStyle(
-                            fontSize: size.width * 0.07,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: size.height * 0.01,
-                      ),
-                      SizedBox(
-                        height: size.width * 0.02,
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: TextFormField(
-                          controller: _loginController.emailController.value,
-                          decoration: const InputDecoration(
-                              contentPadding: EdgeInsets.all(9),
-                              hintText: 'Email ID',
-                              border: OutlineInputBorder()),
-                          validator: (value) =>
-                              ValidationUtils.validateEmail(value!),
-                        ),
-                      ),
-                      SizedBox(
-                        height: size.width * 0.02,
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: TextFormField(
-                          controller:
-                          _loginController.passwordController.value,
-                          obscureText: _obscureText,
-                          decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _obscureText = !_obscureText;
-                                  });
-                                },
-                                icon: Icon(
-                                  _obscureText
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                ),
-                              ),
-                              contentPadding: const EdgeInsets.all(9),
-                              hintText: 'Password',
-                              border: OutlineInputBorder()),
-                          validator: (value) =>
-                              ValidationUtils.validatePassword(value!),
-                        ),
-                      ),
-
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: TextButton(
-                          onPressed: () {
-                            Get.to(
-                                  () => const ForgetPassword(),
-                            );
-                          },
-                          child: const Text('Forgot Password',style: textPrimaryStyle,),
-                        ),
-                      ),
-
-                      Obx(() {
-                        return InkWell(
-                            onTap: () {
-                              if (_formKey.currentState!.validate()) {
-                                _loginController.loginApi();
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                        'Please enter your email and password.'),
-                                  ),
-                                );
-                              }
-                            },
-                            child:
-                                 Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Container(
-                              alignment: Alignment.center,
-                              width: double.infinity,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                  BorderRadius.circular(10),
-                                color: AppColors.primaryColor,
-                              ),
-                              child: _loginController.loading.value
-                                  ? const Center(
-                                child: CircularProgressIndicator(
-                                  color: AppColors.whiteColor,
-                                ),
-                              ):const Text(
-                                  'Login',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                  ),
-                              ),
-                            ),
-                                ));
-                      }),
-                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Don't have an account?"),
-                          TextButton(
+                          SizedBox(
+                            height: size.height * 0.03,
+                          ),
+                          Text(
+                            "Login",
+                            style: TextStyle(
+                                fontSize: size.width * 0.07,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: size.height * 0.01,
+                          ),
+                          SizedBox(
+                            height: size.width * 0.02,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: TextFormField(
+                              controller: _loginController.emailController.value,
+                              decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.all(9),
+                                  hintText: 'Email ID',
+                                  border: OutlineInputBorder()),
+                              validator: (value) =>
+                                  ValidationUtils.validateEmail(value!),
+                            ),
+                          ),
+                          SizedBox(
+                            height: size.width * 0.02,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: TextFormField(
+                              controller:
+                                  _loginController.passwordController.value,
+                              obscureText: _obscureText,
+                              decoration: InputDecoration(
+                                  suffixIcon: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _obscureText = !_obscureText;
+                                      });
+                                    },
+                                    icon: Icon(
+                                      _obscureText
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                    ),
+                                  ),
+                                  contentPadding: const EdgeInsets.all(9),
+                                  hintText: 'Password',
+                                  border: OutlineInputBorder()),
+                              validator: (value) =>
+                                  ValidationUtils.validatePassword(value!),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: TextButton(
                               onPressed: () {
-                                Get.to(() => const SignUpView());
+                                Get.to(
+                                  () => const ForgetPassword(),
+                                );
                               },
-                              child: const Text('Sign Up',style: textPrimaryStyle,))
+                              child: const Text(
+                                'Forgot Password',
+                                style: textPrimaryStyle,
+                              ),
+                            ),
+                          ),
+                          Obx(() {
+                            return InkWell(
+                                onTap: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    _loginController.loginApi();
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                            'Please enter your email and password.'),
+                                      ),
+                                    );
+                                  }
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    width: double.infinity,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: AppColors.primaryColor,
+                                    ),
+                                    child: _loginController.loading.value
+                                        ? const Center(
+                                            child: CircularProgressIndicator(
+                                              color: AppColors.whiteColor,
+                                            ),
+                                          )
+                                        : const Text(
+                                            'Login',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                  ),
+                                ));
+                          }),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text("Don't have an account?"),
+                              TextButton(
+                                  onPressed: () {
+                                    Get.to(() => const SignUpView());
+                                  },
+                                  child: const Text(
+                                    'Sign Up',
+                                    style: textPrimaryStyle,
+                                  ))
+                            ],
+                          )
                         ],
-                      )
-                    ],
-                  ))),
+                      ))),
                 ),
-              ),
-
-            ],
+              ],
+            ),
           ),
         ),
       ),

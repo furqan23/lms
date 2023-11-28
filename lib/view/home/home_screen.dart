@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
@@ -31,6 +33,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   LoginController _loginController = Get.put(LoginController());
 
 
@@ -105,8 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               const SizedBox(height: 5),
               ElevatedButton(onPressed: (){
-                Get.to(()=>TestApp());
-              }, child: Text("data")),
+                Get.to(()=>const TestApp());
+              }, child: const Text("data")),
               if (dashboardList.isNotEmpty &&
                   dashboardList[0].data != null &&
                   dashboardList[0].data!.slides != null &&
@@ -143,14 +146,15 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Container(width: MediaQuery.of(context).size.width,
+                child: SizedBox(width: MediaQuery.of(context).size.width,
                   child: ElevatedButton(onPressed: (){
-                    Get.to(()=>MyWallet());
-                  }, child: Text("My Wallet")),
+                    Get.to(()=>const MyWallet());
+                  }, child: const Text("My Wallet")),
                 ),
               ),
 
               GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: dashboardList[0].data?.category?.length ?? 0,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

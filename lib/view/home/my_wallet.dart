@@ -27,7 +27,7 @@ class MyWallet extends StatefulWidget {
 class _MyWallletState extends State<MyWallet> {
   String walletBalanceStr = "";
   CartController? cartController;
-
+  bool isLoading = true;
   int testfee = 0;
   String? tokenn;
   List<CartModel> cartList = [];
@@ -53,7 +53,10 @@ class _MyWallletState extends State<MyWallet> {
     try {
       List<Map<String, dynamic>> requestDataList = [];
 
+
+      log("cartlenht: $cartList.length.toString()");
       for (int i = 0; i < cartList.length; i++) {
+
         Map<String, dynamic> cartData = {
           "course_id": cartList[i].courseId,
           "group_id": cartList[i].groupId,
@@ -140,7 +143,8 @@ class _MyWallletState extends State<MyWallet> {
           // print('Parsed Data: $mydata');
           invoiceByIdList.add(GetInvoiceByIdModel.fromJson(mydata));
           Get.dialog(IncomingPaymentMethodDialog(
-            icon: MyImgs.dialogIcon,
+            invoiceId: mydata['id'],
+            status: mydata["status"],
             text: mydata["message"],
             invoiceByIdList: invoiceByIdList,
           ));
@@ -178,7 +182,7 @@ class _MyWallletState extends State<MyWallet> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("My Wallet"),
+        title: const Text("My Wallet"),
       ),
       floatingActionButton: Stack(
         children: [
@@ -203,14 +207,24 @@ class _MyWallletState extends State<MyWallet> {
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
                               children: [
+                                const Text(
+                                  'Total Amount',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                                 Obx(
-                                  () => Text(
-                                    'Total Amount: ${currency} ${cartController!.totalBalance.value}',
+                                      () => Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Text(
+                                    ' ${currency} ${cartController!.totalBalance.value}',
                                     style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
                                     ),
                                   ),
+                                      ),
                                 ),
 
                                 // Text( 'Total Amount: ${currency}${_cartController.totalBalance.value.toStringAsFixed(0)}'),
@@ -257,7 +271,7 @@ class _MyWallletState extends State<MyWallet> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 InkWell(
                                   onTap: () {
                                     getTokenAndFetchInvoice();
@@ -290,8 +304,9 @@ class _MyWallletState extends State<MyWallet> {
                   },
                 );
               },
+              backgroundColor: Colors.blue,
               child: const Icon(Icons.add),
-              backgroundColor: Colors.blue, // Replace with your desired color
+              // Replace with your desired color
             ),
           ),
         ],
@@ -311,17 +326,23 @@ class _MyWallletState extends State<MyWallet> {
           const SizedBox(
             height: 30,
           ),
-          SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: Card(
-                  elevation: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Text(
-                      "Current Balance $currency $walletBalanceStr",
-                      style: const TextStyle(color: Colors.green, fontSize: 20),
-                    ),
-                  ))),
+          isLoading
+              ? Center(
+            child: CircularProgressIndicator(), // Show loading indicator while data is being fetched
+          )
+              : SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Card(
+              elevation: 1,
+              child: Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Text(
+                  "Current Balance $currency ${walletBalanceStr.isEmpty ? 'Loading...' : walletBalanceStr}",
+                  style: const TextStyle(color: Colors.green, fontSize: 20),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -337,6 +358,7 @@ class _MyWallletState extends State<MyWallet> {
   }
 
   void getWalletApi() async {
+
     try {
       final res = await http.get(
         Uri.parse(AuthApi.getMyWalletApi),
@@ -354,7 +376,7 @@ class _MyWallletState extends State<MyWallet> {
           // courseList.add(CourseModel.fromJson(mydata));
           walletBalanceStr = mydata['data']["balance"].toString();
           setState(() {
-            // boolData = true;
+            isLoading = false; // Set isLoading to false when data is loaded
           });
         } else {
           throw Exception('Empty response');

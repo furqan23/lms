@@ -38,6 +38,7 @@ class _MyCoursesState extends State<MyCourses> {
                         myCoursesList[0].data![index].courseId!));
                   },
                   child: DashbaordCardTwo(
+                    group: myCoursesList[0].data![index].groupId,
                     id: myCoursesList[0].data![index].name,
                     catName: myCoursesList[0].data![index].courseTitle,
                     name:
