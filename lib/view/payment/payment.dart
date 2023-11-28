@@ -70,7 +70,6 @@ class _PaymentState extends State<Payment> {
       appBar: AppBar(title: const Text("My Payments"),),
       body: boolData
           ? paymentList[0].data?.length==0?const Center(child: Text("No Record Found"),):ListView.builder(
-
               shrinkWrap: true,
               itemCount: paymentList[0].data?.length,
               itemBuilder: (context, index) {
