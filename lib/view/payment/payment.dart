@@ -67,49 +67,67 @@ class _PaymentState extends State<Payment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("My Payments"),),
-      body: boolData
-          ? paymentList[0].data?.length==0?const Center(child: Text("No Record Found"),):ListView.builder(
-              shrinkWrap: true,
-              itemCount: paymentList[0].data?.length,
-              itemBuilder: (context, index) {
-                String? createDateStr = paymentList[0].data![index].createdAt;
-                DateTime createDate =
-                    DateTime.tryParse(createDateStr!) ?? DateTime.now();
+      appBar: AppBar(
+        title: const Text("My Payments"),
+      ),
+      body: paymentList.isEmpty
+          ? Center(
+        child: CircularProgressIndicator(),
+      )
+          : ListView.builder(
+        itemCount: paymentList[0].data?.length ?? 0,
+        itemBuilder: (context, index) {
+          if (paymentList[0].data != null) {
+            String? createDateStr =
+                paymentList[0].data![index].createdAt;
+            DateTime createDate =
+                DateTime.tryParse(createDateStr!) ?? DateTime.now();
 
-                // Format the date to show only the date portion
-                String formattedDate =
-                    DateFormat('yyyy-MM-dd').format(createDate);
-
-                // Calculate the total price by summing up all prices in invoiceDetil
-                double totalAmount = 0.0;
-                for (var invoice in paymentList[0].data![index].invoiceDetil!) {
-                  totalAmount +=
-                      double.tryParse(invoice.price.toString()) ?? 0.0;
-                }
-
-                return Padding(
+            // Format the date to show only the date portion
+            String formattedDate =
+            DateFormat('yyyy-MM-dd').format(createDate);
+            // Calculate the total price by summing up all prices in invoiceDetil
+            double totalAmount = 0.0;
+            for (var invoice
+            in paymentList[0].data![index].invoiceDetil!) {
+              totalAmount +=
+                  double.tryParse(invoice.price.toString()) ?? 0.0;
+            }
+            return Column(
+              children: [
+                Padding(
                   padding: const EdgeInsets.all(8.0),
-                    child: CustomCardWidget(
-                      onPressed: (){
-                        Get.to(()=>InvoicePayment(invoice_id: paymentList[0].data![index].id.toString()));
-                      },
-                      title: '1',
-                      inv: paymentList[0]
-                          .data![index]
-                          .id
-                          .toString(), // Display the formatted date as the invoice
-                      Amount: totalAmount
-                          .toStringAsFixed(2), // Display the total amount
-                      createDate: formattedDate, // Display the formatted date
-                      Status: paymentList[0].data![index].status.toString(),
-                      Attachment: 'Show',
-                    ),
-                );
-              })
-          : const Center(
-              child: CircularProgressIndicator(),
-            ),
+                  child: CustomCardWidget(
+                    onPressed: () {
+                      Get.to(() => InvoicePayment(
+                          invoice_id:  paymentList[0]
+                              .data![index]
+                              .id
+                              .toString(),
+                      ),);
+                    },
+                    title: '${index + 1}',
+                    inv: paymentList[0]
+                        .data![index]
+                        .id
+                        .toString(), // Display the formatted date as the invoice
+                    Amount: totalAmount
+                        .toStringAsFixed(2), // Display the total amount
+                    createDate: formattedDate, // Display the formatted date
+                    Status: paymentList[0]
+                        .data![index]
+                        .status
+                        .toString(),
+                    Attachment: 'Show',
+                  ),
+                ),
+              ],
+            );
+          } else {
+            return SizedBox.shrink(); // Return an empty container or nothing
+          }
+        },
+      ),
     );
   }
 }

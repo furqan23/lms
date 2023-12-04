@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:splashapp/model/createinvoice_model.dart';
 import 'package:splashapp/model/get_invoice_id_model.dart';
 import 'package:splashapp/values/colors.dart';
@@ -31,8 +32,23 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
     super.initState();
+    getCartData();
   }
+  Future<void> getCartData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final cartData = prefs.getString('cartData');
 
+    if (cartData != null && cartData.isNotEmpty) {
+      Iterable decoded = json.decode(cartData);
+      List<CartModel> cartItems = decoded.map((item) => CartModel.fromJson(item)).toList();
+
+      setState(() {
+        cartList = cartItems;
+      });
+      print('Fetched Cart Data: $cartList');
+    }
+
+  }
   List<CartModel> cartList = [];
   List<InvoiceModel> invoiceList = [];
   List<GetInvoiceByIdModel> invoiceByIdList = [];
@@ -40,14 +56,17 @@ class _CartScreenState extends State<CartScreen> {
   String test = 'test'; // test
   bool boolData = false;
   String? token;
+  double calculateTotalBalance() {
+    return cartList.fold(0.0, (double sum, CartModel cartItem) {
+      return sum + cartItem.price;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     // Calculate the total balance by summing up the prices of all items in the cart
-    double totalBalance =
-        widget.cartList.fold(0.0, (double sum, CartModel cartItem) {
-      return sum + cartItem.price;
-    });
+
+    double totalBalance = calculateTotalBalance();
 
     return Scaffold(
       appBar: AppBar(
@@ -182,15 +201,16 @@ class _CartScreenState extends State<CartScreen> {
             child: Container(
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: widget.cartList.length,
+                itemCount: cartList.length,
                 itemBuilder: (context, index) {
-                  final cartItem = widget.cartList[index];
+                  final cartItem =  cartList[index];
                   return Card(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Text("Group Name : ${cartItem.groupname.toString()}"),
                           Text("Group id : ${cartItem.groupId.toString()}"),
                           Text("Course id :  ${cartItem.courseId.toString()}"),
                           Text(
@@ -211,7 +231,7 @@ class _CartScreenState extends State<CartScreen> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              'Total Amount: \$${totalBalance.toStringAsFixed(0)}',
+              'Total Amount: \$${totalBalance.toStringAsFixed(2)}',
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -256,11 +276,11 @@ class _CartScreenState extends State<CartScreen> {
     try {
       List<Map<String, dynamic>> requestDataList = [];
 
-      for (int i = 0; i < widget.cartList.length; i++) {
+      for (int i = 0; i < cartList.length; i++) {
         Map<String, dynamic> cartData = {
-          "course_id": widget.cartList[i].courseId,
-          "group_id": widget.cartList[i].groupId,
-          "category_id": widget.cartList[i].categoryid,
+          "course_id": cartList[i].courseId,
+          "group_id": cartList[i].groupId,
+          "category_id": cartList[i].categoryid,
           'fee_type': course,
           "qty": 1
         };
@@ -487,4 +507,6 @@ class _CartScreenState extends State<CartScreen> {
   //     // Handle exceptions here
   //   }
   // }
+
+
 }

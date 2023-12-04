@@ -30,11 +30,36 @@ class IncomingPaymentMethodDialog extends StatefulWidget {
 }
 
 class _IncomingJobState extends State<IncomingPaymentMethodDialog> {
+
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var textTheme = theme.textTheme;
     var mediaQuery = MediaQuery.of(context).size;
+    List<Widget> customButtons = [];
+
+    for (int i = 0; i < 3; i++) {
+      if (widget.invoiceByIdList.isNotEmpty &&
+          widget.invoiceByIdList[0].data?.pMethods != null &&
+          widget.invoiceByIdList[0].data!.pMethods!.length > i) {
+        final paymentMethod =
+        widget.invoiceByIdList[0].data!.pMethods![i];
+
+        customButtons.add(
+          CustomButton(
+            title: "${paymentMethod.paymentTitle}",
+            colorOne: AppColors.tbtn1,
+            colorTwo: AppColors.tbtn2,
+            onPressed: () {
+              Get.to(() => ConfirmationMesg(
+                data: paymentMethod.description ?? "na",
+              ));
+            },
+          ),
+        );
+      }
+    }
     return Dialog(
       child: Container(
           padding: EdgeInsets.all(20),
@@ -75,46 +100,8 @@ class _IncomingJobState extends State<IncomingPaymentMethodDialog> {
                   height: 30,
                 ),
 
-                CustomButton(
-                  title:
-                      "${widget.invoiceByIdList[0].data?.pMethods?[0].paymentTitle}",
-                  colorOne: AppColors.tbtn1,
-                  colorTwo: AppColors.tbtn2,
-                  onPressed: () {
-                    // Get.back();
-                    Get.to(() => ConfirmationMesg(
-                        data: widget.invoiceByIdList[0].data?.pMethods?[0]
-                                .description ??
-                            "na"));
-                  },
-                ),
-
-                CustomButton(
-                  title:
-                      "${widget.invoiceByIdList[0].data?.pMethods?[1].paymentTitle}",
-                  colorOne: AppColors.tbtn1,
-                  colorTwo: AppColors.tbtn2,
-                  onPressed: () {
-                    // Get.back();
-                    Get.to(() => ConfirmationMesg(
-                        data: widget.invoiceByIdList[0].data?.pMethods?[1]
-                                .description ??
-                            "na"));
-                  },
-                ),
-
-                CustomButton(
-                  title:
-                      "${widget.invoiceByIdList[0].data?.pMethods?[2].paymentTitle}",
-                  colorOne: AppColors.tbtn1,
-                  colorTwo: AppColors.tbtn2,
-                  onPressed: () {
-                    // Get.back();
-                    Get.to(() => ConfirmationMesg(
-                        data: widget.invoiceByIdList[0].data?.pMethods?[2]
-                                .description ??
-                            "na"));
-                  },
+                Column(
+                  children: customButtons,
                 ),
               ],
             ),

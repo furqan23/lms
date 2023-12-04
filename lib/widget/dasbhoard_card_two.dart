@@ -70,8 +70,22 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                       //             fontWeight: FontWeight.w700))),
 
                       Center(
-                          child: Image.network(
-                              "https://dav.binshaharts.com/frontend/img/learning.png",),),
+                        child: Image.network(
+                          "https://dav.binshaharts.com/frontend/img/learning.png",
+                          errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                            // Returning a local image if the network image fails to load
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(
+                                'assets/images/logo.png', // Replace 'local_image.png' with your local image asset path
+                                width: 100, // Adjust width and height as needed
+                                height: 100,
+                                fit: BoxFit.contain, // Adjust the fit property as per your requirement
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),

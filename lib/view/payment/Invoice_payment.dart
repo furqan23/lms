@@ -35,6 +35,7 @@ class _InvoicePaymentState extends State<InvoicePayment> {
   void initState() {
     super.initState();
     getTokenAndFetchInvoice();
+    print('Invoice ID: ${widget.invoice_id}');
   }
 
   Future<void> getTokenAndFetchInvoice() async {
@@ -102,135 +103,172 @@ class _InvoicePaymentState extends State<InvoicePayment> {
       body: boolData == false
           ? const Center(child: CircularProgressIndicator())
           : Card(
-        elevation: 5,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              elevation: 5,
+              child: Column(
                 children: [
-                  const Text('Invoice #: '),
-                  Text(widget.invoice_id),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Total Amount: '),
-                  //Text("PKR: ${totalAmountMethod()}"),
-                ],
-              ),
-            ), // Display the token
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Payment Status: '),
-                  Container(
-                    alignment: Alignment.center,
-                    width: w.width * .18,
-                    height: w.height * .030,
-                    decoration: BoxDecoration(
-                      color: invoiceList[0].data!.status.toString() ==
-                          "un-paid"
-                          ? AppColors.redColor
-                          : Colors.green,
-                      borderRadius: BorderRadius.circular(6),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Invoice #: '),
+                        Text(widget.invoice_id),
+                      ],
                     ),
-                    child: Text(
-                      invoiceList[0].data!.status.toString()??"0",
-                      style: const TextStyle(color: Colors.white),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(12, 8.0, 12, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Total Amount: '),
+                        //Text("PKR: ${totalAmountMethod()}"),
+                      ],
+                    ),
+                  ), // Display the token
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Payment Status: '),
+                        Container(
+                          alignment: Alignment.center,
+                          width: w.width * .18,
+                          height: w.height * .030,
+                          decoration: BoxDecoration(
+                            color: invoiceList[0].data!.status.toString() ==
+                                    "un-paid"
+                                ? AppColors.redColor
+                                : Colors.green,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Text(
+                            invoiceList[0].data!.status.toString() ?? "0",
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: invoiceList[0].data!.invoiceDetil?.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 3),
+                          child: Card(
+                            elevation: 5,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  //  Text('Token: $token'),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(invoiceList[0]
+                                                .data!
+                                                .id
+                                                .toString()),
+                                            Text(invoiceList[0]
+                                                    .data!
+                                                    .invoiceDetil?[index]
+                                                    .category!
+                                                    .name!
+                                                    .toString() ??
+                                                "kkk"),
+                                            const Text(" /",
+                                                style: textGreyStyle),
+                                            Text(invoiceList[0]
+                                                    .data!
+                                                    .invoiceDetil?[index]
+                                                    .groups!
+                                                    .name!
+                                                    .toString() ??
+                                                "kkk"),
+                                          ],
+                                        ),
+                                        //           Row(
+                                        //             children: [
+                                        //               Text('/',style: textGreyStyle),
+                                        // Text(invoiceList[0].data!.invoiceDetil![index].groups!.name!.toString()),
+                                        //             ],
+                                        //           ),
+                                      ],
+                                    ),
+                                  ), // Display the invoice_id
+
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const Text(
+                                              "Course Title:  ",
+                                              style: textGreyStyle,
+                                            ),
+                                            Text(invoiceList[0]
+                                                    .data!
+                                                    .invoiceDetil?[index]
+                                                    .course!
+                                                    .courseTitle!
+                                                    .toString() ??
+                                                "Eata"),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            const Text(
+                                              "Price:  ",
+                                              style: textGreyStyle,
+                                            ),
+                                            Text(invoiceList[0]
+                                                        .data!
+                                                        .invoiceDetil?[index]
+                                                        .course!
+                                                        .price !=
+                                                    null
+                                                ? invoiceList[0]
+                                                    .data!
+                                                    .invoiceDetil![index]
+                                                    .course!
+                                                    .price!
+                                                    .toString()
+                                                : "000"),
+                                            Text(invoiceList[0].data!.userId !=
+                                                    null
+                                                ? invoiceList[0]
+                                                    .data!
+                                                    .userId
+                                                    .toString()
+                                                : "000"),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
               ),
             ),
-
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: invoiceList[0].data!.invoiceDetil?.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 3),
-                    child: Card(
-                      elevation: 5,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            //  Text('Token: $token'),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(invoiceList[0]
-                                          .data!
-                                          .id
-                                          .toString()),
-                                      Text(invoiceList[0].data!.invoiceDetil?[index].category!.name!.toString()??"kkk"),
-                                      const Text(" /",
-                                          style: textGreyStyle),
-                                       Text(invoiceList[0].data!.invoiceDetil?[index].groups!.name!.toString()??"kkk"),
-                                    ],
-                                  ),
-                                  //           Row(
-                                  //             children: [
-                                  //               Text('/',style: textGreyStyle),
-                                  // Text(invoiceList[0].data!.invoiceDetil![index].groups!.name!.toString()),
-                                  //             ],
-                                  //           ),
-                                ],
-                              ),
-                            ), // Display the invoice_id
-
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        "Course Title:  ",
-                                        style: textGreyStyle,
-                                      ),
-                                      Text(invoiceList[0].data!.invoiceDetil?[index].course!.courseTitle!.toString()?? "Eata"),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        "Price:  ",
-                                        style: textGreyStyle,
-                                      ),
-                                     Text(invoiceList[0].data!.invoiceDetil?[index].course!.price!.toString()?? "000"),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 

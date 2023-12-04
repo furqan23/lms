@@ -44,7 +44,8 @@ class _MyCoursesState extends State<MyVideos> {
                   },
                   child: VideoCard(
                     id: myCoursesList[0].data![index].id,
-                    catName: myCoursesList[0].data![index].videoTitle,
+                    catName: myCoursesList[0].data![index].videoTitle.toString(),
+                     videotitle: myCoursesList[0].data![index].videoTitle.toString(),
                      name:myCoursesList[0].data![index].videoName,
                     description: myCoursesList[0].data![index].courseId,
                     slug: myCoursesList[0].data![index].courseId,

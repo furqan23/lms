@@ -37,6 +37,11 @@ class Data {
   String? updatedAt;
   String? uploadedReceipt;
   String? uploadedReceiptDate;
+  String? invoiceAmount;
+  String? otherCharges;
+  String? otherChargesDesc;
+  String? discount;
+  String? invoiceTotalAmount;
   User? user;
   List<InvoiceDetil>? invoiceDetil;
 
@@ -50,6 +55,11 @@ class Data {
         this.updatedAt,
         this.uploadedReceipt,
         this.uploadedReceiptDate,
+        this.invoiceAmount,
+        this.otherCharges,
+        this.otherChargesDesc,
+        this.discount,
+        this.invoiceTotalAmount,
         this.user,
         this.invoiceDetil});
 
@@ -63,6 +73,11 @@ class Data {
     updatedAt = json['updated_at'];
     uploadedReceipt = json['uploaded_receipt'];
     uploadedReceiptDate = json['uploaded_receipt_date'];
+    invoiceAmount = json['invoice_amount'];
+    otherCharges = json['other_charges'];
+    otherChargesDesc = json['other_charges_desc'];
+    discount = json['discount'];
+    invoiceTotalAmount = json['invoice_total_amount'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
     if (json['invoice_detil'] != null) {
       invoiceDetil = <InvoiceDetil>[];
@@ -83,6 +98,11 @@ class Data {
     data['updated_at'] = this.updatedAt;
     data['uploaded_receipt'] = this.uploadedReceipt;
     data['uploaded_receipt_date'] = this.uploadedReceiptDate;
+    data['invoice_amount'] = this.invoiceAmount;
+    data['other_charges'] = this.otherCharges;
+    data['other_charges_desc'] = this.otherChargesDesc;
+    data['discount'] = this.discount;
+    data['invoice_total_amount'] = this.invoiceTotalAmount;
     if (this.user != null) {
       data['user'] = this.user!.toJson();
     }
@@ -101,6 +121,13 @@ class User {
   String? isActive;
   String? createdAt;
   String? updatedAt;
+  Null? regNo;
+  Null? retriveUniqCode;
+  Null? cardExpireAt;
+  Null? contactNo;
+  String? commission;
+  String? deviceImei;
+  Null? image;
 
   User(
       {this.id,
@@ -108,7 +135,14 @@ class User {
         this.email,
         this.isActive,
         this.createdAt,
-        this.updatedAt});
+        this.updatedAt,
+        this.regNo,
+        this.retriveUniqCode,
+        this.cardExpireAt,
+        this.contactNo,
+        this.commission,
+        this.deviceImei,
+        this.image});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -117,6 +151,13 @@ class User {
     isActive = json['is_active'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    regNo = json['reg_no'];
+    retriveUniqCode = json['retrive_uniq_code'];
+    cardExpireAt = json['card_expire_at'];
+    contactNo = json['contact_no'];
+    commission = json['commission'];
+    deviceImei = json['device_imei'];
+    image = json['image'];
   }
 
   Map<String, dynamic> toJson() {
@@ -127,6 +168,13 @@ class User {
     data['is_active'] = this.isActive;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+    data['reg_no'] = this.regNo;
+    data['retrive_uniq_code'] = this.retriveUniqCode;
+    data['card_expire_at'] = this.cardExpireAt;
+    data['contact_no'] = this.contactNo;
+    data['commission'] = this.commission;
+    data['device_imei'] = this.deviceImei;
+    data['image'] = this.image;
     return data;
   }
 }
@@ -139,6 +187,8 @@ class InvoiceDetil {
   String? courseId;
   String? qty;
   String? price;
+  String? discount;
+  String? feeType;
   Null? createdAt;
   Null? updatedAt;
   Category? category;
@@ -151,6 +201,8 @@ class InvoiceDetil {
         this.courseId,
         this.qty,
         this.price,
+        this.discount,
+        this.feeType,
         this.createdAt,
         this.updatedAt,
         this.category});
@@ -163,6 +215,8 @@ class InvoiceDetil {
     courseId = json['course_id'];
     qty = json['qty'];
     price = json['price'];
+    discount = json['discount'];
+    feeType = json['fee_type'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     category = json['category'] != null
@@ -179,6 +233,8 @@ class InvoiceDetil {
     data['course_id'] = this.courseId;
     data['qty'] = this.qty;
     data['price'] = this.price;
+    data['discount'] = this.discount;
+    data['fee_type'] = this.feeType;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     if (this.category != null) {
@@ -197,7 +253,7 @@ class Category {
   Null? iconClass;
   String? isActive;
   Null? createdAt;
-  Null? updatedAt;
+  String? updatedAt;
   MasterCategory? masterCategory;
 
   Category(

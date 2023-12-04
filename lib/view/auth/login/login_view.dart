@@ -78,7 +78,7 @@ class _LoginViewState extends State<LoginView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
-                            height: size.height * 0.03,
+                            height: size.height * 0.01,
                           ),
                           Text(
                             "Login",

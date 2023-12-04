@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:splashapp/Controller/cart_controller.dart';
 import 'package:splashapp/Controller/login_controller.dart';
 import 'package:splashapp/model/cart_model.dart';
@@ -46,8 +47,24 @@ class _MyWallletState extends State<MyWallet> {
     getTokenFromHive();
     log('befre passing test feee $testfee');
     cartController = Get.find<CartController>();
+    getCartData();
   }
 
+  Future<void> getCartData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final cartData = prefs.getString('cartData');
+
+    if (cartData != null && cartData.isNotEmpty) {
+      Iterable decoded = json.decode(cartData);
+      List<CartModel> cartItems = decoded.map((item) => CartModel.fromJson(item)).toList();
+
+      setState(() {
+        cartList = cartItems;
+      });
+      print('Fetched Cart Data: $cartList');
+    }
+
+  }
   void getInvoiceID2() async {
     showLoadingIndicator(context);
     try {
@@ -62,7 +79,7 @@ class _MyWallletState extends State<MyWallet> {
           "group_id": cartList[i].groupId,
           "category_id": cartList[i].categoryid,
           'fee_type': test,
-          "qty": 1
+          "qty": cartController!.quantity.value.toString(),
         };
         requestDataList.add(cartData);
 
@@ -175,7 +192,7 @@ class _MyWallletState extends State<MyWallet> {
     // print('Token: $token');
     // getInvoiceID();
     getInvoiceID2();
-    cartController!.totalBalance.value = testfee;
+
   }
 
   @override
@@ -207,6 +224,7 @@ class _MyWallletState extends State<MyWallet> {
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
                               children: [
+
                                 const Text(
                                   'Total Amount',
                                   style: TextStyle(
@@ -250,8 +268,7 @@ class _MyWallletState extends State<MyWallet> {
                                       ),
                                     ),
                                     Obx(
-                                      () => Text(cartController!.quantity.value
-                                          .toString()),
+                                      () => Text(cartController!.quantity.value.toString()),
                                     ), // Display the quantity from the controller
                                     InkWell(
                                       onTap: () {
@@ -327,7 +344,7 @@ class _MyWallletState extends State<MyWallet> {
             height: 30,
           ),
           isLoading
-              ? Center(
+              ? const Center(
             child: CircularProgressIndicator(), // Show loading indicator while data is being fetched
           )
               : SizedBox(
@@ -407,6 +424,7 @@ class _MyWallletState extends State<MyWallet> {
           final mydata = jsonDecode(res.body);
           // courseList.add(CourseModel.fromJson(mydata));
           testfee = mydata['data']["test_fee"];
+          cartController!.totalBalance.value = testfee * cartController!.quantity.value;
           setState(() {
             // boolData = true;
           });

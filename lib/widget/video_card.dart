@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:splashapp/values/colors.dart';
 
 class VideoCard extends StatefulWidget {
-  String? id, catName, description, slug, seat, name, registermethod;
+  String? id,
+      catName,
+      description,
+      slug,
+      seat,
+      name,
+      registermethod,
+      videotitle;
 
   VideoCard({
     super.key,
     required this.id,
+    required this.videotitle,
     required this.name,
     required this.description,
     required this.catName,
@@ -28,7 +36,7 @@ class _DashbaordCardState extends State<VideoCard> {
         elevation: 5,
         child: Container(
           width: double.infinity,
-          height: 130,
+          height: 150,
           decoration: BoxDecoration(
               color: Colors.white12,
               borderRadius: BorderRadius.circular(5),
@@ -39,11 +47,11 @@ class _DashbaordCardState extends State<VideoCard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(6.0),
                 child: Container(
                   alignment: Alignment.center,
                   width: 100,
-                  height: 100,
+                  height: 130,
                   decoration: BoxDecoration(
                     color: AppColors.lightColor,
                     borderRadius: BorderRadius.circular(10),
@@ -66,19 +74,46 @@ class _DashbaordCardState extends State<VideoCard> {
                       //             fontWeight: FontWeight.w700))),
 
                       Center(
-                          child: Image.network(
-                              "https://dav.binshaharts.com/frontend/img/learning.png")),
+                        child: Image.network(
+                          "https://dav.binshaharts.com/frontend/img/learning.png",
+                          errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                            // Returning a local image if the network image fails to load
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(
+                                'assets/images/logo.png', // Replace 'local_image.png' with your local image asset path
+                                width: 100, // Adjust width and height as needed
+                                height: 100,
+                                fit: BoxFit.contain, // Adjust the fit property as per your requirement
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(6.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Row(
+                        children: [
+                          const Text(
+                            "Title : ",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(widget.videotitle!,
+                          )
+                        ],
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 8),
                       child: Row(
                         children: [
                           Text(
@@ -86,23 +121,23 @@ class _DashbaordCardState extends State<VideoCard> {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                           "",
+                            "",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.only(top: 8),
                       child: Row(
                         children: [
-                          Text(
+                          const Text(
                             "Duration: ",
                             style: TextStyle(color: Colors.grey, fontSize: 14),
                           ),
                           Text(
                             widget.slug!,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           )
                         ],
                       ),
@@ -124,7 +159,8 @@ class _DashbaordCardState extends State<VideoCard> {
                     // ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
-                      child: Row(mainAxisAlignment: MainAxisAlignment.end,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           // const Text(
                           //   "Total Seat:  ",
@@ -134,7 +170,7 @@ class _DashbaordCardState extends State<VideoCard> {
                           //   widget.seat!,
                           //   style: TextStyle(fontWeight: FontWeight.bold),
                           // ),
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                           Container(
                             alignment: Alignment.center,
                             width: 140,

@@ -7,9 +7,7 @@ import '../model/cart_model.dart';
 class CartController extends GetxController {
   RxList<CartModel> cartList = <CartModel>[].obs;
 
-  void setCartItems(List<CartModel> items) {
-    cartList.value.assignAll(items);
-  }
+
 
   RxInt quantity = 0.obs;
   RxInt totalBalance = 0.obs;
@@ -32,4 +30,5 @@ class CartController extends GetxController {
       update();
     }
   }
+
 }

@@ -9,7 +9,7 @@ import 'package:splashapp/widget/lsit.dart';
 import '../../model/cart_model.dart';
 import '../../values/auth_api.dart';
 import '../cart/cart.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 class HomeDetail extends StatefulWidget {
   final String mscatId;
 
@@ -152,6 +152,7 @@ class _VideoViewState extends State<HomeDetail> {
 
     for (final course in dataEntry.courses!) {
       final cartItem = CartModel(
+        groupname: courseList[0].data![dataIndex].name.toString(),
         groupId: courseList[0].data![dataIndex].id.toString(),
         categoryid: course.categoryId.toString(),
         courseId: course.id.toString(),
@@ -165,7 +166,7 @@ class _VideoViewState extends State<HomeDetail> {
         });
       }
     }
-
+    saveCartData();
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Items added to cart'),
@@ -179,6 +180,7 @@ class _VideoViewState extends State<HomeDetail> {
     if (courseIndex >= 0 && courseIndex < dataEntry.courses!.length) {
       final course = dataEntry.courses![courseIndex];
       final cartItem = CartModel(
+        groupname: courseList[0].data![Index].name.toString(),
         groupId: courseList[0].data![Index].id.toString(),
         categoryid: course.categoryId.toString(),
         courseId: course.id.toString(),
@@ -203,5 +205,14 @@ class _VideoViewState extends State<HomeDetail> {
         );
       }
     }
+    saveCartData();
   }
+
+  Future<void> saveCartData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('cartData', json.encode(cartList));
+
+  }
+
+
 }
