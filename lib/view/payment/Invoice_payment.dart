@@ -44,48 +44,12 @@ class _InvoicePaymentState extends State<InvoicePayment> {
     getInvoiceAPI();
   }
 
-  void getInvoiceAPI() async {
-    try {
-      final Map<String, dynamic> requestData = {
-        "invoice_id": widget.invoice_id,
-      };
-
-      final String requestBody = jsonEncode(requestData);
-
-      final res = await http.post(
-        Uri.parse(AuthApi.postInvoiceById),
-        body: requestBody,
-        headers: {
-          'Authorization': 'Bearer $token', // Use the retrieved token
-          'Content-Type': 'application/json',
-        },
-      );
-
-      print('Response Status Code: ${res.statusCode}');
-      print('Response Body: ${res.body}');
-
-      if (res.statusCode == 200) {
-        if (res.body.isNotEmpty) {
-          final mydata = jsonDecode(res.body);
-          print('Parsed Data: $mydata');
-          invoiceList.add(InvoiceModel.fromJson(mydata));
-          setState(() {
-            boolData = true;
-          });
-        } else {
-          throw Exception('Empty response');
-        }
-      } else {
-        print('Error: ${res.statusCode}');
-      }
-    } catch (e) {
-      print(e.toString());
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    final w = MediaQuery.of(context).size;
+    final w = MediaQuery
+        .of(context)
+        .size;
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: AppColors.primaryColor,
@@ -103,172 +67,139 @@ class _InvoicePaymentState extends State<InvoicePayment> {
       body: boolData == false
           ? const Center(child: CircularProgressIndicator())
           : Card(
-              elevation: 5,
-              child: Column(
+        elevation: 5,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Invoice #: '),
-                        Text(widget.invoice_id),
-                      ],
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(12, 8.0, 12, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Total Amount: '),
-                        //Text("PKR: ${totalAmountMethod()}"),
-                      ],
-                    ),
-                  ), // Display the token
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Payment Status: '),
-                        Container(
-                          alignment: Alignment.center,
-                          width: w.width * .18,
-                          height: w.height * .030,
-                          decoration: BoxDecoration(
-                            color: invoiceList[0].data!.status.toString() ==
-                                    "un-paid"
-                                ? AppColors.redColor
-                                : Colors.green,
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: Text(
-                            invoiceList[0].data!.status.toString() ?? "0",
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  const Text('Invoice #: '),
+                  Text(widget.invoice_id),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Total Amount: '),
+                  //Text("PKR: ${totalAmountMethod()}"),
+                ],
+              ),
+            ), // Display the token
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Payment Status: '),
+                  // Container(
+                  //   alignment: Alignment.center,
+                  //   width: w.width * .18,
+                  //   height: w.height * .030,
+                  //   decoration: BoxDecoration(
+                  //     color: invoiceList[0].data!.status.toString() ==
+                  //         "un-paid"
+                  //         ? AppColors.redColor
+                  //         : Colors.green,
+                  //     borderRadius: BorderRadius.circular(6),
+                  //   ),
+                  //   child: Text(
+                  //     invoiceList[0].data!.status.toString()??"0",
+                  //     style: const TextStyle(color: Colors.white),
+                  //   ),
+                  // ),
+                ],
+              ),
+            ),
 
-                  Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: invoiceList[0].data!.invoiceDetil?.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 3),
-                          child: Card(
-                            elevation: 5,
-                            child: Padding(
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: invoiceList.length,
+                itemBuilder: (context, index) {
+                  print('Item count: ${invoiceList.length}');
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 3),
+                    child: Card(
+                      elevation: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            //  Text('Token: $token'),
+                            Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Column(
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
                                 children: [
-                                  //  Text('Token: $token'),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(invoiceList[0]
-                                                .data!
-                                                .id
-                                                .toString()),
-                                            Text(invoiceList[0]
-                                                    .data!
-                                                    .invoiceDetil?[index]
-                                                    .category!
-                                                    .name!
-                                                    .toString() ??
-                                                "kkk"),
-                                            const Text(" /",
-                                                style: textGreyStyle),
-                                            Text(invoiceList[0]
-                                                    .data!
-                                                    .invoiceDetil?[index]
-                                                    .groups!
-                                                    .name!
-                                                    .toString() ??
-                                                "kkk"),
-                                          ],
-                                        ),
-                                        //           Row(
-                                        //             children: [
-                                        //               Text('/',style: textGreyStyle),
-                                        // Text(invoiceList[0].data!.invoiceDetil![index].groups!.name!.toString()),
-                                        //             ],
-                                        //           ),
-                                      ],
-                                    ),
-                                  ), // Display the invoice_id
+                                  Row(
+                                    children: [
+                                      // Text(invoiceList[0]
+                                      //     .data!
+                                      //     .id
+                                      //     .toString()),
+                                      //  Text(invoiceList[0].data!.invoiceDetil?[index].category!.name!.toString()??"kkk"),
+                                      const Text(" /",
+                                          style: textGreyStyle),
+                                      // Text(invoiceList[0].data!.invoiceDetil?[index].groups!.name!.toString()??"kkk"),
+                                    ],
+                                  ),
+                                  //           Row(
+                                  //             children: [
+                                  //               Text('/',style: textGreyStyle),
+                                  // Text(invoiceList[0].data!.invoiceDetil![index].groups!.name!.toString()),
+                                  //             ],
+                                  //           ),
+                                ],
+                              ),
+                            ), // Display the invoice_id
 
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              "Course Title:  ",
-                                              style: textGreyStyle,
-                                            ),
-                                            Text(invoiceList[0]
-                                                    .data!
-                                                    .invoiceDetil?[index]
-                                                    .course!
-                                                    .courseTitle!
-                                                    .toString() ??
-                                                "Eata"),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              "Price:  ",
-                                              style: textGreyStyle,
-                                            ),
-                                            Text(invoiceList[0]
-                                                        .data!
-                                                        .invoiceDetil?[index]
-                                                        .course!
-                                                        .price !=
-                                                    null
-                                                ? invoiceList[0]
-                                                    .data!
-                                                    .invoiceDetil![index]
-                                                    .course!
-                                                    .price!
-                                                    .toString()
-                                                : "000"),
-                                            Text(invoiceList[0].data!.userId !=
-                                                    null
-                                                ? invoiceList[0]
-                                                    .data!
-                                                    .userId
-                                                    .toString()
-                                                : "000"),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Course Title:  ",
+                                        style: textGreyStyle,
+                                      ),
+                                      //  Text(invoiceList[0].data!.invoiceDetil?[index].course!.courseTitle!.toString()?? "Eata"),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Price:  ",
+                                        style: textGreyStyle,
+                                      ),
+                                      //Text(invoiceList[0].data!.invoiceDetil?[index].course!.price != null
+                                      //  ? invoiceList[0].data!.invoiceDetil![index].course!.price!.toString()
+                                      //  : "000"),
+
+                                    ],
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                        );
-                      },
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                  );
+                },
               ),
             ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -367,7 +298,10 @@ class _InvoicePaymentState extends State<InvoicePayment> {
     response.files.add(
       await http.MultipartFile(
           "file", _filee.readAsBytes().asStream(), _filee.lengthSync(),
-          filename: _filee.path.toString().split("/").last),
+          filename: _filee.path
+              .toString()
+              .split("/")
+              .last),
     );
 
     try {
@@ -392,11 +326,63 @@ class _InvoicePaymentState extends State<InvoicePayment> {
     }
   }
 
-  double totalAmountMethod() {
-    double totalAmount = 0.0;
-    for (var invoice in invoiceList[0].data!.invoiceDetil!) {
-      totalAmount += double.tryParse(invoice.price.toString()) ?? 0.0;
+  // double totalAmountMethod() {
+  //   double totalAmount = 0.0;
+  //   for (var invoice in invoiceList[0].data!.invoiceDetil!) {
+  //     totalAmount += double.tryParse(invoice.price.toString()) ?? 0.0;
+  //   }
+  //   return totalAmount;
+  // }
+
+
+  void getInvoiceAPI() async {
+    try {
+      final Map<String, dynamic> requestData = {
+        "invoice_id": widget.invoice_id,
+      };
+
+      final String requestBody = jsonEncode(requestData);
+      print("Request Data: $requestData");
+
+      final res = await http.post(
+        Uri.parse(AuthApi.postInvoiceById),
+        body: requestBody,
+        headers: {
+          'Authorization': 'Bearer $token', // Use the retrieved token
+          'Content-Type': 'application/json',
+        },
+      );
+
+      print('Response Status Code: ${res.statusCode}');
+      print('Response Bodyssss: ${res.body}');
+
+      if (res.statusCode == 200) {
+        if (res.body.isNotEmpty) {
+          final Map<String, dynamic> mydata = jsonDecode(res.body);
+          // Make sure 'data' key exists in the received JSON
+          if (mydata.containsKey('data')) {
+            final invoiceModel = InvoiceModel.fromJson(mydata['data']);
+            if (invoiceModel != null) {
+              setState(() {
+                invoiceList.add(invoiceModel);
+              });
+            } else {
+              throw Exception('Failed to parse InvoiceModel');
+            }
+          } else {
+            throw Exception('Data key not found in response');
+          }
+        } else {
+          throw Exception('Empty response');
+        }
+      } else {
+        print('Error: ${res.statusCode}');
+      }
+    } catch (e) {
+      print(e.toString());
     }
-    return totalAmount;
   }
+
 }
+
+
