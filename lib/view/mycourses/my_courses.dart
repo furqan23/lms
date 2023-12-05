@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:splashapp/values/logs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:splashapp/Controller/login_controller.dart';
@@ -40,7 +40,7 @@ class _MyCoursesState extends State<MyCourses> {
                     Get.to(()=>MyVideos(myCoursesList[0].data![index].courseId!));
                   },
                   child: DashbaordCardTwo(
-                    group: myCoursesList[0].data![index].groupId,
+                    group: myCoursesList[0].data![index].groupname,
                     id: myCoursesList[0].data![index].name,
                     catName: myCoursesList[0].data![index].courseTitle,
                     name:"${myCoursesList[0].data![index].firstName} ",
@@ -87,7 +87,8 @@ class _MyCoursesState extends State<MyCourses> {
       );
 
       print('Response Status Code: ${res.statusCode}');
-      print('Response Body: ${res.body}');
+      print('Response Body long');
+      LogPrint(res.body.toString());
 
       if (res.statusCode == 200) {
         if (res.body.isNotEmpty) {

@@ -31,6 +31,7 @@ class MyCoursesModel {
 
 class Data {
   String? courseId;
+  String? groupname;
   String? id;
   String? name;
   String? registrationMethod;
@@ -49,7 +50,10 @@ class Data {
   String? lastName;
 
   Data(
-      {this.courseId,
+
+      {
+        this.groupname,
+        this.courseId,
         this.id,
         this.name,
         this.registrationMethod,
@@ -69,6 +73,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     courseId = json['course_id'];
+    groupname =json['group_name'];
     id = json['id'];
     name = json['name'];
     registrationMethod = json['registration_method'];
@@ -90,6 +95,7 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['course_id'] = this.courseId;
+    data['group_name']=this.groupname;
     data['id'] = this.id;
     data['name'] = this.name;
     data['registration_method'] = this.registrationMethod;
