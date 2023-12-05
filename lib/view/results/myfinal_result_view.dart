@@ -76,7 +76,7 @@ class _MyFinalResultState extends State<MyFinalResult> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Result'),
+        title: const Text('Result'),
       ),
       body: boolData
           ? ListView.builder(
@@ -120,7 +120,7 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                                 .testDetails!
                                                 .catName
                                                 .toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ],
@@ -130,8 +130,8 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Row(
                                         children: [
-                                          Text(
-                                            "Name : ",
+                                          const Text(
+                                            "Group Name : ",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -141,7 +141,7 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                                 .testDetails!
                                                 .name
                                                 .toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ],
@@ -154,7 +154,7 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
                                         children: [
-                                          Text(
+                                          const Text(
                                             "Course Title  : ",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
@@ -166,7 +166,7 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                                 .testDetails!
                                                 .courseTitle
                                                 .toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ],
@@ -218,7 +218,7 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                                 .resultSummery!
                                                 .totalQuestions
                                                 .toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ],
@@ -228,7 +228,7 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Row(
                                         children: [
-                                          Text(
+                                          const Text(
                                             "Given Answers : ",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
@@ -239,7 +239,7 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                                 .resultSummery!
                                                 .givenAnswers
                                                 .toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ],
@@ -252,7 +252,7 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
                                         children: [
-                                          Text(
+                                          const Text(
                                             "Corrected Answers  : ",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
@@ -264,7 +264,7 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                                 .resultSummery!
                                                 .correctedAnswers
                                                 .toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ],
@@ -288,7 +288,7 @@ class _MyFinalResultState extends State<MyFinalResult> {
                                                 .resultSummery!
                                                 .wrongAnswers
                                                 .toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ],
@@ -304,7 +304,7 @@ class _MyFinalResultState extends State<MyFinalResult> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     InkWell(
                       onTap: () {
                         Get.to(() =>
@@ -316,14 +316,14 @@ class _MyFinalResultState extends State<MyFinalResult> {
                         height: 60,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: Colors.red),
-                        child: Text("Test Answer"),
+                            color: Colors.green),
+                        child: const Text("View Test Answer"),
                       ),
                     )
                   ],
                 );
               })
-          : Center(
+          : const Center(
               child: CircularProgressIndicator(),
             ),
     );

@@ -64,42 +64,6 @@ class _MyResultsTestState extends State<MyResultsTest> {
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Row(
                           children: [
-                            const Text("Test Start : "),
-                            Text(getresultList[0]
-                                .data![index]
-                                .testStart
-                                .toString()),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          children: [
-                            const Text("Test End : "),
-                            Text(getresultList[0]
-                                .data![index]
-                                .testEnd
-                                .toString()),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          children: [
-                            const Text("Start Time : "),
-                            Text(getresultList[0]
-                                .data![index]
-                                .timeStart
-                                .toString()),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          children: [
                             const Text("TestTile : "),
                             Text(getresultList[0]
                                 .data![index]
@@ -108,12 +72,27 @@ class _MyResultsTestState extends State<MyResultsTest> {
                           ],
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          children: [
+                            const Text("Test Date : "),
+                            Text(getresultList[0]
+                                .data![index]
+                                .testStart
+                                .toString()),
+                          ],
+                        ),
+                      ),
+
+
+
                       ElevatedButton(
                         onPressed: () {
                           Get.to(() => MyFinalResult(
                               id: getresultList[0].data![index].id!));
                         },
-                        child: const Text("next"),
+                        child: const Text("View Results"),
                       ),
                       const SizedBox(height: 10),
                     ],

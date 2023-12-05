@@ -33,21 +33,18 @@ class _CartScreenState extends State<CartScreen> {
   void initState() {
     super.initState();
     getCartData();
+
   }
   Future<void> getCartData() async {
     final prefs = await SharedPreferences.getInstance();
-    final cartData = prefs.getString('cartData');
+    final cartDataString = prefs.getString('cartData');
 
-    if (cartData != null && cartData.isNotEmpty) {
-      Iterable decoded = json.decode(cartData);
-      List<CartModel> cartItems = decoded.map((item) => CartModel.fromJson(item)).toList();
-
-      setState(() {
-        cartList = cartItems;
-      });
-      print('Fetched Cart Data: $cartList');
-    }
-
+    setState(() {
+      if (cartDataString != null) {
+        List<dynamic> decodedList = json.decode(cartDataString);
+        cartList = decodedList.map((item) => CartModel.fromJson(item)).toList();
+      }
+    });
   }
   List<CartModel> cartList = [];
   List<InvoiceModel> invoiceList = [];
@@ -210,13 +207,11 @@ class _CartScreenState extends State<CartScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Text("Category Name : ${cartItem.categoryname.toString()}"),
                           Text("Group Name : ${cartItem.groupname.toString()}"),
-                          Text("Group id : ${cartItem.groupId.toString()}"),
-                          Text("Course id :  ${cartItem.courseId.toString()}"),
-                          Text(
-                              "Category id : ${cartItem.categoryid.toString()}"),
+
                           Text("Course title: ${cartItem.courseTitle}"),
-                          Text('Price: \$${cartItem.price.toStringAsFixed(2)}'),
+                          Text('Price: ${cartItem.price.toStringAsFixed(2)} pkr'),
                         ],
                       ),
                     ),

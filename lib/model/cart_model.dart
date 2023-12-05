@@ -1,5 +1,6 @@
 class CartModel {
   final String groupname;
+  final String categoryname;
   final String courseId;
   final String courseTitle;
   final double price;
@@ -12,11 +13,13 @@ class CartModel {
     required this.groupId,
     required this.categoryid,
     required this.courseTitle,
+    required this.categoryname,
     required this.price,
   });
 
   factory CartModel.fromJson(Map<String, dynamic> json) {
     return CartModel(
+      categoryname: json['categoryname'],
       groupname: json['groupname'] ?? '',
       courseId: json['courseId'] ?? '',
       groupId: json['groupId'] ?? '',
@@ -28,6 +31,7 @@ class CartModel {
 
   Map<String, dynamic> toJson() {
     return {
+      'categoryname':categoryname,
       'groupname': groupname,
       'courseId': courseId,
       'groupId': groupId,

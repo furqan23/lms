@@ -62,7 +62,7 @@ class _IncomingJobState extends State<IncomingPaymentMethodDialog> {
     }
     return Dialog(
       child: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           height: mediaQuery.height * 0.60,
           width: mediaQuery.width * 0.85,
           decoration: BoxDecoration(

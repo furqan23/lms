@@ -33,28 +33,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   LoginController _loginController = Get.put(LoginController());
-
 
   List<DashboardModelWithSlider> dashboardList = [];
   bool boolData = false;
   List<CartModel> cartList = [];
   Box<String>? namee;
-   String userName="";
-   String emaill="";
+  String userName = "";
+  String emaill = "";
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
     namee = Hive.box("tokenBox");
-    userName = namee!.get('username') ??" ";
-    emaill = namee!.get('email') ??" ";
+    userName = namee!.get('username') ?? " ";
+    emaill = namee!.get('email') ?? " ";
 
     // final String? token = box.get('token');
-     getDashboardAPI();
-
+    getDashboardAPI();
   }
 
   void getDashboardAPI() async {
@@ -102,93 +99,99 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         )),
-        body:  boolData
+        body: boolData
             ? SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 5),
-              ElevatedButton(onPressed: (){
-                Get.to(()=>const TestApp());
-              }, child: const Text("data")),
-              if (dashboardList.isNotEmpty &&
-                  dashboardList[0].data != null &&
-                  dashboardList[0].data!.slides != null &&
-                  dashboardList[0].data!.slides!.isNotEmpty)
-                CarouselSlider.builder(
-                  itemCount: dashboardList[0].data!.slides!.length,
-                  itemBuilder: (BuildContext context, int itemIndex,
-                      int pageViewIndex) =>
-                      CarouselWidget(
-                        title: "${dashboardList[0].data!.slides![itemIndex].title.toString()}   ${dashboardList[0].data!.slides!.length}",
-                        image: AuthApi.baseUrlSliderImage +
-                            "${dashboardList[0].data!.slides![itemIndex].filePath.toString()}",
-                        btntitle: '',
-                        color: const Color(0xffFFCAA6),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 5),
+                    // ElevatedButton(onPressed: (){
+                    //   Get.to(()=>const TestApp());
+                    // }, child: const Text("data")),
+                    if (dashboardList.isNotEmpty &&
+                        dashboardList[0].data != null &&
+                        dashboardList[0].data!.slides != null &&
+                        dashboardList[0].data!.slides!.isNotEmpty)
+                      CarouselSlider.builder(
+                        itemCount: dashboardList[0].data!.slides!.length,
+                        itemBuilder: (BuildContext context, int itemIndex,
+                                int pageViewIndex) =>
+                            CarouselWidget(
+                          title:
+                              "${dashboardList[0].data!.slides![itemIndex].title.toString()}",
+                          // ${dashboardList[0].data!.slides!.length}
+
+                          image: AuthApi.baseUrlSliderImage +
+                              "${dashboardList[0].data!.slides![itemIndex].filePath.toString()}",
+                          btntitle: '',
+                          color: const Color(0xffFFCAA6),
+                        ),
+                        options: CarouselOptions(
+                          aspectRatio: 15 / 9,
+                          viewportFraction: 0.8,
+                          initialPage: 0,
+                          enableInfiniteScroll: true,
+                          reverse: false,
+                          autoPlay: true,
+                          autoPlayInterval: const Duration(seconds: 3),
+                          autoPlayAnimationDuration:
+                              const Duration(milliseconds: 800),
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          enlargeCenterPage: true,
+                          enlargeFactor: 0.3,
+                          scrollDirection: Axis.horizontal,
+                        ),
+                      )
+                    else
+                      Container(),
+                    const SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Get.to(() => const MyWallet());
+                            },
+                            child: const Text("My Wallet")),
                       ),
-                  options: CarouselOptions(
-                    aspectRatio: 15 / 9,
-                    viewportFraction: 0.8,
-                    initialPage: 0,
-                    enableInfiniteScroll: true,
-                    reverse: false,
-                    autoPlay: true,
-                    autoPlayInterval: const Duration(seconds: 3),
-                    autoPlayAnimationDuration:
-                    const Duration(milliseconds: 800),
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    enlargeCenterPage: true,
-                    enlargeFactor: 0.3,
-                    scrollDirection: Axis.horizontal,
-                  ),
-                )
-              else
-                Container( ),
-              const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(width: MediaQuery.of(context).size.width,
-                  child: ElevatedButton(onPressed: (){
-                    Get.to(()=>const MyWallet());
-                  }, child: const Text("My Wallet")),
-                ),
-              ),
-
-              GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: dashboardList[0].data?.category?.length ?? 0,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                ),
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Get.to(() => HomeDetail(
-                        mscatId: dashboardList[0]
-                            .data!
-                            .category![index]
-                            .mscatId!,
-                      ));
-                    },
-                    child: DashbaordCard(
-                      id: dashboardList[0].data!.category![index].id!,
-                      catName: dashboardList[0]
-                          .data!
-                          .category![index]
-                          .catName!,
                     ),
-                  );
-                },
-              ),
 
-            ],
-          ),
-        )
+                    GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: dashboardList[0].data?.category?.length ?? 0,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                      ),
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            Get.to(() => HomeDetail(
+                                  mscatId: dashboardList[0]
+                                      .data!
+                                      .category![index]
+                                      .mscatId!,
+                                ));
+                          },
+                          child: DashbaordCard(
+                            id: dashboardList[0].data!.category![index].id!,
+                            catName: dashboardList[0]
+                                .data!
+                                .category![index]
+                                .catName!,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              )
             : const Center(
-          child: CircularProgressIndicator(
-            color: AppColors.primaryColor,
-          ),
-        ),
+                child: CircularProgressIndicator(
+                  color: AppColors.primaryColor,
+                ),
+              ),
       ),
     );
   }
@@ -220,8 +223,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                   Text(
-                    userName  ,
+                  Text(
+                    userName,
                     style: const TextStyle(
                       fontFamily: 'BandaBold',
                       fontWeight: FontWeight.w600,
@@ -229,8 +232,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: AppColors.blackColor,
                     ),
                   ),
-                   Text(
-                     emaill,
+                  Text(
+                    emaill,
                     style: const TextStyle(
                       fontFamily: 'BandaBold',
                       fontWeight: FontWeight.w600,
@@ -342,9 +345,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ));
                 }),
-
-
-
           ],
         ),
       );

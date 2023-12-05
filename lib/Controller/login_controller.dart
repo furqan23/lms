@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:device_information/device_information.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
@@ -10,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
+
   final emailController = TextEditingController().obs;
   final passwordController = TextEditingController().obs;
   RxBool loading = false.obs;
@@ -19,6 +22,7 @@ class LoginController extends GetxController {
   void onInit() {
     super.onInit();
     checkLoginStatus();
+    initPlatformState();
   }
 
   void checkLoginStatus() async {
@@ -34,10 +38,20 @@ class LoginController extends GetxController {
     loading.value = true;
 
     try {
+      final email = emailController.value.text.toString().trim();
+      final password = passwordController.value.text.toString().trim();
+      final imei = imeiNo.value;
+
+      print('Email: $email');
+      print('Password: $password');
+      print('IMEI: $imei');
       final res = await http.post(Uri.parse(AuthApi.loginApi), body: {
-        'email': emailController.value.text.toString().trim(),
-        'password': passwordController.value.text.toString().trim(),
+        'email': email,
+        'password': password,
+        'device_imei': imei,
+
       });
+
       var data = jsonDecode(res.body);
       print("login res ${res.body}  ${res.statusCode}");
       if (res.statusCode == 200) {
@@ -91,5 +105,34 @@ class LoginController extends GetxController {
   Future<String?> getTokenFromHive() async {
     final box = await Hive.openBox<String>('tokenBox');
     return box.get('token');
+  }
+
+
+  var platformVersion = 'Unknown'.obs;
+  var imeiNo = ''.obs;
+  // var modelName = ''.obs;
+  // var manufacturerName = ''.obs;
+  // var apiLevel = ''.obs;
+  // var deviceName = ''.obs;
+  // var productName = ''.obs;
+  // var cpuType = ''.obs;
+  // var hardware = ''.obs;
+
+
+
+  Future<void> initPlatformState() async {
+    try {
+      platformVersion.value = await DeviceInformation.platformVersion;
+      imeiNo.value = await DeviceInformation.deviceIMEINumber;
+      // modelName.value = await DeviceInformation.deviceModel;
+      // manufacturerName.value = await DeviceInformation.deviceManufacturer;
+      // apiLevel.value = await DeviceInformation.apiLevel;
+      // deviceName.value = await DeviceInformation.deviceName;
+      // productName.value = await DeviceInformation.productName;
+      // cpuType.value = await DeviceInformation.cpuName;
+      // hardware.value = await DeviceInformation.hardware;
+    } on PlatformException catch (e) {
+      platformVersion.value = '${e.message}';
+    }
   }
 }

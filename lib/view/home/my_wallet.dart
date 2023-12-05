@@ -75,9 +75,7 @@ class _MyWallletState extends State<MyWallet> {
       for (int i = 0; i < cartList.length; i++) {
 
         Map<String, dynamic> cartData = {
-          "course_id": cartList[i].courseId,
-          "group_id": cartList[i].groupId,
-          "category_id": cartList[i].categoryid,
+
           'fee_type': test,
           "qty": cartController!.quantity.value.toString(),
         };
@@ -335,7 +333,7 @@ class _MyWallletState extends State<MyWallet> {
             child: Padding(
               padding: EdgeInsets.all(18.0),
               child: Text(
-                "Balance of test in the wallet. You can use this balance to get online test",
+                "You can use this balance to get online test",
                 style: TextStyle(fontSize: 24),
               ),
             ),

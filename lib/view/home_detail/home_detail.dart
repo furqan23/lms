@@ -152,6 +152,7 @@ class _VideoViewState extends State<HomeDetail> {
 
     for (final course in dataEntry.courses!) {
       final cartItem = CartModel(
+        categoryname: courseList[0].data![dataIndex].catName.toString(),
         groupname: courseList[0].data![dataIndex].name.toString(),
         groupId: courseList[0].data![dataIndex].id.toString(),
         categoryid: course.categoryId.toString(),
@@ -180,6 +181,7 @@ class _VideoViewState extends State<HomeDetail> {
     if (courseIndex >= 0 && courseIndex < dataEntry.courses!.length) {
       final course = dataEntry.courses![courseIndex];
       final cartItem = CartModel(
+        categoryname: courseList[0].data![Index].catName.toString(),
         groupname: courseList[0].data![Index].name.toString(),
         groupId: courseList[0].data![Index].id.toString(),
         categoryid: course.categoryId.toString(),
@@ -210,7 +212,9 @@ class _VideoViewState extends State<HomeDetail> {
 
   Future<void> saveCartData() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('cartData', json.encode(cartList));
+    final cartData = cartList.map((cart) => cart.toJson()).toList();
+    await prefs.setString('cartData', json.encode(cartData));
+    print(cartData);
 
   }
 

@@ -107,41 +107,42 @@ class _DashbaordCardState extends State<VideoCard> {
                             "Title : ",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          Text(widget.videotitle!,
-                          )
+
                         ],
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 8),
-                      child: Row(
-                        children: [
-                          Text(
-                            "Video Type: ",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
+                    Text(widget.videotitle!,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: Row(
-                        children: [
-                          const Text(
-                            "Duration: ",
-                            style: TextStyle(color: Colors.grey, fontSize: 14),
-                          ),
-                          Text(
-                            widget.slug!,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    ),
+                    // const Padding(
+                    //   padding: EdgeInsets.only(top: 8),
+                    //   child: Row(
+                    //     children: [
+                    //       Text(
+                    //         "Video Type: ",
+                    //         style: TextStyle(fontWeight: FontWeight.bold),
+                    //       ),
+                    //       Text(
+                    //         "",
+                    //         style: TextStyle(fontWeight: FontWeight.bold),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(top: 8),
+                    //   child: Row(
+                    //     children: [
+                    //       const Text(
+                    //         "Duration: ",
+                    //         style: TextStyle(color: Colors.grey, fontSize: 14),
+                    //       ),
+                    //       Text(
+                    //         widget.slug!,
+                    //         style: const TextStyle(fontWeight: FontWeight.bold),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
                     // Padding(
                     //   padding: const EdgeInsets.only(top: 10),
                     //   child: Row(
@@ -171,6 +172,7 @@ class _DashbaordCardState extends State<VideoCard> {
                           //   style: TextStyle(fontWeight: FontWeight.bold),
                           // ),
                           const SizedBox(width: 20),
+                          SizedBox(height: MediaQuery.of(context).size.height*.1),
                           Container(
                             alignment: Alignment.center,
                             width: 140,

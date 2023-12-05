@@ -28,32 +28,32 @@ class _TestScreenState extends State<TestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Wallet Test Screen"),),
+      appBar: AppBar(title: const Text("Wallet Test Screen"),),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(18.0),
           child: Column(
             children: [
-              Text("Wallet Amount"),
+              const Text("Wallet Amount"),
              NormalFiled(controller: controllerr, hintText: "Enter Text", labelText: "Invoice", textInputType: TextInputType.name),
-              SizedBox(height: 30,),
+              const SizedBox(height: 30,),
             SizedBox(width: MediaQuery.of(context).size.width,
               child: ElevatedButton(onPressed: () async{
                await getTestkQuickAPI();
-              }, child: Text("Check")),
+              }, child: const Text("Check")),
             ),
-              Text(textt,style: TextStyle(fontSize: 21),),
-              SizedBox(height: 50,),
+              Text(textt,style: const TextStyle(fontSize: 21),),
+              const SizedBox(height: 50,),
 
 
               SizedBox(width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(onPressed: () async{
                   await getPaykQuickAPI();
-                }, child: Text("Pay Now")),
+                }, child: const Text("Pay Now")),
               ),
-              SizedBox(height: 10,),
-              Text(texttPayment,style: TextStyle(fontSize: 21),),
-              SizedBox(height: 30,),
+              const SizedBox(height: 10,),
+              Text(texttPayment,style: const TextStyle(fontSize: 21),),
+              const SizedBox(height: 30,),
             ],
           ),
         ),

@@ -69,33 +69,13 @@ class _MyResultsCourseState extends State<MyResultsCourse> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
 
+
                                     Padding(
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Row(
                                         children: [
                                           const Text(
-                                            "Id: ",
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 14),
-                                          ),
-                                          Text(
-                                            getresultsModelList[0]
-                                                .data![index]
-                                                .id
-                                                .toString(),
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 10),
-                                      child: Row(
-                                        children: [
-                                          const Text(
-                                            "Name: ",
+                                            "Group Name: ",
                                             style: TextStyle(
                                                 color: Colors.grey,
                                                 fontSize: 14),
@@ -205,6 +185,7 @@ class _MyResultsCourseState extends State<MyResultsCourse> {
     token = await LoginController().getTokenFromHive();
     print('Token: $token');
     getMyTestAPI();
+
   }
 
   /*------------------ Call GetTestQuestionApi  ----------------*/
@@ -220,7 +201,7 @@ class _MyResultsCourseState extends State<MyResultsCourse> {
 
       print('Response Status Code: ${res.statusCode}');
       print('Response Body: ${res.body}');
-
+      print('Response Body: ${res.body.toString()}');
       if (res.statusCode == 200) {
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);
