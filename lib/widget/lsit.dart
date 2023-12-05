@@ -207,7 +207,7 @@ class _lsitState extends State<lsit> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "${widget.teacher}",
+                                "${widget.map![index].firstName!}",
                                 style:
                                     const TextStyle(fontWeight: FontWeight.w400),
                               ),

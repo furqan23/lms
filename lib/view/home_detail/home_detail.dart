@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:splashapp/model/course_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:splashapp/values/colors.dart';
+import 'package:splashapp/values/logs.dart';
 import 'package:splashapp/widget/lsit.dart';
 import '../../model/cart_model.dart';
 import '../../values/auth_api.dart';
@@ -126,8 +127,9 @@ class _VideoViewState extends State<HomeDetail> {
         "category_id": widget.mscatId,
       });
       print('Response Status Code: ${res.statusCode}');
-      print('Response Body: ${res.body.toString()}');
-
+    //  print('Response Body: ${res.body.toString()}');
+      print('Response Body long');
+      LogPrint(res.body.toString());
       if (res.statusCode == 200) {
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);

@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:splashapp/Controller/login_controller.dart';
 import 'package:splashapp/model/DashboardModelWithSlider.dart';
 import 'package:splashapp/values/auth_api.dart';
+import 'package:splashapp/values/logs.dart';
 import 'package:splashapp/values/my_imgs.dart';
 import 'package:splashapp/view/home/my_wallet.dart';
 import 'package:splashapp/view/home_detail/home_detail.dart';
@@ -58,7 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       final res = await http.get(Uri.parse(AuthApi.getDashboardApi));
       print('Response Status Code: ${res.statusCode}');
-      print('Response Body: ${res.body.toString()}');
+      print('Response Body long');
+       LogPrint(res.body.toString());
 
       if (res.statusCode == 200) {
         if (res.body.isNotEmpty) {
