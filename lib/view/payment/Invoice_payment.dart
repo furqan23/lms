@@ -15,11 +15,12 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../../values/colors.dart';
+import '../../values/logs.dart';
 
 class InvoicePayment extends StatefulWidget {
   final String invoice_id;
 
-  InvoicePayment({super.key, required this.invoice_id});
+  InvoicePayment({Key? key, required this.invoice_id}) : super(key: key);
 
   @override
   State<InvoicePayment> createState() => _InvoicePaymentState();
@@ -27,15 +28,15 @@ class InvoicePayment extends StatefulWidget {
 
 class _InvoicePaymentState extends State<InvoicePayment> {
   String? token;
-  List<InvoiceModel> invoiceList = [];
-  bool boolData = false;
-  File? file;
+  InvoiceModel? invoiceData; // Use InvoiceModel to hold the data
+  bool isLoading = true;
 
+  File? file;
   @override
   void initState() {
     super.initState();
     getTokenAndFetchInvoice();
-    print('Invoice ID: ${widget.invoice_id}');
+
   }
 
   Future<void> getTokenAndFetchInvoice() async {
@@ -44,12 +45,46 @@ class _InvoicePaymentState extends State<InvoicePayment> {
     getInvoiceAPI();
   }
 
+  void getInvoiceAPI() async {
+    try {
+      final Map<String, dynamic> requestData = {
+        "invoice_id": widget.invoice_id,
+      };
+
+      final String requestBody = jsonEncode(requestData);
+      print("Request Data: $requestData");
+
+      final res = await http.post(
+        Uri.parse(AuthApi.postInvoiceById),
+        body: requestBody,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      print('Response Status Code: ${res.statusCode}');
+      print('Response Body long');
+      LogPrint(res.body.toString());
+
+      if (res.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(res.body);
+        setState(() {
+          isLoading = false; // Update loading state
+          invoiceData = InvoiceModel.fromJson(responseData);
+        });
+        print('Received Data: $responseData');
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final w = MediaQuery
-        .of(context)
-        .size;
+    final w = MediaQuery.of(context).size;
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: AppColors.primaryColor,
@@ -64,145 +99,101 @@ class _InvoicePaymentState extends State<InvoicePayment> {
       appBar: AppBar(
         title: const Text("Payment Detail"),
       ),
-      body: boolData == false
+      body: isLoading
           ? const Center(child: CircularProgressIndicator())
-          : Card(
-        elevation: 5,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Invoice #: '),
-                  Text(widget.invoice_id),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Total Amount: '),
-                  //Text("PKR: ${totalAmountMethod()}"),
-                ],
-              ),
-            ), // Display the token
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Payment Status: '),
-                  // Container(
-                  //   alignment: Alignment.center,
-                  //   width: w.width * .18,
-                  //   height: w.height * .030,
-                  //   decoration: BoxDecoration(
-                  //     color: invoiceList[0].data!.status.toString() ==
-                  //         "un-paid"
-                  //         ? AppColors.redColor
-                  //         : Colors.green,
-                  //     borderRadius: BorderRadius.circular(6),
-                  //   ),
-                  //   child: Text(
-                  //     invoiceList[0].data!.status.toString()??"0",
-                  //     style: const TextStyle(color: Colors.white),
-                  //   ),
-                  // ),
-                ],
-              ),
-            ),
-
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: invoiceList.length,
-                itemBuilder: (context, index) {
-                  print('Item count: ${invoiceList.length}');
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 3),
-                    child: Card(
-                      elevation: 5,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            //  Text('Token: $token'),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      // Text(invoiceList[0]
-                                      //     .data!
-                                      //     .id
-                                      //     .toString()),
-                                      //  Text(invoiceList[0].data!.invoiceDetil?[index].category!.name!.toString()??"kkk"),
-                                      const Text(" /",
-                                          style: textGreyStyle),
-                                      // Text(invoiceList[0].data!.invoiceDetil?[index].groups!.name!.toString()??"kkk"),
-                                    ],
-                                  ),
-                                  //           Row(
-                                  //             children: [
-                                  //               Text('/',style: textGreyStyle),
-                                  // Text(invoiceList[0].data!.invoiceDetil![index].groups!.name!.toString()),
-                                  //             ],
-                                  //           ),
-                                ],
-                              ),
-                            ), // Display the invoice_id
-
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        "Course Title:  ",
-                                        style: textGreyStyle,
-                                      ),
-                                      //  Text(invoiceList[0].data!.invoiceDetil?[index].course!.courseTitle!.toString()?? "Eata"),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        "Price:  ",
-                                        style: textGreyStyle,
-                                      ),
-                                      //Text(invoiceList[0].data!.invoiceDetil?[index].course!.price != null
-                                      //  ? invoiceList[0].data!.invoiceDetil![index].course!.price!.toString()
-                                      //  : "000"),
-
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
+          : invoiceData != null
+          ? _buildInvoiceDetails(invoiceData!.data!)
+          : Center(child: Text('No data')),
     );
   }
 
+  Widget _buildInvoiceDetails(Data data) {
+    final w = MediaQuery.of(context).size;
+    return Card(
+      elevation: 5,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Invoice #: '),
+                Text(widget.invoice_id),
+              ],
+            ),
+          ),
+
+
+          Expanded(child: ListView(
+            shrinkWrap: true,
+            children: [
+              //Text('Invoice TotalAmount: ${data.inv?.invoiceTotalAmount.toString() ?? 'N/A'}'),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text('Payment Status: '),
+                    Container(
+                        alignment: Alignment.center,
+                        width: w.width * .18,
+                        height: w.height * .030,
+                        decoration: BoxDecoration(
+                          color: data.inv?.status.toString() ==
+                              "un-paid"
+                              ? AppColors.redColor
+                              : Colors.green,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Text(
+                          data.inv?.status.toString() ?? 'N/A',
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                    ),
+                  ],
+                ),
+              ),
+             // Text('User ID: ${data.inv!.invoiceDetil![0].id}'),
+              //Text('price: ${data.inv!.invoiceDetil![0].price}'),
+              //Text('price: ${data.inv!.invoiceDetil![0].course!.masterCourse..toString()}'),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        const Text(
+                          "Course Title:  ",
+                          style: textGreyStyle,
+                        ),
+                        Text(data.inv!.invoiceDetil![0].course!.courseTitle.toString()?? "Eata"),
+                      ],
+                    ),
+
+                    Row(
+                      children: [
+                        const Text(
+                          "Price:  ",
+                          style: textGreyStyle,
+                        ),
+                        Text(data.inv!.invoiceDetil![0].course!.price.toString()?? "Eata"),
+
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              // ...Other widgets to display more details
+            ],
+          ),),
+
+        ],
+      ),
+    );
+  }
   Future pickImageFromGallery() async {
     final pickedImage = await ImagePicker.platform
         .getImageFromSource(source: ImageSource.gallery);
@@ -261,7 +252,6 @@ class _InvoicePaymentState extends State<InvoicePayment> {
       },
     );
   }
-
   void uploadReceipt() async {
     FocusScope.of(context).unfocus();
     Size size = Get.size;
@@ -298,10 +288,7 @@ class _InvoicePaymentState extends State<InvoicePayment> {
     response.files.add(
       await http.MultipartFile(
           "file", _filee.readAsBytes().asStream(), _filee.lengthSync(),
-          filename: _filee.path
-              .toString()
-              .split("/")
-              .last),
+          filename: _filee.path.toString().split("/").last),
     );
 
     try {
@@ -326,63 +313,4 @@ class _InvoicePaymentState extends State<InvoicePayment> {
     }
   }
 
-  // double totalAmountMethod() {
-  //   double totalAmount = 0.0;
-  //   for (var invoice in invoiceList[0].data!.invoiceDetil!) {
-  //     totalAmount += double.tryParse(invoice.price.toString()) ?? 0.0;
-  //   }
-  //   return totalAmount;
-  // }
-
-
-  void getInvoiceAPI() async {
-    try {
-      final Map<String, dynamic> requestData = {
-        "invoice_id": widget.invoice_id,
-      };
-
-      final String requestBody = jsonEncode(requestData);
-      print("Request Data: $requestData");
-
-      final res = await http.post(
-        Uri.parse(AuthApi.postInvoiceById),
-        body: requestBody,
-        headers: {
-          'Authorization': 'Bearer $token', // Use the retrieved token
-          'Content-Type': 'application/json',
-        },
-      );
-
-      print('Response Status Code: ${res.statusCode}');
-      print('Response Bodyssss: ${res.body}');
-
-      if (res.statusCode == 200) {
-        if (res.body.isNotEmpty) {
-          final Map<String, dynamic> mydata = jsonDecode(res.body);
-          // Make sure 'data' key exists in the received JSON
-          if (mydata.containsKey('data')) {
-            final invoiceModel = InvoiceModel.fromJson(mydata['data']);
-            if (invoiceModel != null) {
-              setState(() {
-                invoiceList.add(invoiceModel);
-              });
-            } else {
-              throw Exception('Failed to parse InvoiceModel');
-            }
-          } else {
-            throw Exception('Data key not found in response');
-          }
-        } else {
-          throw Exception('Empty response');
-        }
-      } else {
-        print('Error: ${res.statusCode}');
-      }
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
 }
-
-

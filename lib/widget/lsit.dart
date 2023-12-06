@@ -40,7 +40,7 @@ class _lsitState extends State<lsit> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    print("date and time  ${widget.dateAndTime}");
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -159,7 +159,7 @@ class _lsitState extends State<lsit> {
 
                             SizedBox(width: 50),
                             Text(
-                              "Rs.${widget.price}",
+                              "Rs.${widget.map![index].price!}",
                               style:
                               const TextStyle(fontWeight: FontWeight.w500),
                             ),
@@ -212,7 +212,7 @@ class _lsitState extends State<lsit> {
                                     const TextStyle(fontWeight: FontWeight.w400),
                               ),
                               Text(
-                                "${widget.dateAndTime.padLeft(2)}",
+                                "${widget.map![index].classtime!.padLeft(2)}",
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w500, fontSize: 14),
                               ),

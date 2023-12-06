@@ -79,7 +79,7 @@ class _VideoViewState extends State<HomeDetail> {
                     status: courseList[0].data![index].name.toString(),
                     groupcode: courseList[0].data![index].groupcode.toString(),
                     dateAndTime:
-                        courseList[0].data![index].courses![0].classtime.toString(),
+                    courseList[0].data![index].courses![0].classtime!,
                     teacher: courseList[0]
                         .data![index]
                         .courses![0]
