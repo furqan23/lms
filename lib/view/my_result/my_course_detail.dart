@@ -7,8 +7,9 @@ import 'package:http/http.dart' as http;
 import 'package:splashapp/values/auth_api.dart';
 
 class MyCourseDetail extends StatefulWidget {
-  String id;
-   MyCourseDetail( this.id, {super.key});
+  final String id;
+
+  MyCourseDetail(this.id, {Key? key}) : super(key: key);
 
   @override
   State<MyCourseDetail> createState() => _MyCourseDetailState();
@@ -23,78 +24,37 @@ class _MyCourseDetailState extends State<MyCourseDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Course Detail"),
+        title: const Text("Course Detail"),
       ),
       body: boolData
-          ?
-          Card(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(12,8.0,12,0),
-                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Course Id: '),
-                       Text(myCoursesList![0].data!.id!.toString()),
-                    ],
-                  ),
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(12,8.0,12,0),
-                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Course Title: '),
-                      Text(myCoursesList![0].data!.courseTitle!.toString()),
-                    ],
-                  ),
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(12,8.0,12,0),
-                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Course Category: '),
-                      Text(myCoursesList![0].data!.courseSlug!.toString()),
-                    ],
-                  ),
-                ),
-
-
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(12,8.0,12,0),
-                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Price: '),
-                      Text("PKR: ${myCoursesList![0].data!.price!.toString()}"),
-                    ],
-                  ),
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(12,8.0,12,0),
-                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Active Status: '),
-                      Text(myCoursesList![0].data!.isActive!.toString()=="1"?"Active":"Not-Active"),
-
-                    ],
-                  ),
-                ),
-
-
-
-              ],
+          ? myCoursesList.isNotEmpty
+          ? Card(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Course Id: '),
+                  Text(myCoursesList[0].data!.id!.toString()),
+                ],
+              ),
             ),
-          )
-          :const Center(
+            // Display other course details similarly
+          ],
+        ),
+      )
+          : const Center(
+        child: Text('No data'),
+      )
+          : const Center(
         child: CircularProgressIndicator(),
       ),
     );
   }
-
-
 
   @override
   void initState() {
@@ -122,7 +82,7 @@ class _MyCourseDetailState extends State<MyCourseDetail> {
           'Authorization': 'Bearer $token', // Use the retrieved token
           'Content-Type': 'application/json',
         },
-        body: requestBody
+        body: requestBody,
       );
 
       print('Response Status Code: ${res.statusCode}');
@@ -137,7 +97,10 @@ class _MyCourseDetailState extends State<MyCourseDetail> {
             boolData = true;
           });
         } else {
-          throw Exception('Empty response');
+          setState(() {
+            boolData = true; // Setting boolData to true even if the response body is empty
+          });
+          print('Empty response');
         }
       } else {
         print('Error: ${res.statusCode}');

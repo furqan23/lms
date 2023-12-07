@@ -48,7 +48,7 @@ class LoginController extends GetxController {
       final res = await http.post(Uri.parse(AuthApi.loginApi), body: {
         'email': email,
         'password': password,
-       // 'device_imei': imei,
+       //'device_imei': imei,
 
       });
 

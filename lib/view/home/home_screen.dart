@@ -34,7 +34,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  LoginController _loginController = Get.put(LoginController());
+  final LoginController _loginController = Get.put(LoginController());
 
   List<DashboardModelWithSlider> dashboardList = [];
   bool boolData = false;
@@ -161,29 +161,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: dashboardList[0].data?.category?.length ?? 0,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
+                      itemCount: dashboardList.isNotEmpty ? dashboardList[0].data?.category?.length ?? 0 : 0,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                       ),
                       itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            Get.to(() => HomeDetail(
-                                  mscatId: dashboardList[0]
-                                      .data!
-                                      .category![index]
-                                      .mscatId!,
-                                ));
-                          },
-                          child: DashbaordCard(
-                            id: dashboardList[0].data!.category![index].id!,
-                            catName: dashboardList[0]
-                                .data!
-                                .category![index]
-                                .catName!,
-                          ),
-                        );
+                        if (dashboardList.isEmpty) {
+                          return const Center(child: Text('No data'));
+                        } else {
+                          return InkWell(
+                            onTap: () {
+                              Get.to(() => HomeDetail(
+                                mscatId: dashboardList[0].data!.category![index].mscatId!,
+                              ));
+                            },
+                            child: DashbaordCard(
+
+                              id: dashboardList[0].data!.category![index].id!,
+                              catName: dashboardList[0].data!.category![index].catName!,
+                            ),
+                          );
+                        }
                       },
                     ),
                   ],

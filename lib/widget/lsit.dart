@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:splashapp/values/colors.dart';
-import 'package:splashapp/view/cart/cart.dart';
-
 import '../model/cart_model.dart';
 import '../model/course_model.dart';
 
@@ -157,7 +155,7 @@ class _lsitState extends State<lsit> {
                               ],
                             ),
 
-                            SizedBox(width: 50),
+                            const SizedBox(width: 50),
                             Text(
                               "Rs.${widget.map![index].price!}",
                               style:

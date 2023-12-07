@@ -11,6 +11,7 @@ import '../../model/cart_model.dart';
 import '../../values/auth_api.dart';
 import '../cart/cart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 class HomeDetail extends StatefulWidget {
   final String mscatId;
 
@@ -33,6 +34,7 @@ class _VideoViewState extends State<HomeDetail> {
   void initState() {
     super.initState();
     getCourseAPI();
+    getCartData();
   }
 
   @override
@@ -52,10 +54,18 @@ class _VideoViewState extends State<HomeDetail> {
                   style: const TextStyle(color: Colors.white),
                 ),
                 backgroundColor: Colors.red,
-                isLabelVisible: true,
+                isLabelVisible:
+                    cartList.isNotEmpty, // Show badge if cartList is not empty
                 child: IconButton(
-                  onPressed: () {
-                    Get.to(() => CartScreen(cartList: cartList));
+                  onPressed: () async {
+                    var updatedCartList =
+                        await Get.to(() => CartScreen(cartList: cartList));
+
+                    if (updatedCartList != null) {
+                      setState(() {
+                        cartList = updatedCartList;
+                      });
+                    }
                   },
                   icon: const Icon(Icons.shopping_cart),
                 ),
@@ -64,46 +74,54 @@ class _VideoViewState extends State<HomeDetail> {
           ],
         ),
         body: boolData
-            ? ListView.builder(
-                shrinkWrap: true,
-                itemCount: courseList[0].data?.length,
-                itemBuilder: (context, index) {
-                  final selectedItem = courseList[0].data![index].courses![0];
+            ? courseList.isNotEmpty
+                ? ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: courseList[0].data?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      final selectedItem =
+                          courseList[0].data![index].courses![0];
 
-                  return lsit(
-                    regMethod: courseList[0]
-                        .data![index]
-                        .registrationMethod
-                        .toString(),
-                    ePass: courseList[0].data![index].catName.toString(),
-                    status: courseList[0].data![index].name.toString(),
-                    groupcode: courseList[0].data![index].groupcode.toString(),
-                    dateAndTime:
-                    courseList[0].data![index].courses![0].classtime!,
-                    teacher: courseList[0]
-                        .data![index]
-                        .courses![0]
-                        .firstName
-                        .toString(),
-                    price:
-                        courseList[0].data![index].courses![0].price.toString(),
-                    map: courseList[0].data![index].courses,
-                    onAddToCart: () {
-                      if (courseList[0].data![index].registrationMethod ==
-                          "whole") {
-                        onAddToCart(index);
-                      } else if (courseList[0]
-                              .data![index]
-                              .registrationMethod ==
-                          "single") {
-                        onAddToSingleCart(index, singleCartIndex);
-                        singleCartIndex++;
-                      }
-                      // navigateToCartScreen();
+                      return lsit(
+                        regMethod: courseList[0]
+                            .data![index]
+                            .registrationMethod
+                            .toString(),
+                        ePass: courseList[0].data![index].catName.toString(),
+                        status: courseList[0].data![index].name.toString(),
+                        groupcode:
+                            courseList[0].data![index].groupcode.toString(),
+                        dateAndTime:
+                            courseList[0].data![index].courses![0].classtime!,
+                        teacher: courseList[0]
+                            .data![index]
+                            .courses![0]
+                            .firstName
+                            .toString(),
+                        price: courseList[0]
+                            .data![index]
+                            .courses![0]
+                            .price
+                            .toString(),
+                        map: courseList[0].data![index].courses,
+                        onAddToCart: () {
+                          if (courseList[0].data![index].registrationMethod ==
+                              "whole") {
+                            onAddToCart(index);
+                          } else if (courseList[0]
+                                  .data![index]
+                                  .registrationMethod ==
+                              "single") {
+                            onAddToSingleCart(index, singleCartIndex);
+                            singleCartIndex++;
+                          }
+                        },
+                      );
                     },
-                  );
-                },
-              )
+                  )
+                : const Center(
+                    child: Text('No courses available'),
+                  )
             : const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
@@ -121,13 +139,32 @@ class _VideoViewState extends State<HomeDetail> {
     );
   }
 
+  Future<void> saveCartData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final cartData = cartList.map((cart) => cart.toJson()).toList();
+    await prefs.setString('cartData', json.encode(cartData));
+    print(cartData);
+  }
+
+  Future<void> getCartData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final cartDataString = prefs.getString('cartData');
+
+    setState(() {
+      if (cartDataString != null) {
+        List<dynamic> decodedList = json.decode(cartDataString);
+        cartList = decodedList.map((item) => CartModel.fromJson(item)).toList();
+      }
+    });
+  }
+
   void getCourseAPI() async {
     try {
       final res = await http.post(Uri.parse(AuthApi.courseApi), body: {
         "category_id": widget.mscatId,
       });
       print('Response Status Code: ${res.statusCode}');
-    //  print('Response Body: ${res.body.toString()}');
+//  print('Response Body: ${res.body.toString()}');
       print('Response Body long');
       LogPrint(res.body.toString());
       if (res.statusCode == 200) {
@@ -138,87 +175,99 @@ class _VideoViewState extends State<HomeDetail> {
             boolData = true;
           });
         } else {
+          setState(() {
+            boolData = false; // Set boolData to false as there is no data
+          });
           throw Exception('Empty response');
         }
       } else {
+        setState(() {
+          boolData = false; // Set boolData to false as loading failed
+        });
         throw Exception('Failed to load data');
       }
     } catch (e) {
       print('Error: $e');
+      setState(() {
+        boolData = false; // Set boolData to false in case of any error
+      });
       throw Exception('Failed to load data');
+    }
+  }
+
+  void onAddToSingleCart(int Index, int courseIndex) {
+    final dataEntry = courseList[0].data![Index];
+
+    if (dataEntry.registrationMethod == "single") {
+      if (courseIndex >= 0 && courseIndex < dataEntry.courses!.length) {
+        final course = dataEntry.courses![courseIndex];
+        final cartItem = CartModel(
+          registrationMethod: dataEntry.registrationMethod.toString(),
+          categoryname: dataEntry.catName.toString(),
+          groupname: dataEntry.name.toString(),
+          groupId: dataEntry.id.toString(),
+          categoryid: course.categoryId.toString(),
+          courseId: course.id.toString(),
+          courseTitle: course.courseTitle.toString(),
+          price: double.parse(course.price.toString()),
+        );
+
+// Check if the cartItem already exists in cartList
+        if (!cartList.any((item) => item.courseId == cartItem.courseId)) {
+          setState(() {
+            cartList.add(cartItem);
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Item added to cart'),
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Item is already in the cart'),
+            ),
+          );
+        }
+      }
+      saveCartData();
     }
   }
 
   void onAddToCart(int dataIndex) {
     final dataEntry = courseList[0].data![dataIndex];
 
-    for (final course in dataEntry.courses!) {
-      final cartItem = CartModel(
-        categoryname: courseList[0].data![dataIndex].catName.toString(),
-        groupname: courseList[0].data![dataIndex].name.toString(),
-        groupId: courseList[0].data![dataIndex].id.toString(),
-        categoryid: course.categoryId.toString(),
-        courseId: course.id.toString(),
-        courseTitle: course.courseTitle.toString(),
-        price: double.parse(course.price.toString()),
-      );
-
-      if (!cartList.contains(cartItem)) {
-        setState(() {
-          cartList.add(cartItem);
-        });
-      }
-    }
-    saveCartData();
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Items added to cart'),
-      ),
-    );
-  }
-
-  void onAddToSingleCart(int Index, int courseIndex) {
-    final dataEntry = courseList[0].data![Index];
-
-    if (courseIndex >= 0 && courseIndex < dataEntry.courses!.length) {
-      final course = dataEntry.courses![courseIndex];
-      final cartItem = CartModel(
-        categoryname: courseList[0].data![Index].catName.toString(),
-        groupname: courseList[0].data![Index].name.toString(),
-        groupId: courseList[0].data![Index].id.toString(),
-        categoryid: course.categoryId.toString(),
-        courseId: course.id.toString(),
-        courseTitle: course.courseTitle.toString(),
-        price: double.parse(course.price.toString()),
-      );
-
-      if (!cartList.contains(cartItem)) {
-        setState(() {
-          cartList.add(cartItem);
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Item added to cart'),
-          ),
+    if (dataEntry.registrationMethod == "whole") {
+      for (final course in dataEntry.courses!) {
+        final cartItem = CartModel(
+          registrationMethod: dataEntry.registrationMethod.toString(),
+          categoryname: dataEntry.catName.toString(),
+          groupname: dataEntry.name.toString(),
+          groupId: dataEntry.id.toString(),
+          categoryid: course.categoryId.toString(),
+          courseId: course.id.toString(),
+          courseTitle: course.courseTitle.toString(),
+          price: double.parse(course.price.toString()),
         );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Item is already in the cart'),
-          ),
-        );
+
+// Check if the cartItem already exists in cartList
+        if (!cartList.any((item) => item.courseId == cartItem.courseId)) {
+          setState(() {
+            cartList.add(cartItem);
+          });
+        }
       }
+
+      saveCartData();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Items added to cart'),
+        ),
+      );
+    } else if (dataEntry.registrationMethod == "single") {
+// Implement logic for handling single item addition
+// This section should be based on your requirement for adding a single item
+// For example, display a dialog to choose a specific item and then add it to the cart
     }
-    saveCartData();
   }
-
-  Future<void> saveCartData() async {
-    final prefs = await SharedPreferences.getInstance();
-    final cartData = cartList.map((cart) => cart.toJson()).toList();
-    await prefs.setString('cartData', json.encode(cartData));
-    print(cartData);
-
-  }
-
-
 }

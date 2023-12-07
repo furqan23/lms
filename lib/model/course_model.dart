@@ -11,15 +11,15 @@ class CourseModel {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -32,30 +32,31 @@ class Data {
   String? name;
   String? groupcode;
   String? registrationMethod;
-  Null? description;
+  String? description; // Update here to remove nullability
   String? isActive;
   String? totalSeat;
-  Null? expireOn;
+  String? expireOn;
   String? catName;
   List<Courses>? courses;
 
-  Data(
-      {this.id,
-        this.name,
-        this.registrationMethod,
-        this.description,
-        this.groupcode,
-        this.isActive,
-        this.totalSeat,
-        this.expireOn,
-        this.catName,
-        this.courses});
+  Data({
+    this.id,
+    this.name,
+    this.registrationMethod,
+    this.description,
+    this.groupcode,
+    this.isActive,
+    this.totalSeat,
+    this.expireOn,
+    this.catName,
+    this.courses,
+  });
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     registrationMethod = json['registration_method'];
-    description = json['description'];
+    description = json['description']; // Handle nullability here
     isActive = json['is_active'];
     totalSeat = json['total_seat'];
     expireOn = json['expire_on'];
@@ -64,24 +65,24 @@ class Data {
     if (json['courses'] != null) {
       courses = <Courses>[];
       json['courses'].forEach((v) {
-        courses!.add(new Courses.fromJson(v));
+        courses!.add(Courses.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['registration_method'] = this.registrationMethod;
-    data['description'] = this.description;
-    data['is_active'] = this.isActive;
-    data['total_seat'] = this.totalSeat;
-    data['group_code'] = this.groupcode;
-    data['expire_on'] = this.expireOn;
-    data['cat_name'] = this.catName;
-    if (this.courses != null) {
-      data['courses'] = this.courses!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['registration_method'] = registrationMethod;
+    data['description'] = description; // Update nullability handling here
+    data['is_active'] = isActive;
+    data['total_seat'] = totalSeat;
+    data['expire_on'] = expireOn;
+    data['group_code'] = groupcode;
+    data['cat_name'] = catName;
+    if (courses != null) {
+      data['courses'] = courses!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -93,45 +94,46 @@ class Courses {
   String? instructorId;
   String? categoryId;
   String? masterCourseId;
-  Null? instructionLevelId;
+  String? instructionLevelId;
   String? courseTitle;
   String? courseSlug;
-  Null? keywords;
-  Null? overview;
+  String? keywords;
+  String? overview;
   String? courseImage;
-  Null? thumbImage;
+  String? thumbImage;
   String? courseVideo;
-  Null? duration;
+  String? duration;
   String? price;
-  Null? strikeOutPrice;
+  String? strikeOutPrice;
   String? isActive;
   String? createdAt;
   String? updatedAt;
   String? firstName;
-  Null? lastName;
+  String? lastName;
 
-  Courses(
-      {this.id,
-        this.instructorId,
-        this.categoryId,
-        this.masterCourseId,
-        this.instructionLevelId,
-        this.courseTitle,
-        this.classtime,
-        this.courseSlug,
-        this.keywords,
-        this.overview,
-        this.courseImage,
-        this.thumbImage,
-        this.courseVideo,
-        this.duration,
-        this.price,
-        this.strikeOutPrice,
-        this.isActive,
-        this.createdAt,
-        this.updatedAt,
-        this.firstName,
-        this.lastName});
+  Courses({
+    this.id,
+    this.instructorId,
+    this.categoryId,
+    this.masterCourseId,
+    this.instructionLevelId,
+    this.courseTitle,
+    this.classtime,
+    this.courseSlug,
+    this.keywords,
+    this.overview,
+    this.courseImage,
+    this.thumbImage,
+    this.courseVideo,
+    this.duration,
+    this.price,
+    this.strikeOutPrice,
+    this.isActive,
+    this.createdAt,
+    this.updatedAt,
+    this.firstName,
+    this.lastName,
+  });
 
   Courses.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -140,7 +142,7 @@ class Courses {
     masterCourseId = json['master_course_id'];
     instructionLevelId = json['instruction_level_id'];
     courseTitle = json['course_title'];
-    classtime =json['class_time'];
+    classtime = json['class_time'];
     courseSlug = json['course_slug'];
     keywords = json['keywords'];
     overview = json['overview'];
@@ -158,28 +160,28 @@ class Courses {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['instructor_id'] = this.instructorId;
-    data['category_id'] = this.categoryId;
-    data['master_course_id'] = this.masterCourseId;
-    data['instruction_level_id'] = this.instructionLevelId;
-    data['course_title'] = this.courseTitle;
-    data['class_time']= this.classtime;
-    data['course_slug'] = this.courseSlug;
-    data['keywords'] = this.keywords;
-    data['overview'] = this.overview;
-    data['course_image'] = this.courseImage;
-    data['thumb_image'] = this.thumbImage;
-    data['course_video'] = this.courseVideo;
-    data['duration'] = this.duration;
-    data['price'] = this.price;
-    data['strike_out_price'] = this.strikeOutPrice;
-    data['is_active'] = this.isActive;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['instructor_id'] = instructorId;
+    data['category_id'] = categoryId;
+    data['master_course_id'] = masterCourseId;
+    data['instruction_level_id'] = instructionLevelId;
+    data['course_title'] = courseTitle;
+    data['class_time'] = classtime;
+    data['course_slug'] = courseSlug;
+    data['keywords'] = keywords;
+    data['overview'] = overview;
+    data['course_image'] = courseImage;
+    data['thumb_image'] = thumbImage;
+    data['course_video'] = courseVideo;
+    data['duration'] = duration;
+    data['price'] = price;
+    data['strike_out_price'] = strikeOutPrice;
+    data['is_active'] = isActive;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
     return data;
   }
 }

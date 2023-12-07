@@ -3,9 +3,10 @@ class CartModel {
   final String categoryname;
   final String courseId;
   final String courseTitle;
-  final double price;
+  double price;
   final String categoryid;
   final String groupId;
+ String registrationMethod; // New field
 
   CartModel({
     required this.groupname,
@@ -15,6 +16,7 @@ class CartModel {
     required this.courseTitle,
     required this.categoryname,
     required this.price,
+    required this.registrationMethod, // New field
   });
 
   factory CartModel.fromJson(Map<String, dynamic> json) {
@@ -26,18 +28,20 @@ class CartModel {
       categoryid: json['categoryid'] ?? '',
       courseTitle: json['courseTitle'] ?? '',
       price: (json['price'] ?? 0.0).toDouble(),
+      registrationMethod: json['registrationMethod'] ?? '', // New field
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'categoryname':categoryname,
+      'categoryname': categoryname,
       'groupname': groupname,
       'courseId': courseId,
       'groupId': groupId,
       'categoryid': categoryid,
       'courseTitle': courseTitle,
       'price': price,
+      'registrationMethod': registrationMethod, // New field
     };
   }
 }
