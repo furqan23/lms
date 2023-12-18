@@ -96,7 +96,7 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Group ${widget.group!}",
+                      "${widget.group!}",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Padding(

@@ -12,6 +12,8 @@ import '../../values/auth_api.dart';
 import '../cart/cart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
+RxString cartInt="".obs;
 class HomeDetail extends StatefulWidget {
   final String mscatId;
 
@@ -30,6 +32,8 @@ class _VideoViewState extends State<HomeDetail> {
   bool boolData = false;
   int singleCartIndex = 0;
   bool isAdded = false;
+
+
   @override
   void initState() {
     super.initState();
@@ -39,6 +43,7 @@ class _VideoViewState extends State<HomeDetail> {
 
   @override
   Widget build(BuildContext context) {
+    cartInt.value=cartList.length.toString();
     final textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
@@ -49,10 +54,11 @@ class _VideoViewState extends State<HomeDetail> {
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Badge(
-                label: Text(
-                  cartList.length.toString(),
+                label:  Obx(
+                      () =>Text(
+                  cartInt.value,
                   style: const TextStyle(color: Colors.white),
-                ),
+                ),),
                 backgroundColor: Colors.red,
                 isLabelVisible:
                     cartList.isNotEmpty, // Show badge if cartList is not empty

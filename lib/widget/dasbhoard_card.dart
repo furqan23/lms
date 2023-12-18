@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/values/colors.dart';
 
 import '../values/myimage.dart';
 
 class DashbaordCard extends StatefulWidget {
-  String? id, catName, description, slug, seat, name, registermethod;
+  String? id, catName, description, slug, seat, name, registermethod,image;
 
   DashbaordCard({
     super.key,
     required this.id,
     required this.catName,
+    required this.image,
   });
 
   @override
@@ -20,19 +22,19 @@ class _DashbaordCardState extends State<DashbaordCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(1.0),
       child: Card(
         child: Column(
           children: [
             Center(
-              child: Image(
-                image: AssetImage(tOnBoardingImage3),
-                width: 100,
-                height: 100,
-              ),
+              child:widget.image==null?Image(
+          image: AssetImage(tOnBoardingImage3),
+          width: 45,
+          height: 45,
+        ):Image.network("${AuthApi.dashboardImagesBaseUrl}/${widget.image}")
             ),
             Text(widget.catName.toString(),style: TextStyle(
-              fontSize: 22,
+              fontSize: 17,letterSpacing: -1,
             ),),
           ],
         ),

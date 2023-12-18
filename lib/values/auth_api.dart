@@ -15,8 +15,8 @@ class AuthApi {
   static const String getDashboardApi =
       "https://cmi.edu.pk/qca/api/v1/dashboard";
 
-  static const String getDashboardApi2 =
-      "https://cmi.edu.pk/qca/api/v1/baseurl/category/xxxxxxx";
+  static const String dashboardImagesBaseUrl=
+      "https://cmi.edu.pk/qca/api/v1/baseurl/category/";
   static const String courseApi = "https://cmi.edu.pk/qca/api/v1/courseList";
   static const String getPayApi =
       "https://cmi.edu.pk/qca/api/v1/student/myPayments";

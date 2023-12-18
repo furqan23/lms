@@ -66,6 +66,7 @@ class Category {
   String? catName;
   Null? iconClass;
   String? slug;
+  String? image;
   String? mscatId;
 
   Category(
@@ -79,6 +80,7 @@ class Category {
         this.catName,
         this.iconClass,
         this.slug,
+        this.image,
         this.mscatId});
 
   Category.fromJson(Map<String, dynamic> json) {
@@ -92,6 +94,7 @@ class Category {
     catName = json['cat_name'];
     iconClass = json['icon_class'];
     slug = json['slug'];
+    image = json['image'];
     mscatId = json['mscat_id'];
   }
 
@@ -107,6 +110,7 @@ class Category {
     data['cat_name'] = this.catName;
     data['icon_class'] = this.iconClass;
     data['slug'] = this.slug;
+    data['image'] = this.image;
     data['mscat_id'] = this.mscatId;
     return data;
   }

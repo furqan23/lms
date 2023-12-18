@@ -42,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Box<String>? namee;
   String userName = "";
   String emaill = "";
+
   @override
   void initState() {
     // TODO: implement initState
@@ -60,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
       final res = await http.get(Uri.parse(AuthApi.getDashboardApi));
       print('Response Status Code: ${res.statusCode}');
       print('Response Body long');
-       LogPrint(res.body.toString());
+      LogPrint(res.body.toString());
 
       if (res.statusCode == 200) {
         if (res.body.isNotEmpty) {
@@ -85,6 +86,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final textScaleFactor = MediaQuery.of(context).textScaleFactor;
+
+// size of the screen
+    var size = MediaQuery.of(context).size;
+
+/*24 is for notification bar on Android*/
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 8;
+    final double itemWidth = size.width / 2;
+
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: Scaffold(
@@ -161,9 +170,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: dashboardList.isNotEmpty ? dashboardList[0].data?.category?.length ?? 0 : 0,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      itemCount: dashboardList.isNotEmpty
+                          ? dashboardList[0].data?.category?.length ?? 0
+                          : 0,
+                      gridDelegate:
+                           SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
+                            childAspectRatio: (itemWidth / itemHeight),
                       ),
                       itemBuilder: (context, index) {
                         if (dashboardList.isEmpty) {
@@ -172,13 +185,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           return InkWell(
                             onTap: () {
                               Get.to(() => HomeDetail(
-                                mscatId: dashboardList[0].data!.category![index].mscatId!,
-                              ));
+                                    mscatId: dashboardList[0]
+                                        .data!
+                                        .category![index]
+                                        .mscatId!,
+                                  ));
                             },
                             child: DashbaordCard(
-
                               id: dashboardList[0].data!.category![index].id!,
-                              catName: dashboardList[0].data!.category![index].catName!,
+                              catName: dashboardList[0]
+                                  .data!
+                                  .category![index]
+                                  .catName!,
+                              image: dashboardList[0]
+                                  .data!
+                                  .category![index]
+                                  .image??null,
                             ),
                           );
                         }
@@ -267,14 +289,14 @@ class _HomeScreenState extends State<HomeScreen> {
             CustomListTile(
               leadingIcon: Icons.person_outline,
               titleText: 'My Courses',
-              color: Colors.pink.shade100,
+              color: Colors.green.shade300,
               onTap: () {
                 Get.to(() => const MyCourses());
               },
             ),
             CustomListTile(
               leadingIcon: Icons.bookmark_outline_rounded,
-              color: Colors.blueAccent.shade100,
+              color: Colors.green.shade300,
               titleText: 'My Result',
               onTap: () {
                 Get.to(() => const MyResultsCourse());
@@ -283,14 +305,14 @@ class _HomeScreenState extends State<HomeScreen> {
             CustomListTile(
                 leadingIcon: Icons.quiz_outlined,
                 titleText: 'My Test',
-                color: Colors.cyan.shade100,
+                color: Colors.green.shade300,
                 onTap: () {
                   Get.to(() => const GetCourseTest());
                 }),
             CustomListTile(
               leadingIcon: Icons.payments_outlined,
               titleText: 'Payments',
-              color: Colors.blue.shade400,
+              color: Colors.green.shade300,
               onTap: () {
                 Get.to(() => const Payment());
               },

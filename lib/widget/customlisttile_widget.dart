@@ -21,7 +21,7 @@ class CustomListTile extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(7),
         child: Card(
-          elevation: 3,
+          elevation: 1,
           child: ListTile(
             leading:Container(
               width: 40,
