@@ -8,6 +8,7 @@ import 'package:splashapp/model/video_model.dart';
 import 'package:splashapp/values/auth_api.dart';
 import 'package:http/http.dart' as http;
 import 'package:splashapp/view/mycourses/my_course_detail.dart';
+import 'package:splashapp/view/mycourses/onlinevideo/playvideo.dart';
 import 'package:splashapp/view/mycourses/video_player.dart';
 import 'package:splashapp/widget/dasbhoard_card.dart';
 import 'package:splashapp/widget/dasbhoard_card_two.dart';
@@ -40,7 +41,9 @@ class _MyCoursesState extends State<MyVideos> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: (){
-                    Get.to(()=>YoutubePlayerDemo(urll:myCoursesList[0].data![index].videoName!));
+                    // Get.to(()=>YoutubePlayerDemo(urll:myCoursesList[0].data![index].videoName!));
+                    Get.to(()=>PlayVideo(type:"ok",id:myCoursesList[0].data![index].videoName!,
+                    listvideo: myCoursesList[0].data!,));
                   },
                   child: VideoCard(
                     id: myCoursesList[0].data![index].id,

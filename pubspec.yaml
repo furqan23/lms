@@ -55,6 +55,7 @@ dependencies:
   device_info_plus: ^9.1.1
   device_information: ^0.0.4
   permission_handler:
+  youtube_player_flutter: ^8.1.2
 
 
 
