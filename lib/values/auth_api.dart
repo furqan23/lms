@@ -24,6 +24,10 @@ class AuthApi {
       "https://cmi.edu.pk/qca/api/v1/student/getInvoiceById";
   static const String getstudentCourse =
       "https://cmi.edu.pk/qca/api/v1/student/myCourses";
+    static const String getGroupsText =
+      "https://cmi.edu.pk/qca/api/v1/student/getGroups";
+   static const String getCourseAlbum =
+      "https://cmi.edu.pk/qca/api/v1/student/getCourseAlbums";
   static const String getstudentCourseById =
       "https://cmi.edu.pk/qca/api/v1/student/getCourseById";
   static const String uploadReceiptApi =
@@ -33,10 +37,9 @@ class AuthApi {
   static const String getTestApi =
       "https://cmi.edu.pk/qca/api/v1/student/getCourseTests";
   static const String startTestApi =
-      "https://cmi.edu.pk/qca/api/v1/student/startTest";
-
-  static const String testinfo =
       "https://cmi.edu.pk/qca/api/v1/student/testInfo";
+  static const String testinfo =
+      "https://cmi.edu.pk/qca/api/v1/student/startTest";
   static const String getQuestionTestApi =
       "https://cmi.edu.pk/qca/api/v1/student/getTestQuestions";
   static const String postAnswerApi =

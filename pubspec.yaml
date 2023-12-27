@@ -56,6 +56,8 @@ dependencies:
   device_information: ^0.0.4
   permission_handler:
   youtube_player_flutter: ^8.1.2
+  timer_count_down: ^2.2.2
+  flutter_countdown_timer: ^4.1.0
 
 
 

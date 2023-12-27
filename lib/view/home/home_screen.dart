@@ -14,12 +14,15 @@ import 'package:splashapp/values/logs.dart';
 import 'package:splashapp/values/my_imgs.dart';
 import 'package:splashapp/view/home/my_wallet.dart';
 import 'package:splashapp/view/home_detail/home_detail.dart';
+import 'package:splashapp/view/my_test/my_groups.dart';
 import 'package:splashapp/view/mycourses/my_courses.dart';
 import 'package:splashapp/view/payment/payment.dart';
 import 'package:splashapp/view/quizz/getcoursetest_view.dart';
 import 'package:splashapp/view/results/myresultcourse_view.dart';
 import 'package:splashapp/view/test_pay/test_pay.dart';
 import 'package:splashapp/widget/carousel_widget.dart';
+import 'package:splashapp/widget/timer_two.dart';
+import 'package:splashapp/widget/timer_widget.dart';
 
 import '../../model/cart_model.dart';
 import '../../values/colors.dart';
@@ -115,6 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   children: [
                     const SizedBox(height: 5),
+                    // TimerWidgett(timee: 120),
+                    // CountdownTimerDemo(),
                     // ElevatedButton(onPressed: (){
                     //   Get.to(()=>const TestApp());
                     // }, child: const Text("data")),
@@ -307,7 +312,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 titleText: 'My Test',
                 color: Colors.green.shade300,
                 onTap: () {
-                  Get.to(() => const GetCourseTest());
+                  Get.to(() => const MyGroups());
                 }),
             CustomListTile(
               leadingIcon: Icons.payments_outlined,

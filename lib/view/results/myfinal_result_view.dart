@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:splashapp/values/constants.dart';
 import 'package:splashapp/view/quizz/viewanswer_view.dart';
 import '../../Controller/login_controller.dart';
 import '../../model/finalresult_model.dart';
@@ -312,12 +313,12 @@ class _MyFinalResultState extends State<MyFinalResult> {
                       },
                       child: Container(
                         alignment: Alignment.center,
-                        width: 120,
+                        width: 280,
                         height: 60,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: Colors.green),
-                        child: const Text("View Test Answer"),
+                        child: const Text("View Test Answer",style: textwhiteColorStyle,),
                       ),
                     )
                   ],

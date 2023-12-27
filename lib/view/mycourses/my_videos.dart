@@ -92,7 +92,7 @@ class _MyCoursesState extends State<MyVideos> {
 
         },
         body: {
-          "course_id":widget.id,
+          "album_id":widget.id,
         }
       );
 

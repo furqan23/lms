@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:splashapp/values/logs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:splashapp/Controller/login_controller.dart';
@@ -7,6 +7,7 @@ import 'package:splashapp/model/my_courses_model.dart';
 import 'package:splashapp/values/auth_api.dart';
 import 'package:http/http.dart' as http;
 import 'package:splashapp/view/mycourses/my_course_detail.dart';
+import 'package:splashapp/view/mycourses/my_videos.dart';
 import 'package:splashapp/widget/dasbhoard_card.dart';
 import 'package:splashapp/widget/dasbhoard_card_two.dart';
 
@@ -27,22 +28,22 @@ class _MyCoursesState extends State<MyCourses> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("My Courses"),
+        title: const Text("My Courses"),
       ),
       body: boolData
-          ? ListView.builder(
+          ? myCoursesList[0].data?.length==0?const Center(child: Text("No Record Found"),): ListView.builder(
               shrinkWrap: true,
               itemCount: myCoursesList[0].data?.length,
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: (){
-                    Get.to(()=>MyCourseDetail(myCoursesList[0].data![index].courseId!));
+                    Get.to(()=>MyVideos(myCoursesList[0].data![index].courseId!));
                   },
                   child: DashbaordCardTwo(
-                    group: myCoursesList[0].data![index].groupId,
+                    group: myCoursesList[0].data![index].groupname,
                     id: myCoursesList[0].data![index].name,
                     catName: myCoursesList[0].data![index].courseTitle,
-                    name:"${myCoursesList[0].data![index].firstName} ${myCoursesList[0].data![index].lastName} ",
+                    name:"${myCoursesList[0].data![index].firstName} ",
                     description: myCoursesList[0].data![index].name,
                     slug: myCoursesList[0].data![index].name,
                     seat: myCoursesList[0].data![index].totalSeat,
@@ -86,12 +87,13 @@ class _MyCoursesState extends State<MyCourses> {
       );
 
       print('Response Status Code: ${res.statusCode}');
-      print('Response Body: ${res.body}');
+      print('Response Body long');
+      LogPrint(res.body.toString());
 
       if (res.statusCode == 200) {
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);
-          print('test info Data: $mydata');
+          print('Parsed Data: $mydata');
           myCoursesList.add(MyCoursesModel.fromJson(mydata));
           setState(() {
             boolData = true;
