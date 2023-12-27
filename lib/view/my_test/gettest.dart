@@ -10,6 +10,7 @@ import 'package:splashapp/model/my_courses_model.dart';
 import 'package:splashapp/values/colors.dart';
 import 'package:splashapp/values/constants.dart';
 import 'package:splashapp/values/my_imgs.dart';
+import 'package:splashapp/values/text_string.dart';
 import 'package:splashapp/view/quizz/quizz_view.dart';
 import 'package:splashapp/widget/incoming_job_dialog.dart';
 import 'package:splashapp/widget/testcard_widget.dart';
@@ -69,6 +70,7 @@ class _GetTestState extends State<GetTest> {
                   },
                   child: TestCard(
                     id: getTestList[0].data![index].courseId.toString(),
+                    test_code: getTestList[0].data![index].test_code.toString(),
                     title: getTestList[0].data![index].testTitle.toString(),
                     start: getTestList[0].data![index].testStart.toString(),
                     total: getTestList[0].data![index].totalTime.toString(),
@@ -153,6 +155,8 @@ class _GetTestState extends State<GetTest> {
           int total_time = int.parse(mydata['data']['total_time']);
           int total_question = mydata['data']['total_question'];
           String test_title = mydata['data']['test_title'];
+          String test_amount = mydata['data']['fee'].toString();
+          String test_date = mydata['data']['test_start'].toString();
 
           Get.dialog(
               barrierDismissible: false,
@@ -169,14 +173,30 @@ class _GetTestState extends State<GetTest> {
                     children: [
                       Center(
                         child: Text(
-                          "Title: $test_title",
-                          style: textBoldStyle,
+                          "${test_title.toUpperCase()}",
+                          style: textBoldStyleDialog,
                         ),
                       ),
                       const SizedBox(
-                        height: 4,
+                        height: 20,
                       ),
                       // Image.asset(AppImage.internetConnection,height:30),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Start Date: ",
+                          ),
+                          Text(
+                            "$test_date",
+                          ),
+                        ],
+                      ),
+                      const Divider(
+                        color: AppColors.greyshade100,
+                        thickness: 1,
+                      ),
+  // Image.asset(AppImage.internetConnection,height:30),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -208,7 +228,18 @@ class _GetTestState extends State<GetTest> {
                         color: AppColors.greyshade100,
                         thickness: 1,
                       ),
-
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Total Time:",
+                          ),
+                          Text(
+                            "$currency $test_amount",
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

@@ -1,37 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:splashapp/values/colors.dart';
 
-class DashbaordCardTwo extends StatefulWidget {
-  String? id, catName, description, slug, seat, name, registermethod, buttonText,group;
+class GroupsCard extends StatefulWidget {
 
-  DashbaordCardTwo({
+
+  String id;
+  String groupCode;
+  String name;
+  String registrationMethod;
+  String catName;
+  String buttonText;
+
+
+
+
+  GroupsCard({
     super.key,
     required this.id,
     required this.name,
-    required this.description,
     required this.catName,
-    required this.slug,
-    required this.seat,
-    required this.registermethod,
-    required this.group,
+    required this.groupCode,
+    required this.registrationMethod,
     required this.buttonText,
 
   });
 
   @override
-  State<DashbaordCardTwo> createState() => _DashbaordCardState();
+  State<GroupsCard> createState() => _DashbaordCardState();
 }
 
-class _DashbaordCardState extends State<DashbaordCardTwo> {
+class _DashbaordCardState extends State<GroupsCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.only(left: 12.0,right: 12,top: 8),
       child: Card(
-        elevation: 5,
+        elevation: 3,
         child: Container(
           width: double.infinity,
-          height: 150,
+          height: 130,
           decoration: BoxDecoration(
               color: Colors.white12,
               borderRadius: BorderRadius.circular(5),
@@ -46,7 +53,7 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                 child: Container(
                   alignment: Alignment.center,
                   width: 100,
-                  height: 130,
+                  height: 116,
                   decoration: BoxDecoration(
                     color: AppColors.lightColor,
                     borderRadius: BorderRadius.circular(10),
@@ -80,7 +87,7 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                                 'assets/images/logo.png', // Replace 'local_image.png' with your local image asset path
                                 width: 100, // Adjust width and height as needed
                                 height: 100,
-                                fit: BoxFit.contain, // Adjust the fit property as per your requirement
+                                fit: BoxFit.fitHeight, // Adjust the fit property as per your requirement
                               ),
                             );
                           },
@@ -96,7 +103,7 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${widget.group!}",
+                      "${widget.id!}",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Padding(
@@ -105,7 +112,7 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                         children: [
 
                           Text(
-                            "${widget.catName!}/${widget.slug}",
+                            "${widget.catName!}",
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           // Text(
@@ -115,16 +122,16 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
+                   const Padding(
+                      padding: const EdgeInsets.only(top: 0),
                       child: Row(
                         children: [
                           const Text(
-                            "Lecturer: ",
+                            "",
                             style: TextStyle(color: Colors.grey, fontSize: 14),
                           ),
                           Text(
-                            widget.name!,
+                            "",
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           )
                         ],

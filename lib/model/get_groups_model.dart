@@ -1,13 +1,11 @@
-
-
-class MyCoursesModel {
+class  GetGroupsModel {
   bool? success;
   String? message;
   List<Data>? data;
 
-  MyCoursesModel({this.success, this.message, this.data});
+  GetGroupsModel({this.success, this.message, this.data});
 
-  MyCoursesModel.fromJson(Map<String, dynamic> json) {
+  GetGroupsModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     message = json['message'];
     if (json['data'] != null) {
@@ -30,92 +28,70 @@ class MyCoursesModel {
 }
 
 class Data {
-  String? courseId;
-  String? groupname;
   String? id;
+  String? groupCode;
   String? name;
   String? registrationMethod;
   var description;
   String? isActive;
   String? totalSeat;
   var expireOn;
-  String? masterCategoryId;
-  String? groupId;
-  String? course_code;
-  String? slug;
+  var image;
+  var group_type;
+  String? catName;
   var iconClass;
-  var createdAt;
-  var updatedAt;
-  String? courseTitle;
-  String? firstName;
-  String? lastName;
+  String? slug;
+  String? mscatId;
 
   Data(
-
-      {
-        this.groupname,
-        this.courseId,
-        this.id,
+      {this.id,
+        this.groupCode,
         this.name,
         this.registrationMethod,
         this.description,
         this.isActive,
         this.totalSeat,
         this.expireOn,
-        this.masterCategoryId,
-        this.groupId,
-        this.course_code,
-        this.slug,
+        this.image,
+        this.catName,
+        this.group_type,
         this.iconClass,
-        this.createdAt,
-        this.updatedAt,
-        this.courseTitle,
-        this.firstName,
-        this.lastName});
+        this.slug,
+        this.mscatId});
 
   Data.fromJson(Map<String, dynamic> json) {
-    courseId = json['course_id'];
-    groupname =json['group_name'];
     id = json['id'];
+    groupCode = json['group_code'];
+    group_type = json['group_type'];
     name = json['name'];
     registrationMethod = json['registration_method'];
     description = json['description'];
     isActive = json['is_active'];
     totalSeat = json['total_seat'];
     expireOn = json['expire_on'];
-    masterCategoryId = json['master_category_id'];
-    groupId = json['group_id'];
-    course_code = json['course_code'];
-    slug = json['slug'];
+    image = json['image'];
+    catName = json['cat_name'];
     iconClass = json['icon_class'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    courseTitle = json['course_title'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
+    slug = json['slug'];
+    mscatId = json['mscat_id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['course_id'] = this.courseId;
-    data['group_name']=this.groupname;
     data['id'] = this.id;
+    data['group_code'] = this.groupCode;
     data['name'] = this.name;
     data['registration_method'] = this.registrationMethod;
     data['description'] = this.description;
     data['is_active'] = this.isActive;
     data['total_seat'] = this.totalSeat;
     data['expire_on'] = this.expireOn;
-    data['master_category_id'] = this.masterCategoryId;
-    data['group_id'] = this.groupId;
-    data['course_code'] = this.course_code;
-    data['slug'] = this.slug;
+    data['group_type'] = this.group_type;
+    data['image'] = this.image;
+    data['cat_name'] = this.catName;
     data['icon_class'] = this.iconClass;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['course_title'] = this.courseTitle;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
+    data['slug'] = this.slug;
+    data['mscat_id'] = this.mscatId;
     return data;
   }
 }

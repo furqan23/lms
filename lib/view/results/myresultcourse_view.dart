@@ -200,12 +200,12 @@ class _MyResultsCourseState extends State<MyResultsCourse> {
       );
 
       print('Response Status Code: ${res.statusCode}');
-      print('Response Body: ${res.body}');
+      // print('Response Body: ${res.body}');
       print('Response Body: ${res.body.toString()}');
       if (res.statusCode == 200) {
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);
-          print('Parsed Data: $mydata');
+          // print('Parsed Data: $mydata');
           getresultsModelList.add(MyResultModel.fromJson(mydata));
 
           setState(() {

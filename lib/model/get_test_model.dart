@@ -30,6 +30,7 @@ class GetTestModel {
 class Data {
   String? id;
   String? courseId;
+  String? test_code;
   String? testTitle;
   String? totalTime;
   String? testStart;
@@ -44,6 +45,7 @@ class Data {
   Data(
       {this.id,
         this.courseId,
+        this.test_code,
         this.testTitle,
         this.totalTime,
         this.testStart,
@@ -58,6 +60,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     courseId = json['course_id'];
+    test_code = json['test_code'];
     testTitle = json['test_title'];
     totalTime = json['total_time'];
     testStart = json['test_start'];
@@ -74,6 +77,7 @@ class Data {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['course_id'] = this.courseId;
+    data['test_code'] = this.test_code;
     data['test_title'] = this.testTitle;
     data['total_time'] = this.totalTime;
     data['test_start'] = this.testStart;

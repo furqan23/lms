@@ -47,7 +47,7 @@ class _GetCourseTestState extends State<GetCourseTest> {
                         GetTest(id: myCoursesList[0].data![index].courseId!));
                   },
                   child: DashbaordCardTwo(
-                    group: myCoursesList[0].data![index].groupId,
+                    group: myCoursesList[0].data![index].course_code,
                     id: myCoursesList[0].data![index].name,
                     catName: myCoursesList[0].data![index].courseTitle,
                     name:

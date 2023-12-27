@@ -13,6 +13,8 @@ import 'package:splashapp/model/createinvoice_model.dart';
 import 'package:splashapp/model/get_invoice_id_model.dart';
 import 'package:splashapp/model/testfee_model.dart';
 import 'package:splashapp/values/auth_api.dart';
+import 'package:splashapp/values/colors.dart';
+import 'package:splashapp/values/constants.dart';
 import 'package:splashapp/values/my_imgs.dart';
 import 'package:splashapp/values/text_string.dart';
 import 'package:splashapp/widget/incoming_payment_method_dialog.dart';
@@ -36,7 +38,7 @@ class _MyWallletState extends State<MyWallet> {
   List<TestFee> testfeeList = [];
   List<GetInvoiceByIdModel> invoiceByIdList = [];
   String course = 'course';
-  String test = 'test'; // test
+  String _test = 'test'; // test
   bool boolData = false;
   String? token;
 
@@ -71,12 +73,11 @@ class _MyWallletState extends State<MyWallet> {
       List<Map<String, dynamic>> requestDataList = [];
 
 
-      log("cartlenht: $cartList.length.toString()");
-      for (int i = 0; i < cartList.length; i++) {
+      // log("cartlenht: $cartList.length.toString()");
+      for (int i = 0; i < 1; i++) {
 
         Map<String, dynamic> cartData = {
-
-          'fee_type': test,
+          'fee_type': _test,
           "qty": cartController!.quantity.value.toString(),
         };
         requestDataList.add(cartData);
@@ -84,14 +85,14 @@ class _MyWallletState extends State<MyWallet> {
         print(requestDataList);
       }
 
-      final String requestBody = jsonEncode(requestDataList);
+      // final String requestBody = jsonEncode(requestDataList);
 
-      List<Map<String, dynamic>> requestDataBody;
+      // List<Map<String, dynamic>> requestDataBody;
       Map<String, dynamic> requestDataBodyy = {
         "bodyy": requestDataList,
       };
 
-      print(requestDataBodyy);
+      print("request body new $requestDataBodyy");
       // print("${requestBody}");
       final res = await http.post(
         Uri.parse(AuthApi.createInvoiceid),
@@ -222,7 +223,14 @@ class _MyWallletState extends State<MyWallet> {
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
                               children: [
-
+                                 Text(
+                                  'Per Test Fee: $currency $testfee',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 13,),
                                 const Text(
                                   'Total Amount',
                                   style: TextStyle(
@@ -260,9 +268,9 @@ class _MyWallletState extends State<MyWallet> {
                                         height: 40,
                                         decoration: const BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: Colors.red,
+                                          color: AppColors.primaryColor,
                                         ),
-                                        child: const Icon(Icons.remove),
+                                        child: const Icon(Icons.remove,color: AppColors.whiteColor),
                                       ),
                                     ),
                                     Obx(
@@ -279,9 +287,9 @@ class _MyWallletState extends State<MyWallet> {
                                         height: 40,
                                         decoration: const BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: Colors.green,
+                                          color: AppColors.primaryColor,
                                         ),
-                                        child: const Icon(Icons.add),
+                                        child: const Icon(Icons.add,color: AppColors.whiteColor,),
                                       ),
                                     ),
                                   ],
@@ -289,6 +297,7 @@ class _MyWallletState extends State<MyWallet> {
                                 const SizedBox(height: 20),
                                 InkWell(
                                   onTap: () {
+                                    Get.back();
                                     getTokenAndFetchInvoice();
                                   },
                                   child: Container(
@@ -296,10 +305,10 @@ class _MyWallletState extends State<MyWallet> {
                                     width: 90,
                                     height: 40,
                                     decoration: BoxDecoration(
-                                        color: Colors.red,
+                                        color: AppColors.primaryColor,
                                         borderRadius:
                                             BorderRadius.circular(10)),
-                                    child: const Text("create"),
+                                    child: const Text("create",style: textwhiteColorStyle,),
                                   ),
                                 ),
                               ],
@@ -319,7 +328,7 @@ class _MyWallletState extends State<MyWallet> {
                   },
                 );
               },
-              backgroundColor: Colors.blue,
+              backgroundColor: AppColors.primaryColor,
               child: const Icon(Icons.add),
               // Replace with your desired color
             ),

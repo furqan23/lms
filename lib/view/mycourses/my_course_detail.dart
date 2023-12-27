@@ -36,7 +36,7 @@ class _MyCourseDetailState extends State<MyCourseDetail> {
                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Course Id: '),
-                       Text(myCoursesList![0].data!.id!.toString()),
+                       Text(myCoursesList?[0].data?.id?.toString()??"N/A"),
                     ],
                   ),
                 ),
@@ -46,7 +46,7 @@ class _MyCourseDetailState extends State<MyCourseDetail> {
                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Course Title: '),
-                      Text(myCoursesList![0].data!.courseTitle!.toString()),
+                      Text(myCoursesList![0].data!.courseTitle?.toString()??"N/A"),
                     ],
                   ),
                 ),
@@ -56,7 +56,7 @@ class _MyCourseDetailState extends State<MyCourseDetail> {
                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Course Category: '),
-                      Text(myCoursesList![0].data!.courseSlug!.toString()),
+                      Text(myCoursesList![0].data!.courseSlug?.toString()??"N/A"),
                     ],
                   ),
                 ),
@@ -67,7 +67,7 @@ class _MyCourseDetailState extends State<MyCourseDetail> {
                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Price: '),
-                      Text("PKR: ${myCoursesList![0].data!.price!.toString()}"),
+                      Text("PKR: ${myCoursesList?[0].data?.price?.toString()}"??"N/A"),
                     ],
                   ),
                 ),

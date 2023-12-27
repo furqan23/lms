@@ -1,28 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:splashapp/values/colors.dart';
 
-class DashbaordCardTwo extends StatefulWidget {
-  String? id, catName, description, slug, seat, name, registermethod, buttonText,group;
+class AlbumCard extends StatefulWidget {
+  String? id, albam_code, albam_title;
 
-  DashbaordCardTwo({
+  AlbumCard({
     super.key,
     required this.id,
-    required this.name,
-    required this.description,
-    required this.catName,
-    required this.slug,
-    required this.seat,
-    required this.registermethod,
-    required this.group,
-    required this.buttonText,
+    required this.albam_code,
+    required this.albam_title,
+
 
   });
 
   @override
-  State<DashbaordCardTwo> createState() => _DashbaordCardState();
+  State<AlbumCard> createState() => _DashbaordCardState();
 }
 
-class _DashbaordCardState extends State<DashbaordCardTwo> {
+class _DashbaordCardState extends State<AlbumCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,7 +26,7 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
         elevation: 5,
         child: Container(
           width: double.infinity,
-          height: 150,
+          height: 110,
           decoration: BoxDecoration(
               color: Colors.white12,
               borderRadius: BorderRadius.circular(5),
@@ -41,77 +36,77 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: Container(
-                  alignment: Alignment.center,
-                  width: 100,
-                  height: 130,
-                  decoration: BoxDecoration(
-                    color: AppColors.lightColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    children: [
-
-                      // SizedBox(
-                      //     height: MediaQuery.of(context).size.height * 0.05),
-                      // Center(
-                      //     child: Text(
-                      //   widget.slug.toString(),
-                      //   style: const TextStyle(
-                      //       color: Colors.black, fontWeight: FontWeight.w700),
-                      // )),
-                      // Align(
-                      //     alignment: Alignment.topCenter,
-                      //     child: Text(widget.catName.toString(),
-                      //         style: const TextStyle(
-                      //             color: Colors.black,
-                      //             fontWeight: FontWeight.w700))),
-
-                      Center(
-                        child: Image.network(
-                          "https://dav.binshaharts.com/frontend/img/learning.png",
-                          errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-                            // Returning a local image if the network image fails to load
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset(
-                                'assets/images/logo.png', // Replace 'local_image.png' with your local image asset path
-                                width: 100, // Adjust width and height as needed
-                                height: 100,
-                                fit: BoxFit.contain, // Adjust the fit property as per your requirement
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 5),
+              //   child: Container(
+              //     alignment: Alignment.center,
+              //     width: 100,
+              //     height: 130,
+              //     decoration: BoxDecoration(
+              //       color: AppColors.lightColor,
+              //       borderRadius: BorderRadius.circular(10),
+              //     ),
+              //     child: Column(
+              //       children: [
+              //
+              //         // SizedBox(
+              //         //     height: MediaQuery.of(context).size.height * 0.05),
+              //         // Center(
+              //         //     child: Text(
+              //         //   widget.slug.toString(),
+              //         //   style: const TextStyle(
+              //         //       color: Colors.black, fontWeight: FontWeight.w700),
+              //         // )),
+              //         // Align(
+              //         //     alignment: Alignment.topCenter,
+              //         //     child: Text(widget.catName.toString(),
+              //         //         style: const TextStyle(
+              //         //             color: Colors.black,
+              //         //             fontWeight: FontWeight.w700))),
+              //
+              //         Center(
+              //           child: Image.network(
+              //             "https://dav.binshaharts.com/frontend/img/learning.png",
+              //             errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+              //               // Returning a local image if the network image fails to load
+              //               return Padding(
+              //                 padding: const EdgeInsets.all(8.0),
+              //                 child: Image.asset(
+              //                   'assets/images/logo.png', // Replace 'local_image.png' with your local image asset path
+              //                   width: 100, // Adjust width and height as needed
+              //                   height: 100,
+              //                   fit: BoxFit.contain, // Adjust the fit property as per your requirement
+              //                 ),
+              //               );
+              //             },
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "${widget.group!}",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    // Text(
+                    //   "${widget.albam_code!}",
+                    //   style: TextStyle(fontWeight: FontWeight.bold),
+                    // ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.only(top: 1),
                       child: Row(
                         children: [
 
                           Text(
-                            "${widget.catName!}/${widget.slug}",
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            "Code: ",
+                            style: const TextStyle(fontWeight: FontWeight.bold,color:Colors.grey),
                           ),
-                          // Text(
-                          //   widget.name!,
-                          //   style: TextStyle(fontWeight: FontWeight.bold),
-                          // )
+                          Text(
+                            widget.albam_code!,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )
                         ],
                       ),
                     ),
@@ -120,11 +115,11 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                       child: Row(
                         children: [
                           const Text(
-                            "Lecturer: ",
+                            "Title: ",
                             style: TextStyle(color: Colors.grey, fontSize: 14),
                           ),
                           Text(
-                            widget.name!,
+                            widget.albam_title!,
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           )
                         ],
@@ -169,7 +164,7 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                               color: AppColors.primaryColor,
                             ),
                             child:  Text(
-                          widget.buttonText!,
+                          "Video lectures",
                               style: const TextStyle(
                                 color: Colors.white,
                               ),

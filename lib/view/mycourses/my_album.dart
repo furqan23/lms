@@ -4,28 +4,32 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:splashapp/Controller/login_controller.dart';
+import 'package:splashapp/model/album_model.dart';
 import 'package:splashapp/model/my_courses_model.dart';
 import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/view/mycourses/my_course_detail.dart';
+import 'package:splashapp/view/mycourses/my_videos.dart';
+import 'package:splashapp/widget/album_card.dart';
 import 'package:splashapp/widget/dasbhoard_card_two.dart';
 
-class MyCourses extends StatefulWidget {
-  const MyCourses({super.key});
+class MyAlbum extends StatefulWidget {
+  final String id;
+  MyAlbum(this.id, {Key? key}) : super(key: key);
 
   @override
-  State<MyCourses> createState() => _MyCoursesState();
+  State<MyAlbum> createState() => _MyCoursesState();
 }
 
-class _MyCoursesState extends State<MyCourses> {
+class _MyCoursesState extends State<MyAlbum> {
   String? token;
-  List<MyCoursesModel> myCoursesList = [];
+  List<AlbumModel> myCoursesList = [];
   bool boolData = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:const Text("My Courses"),
+        title:const Text("Course Albums"),
       ),
       body: boolData
           ? ListView.builder(
@@ -34,21 +38,15 @@ class _MyCoursesState extends State<MyCourses> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    Get.to(() => MyCourseDetail(
-                        myCoursesList[0].data![index].courseId!));
+                    Get.to(() => MyVideos(
+                        myCoursesList[0].data![index].id!));
                   },
-                  child: DashbaordCardTwo(
-                    group: myCoursesList[0].data![index].groupId,
-                    id: myCoursesList[0].data![index].name,
-                    catName: myCoursesList[0].data![index].courseTitle,
-                    name:
-                        "${myCoursesList[0].data![index].firstName} ${myCoursesList[0].data![index].lastName}",
-                    description: myCoursesList[0].data![index].name,
-                    slug: myCoursesList[0].data![index].name,
-                    seat: myCoursesList[0].data![index].totalSeat,
-                    registermethod:
-                        myCoursesList[0].data![index].registrationMethod,
-                    buttonText: 'Video Lectures >',
+                  child: AlbumCard(
+                    id: myCoursesList[0].data![index].id,
+                    albam_title: myCoursesList[0].data![index].albumTitle,
+                    albam_code:
+                        "${myCoursesList[0].data![index].albamCode}",
+
                   ),
                 );
               })
@@ -78,11 +76,14 @@ class _MyCoursesState extends State<MyCourses> {
 
       // final String requestBody = jsonEncode(requestData);
 
-      final res = await http.get(
-        Uri.parse(AuthApi.getstudentCourse),
+      final res = await http.post(
+        Uri.parse(AuthApi.getCourseAlbum),
         headers: {
           'Authorization': 'Bearer $token', // Use the retrieved token
-          'Content-Type': 'application/json',
+        },
+        body: {
+          'course_id': '${widget.id}', // Use the retrieved token
+
         },
       );
 
@@ -93,7 +94,7 @@ class _MyCoursesState extends State<MyCourses> {
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);
           print('Parsed Data: $mydata');
-          myCoursesList.add(MyCoursesModel.fromJson(mydata));
+          myCoursesList.add(AlbumModel.fromJson(mydata));
           setState(() {
             boolData = true;
           });

@@ -14,6 +14,7 @@ class AppColors {
   static const Color AshGreyColor  =Color(0xffb2beb5);
   static const Color redColor =Color(0xffED3236);
   static const Color greyshade100 =Color(0xc3a4a8a5);
+  static const Color whiteshade100 =Color(0xe5f4f6f4);
 
   static const Color tprimaryColor = Color(0xFF06A990);
   static const tSecondaryColor = Color(0xFF272727);

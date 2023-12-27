@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import '../values/colors.dart';
 
 class TestCard extends StatelessWidget {
-  final String id, title, start,total;
+  final String id, title, start,total,test_code;
 
   const TestCard(
-      {super.key, required this.id, required this.title, required this.start, required this.total});
+      {super.key, required this.id, required this.title, required this.start,  required this.test_code, required this.total});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class TestCard extends StatelessWidget {
         elevation: 5,
         child: Container(
           width: double.infinity,
-          height: 150,
+          height: 155,
           decoration: BoxDecoration(
               color: Colors.white12,
               borderRadius: BorderRadius.circular(5),
@@ -32,6 +32,21 @@ class TestCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Row(
+                        children: [
+                          const Text(
+                            "Test Code: ",
+                            style: TextStyle(color: Colors.grey, fontSize: 14),
+                          ),
+                          Text(
+                            test_code,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Row(
                         children: [
@@ -62,21 +77,21 @@ class TestCard extends StatelessWidget {
                       ),
                     ),
 
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Row(
-                        children: [
-                          const Text(
-                            "Duration: ",
-                            style: TextStyle(color: Colors.grey, fontSize: 14),
-                          ),
-                          Text(
-                            "$total Min",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(top: 10),
+                    //   child: Row(
+                    //     children: [
+                    //       const Text(
+                    //         "Duration: ",
+                    //         style: TextStyle(color: Colors.grey, fontSize: 14),
+                    //       ),
+                    //       Text(
+                    //         "$total Min",
+                    //         style: TextStyle(fontWeight: FontWeight.bold),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
 
                     Padding(
                       padding: const EdgeInsets.only(top: 10),

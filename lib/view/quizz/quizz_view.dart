@@ -8,6 +8,7 @@ import 'package:splashapp/model/test_question_model.dart';
 import 'package:splashapp/view/home/home_screen.dart';
 import 'package:splashapp/view/results/myfinal_result_view.dart';
 import 'package:splashapp/widget/show_load_indicator.dart';
+import 'package:splashapp/widget/timer_widget.dart';
 import '../../Controller/login_controller.dart';
 import '../../values/auth_api.dart';
 
@@ -101,6 +102,7 @@ class _QuizzViewState extends State<QuizzView> {
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
+                      TimerWidgett(timee:  120),
                       const SizedBox(height: 15),
                       Container(
                         height: MediaQuery.of(context).size.height * 0.5,
