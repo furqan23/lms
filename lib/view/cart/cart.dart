@@ -160,7 +160,7 @@ class _CartScreenState extends State<CartScreen> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              'Total Amount: \$${totalBalance.toStringAsFixed(2)}',
+              'Total Amount:${totalBalance.toStringAsFixed(2)} pkr  ',
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
