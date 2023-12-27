@@ -32,25 +32,25 @@ class Data {
   String? videoTitle;
   String? videoName;
   Null? videoType;
+  String? courseAlbumId;
   Null? duration;
   Null? imageName;
   Null? videoTag;
-  String? uploaderId;
-  String? courseId;
+  Null? uploaderId;
   String? processed;
-  Null? createdAt;
-  Null? updatedAt;
+  String? createdAt;
+  String? updatedAt;
 
   Data(
       {this.id,
         this.videoTitle,
         this.videoName,
         this.videoType,
+        this.courseAlbumId,
         this.duration,
         this.imageName,
         this.videoTag,
         this.uploaderId,
-        this.courseId,
         this.processed,
         this.createdAt,
         this.updatedAt});
@@ -60,11 +60,11 @@ class Data {
     videoTitle = json['video_title'];
     videoName = json['video_name'];
     videoType = json['video_type'];
+    courseAlbumId = json['course_album_id'];
     duration = json['duration'];
     imageName = json['image_name'];
     videoTag = json['video_tag'];
     uploaderId = json['uploader_id'];
-    courseId = json['course_id'];
     processed = json['processed'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -76,11 +76,11 @@ class Data {
     data['video_title'] = this.videoTitle;
     data['video_name'] = this.videoName;
     data['video_type'] = this.videoType;
+    data['course_album_id'] = this.courseAlbumId;
     data['duration'] = this.duration;
     data['image_name'] = this.imageName;
     data['video_tag'] = this.videoTag;
     data['uploader_id'] = this.uploaderId;
-    data['course_id'] = this.courseId;
     data['processed'] = this.processed;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;

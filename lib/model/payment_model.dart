@@ -29,17 +29,18 @@ class PaymentModel {
 
 class Data {
   int? id;
+  String? refId;
   String? userId;
   String? createdBy;
   String? status;
   String? createdAt;
   String? createFromPlace;
   String? updatedAt;
-  String? uploadedReceipt;
-  String? uploadedReceiptDate;
+  Null? uploadedReceipt;
+  Null? uploadedReceiptDate;
   String? invoiceAmount;
   String? otherCharges;
-  String? otherChargesDesc;
+  Null? otherChargesDesc;
   String? discount;
   String? invoiceTotalAmount;
   User? user;
@@ -47,6 +48,7 @@ class Data {
 
   Data(
       {this.id,
+        this.refId,
         this.userId,
         this.createdBy,
         this.status,
@@ -65,6 +67,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    refId = json['ref_id'];
     userId = json['user_id'];
     createdBy = json['created_by'];
     status = json['status'];
@@ -90,6 +93,7 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data['ref_id'] = this.refId;
     data['user_id'] = this.userId;
     data['created_by'] = this.createdBy;
     data['status'] = this.status;
@@ -124,9 +128,10 @@ class User {
   Null? regNo;
   Null? retriveUniqCode;
   Null? cardExpireAt;
-  Null? contactNo;
+  String? contactNo;
   String? commission;
   String? deviceImei;
+  Null? biography;
   Null? image;
 
   User(
@@ -142,6 +147,7 @@ class User {
         this.contactNo,
         this.commission,
         this.deviceImei,
+        this.biography,
         this.image});
 
   User.fromJson(Map<String, dynamic> json) {
@@ -157,6 +163,7 @@ class User {
     contactNo = json['contact_no'];
     commission = json['commission'];
     deviceImei = json['device_imei'];
+    biography = json['biography'];
     image = json['image'];
   }
 
@@ -174,6 +181,7 @@ class User {
     data['contact_no'] = this.contactNo;
     data['commission'] = this.commission;
     data['device_imei'] = this.deviceImei;
+    data['biography'] = this.biography;
     data['image'] = this.image;
     return data;
   }
@@ -253,7 +261,7 @@ class Category {
   Null? iconClass;
   String? isActive;
   Null? createdAt;
-  String? updatedAt;
+  Null? updatedAt;
   MasterCategory? masterCategory;
 
   Category(
@@ -309,6 +317,7 @@ class MasterCategory {
   String? isActive;
   String? createdAt;
   String? updatedAt;
+  Null? image;
 
   MasterCategory(
       {this.id,
@@ -317,7 +326,8 @@ class MasterCategory {
         this.iconClass,
         this.isActive,
         this.createdAt,
-        this.updatedAt});
+        this.updatedAt,
+        this.image});
 
   MasterCategory.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -327,6 +337,7 @@ class MasterCategory {
     isActive = json['is_active'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    image = json['image'];
   }
 
   Map<String, dynamic> toJson() {
@@ -338,6 +349,7 @@ class MasterCategory {
     data['is_active'] = this.isActive;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+    data['image'] = this.image;
     return data;
   }
 }
