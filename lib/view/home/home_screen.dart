@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 /*24 is for notification bar on Android*/
     final double itemHeight = (size.height - kToolbarHeight - 24) / 8;
-    final double itemWidth = size.width / 2;
+    final double itemWidth = size.width / 2.5;
 
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),

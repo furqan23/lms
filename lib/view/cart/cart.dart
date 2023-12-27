@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:splashapp/model/createinvoice_model.dart';
 import 'package:splashapp/model/get_invoice_id_model.dart';
 import 'package:splashapp/values/colors.dart';
+import 'package:splashapp/values/text_string.dart';
+import 'package:splashapp/view/home_detail/home_detail.dart';
 import 'package:splashapp/widget/incoming_payment_method_dialog.dart';
 import 'package:splashapp/widget/show_load_indicator.dart';
 import '../../Controller/login_controller.dart';
@@ -78,7 +80,7 @@ class _CartScreenState extends State<CartScreen> {
 
       // Remove all items with the same category name
       cartList.removeWhere((item) => item.groupname == groupNameToRemove);
-
+      cartInt.value=cartList.length.toString();
       saveCartData();
     });
   }
@@ -119,17 +121,33 @@ class _CartScreenState extends State<CartScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Group Name: $groupName'),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Group Name: $groupName'),
+                          ),
                           Column(
                             children: groupItems.map((item) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Category Name: ${item.categoryname}"),
-                                  Text("Course title: ${item.courseTitle}"),
-                                  Text(
-                                      'Price: ${item.price.toStringAsFixed(2)} pkr'),
-                                ],
+                              return Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Container(
+
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Card(
+                                    color: AppColors.whiteshade100,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("Category Name: ${item.categoryname}"),
+                                          Text("Course title: ${item.courseTitle}"),
+                                          Text(
+                                              'Price: ${item.price.toStringAsFixed(2)} $currency'),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               );
                             }).toList(),
                           ),
@@ -158,9 +176,9 @@ class _CartScreenState extends State<CartScreen> {
           // Display the total balance at the bottom of the screen
 
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(1.0),
             child: Text(
-              'Total Amount:${totalBalance.toStringAsFixed(2)} pkr  ',
+              'Total Amount: $currency ${totalBalance.toStringAsFixed(2)}',
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -174,13 +192,13 @@ class _CartScreenState extends State<CartScreen> {
               getTokenAndFetchInvoice();
             },
             child: Container(
-              margin: const EdgeInsets.only(bottom: 10),
+              margin: const EdgeInsets.all( 10),
               width: double.infinity,
               alignment: Alignment.center,
               height: 50,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: AppColors.tprimaryColor,
+                borderRadius: BorderRadius.circular(10),
+                color: AppColors.primaryColor,
               ),
               child: const Text(
                 'Create Invoice',
