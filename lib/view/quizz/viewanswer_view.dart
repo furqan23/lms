@@ -49,13 +49,21 @@ class _ViewAnswerState extends State<ViewAnswer> {
                       bool isOpt4 = false;
 
                       if (resultDetail.correctAnswer!.contains('A')) {
-                        isOpt1 = true;
+                        setState(() {
+                          isOpt1 = true;
+                        });
                       } else if (resultDetail.correctAnswer!.contains('B')) {
-                        isOpt2 = true;
+                        setState(() {
+                          isOpt2 = true;
+                        });
                       } else if (resultDetail.correctAnswer!.contains('C')) {
-                        isOpt3 = true;
+                        setState(() {
+                          isOpt3 = true;
+                        });
                       } else if (resultDetail.correctAnswer!.contains('d')) {
-                        isOpt4 = true;
+                        setState(() {
+                          isOpt4 = true;
+                        });
                       }
 
                       Color borderColor =

@@ -36,11 +36,11 @@ class Data {
   String? createdAt;
   String? createFromPlace;
   String? updatedAt;
-  Null? uploadedReceipt;
-  Null? uploadedReceiptDate;
+  String? uploadedReceipt;
+  String? uploadedReceiptDate;
   String? invoiceAmount;
   String? otherCharges;
-  Null? otherChargesDesc;
+  String? otherChargesDesc;
   String? discount;
   String? invoiceTotalAmount;
   User? user;
@@ -66,21 +66,21 @@ class Data {
         this.invoiceDetil});
 
   Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    refId = json['ref_id'];
-    userId = json['user_id'];
-    createdBy = json['created_by'];
-    status = json['status'];
-    createdAt = json['created_at'];
-    createFromPlace = json['create_from_place'];
-    updatedAt = json['updated_at'];
-    uploadedReceipt = json['uploaded_receipt'];
-    uploadedReceiptDate = json['uploaded_receipt_date'];
-    invoiceAmount = json['invoice_amount'];
-    otherCharges = json['other_charges'];
-    otherChargesDesc = json['other_charges_desc'];
-    discount = json['discount'];
-    invoiceTotalAmount = json['invoice_total_amount'];
+    id = json['id']??"empty";
+    refId = json['ref_id']??"empty";
+    userId = json['user_id']??"empty";
+    createdBy = json['created_by']??"empty";
+    status = json['status']??"empty";
+    createdAt = json['created_at']??"empty";
+    createFromPlace = json['create_from_place']??"empty";
+    updatedAt = json['updated_at']??"empty";
+    uploadedReceipt = json['uploaded_receipt']??"empty";
+    uploadedReceiptDate = json['uploaded_receipt_date']??"empty";
+    invoiceAmount = json['invoice_amount']??"empty";
+    otherCharges = json['other_charges']??"empty";
+    otherChargesDesc = json['other_charges_desc']??"empty";
+    discount = json['discount']??"empty";
+    invoiceTotalAmount = json['invoice_total_amount']??"empty";
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
     if (json['invoice_detil'] != null) {
       invoiceDetil = <InvoiceDetil>[];
@@ -125,14 +125,14 @@ class User {
   String? isActive;
   String? createdAt;
   String? updatedAt;
-  Null? regNo;
-  Null? retriveUniqCode;
-  Null? cardExpireAt;
+  var regNo;
+var retriveUniqCode;
+  var cardExpireAt;
   String? contactNo;
   String? commission;
   String? deviceImei;
-  Null? biography;
-  Null? image;
+  var biography;
+  var image;
 
   User(
       {this.id,
@@ -151,20 +151,20 @@ class User {
         this.image});
 
   User.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    firstName = json['first_name'];
-    email = json['email'];
-    isActive = json['is_active'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    regNo = json['reg_no'];
-    retriveUniqCode = json['retrive_uniq_code'];
-    cardExpireAt = json['card_expire_at'];
-    contactNo = json['contact_no'];
-    commission = json['commission'];
-    deviceImei = json['device_imei'];
-    biography = json['biography'];
-    image = json['image'];
+    id = json['id']??"empty";
+    firstName = json['first_name']??"empty";
+    email = json['email']??"empty";
+    isActive = json['is_active']??"empty";
+    createdAt = json['created_at']??"empty";
+    updatedAt = json['updated_at']??"empty";
+    regNo = json['reg_no']??"empty";
+    retriveUniqCode = json['retrive_uniq_code']??"empty";
+    cardExpireAt = json['card_expire_at']??"empty";
+    contactNo = json['contact_no']??"empty";
+    commission = json['commission']??"empty";
+    deviceImei = json['device_imei']??"empty";
+    biography = json['biography']??"empty";
+    image = json['image']??"empty";
   }
 
   Map<String, dynamic> toJson() {
@@ -197,8 +197,8 @@ class InvoiceDetil {
   String? price;
   String? discount;
   String? feeType;
-  Null? createdAt;
-  Null? updatedAt;
+  var createdAt;
+ var updatedAt;
   Category? category;
 
   InvoiceDetil(
@@ -216,17 +216,17 @@ class InvoiceDetil {
         this.category});
 
   InvoiceDetil.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    invoiceId = json['invoice_id'];
-    groupId = json['group_id'];
-    categoryId = json['category_id'];
-    courseId = json['course_id'];
-    qty = json['qty'];
-    price = json['price'];
-    discount = json['discount'];
-    feeType = json['fee_type'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+    id = json['id']??"empty";
+    invoiceId = json['invoice_id']??"empty";
+    groupId = json['group_id']??"empty";
+    categoryId = json['category_id']??"empty";
+    courseId = json['course_id']??"empty";
+    qty = json['qty']??"empty";
+    price = json['price']??"empty";
+    discount = json['discount']??"empty";
+    feeType = json['fee_type']??"empty";
+    createdAt = json['created_at']??"empty";
+    updatedAt = json['updated_at']??"empty";
     category = json['category'] != null
         ? new Category.fromJson(json['category'])
         : null;
@@ -258,10 +258,10 @@ class Category {
   String? groupId;
   String? name;
   String? slug;
-  Null? iconClass;
+  var iconClass;
   String? isActive;
-  Null? createdAt;
-  Null? updatedAt;
+  var createdAt;
+  var updatedAt;
   MasterCategory? masterCategory;
 
   Category(
@@ -277,17 +277,17 @@ class Category {
         this.masterCategory});
 
   Category.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    masterCategoryId = json['master_category_id'];
-    groupId = json['group_id'];
-    name = json['name'];
-    slug = json['slug'];
-    iconClass = json['icon_class'];
-    isActive = json['is_active'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+    id = json['id']??"empty";
+    masterCategoryId = json['master_category_id']??"empty";
+    groupId = json['group_id']??"empty";
+    name = json['name']??"empty";
+    slug = json['slug']??"empty";
+    iconClass = json['icon_class']??"empty";
+    isActive = json['is_active']??"empty";
+    createdAt = json['created_at']??"empty";
+    updatedAt = json['updated_at']??"empty";
     masterCategory = json['master_category'] != null
-        ? new MasterCategory.fromJson(json['master_category'])
+        ?   MasterCategory.fromJson(json['master_category'])
         : null;
   }
 
@@ -317,7 +317,7 @@ class MasterCategory {
   String? isActive;
   String? createdAt;
   String? updatedAt;
-  Null? image;
+  var image;
 
   MasterCategory(
       {this.id,
@@ -330,14 +330,14 @@ class MasterCategory {
         this.image});
 
   MasterCategory.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    slug = json['slug'];
-    iconClass = json['icon_class'];
-    isActive = json['is_active'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    image = json['image'];
+    id = json['id']??"empty";
+    name = json['name']??"empty";
+    slug = json['slug']??"empty";
+    iconClass = json['icon_class']??"empty";
+    isActive = json['is_active']??"empty";
+    createdAt = json['created_at']??"empty";
+    updatedAt = json['updated_at']??"empty";
+    image = json['image']??"empty";
   }
 
   Map<String, dynamic> toJson() {

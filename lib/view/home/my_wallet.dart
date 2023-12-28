@@ -158,6 +158,7 @@ class _MyWallletState extends State<MyWallet> {
           final mydata = jsonDecode(res.body);
           // print('Parsed Data: $mydata');
           invoiceByIdList.add(GetInvoiceByIdModel.fromJson(mydata));
+
           Get.dialog(IncomingPaymentMethodDialog(
             invoiceId: mydata['id'],
             status: mydata["status"],
