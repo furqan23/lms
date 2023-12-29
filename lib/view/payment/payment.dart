@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/view/payment/Invoice_payment.dart';
+import 'package:splashapp/widget/customcard_widget2.dart';
 import '../../Controller/login_controller.dart';
 import '../../model/payment_model.dart';
 import '../../widget/customcard_widget.dart';
@@ -71,7 +72,7 @@ class _PaymentState extends State<Payment> {
         title: const Text("My Payments"),
       ),
       body: paymentList.isEmpty
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : ListView.builder(
@@ -96,7 +97,7 @@ class _PaymentState extends State<Payment> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: CustomCardWidget(
+                        child: CustomCardWidget2(
                           onPressed: () {
                             Get.to(
                               () => InvoicePayment(
@@ -110,9 +111,10 @@ class _PaymentState extends State<Payment> {
                             );
                           },
                           title: '${index + 1}',
-                          inv: paymentList[0]
+                          inv: paymentList[0].data![index].id.toString(),
+                          refid: paymentList[0]
                               .data![index]
-                              .id
+                              .refId
                               .toString(), // Display the formatted date as the invoice
                           Amount: totalAmount
                               .toStringAsFixed(2), // Display the total amount
@@ -125,7 +127,7 @@ class _PaymentState extends State<Payment> {
                     ],
                   );
                 } else {
-                  return SizedBox
+                  return const SizedBox
                       .shrink(); // Return an empty container or nothing
                 }
               },

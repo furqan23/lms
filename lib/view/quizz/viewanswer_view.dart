@@ -17,87 +17,93 @@ class _ViewAnswerState extends State<ViewAnswer> {
   var opt2 = 'opt_2';
   var opt3 = 'opt_3';
   var opt4 = 'opt_4';
-
+  bool boolData = false;
   @override
   Widget build(BuildContext context) {
     print("length ${widget.finalResultList[0].data?.resultDetails?.length}");
     // print("length ${widget.finalResultList[0].data?.resultSummery?.length}");
     // print("length ${widget.finalResultList[0].data?.resultDetails?.length}");
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('View Answer'),
-        ),
-        body: ListView.builder(
-          itemCount: widget.finalResultList.length,
-          itemBuilder: (context, index) {
-            FinalResultModels result = widget.finalResultList[index];
-            return Column(
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 1,
-                  padding: const EdgeInsets.all(10),
-                  child: ListView.builder(
-                    itemCount: result.data!.resultDetails!.length,
-                    itemBuilder: (context, subIndex) {
-                      ResultDetails resultDetail =
-                          result.data!.resultDetails![subIndex];
-                      // log("check::${ resultDetail.givenAnswer}");
+      appBar: AppBar(
+        title: const Text('View Answer'),
+      ),
+      body: boolData
+          ? ListView.builder(
+              itemCount: widget.finalResultList.length,
+              itemBuilder: (context, index) {
+                FinalResultModels result = widget.finalResultList[index];
+                return Column(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height * 1,
+                      padding: const EdgeInsets.all(10),
+                      child: ListView.builder(
+                        itemCount: result.data!.resultDetails!.length,
+                        itemBuilder: (context, subIndex) {
+                          ResultDetails resultDetail =
+                              result.data!.resultDetails![subIndex];
+                          // log("check::${ resultDetail.givenAnswer}");
 
-                      bool isOpt1 = false;
-                      bool isOpt2 = false;
-                      bool isOpt3 = false;
-                      bool isOpt4 = false;
+                          bool isOpt1 = false;
+                          bool isOpt2 = false;
+                          bool isOpt3 = false;
+                          bool isOpt4 = false;
 
-                      if (resultDetail.correctAnswer!.contains('A')) {
-                        setState(() {
-                          isOpt1 = true;
-                        });
-                      } else if (resultDetail.correctAnswer!.contains('B')) {
-                        setState(() {
-                          isOpt2 = true;
-                        });
-                      } else if (resultDetail.correctAnswer!.contains('C')) {
-                        setState(() {
-                          isOpt3 = true;
-                        });
-                      } else if (resultDetail.correctAnswer!.contains('d')) {
-                        setState(() {
-                          isOpt4 = true;
-                        });
-                      }
+                          if (resultDetail.correctAnswer!.contains('A')) {
+                            setState(() {
+                              isOpt1 = true;
+                            });
+                          } else if (resultDetail.correctAnswer!
+                              .contains('B')) {
+                            setState(() {
+                              isOpt2 = true;
+                            });
+                          } else if (resultDetail.correctAnswer!
+                              .contains('C')) {
+                            setState(() {
+                              isOpt3 = true;
+                            });
+                          } else if (resultDetail.correctAnswer!
+                              .contains('d')) {
+                            setState(() {
+                              isOpt4 = true;
+                            });
+                          }
 
-                      Color borderColor =
-                          Colors.black26; // Default border color
+                          Color borderColor =
+                              Colors.black26; // Default border color
 
-                      if (resultDetail.givenAnswer!.contains(opt1.toString())) {
-                        isOpt1 = true;
-                      } else if (resultDetail.givenAnswer!
-                          .contains(opt2.toString())) {
-                        isOpt2 = true;
-                      } else if (resultDetail.givenAnswer!
-                          .contains(opt3.toString())) {
-                        isOpt3 = true;
-                      } else if (resultDetail.givenAnswer!
-                          .contains(opt4.toString())) {
-                        isOpt4 = true;
-                      }
+                          if (resultDetail.givenAnswer!
+                              .contains(opt1.toString())) {
+                            isOpt1 = true;
+                          } else if (resultDetail.givenAnswer!
+                              .contains(opt2.toString())) {
+                            isOpt2 = true;
+                          } else if (resultDetail.givenAnswer!
+                              .contains(opt3.toString())) {
+                            isOpt3 = true;
+                          } else if (resultDetail.givenAnswer!
+                              .contains(opt4.toString())) {
+                            isOpt4 = true;
+                          }
 
-                      log("chec value222::${isOpt4}");
+                          log("chec value222::${isOpt4}");
 
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: Colors.black45)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    Html(
-                                      data: """
+                          return Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border:
+                                          Border.all(color: Colors.black45)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Html(
+                                          data: """
                                     <style>
                                     h2 {
                                     font-size: 24px;
@@ -133,21 +139,21 @@ class _ViewAnswerState extends State<ViewAnswer> {
     <p class="correct-answer">Correct Answer: ${resultDetail.correctedAnswer.toString()}</p>
     
   """,
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border: Border.all(
-                                              color: isOpt1 == true
-                                                  ? Colors.red
-                                                  : Colors.black),
                                         ),
-                                        child: Html(
-                                          data: """
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 10),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                  color: isOpt1 == true
+                                                      ? Colors.red
+                                                      : Colors.black),
+                                            ),
+                                            child: Html(
+                                              data: """
     <style>
       h2 {
         font-size: 24px;
@@ -180,23 +186,23 @@ class _ViewAnswerState extends State<ViewAnswer> {
     <p class="opt">${resultDetail.opt1.toString()}</p>
  
   """,
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border: Border.all(
-                                              color: isOpt2 == true
-                                                  ? Colors.red
-                                                  : Colors.black),
-                                        ),
-                                        child: Html(
-                                          data: """
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 10),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                  color: isOpt2 == true
+                                                      ? Colors.red
+                                                      : Colors.black),
+                                            ),
+                                            child: Html(
+                                              data: """
     <style>
       h2 {
         font-size: 24px;
@@ -229,23 +235,23 @@ class _ViewAnswerState extends State<ViewAnswer> {
     <p class="opt">${resultDetail.opt2.toString()}</p>
  
   """,
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border: Border.all(
-                                              color: isOpt3 == true
-                                                  ? Colors.red
-                                                  : Colors.black),
-                                        ),
-                                        child: Html(
-                                          data: """
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 10),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                  color: isOpt3 == true
+                                                      ? Colors.red
+                                                      : Colors.black),
+                                            ),
+                                            child: Html(
+                                              data: """
     <style>
       h2 {
         font-size: 24px;
@@ -278,23 +284,23 @@ class _ViewAnswerState extends State<ViewAnswer> {
     <p class="opt">${resultDetail.opt3.toString()}</p>
  
   """,
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border: Border.all(
-                                              color: isOpt4 == true
-                                                  ? Colors.green
-                                                  : Colors.black),
-                                        ),
-                                        child: Html(
-                                          data: """
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 10),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                  color: isOpt4 == true
+                                                      ? Colors.green
+                                                      : Colors.black),
+                                            ),
+                                            child: Html(
+                                              data: """
     <style>
       h2 {
         font-size: 24px;
@@ -327,22 +333,26 @@ class _ViewAnswerState extends State<ViewAnswer> {
     <p class="opt">${resultDetail.opt4.toString()}</p>
  
   """,
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-              ],
-            );
-          },
-        ));
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              },
+            )
+          : const Center(
+              child: Text("No data available."),
+            ),
+    );
   }
 }
