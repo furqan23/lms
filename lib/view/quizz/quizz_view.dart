@@ -95,6 +95,15 @@ class _QuizzViewState extends State<QuizzView> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Quiz'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                // Handle Skip button press from the app bar
+               // skipQuestion();
+              },
+              icon: const Icon(Icons.skip_next),
+            ),
+          ],
         ),
         body: boolData
             ? ListView.builder(
