@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:splashapp/values/constants.dart';
+import 'package:splashapp/view/home/home_screen.dart';
 import 'package:splashapp/view/quizz/viewanswer_view.dart';
 import '../../Controller/login_controller.dart';
 import '../../model/finalresult_model.dart';
@@ -72,7 +73,11 @@ class _MyFinalResultState extends State<MyFinalResult> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+leading: IconButton(onPressed: (){
+  Get.to(()=>HomeScreen());
+}, icon: Icon(Icons.arrow_back)),
         title: const Text('Result'),
+        
       ),
       body: boolData
           ? ListView.builder(
