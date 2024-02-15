@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
@@ -95,130 +96,136 @@ class _HomeScreenState extends State<HomeScreen> {
 
 /*24 is for notification bar on Android*/
     final double itemHeight = (size.height - kToolbarHeight - 24) / 8;
-    final double itemWidth = size.width / 2;
+    final double itemWidth = size.width / 2.5;
 
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Dashboard"),
-          centerTitle: true,
-        ),
-        drawer: Drawer(
-            child: SingleChildScrollView(
-          child: Column(
-            children: [
-              buildHeader(context),
-              buildMenu(context),
-            ],
+      child: WillPopScope(
+      onWillPop: ()async{
+        SystemNavigator.pop();
+        return true;
+      },
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text("Dashboard"),
+            centerTitle: true,
           ),
-        )),
-        body: boolData
-            ? SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 5),
-                    // TimerWidgett(timee: 120),
-                    // CountdownTimerDemo(),
-                    // ElevatedButton(onPressed: (){
-                    //   Get.to(()=>const TestApp());
-                    // }, child: const Text("data")),
-                    if (dashboardList.isNotEmpty &&
-                        dashboardList[0].data != null &&
-                        dashboardList[0].data!.slides != null &&
-                        dashboardList[0].data!.slides!.isNotEmpty)
-                      CarouselSlider.builder(
-                        itemCount: dashboardList[0].data!.slides!.length,
-                        itemBuilder: (BuildContext context, int itemIndex,
-                                int pageViewIndex) =>
-                            CarouselWidget(
-                          title:
-                              "${dashboardList[0].data!.slides![itemIndex].title.toString()}",
-                          // ${dashboardList[0].data!.slides!.length}
+          drawer: Drawer(
+              child: SingleChildScrollView(
+            child: Column(
+              children: [
+                buildHeader(context),
+                buildMenu(context),
+              ],
+            ),
+          )),
+          body: boolData
+              ? SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 5),
+                      // TimerWidgett(timee: 120),
+                      // CountdownTimerDemo(),
+                      // ElevatedButton(onPressed: (){
+                      //   Get.to(()=>const TestApp());
+                      // }, child: const Text("data")),
+                      if (dashboardList.isNotEmpty &&
+                          dashboardList[0].data != null &&
+                          dashboardList[0].data!.slides != null &&
+                          dashboardList[0].data!.slides!.isNotEmpty)
+                        CarouselSlider.builder(
+                          itemCount: dashboardList[0].data!.slides!.length,
+                          itemBuilder: (BuildContext context, int itemIndex,
+                                  int pageViewIndex) =>
+                              CarouselWidget(
+                            title:
+                                "${dashboardList[0].data!.slides![itemIndex].title.toString()}",
+                            // ${dashboardList[0].data!.slides!.length}
 
-                          image: AuthApi.baseUrlSliderImage +
-                              "${dashboardList[0].data!.slides![itemIndex].filePath.toString()}",
-                          btntitle: '',
-                          color: const Color(0xffFFCAA6),
+                            image: AuthApi.baseUrlSliderImage +
+                                "${dashboardList[0].data!.slides![itemIndex].filePath.toString()}",
+                            btntitle: '',
+                            color: const Color(0xffFFCAA6),
+                          ),
+                          options: CarouselOptions(
+                            aspectRatio: 15 / 9,
+                            viewportFraction: 0.8,
+                            initialPage: 0,
+                            enableInfiniteScroll: true,
+                            reverse: false,
+                            autoPlay: true,
+                            autoPlayInterval: const Duration(seconds: 3),
+                            autoPlayAnimationDuration:
+                                const Duration(milliseconds: 800),
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                            enlargeCenterPage: true,
+                            enlargeFactor: 0.3,
+                            scrollDirection: Axis.horizontal,
+                          ),
+                        )
+                      else
+                        Container(),
+                      const SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                Get.to(() => const MyWallet());
+                              },
+                              child: const Text("My Wallet")),
                         ),
-                        options: CarouselOptions(
-                          aspectRatio: 15 / 9,
-                          viewportFraction: 0.8,
-                          initialPage: 0,
-                          enableInfiniteScroll: true,
-                          reverse: false,
-                          autoPlay: true,
-                          autoPlayInterval: const Duration(seconds: 3),
-                          autoPlayAnimationDuration:
-                              const Duration(milliseconds: 800),
-                          autoPlayCurve: Curves.fastOutSlowIn,
-                          enlargeCenterPage: true,
-                          enlargeFactor: 0.3,
-                          scrollDirection: Axis.horizontal,
-                        ),
-                      )
-                    else
-                      Container(),
-                    const SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: ElevatedButton(
-                            onPressed: () {
-                              Get.to(() => const MyWallet());
-                            },
-                            child: const Text("My Wallet")),
                       ),
-                    ),
 
-                    GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: dashboardList.isNotEmpty
-                          ? dashboardList[0].data?.category?.length ?? 0
-                          : 0,
-                      gridDelegate:
-                           SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                            childAspectRatio: (itemWidth / itemHeight),
+                      GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: dashboardList.isNotEmpty
+                            ? dashboardList[0].data?.category?.length ?? 0
+                            : 0,
+                        gridDelegate:
+                             SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                              childAspectRatio: (itemWidth / itemHeight),
+                        ),
+                        itemBuilder: (context, index) {
+                          if (dashboardList.isEmpty) {
+                            return const Center(child: Text('No data'));
+                          } else {
+                            return InkWell(
+                              onTap: () {
+                                Get.to(() => HomeDetail(
+                                      mscatId: dashboardList[0]
+                                          .data!
+                                          .category![index]
+                                          .mscatId!,
+                                    ));
+                              },
+                              child: DashbaordCard(
+                                id: dashboardList[0].data!.category![index].id!,
+                                catName: dashboardList[0]
+                                    .data!
+                                    .category![index]
+                                    .catName!,
+                                image: dashboardList[0]
+                                    .data!
+                                    .category![index]
+                                    .image??null,
+                              ),
+                            );
+                          }
+                        },
                       ),
-                      itemBuilder: (context, index) {
-                        if (dashboardList.isEmpty) {
-                          return const Center(child: Text('No data'));
-                        } else {
-                          return InkWell(
-                            onTap: () {
-                              Get.to(() => HomeDetail(
-                                    mscatId: dashboardList[0]
-                                        .data!
-                                        .category![index]
-                                        .mscatId!,
-                                  ));
-                            },
-                            child: DashbaordCard(
-                              id: dashboardList[0].data!.category![index].id!,
-                              catName: dashboardList[0]
-                                  .data!
-                                  .category![index]
-                                  .catName!,
-                              image: dashboardList[0]
-                                  .data!
-                                  .category![index]
-                                  .image??null,
-                            ),
-                          );
-                        }
-                      },
-                    ),
-                  ],
+                    ],
+                  ),
+                )
+              : const Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.primaryColor,
+                  ),
                 ),
-              )
-            : const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.primaryColor,
-                ),
-              ),
+        ),
       ),
     );
   }

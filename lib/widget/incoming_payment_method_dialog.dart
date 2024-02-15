@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,7 +47,7 @@ class _IncomingJobState extends State<IncomingPaymentMethodDialog> {
           widget.invoiceByIdList[0].data!.pMethods!.length > i) {
         final paymentMethod =
         widget.invoiceByIdList[0].data!.pMethods![i];
-
+        log("Payment Method $i: ${paymentMethod.toString()}");
         customButtons.add(
           CustomButton(
             title: "${paymentMethod.paymentTitle}",

@@ -11,6 +11,7 @@ import 'package:splashapp/widget/show_load_indicator.dart';
 import 'package:splashapp/widget/timer_widget.dart';
 import '../../Controller/login_controller.dart';
 import '../../values/auth_api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class QuizzView extends StatefulWidget {
   final String id;
@@ -27,6 +28,41 @@ class QuizzView extends StatefulWidget {
 }
 
 class _QuizzViewState extends State<QuizzView> {
+
+  void skipQuestion() async {
+    if (getquestionTestList.isNotEmpty) {
+      int currentQuestionNumber =
+      int.parse(getquestionTestList[0].data!.questionNo.toString());
+      int nextQuestionNumber = currentQuestionNumber + 1;
+
+      String questionId = getquestionTestList[0].data!.id.toString();
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      // Retrieve existing skipped questions
+      List<String>? skippedQuestions = prefs.getStringList('skippedQuestions') ?? [];
+
+      // Add the current skipped question
+      skippedQuestions.add(questionId);
+
+      // Save the updated list back to SharedPreferences
+      prefs.setStringList('skippedQuestions', skippedQuestions);
+
+      widget.totalQuestions--;
+      print("Total questions: ${widget.totalQuestions}");
+
+      if (widget.totalQuestions == 0) {
+        postAnswerAPI();
+        print("*********** here post answer");
+      } else {
+        getTestQuestionAPI(nextQuestionNumber);
+      }
+    } else {
+      // Handle the case when getquestionTestList is empty
+      print("Error: No questions available");
+    }
+  }
+
   /* ------------- declare  variable token and Model ------------*/
   String? token;
   List<TestQuestionModel> getquestionTestList = [];
@@ -86,6 +122,7 @@ class _QuizzViewState extends State<QuizzView> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     print("total question ${widget.totalQuestions}");
@@ -95,6 +132,15 @@ class _QuizzViewState extends State<QuizzView> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Quiz'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                // Handle Skip button press from the app bar
+               skipQuestion();
+              },
+              icon: const Icon(Icons.skip_next),
+            ),
+          ],
         ),
         body: boolData
             ? ListView.builder(

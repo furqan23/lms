@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/view/payment/Invoice_payment.dart';
+import 'package:splashapp/widget/customcard_widget2.dart';
 import '../../Controller/login_controller.dart';
 import '../../model/payment_model.dart';
 import '../../widget/customcard_widget.dart';
@@ -71,63 +72,66 @@ class _PaymentState extends State<Payment> {
         title: const Text("My Payments"),
       ),
       body: paymentList.isEmpty
-          ? Center(
-        child: CircularProgressIndicator(),
-      )
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
           : ListView.builder(
-        itemCount: paymentList[0].data?.length ?? 0,
-        itemBuilder: (context, index) {
-          if (paymentList[0].data != null) {
-            String? createDateStr =
-                paymentList[0].data![index].createdAt;
-            DateTime createDate =
-                DateTime.tryParse(createDateStr!) ?? DateTime.now();
+              itemCount: paymentList[0].data?.length ?? 0,
+              itemBuilder: (context, index) {
+                if (paymentList[0].data != null) {
+                  String? createDateStr = paymentList[0].data![index].createdAt;
+                  DateTime createDate =
+                      DateTime.tryParse(createDateStr!) ?? DateTime.now();
 
-            // Format the date to show only the date portion
-            String formattedDate =
-            DateFormat('yyyy-MM-dd').format(createDate);
-            // Calculate the total price by summing up all prices in invoiceDetil
-            double totalAmount = 0.0;
-            for (var invoice
-            in paymentList[0].data![index].invoiceDetil!) {
-              totalAmount +=
-                  double.tryParse(invoice.price.toString()) ?? 0.0;
-            }
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomCardWidget(
-                    onPressed: () {
-                      Get.to(() => InvoicePayment(
-                          invoice_id:  paymentList[0]
+                  // Format the date to show only the date portion
+                  String formattedDate =
+                      DateFormat('yyyy-MM-dd').format(createDate);
+                  // Calculate the total price by summing up all prices in invoiceDetil
+                  double totalAmount = 0.0;
+                  for (var invoice
+                      in paymentList[0].data![index].invoiceDetil!) {
+                    totalAmount +=
+                        double.tryParse(invoice.price.toString()) ?? 0.0;
+                  }
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CustomCardWidget2(
+                          onPressed: () {
+                            Get.to(
+                              () => InvoicePayment(
+                                ref_id: paymentList[0]
+                                    .data![index]
+                                    .refId
+                                    .toString(),
+                                invoice_id:
+                                    paymentList[0].data![index].id.toString(),
+                              ),
+                            );
+                          },
+                          title: '${index + 1}',
+                          inv: paymentList[0].data![index].id.toString(),
+                          refid: paymentList[0]
                               .data![index]
-                              .id
-                              .toString(),
-                      ),);
-                    },
-                    title: '${index + 1}',
-                    inv: paymentList[0]
-                        .data![index]
-                        .id
-                        .toString(), // Display the formatted date as the invoice
-                    Amount: totalAmount
-                        .toStringAsFixed(2), // Display the total amount
-                    createDate: formattedDate, // Display the formatted date
-                    Status: paymentList[0]
-                        .data![index]
-                        .status
-                        .toString(),
-                    Attachment: 'Show',
-                  ),
-                ),
-              ],
-            );
-          } else {
-            return SizedBox.shrink(); // Return an empty container or nothing
-          }
-        },
-      ),
+                              .refId
+                              .toString(), // Display the formatted date as the invoice
+                          Amount: totalAmount
+                              .toStringAsFixed(2), // Display the total amount
+                          createDate:
+                              formattedDate, // Display the formatted date
+                          Status: paymentList[0].data![index].status.toString(),
+                          Attachment: 'Show',
+                        ),
+                      ),
+                    ],
+                  );
+                } else {
+                  return const SizedBox
+                      .shrink(); // Return an empty container or nothing
+                }
+              },
+            ),
     );
   }
 }

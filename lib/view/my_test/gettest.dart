@@ -53,30 +53,36 @@ class _GetTestState extends State<GetTest> {
         title: const Text("Available Tests"),
       ),
       body: boolData
-          ? ListView.builder(
-              shrinkWrap: true,
-              itemCount: getTestList[0].data?.length,
-              itemBuilder: (context, index) {
-                final test = getTestList[0].data![index];
-                final testStart = test.testStart ?? "";
-                final testStartDateTime = DateTime.tryParse(testStart);
-                final currentDateTime = DateTime.now();
-                return InkWell(
-                  onTap: () {
-                    //  Get.to(()=>DemoApp());
-                    //  Get.to(()=>QuizzView(id: getTestList[0].data![index].id.toString()));
+          ? getTestList[0].data?.length == 0
+              ? const Center(
+                  child: Text("Sorry No Test available Yet"),
+                )
+              : ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: getTestList[0].data?.length,
+                  itemBuilder: (context, index) {
+                    final test = getTestList[0].data![index];
+                    final testStart = test.testStart ?? "";
+                    final testStartDateTime = DateTime.tryParse(testStart);
+                    final currentDateTime = DateTime.now();
+                    return InkWell(
+                      onTap: () {
+                        //  Get.to(()=>DemoApp());
+                        //  Get.to(()=>QuizzView(id: getTestList[0].data![index].id.toString()));
 
-                    getTestDetailAPI(getTestList[0].data![index].id.toString());
-                  },
-                  child: TestCard(
-                    id: getTestList[0].data![index].courseId.toString(),
-                    test_code: getTestList[0].data![index].test_code.toString(),
-                    title: getTestList[0].data![index].testTitle.toString(),
-                    start: getTestList[0].data![index].testStart.toString(),
-                    total: getTestList[0].data![index].totalTime.toString(),
-                  ),
-                );
-              })
+                        getTestDetailAPI(
+                            getTestList[0].data![index].id.toString());
+                      },
+                      child: TestCard(
+                        id: getTestList[0].data![index].courseId.toString(),
+                        test_code:
+                            getTestList[0].data![index].test_code.toString(),
+                        title: getTestList[0].data![index].testTitle.toString(),
+                        start: getTestList[0].data![index].testStart.toString(),
+                        total: getTestList[0].data![index].totalTime.toString(),
+                      ),
+                    );
+                  })
           : const Center(
               child: CircularProgressIndicator(),
             ),
@@ -196,7 +202,7 @@ class _GetTestState extends State<GetTest> {
                         color: AppColors.greyshade100,
                         thickness: 1,
                       ),
-  // Image.asset(AppImage.internetConnection,height:30),
+                      // Image.asset(AppImage.internetConnection,height:30),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -239,7 +245,9 @@ class _GetTestState extends State<GetTest> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20,),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

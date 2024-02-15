@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:splashapp/values/constants.dart';
+import 'package:splashapp/widget/incoming_payment_method_dialog.dart';
 
 import '../../Controller/login_controller.dart';
 import '../../model/invoice_model.dart';
+import '../../model/get_invoice_id_model.dart' as getinvoice;
 import '../../values/auth_api.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -19,14 +21,16 @@ import '../../values/logs.dart';
 
 class InvoicePayment extends StatefulWidget {
   final String invoice_id;
+  final String ref_id;
 
-  InvoicePayment({Key? key, required this.invoice_id}) : super(key: key);
+  InvoicePayment({Key? key, required this.invoice_id, required this.ref_id}) : super(key: key);
 
   @override
   State<InvoicePayment> createState() => _InvoicePaymentState();
 }
 
 class _InvoicePaymentState extends State<InvoicePayment> {
+  List<getinvoice.GetInvoiceByIdModel> invoiceByIdList = [];
   String? token;
   InvoiceModel? invoiceData; // Use InvoiceModel to hold the data
   bool isLoading = true;
@@ -43,6 +47,7 @@ class _InvoicePaymentState extends State<InvoicePayment> {
     token = await LoginController().getTokenFromHive();
     print('Token: $token');
     getInvoiceAPI();
+    getShowBankInvoiceApi(widget.invoice_id);
   }
 
   void getInvoiceAPI() async {
@@ -72,6 +77,7 @@ class _InvoicePaymentState extends State<InvoicePayment> {
         setState(() {
           isLoading = false; // Update loading state
           invoiceData = InvoiceModel.fromJson(responseData);
+
         });
         print('Received Data: $responseData');
       } else {
@@ -113,6 +119,7 @@ class _InvoicePaymentState extends State<InvoicePayment> {
       elevation: 5,
       child: Column(
         children: [
+
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
             child: Row(
@@ -123,7 +130,16 @@ class _InvoicePaymentState extends State<InvoicePayment> {
               ],
             ),
           ),
-
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 8.0, 12, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Ref Id #: '),
+                Text(widget.ref_id),
+              ],
+            ),
+          ),
 
           Expanded(child: ListView(
             shrinkWrap: true,
@@ -140,14 +156,13 @@ class _InvoicePaymentState extends State<InvoicePayment> {
                         width: w.width * .18,
                         height: w.height * .030,
                         decoration: BoxDecoration(
-                          color: data.inv?.status.toString() ==
-                              "un-paid"
+                          color: (data.inv?['status'] as String?) == "un-paid"
                               ? AppColors.redColor
                               : Colors.green,
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
-                          data.inv?.status.toString() ?? 'N/A',
+                          data.inv?['status']?.toString() ?? 'N/A',
                           style: const TextStyle(color: Colors.white),
                         ),
                     ),
@@ -157,35 +172,35 @@ class _InvoicePaymentState extends State<InvoicePayment> {
              // Text('User ID: ${data.inv!.invoiceDetil![0].id}'),
               //Text('price: ${data.inv!.invoiceDetil![0].price}'),
               //Text('price: ${data.inv!.invoiceDetil![0].course!.masterCourse..toString()}'),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment:
-                  MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        const Text(
-                          "Course Title:  ",
-                          style: textGreyStyle,
-                        ),
-                        Text(data.inv!.invoiceDetil![0].course!.courseTitle.toString()?? "Eata"),
-                      ],
-                    ),
-
-                    Row(
-                      children: [
-                        const Text(
-                          "Price:  ",
-                          style: textGreyStyle,
-                        ),
-                        Text(data.inv!.invoiceDetil![0].course!.price.toString()?? "Eata"),
-
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: Row(
+              //     mainAxisAlignment:
+              //     MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Row(
+              //         children: [
+              //           const Text(
+              //             "Course Title:  ",
+              //             style: textGreyStyle,
+              //           ),
+              //           Text(data.inv!.invoiceDetil![0].course!.courseTitle.toString()?? "Eata"),
+              //         ],
+              //       ),
+              //
+              //       Row(
+              //         children: [
+              //           const Text(
+              //             "Price:  ",
+              //             style: textGreyStyle,
+              //           ),
+              //           Text(data.inv!.invoiceDetil![0].course!.price.toString()?? "Eata"),
+              //
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              // ),
               // ...Other widgets to display more details
             ],
           ),),
@@ -312,5 +327,56 @@ class _InvoicePaymentState extends State<InvoicePayment> {
       print(e.toString());
     }
   }
+  void getShowBankInvoiceApi(String _invoiceId) async {
+    try {
+      final bodyy = {
+        'invoice_id': _invoiceId,
+      };
 
+      final res = await http.post(
+        Uri.parse("${AuthApi.getInvoiceByIdApi}"),
+        headers: {
+          'Authorization': 'Bearer $token', // Use the retrieved token
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(bodyy),
+      );
+
+      print('Response Status Code: ${res.statusCode}');
+      print('Response Body: ${res.body}');
+
+      if (res.statusCode == 200) {
+        Get.back();
+        if (res.body.isNotEmpty) {
+          final mydata = jsonDecode(res.body);
+          // print('Parsed Data: $mydata');
+          invoiceByIdList.add(getinvoice.GetInvoiceByIdModel.fromJson(mydata) );
+          Get.dialog(IncomingPaymentMethodDialog(
+            invoiceId: mydata["id"],
+            status: mydata["status"],
+            text: mydata["message"],
+            invoiceByIdList: invoiceByIdList,
+
+          ));
+
+          //
+          // setState(() {
+          //   boolData = true;
+          // });
+        } else {
+          Get.back();
+          print('Error: Empty response');
+          // Handle empty response here
+        }
+      } else {
+        Get.back();
+        print('Error: ${res.statusCode}');
+        // Handle other HTTP status codes here
+      }
+    } catch (e) {
+      Get.back();
+      print('Error: $e');
+      // Handle exceptions here
+    }
+  }
 }

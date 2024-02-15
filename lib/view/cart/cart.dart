@@ -80,7 +80,7 @@ class _CartScreenState extends State<CartScreen> {
 
       // Remove all items with the same category name
       cartList.removeWhere((item) => item.groupname == groupNameToRemove);
-      cartInt.value=cartList.length.toString();
+      cartInt.value = cartList.length.toString();
       saveCartData();
     });
   }
@@ -109,7 +109,6 @@ class _CartScreenState extends State<CartScreen> {
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: groupedCartItems.length,
-
                 itemBuilder: (context, index) {
                   var groupName = groupedCartItems.keys.toList()[index];
                   print("tettstst ${groupName}");
@@ -130,17 +129,19 @@ class _CartScreenState extends State<CartScreen> {
                               return Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: Container(
-
                                   width: MediaQuery.of(context).size.width,
                                   child: Card(
                                     color: AppColors.whiteshade100,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Text("Category Name: ${item.categoryname}"),
-                                          Text("Course title: ${item.courseTitle}"),
+                                          Text(
+                                              "Category Name: ${item.categoryname}"),
+                                          Text(
+                                              "Course title: ${item.courseTitle}"),
                                           Text(
                                               'Price: ${item.price.toStringAsFixed(2)} $currency'),
                                         ],
@@ -192,7 +193,7 @@ class _CartScreenState extends State<CartScreen> {
               getTokenAndFetchInvoice();
             },
             child: Container(
-              margin: const EdgeInsets.all( 10),
+              margin: const EdgeInsets.all(10),
               width: double.infinity,
               alignment: Alignment.center,
               height: 50,
@@ -314,7 +315,6 @@ class _CartScreenState extends State<CartScreen> {
             status: mydata["status"],
             text: mydata["message"],
             invoiceByIdList: invoiceByIdList,
-
           ));
 
           //
