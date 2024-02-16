@@ -28,27 +28,10 @@ Future<void> initializeApp() async {
   await Hive.openBox<String>('tokenBox');
   Get.put(CartController());
 
-  await _requestPermissions();
+
 }
 
-Future<void> _requestPermissions() async {
-  final PermissionStatus cameraPermissionStatus =
-      await Permission.camera.status;
-  final PermissionStatus storagePermissionStatus =
-      await Permission.storage.status;
-  final PermissionStatus phonePermissionStatus = await Permission.phone.status;
 
-  if (!cameraPermissionStatus.isGranted) {
-    await Permission.camera.request();
-  }
-
-  if (!storagePermissionStatus.isGranted) {
-    await Permission.storage.request();
-  }
-  if (!phonePermissionStatus.isGranted) {
-    await Permission.phone.request();
-  }
-}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

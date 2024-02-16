@@ -38,6 +38,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   final LoginController _loginController = Get.put(LoginController());
 
   List<DashboardModelWithSlider> dashboardList = [];
@@ -47,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String userName = "";
   String emaill = "";
 
+
   @override
   void initState() {
     // TODO: implement initState
@@ -55,6 +57,11 @@ class _HomeScreenState extends State<HomeScreen> {
     namee = Hive.box("tokenBox");
     userName = namee!.get('username') ?? " ";
     emaill = namee!.get('email') ?? " ";
+
+
+
+
+
 
     // final String? token = box.get('token');
     getDashboardAPI();

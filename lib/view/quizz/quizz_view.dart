@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:splashapp/model/test_question_model.dart';
 import 'package:splashapp/view/home/home_screen.dart';
@@ -19,49 +20,65 @@ class QuizzView extends StatefulWidget {
 
   QuizzView(
       {super.key,
-      required this.id,
-      required this.totalTime,
-      required this.totalQuestions});
+        required this.id,
+        required this.totalTime,
+        required this.totalQuestions});
 
   @override
   State<QuizzView> createState() => _QuizzViewState();
 }
 
 class _QuizzViewState extends State<QuizzView> {
-
-  void skipQuestion() async {
-    if (getquestionTestList.isNotEmpty) {
-      int currentQuestionNumber =
-      int.parse(getquestionTestList[0].data!.questionNo.toString());
-      int nextQuestionNumber = currentQuestionNumber + 1;
-
-      String questionId = getquestionTestList[0].data!.id.toString();
-
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-
-      // Retrieve existing skipped questions
-      List<String>? skippedQuestions = prefs.getStringList('skippedQuestions') ?? [];
-
-      // Add the current skipped question
-      skippedQuestions.add(questionId);
-
-      // Save the updated list back to SharedPreferences
-      prefs.setStringList('skippedQuestions', skippedQuestions);
-
-      widget.totalQuestions--;
-      print("Total questions: ${widget.totalQuestions}");
-
-      if (widget.totalQuestions == 0) {
-        postAnswerAPI();
-        print("*********** here post answer");
-      } else {
-        getTestQuestionAPI(nextQuestionNumber);
-      }
-    } else {
-      // Handle the case when getquestionTestList is empty
-      print("Error: No questions available");
+  late Box skippedQuestionsBox;
+  void checkSavedData() {
+    print('Number of items in skippedQuestionsBox: ${skippedQuestionsBox.length}');
+    for (var i = 0; i < skippedQuestionsBox.length; i++) {
+      var questionInfo = skippedQuestionsBox.getAt(i);
+      print('Item $i:');
+      print(questionInfo);
     }
   }
+  void _skipQuestion() {
+    var questionData = getquestionTestList[0].data;
+    // Create a map containing all necessary information
+    Map<String, dynamic> questionInfo = {
+      'questionData': questionData,
+      'givenAnswerList': givenAnswerList,
+      'correctAnswerList': CorrectAnswerList,
+    };
+
+    // Add the map to the Hive box
+    skippedQuestionsBox.add(questionInfo);
+
+    // Check the saved data
+    checkSavedData();
+  }
+  List<Map<String, dynamic>> _getSkippedQuestions() {
+    List<Map<String, dynamic>> skippedQuestions = [];
+    for (var i = 0; i < skippedQuestionsBox.length; i++) {
+      var questionInfo = skippedQuestionsBox.getAt(i);
+      if (questionInfo != null) {
+        skippedQuestions.add(questionInfo as Map<String, dynamic>);
+      }
+    }
+    return skippedQuestions;
+  }
+  void printSkippedQuestions() {
+    List<Map<String, dynamic>> skippedQuestions = _getSkippedQuestions();
+    for (var i = 0; i < skippedQuestions.length; i++) {
+      var questionData = skippedQuestions[i]['questionData'];
+      var givenAnswers = skippedQuestions[i]['givenAnswerList'];
+      var correctAnswers = skippedQuestions[i]['correctAnswerList'];
+
+      print('Skipped Question ${i + 1}:');
+      print('Question: ${questionData['questionName']}');
+      print('Given Answers: $givenAnswers');
+      print('Correct Answers: $correctAnswers');
+      print('\n');
+    }
+  }
+
+
 
   /* ------------- declare  variable token and Model ------------*/
   String? token;
@@ -135,8 +152,7 @@ class _QuizzViewState extends State<QuizzView> {
           actions: [
             IconButton(
               onPressed: () {
-                // Handle Skip button press from the app bar
-               skipQuestion();
+                _skipQuestion();
               },
               icon: const Icon(Icons.skip_next),
             ),
@@ -144,16 +160,16 @@ class _QuizzViewState extends State<QuizzView> {
         ),
         body: boolData
             ? ListView.builder(
-                itemCount: getquestionTestList.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      TimerWidgett(timee:  120),
-                      const SizedBox(height: 15),
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.5,
-                        padding: const EdgeInsets.all(10),
-                        child: Html(data: """
+          itemCount: getquestionTestList.length,
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                TimerWidgett(timee:  120),
+                const SizedBox(height: 15),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  padding: const EdgeInsets.all(10),
+                  child: Html(data: """
                
         <h2>Question No ${getquestionTestList[0].data!.questionNo!}</h2>
        
@@ -163,69 +179,69 @@ class _QuizzViewState extends State<QuizzView> {
          ${getquestionTestList[0].data!.opt3!}
          ${getquestionTestList[0].data!.opt4!}
 """),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomRadioButton(
+                        title: "Option A",
+                        isSelected: selectedRadio == 1,
+                        onSelect: (bool selected) {
+                          handleRadioValueChange(selected ? 1 : null);
+                        },
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomRadioButton(
-                              title: "Option A",
-                              isSelected: selectedRadio == 1,
-                              onSelect: (bool selected) {
-                                handleRadioValueChange(selected ? 1 : null);
-                              },
-                            ),
-                            const SizedBox(width: 20),
-                            CustomRadioButton(
-                              title: "Option B",
-                              isSelected: selectedRadio == 2,
-                              onSelect: (bool selected) {
-                                handleRadioValueChange(selected ? 2 : null);
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomRadioButton(
-                              title: "Option C",
-                              isSelected: selectedRadio == 3,
-                              onSelect: (bool selected) {
-                                handleRadioValueChange(selected ? 3 : null);
-                              },
-                            ),
-                            const SizedBox(width: 20),
-                            CustomRadioButton(
-                              title: "Option D",
-                              isSelected: selectedRadio == 4,
-                              onSelect: (bool selected) {
-                                handleRadioValueChange(selected ? 4 : null);
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            postAnswerAPI();
-                          },
-                          child: const Text("Submit"),
-                        ),
+                      const SizedBox(width: 20),
+                      CustomRadioButton(
+                        title: "Option B",
+                        isSelected: selectedRadio == 2,
+                        onSelect: (bool selected) {
+                          handleRadioValueChange(selected ? 2 : null);
+                        },
                       ),
                     ],
-                  );
-                },
-              )
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomRadioButton(
+                        title: "Option C",
+                        isSelected: selectedRadio == 3,
+                        onSelect: (bool selected) {
+                          handleRadioValueChange(selected ? 3 : null);
+                        },
+                      ),
+                      const SizedBox(width: 20),
+                      CustomRadioButton(
+                        title: "Option D",
+                        isSelected: selectedRadio == 4,
+                        onSelect: (bool selected) {
+                          handleRadioValueChange(selected ? 4 : null);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      postAnswerAPI();
+                    },
+                    child: const Text("Submit"),
+                  ),
+                ),
+              ],
+            );
+          },
+        )
             : const Center(
-                child: CircularProgressIndicator(),
-              ),
+          child: CircularProgressIndicator(),
+        ),
       ),
     );
   }
@@ -332,7 +348,7 @@ class _QuizzViewState extends State<QuizzView> {
             Get.defaultDialog(
               title: "Test Complete",
               middleText:
-                  "Attempt of the test is complete. Result will be available in result section",
+              "Attempt of the test is complete. Result will be available in result section",
               backgroundColor: Colors.green,
               titleStyle: const TextStyle(color: Colors.white),
               middleTextStyle: const TextStyle(color: Colors.white),
@@ -345,10 +361,10 @@ class _QuizzViewState extends State<QuizzView> {
               radius: 30,
               // onConfirm: () => Get.off(() => MyFinalResult(
               //       id: getquestionTestList[0].data!.id!,
-                onConfirm: () => Get.off(() => MyFinalResult(
-                    id: widget.id,
-                    //question: getquestionTestList[0]!.data!.questionNo,
-                  )),
+              onConfirm: () => Get.off(() => MyFinalResult(
+                id: widget.id,
+                //question: getquestionTestList[0]!.data!.questionNo,
+              )),
               // content: Column(
               //   children: [
               //     Container(child:Text("Hello 1")),
