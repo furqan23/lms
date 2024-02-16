@@ -1,4 +1,4 @@
-package com.example.splashapp
+package com.qca.app
 
 import io.flutter.embedding.android.FlutterActivity
 
