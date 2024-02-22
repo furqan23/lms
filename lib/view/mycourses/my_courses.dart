@@ -26,34 +26,37 @@ class _MyCoursesState extends State<MyCourses> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:const Text("My Coursess"),
+        title: const Text("My Courses"),
       ),
       body: boolData
-          ? ListView.builder(
-              shrinkWrap: true,
-              itemCount: myCoursesList[0].data?.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Get.to(() => MyAlbum(
-                        myCoursesList[0].data![index].courseId!));
-                  },
-                  child: DashbaordCardTwo(
-                    group: myCoursesList[0].data![index].course_code,
-                    id: myCoursesList[0].data![index].name,
-                    catName: myCoursesList[0].data![index].courseTitle,
-                    name:
-                        "${myCoursesList[0].data![index].firstName}",
-                    description: myCoursesList[0].data![index].name,
-                    slug: myCoursesList[0].data![index].name,
-                    seat: myCoursesList[0].data![index].totalSeat,
-                    registermethod:
-                        myCoursesList[0].data![index].registrationMethod,
-                    buttonText: 'View Detail >',
-                  ),
-                );
-              })
-          : const Center(
+          ? myCoursesList.isNotEmpty
+              ? ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: myCoursesList[0].data?.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        Get.to(() =>
+                            MyAlbum(myCoursesList[0].data![index].courseId!));
+                      },
+                      child: DashbaordCardTwo(
+                        group: myCoursesList[0].data![index].course_code,
+                        id: myCoursesList[0].data![index].name,
+                        catName: myCoursesList[0].data![index].courseTitle,
+                        name: "${myCoursesList[0].data![index].firstName}",
+                        description: myCoursesList[0].data![index].name,
+                        slug: myCoursesList[0].data![index].name,
+                        seat: myCoursesList[0].data![index].totalSeat,
+                        registermethod:
+                            myCoursesList[0].data![index].registrationMethod,
+                        buttonText: 'View Detail >',
+                      ),
+                    );
+                  })
+              : Center(
+                  child: Text('No data available'),
+                )
+          : Center(
               child: CircularProgressIndicator(),
             ),
     );

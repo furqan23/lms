@@ -75,7 +75,7 @@ class _PaymentState extends State<Payment> {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : ListView.builder(
+          : paymentList.isNotEmpty ? ListView.builder(
               itemCount: paymentList[0].data?.length ?? 0,
               itemBuilder: (context, index) {
                 if (paymentList[0].data != null) {
@@ -131,7 +131,9 @@ class _PaymentState extends State<Payment> {
                       .shrink(); // Return an empty container or nothing
                 }
               },
-            ),
+            ):Center(
+        child: Text("No Data found"),
+      ),
     );
   }
 }
