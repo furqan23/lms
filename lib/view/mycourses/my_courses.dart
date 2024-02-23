@@ -7,11 +7,10 @@ import 'package:splashapp/Controller/login_controller.dart';
 import 'package:splashapp/model/my_courses_model.dart';
 import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/view/mycourses/my_album.dart';
-import 'package:splashapp/view/mycourses/my_course_detail.dart';
 import 'package:splashapp/widget/dasbhoard_card_two.dart';
 
 class MyCourses extends StatefulWidget {
-  const MyCourses({super.key});
+  const MyCourses({Key? key}) : super(key: key);
 
   @override
   State<MyCourses> createState() => _MyCoursesState();
@@ -19,8 +18,8 @@ class MyCourses extends StatefulWidget {
 
 class _MyCoursesState extends State<MyCourses> {
   String? token;
-  List<MyCoursesModel> myCoursesList = [];
-  bool boolData = false;
+  List<Data> myCoursesList = [];
+  bool boolData = true; // Initialize to true for showing loading indicator
 
   @override
   Widget build(BuildContext context) {
@@ -29,36 +28,35 @@ class _MyCoursesState extends State<MyCourses> {
         title: const Text("My Courses"),
       ),
       body: boolData
-          ? myCoursesList.isNotEmpty
-              ? ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: myCoursesList[0].data?.length,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        Get.to(() =>
-                            MyAlbum(myCoursesList[0].data![index].courseId!));
-                      },
-                      child: DashbaordCardTwo(
-                        group: myCoursesList[0].data![index].course_code,
-                        id: myCoursesList[0].data![index].name,
-                        catName: myCoursesList[0].data![index].courseTitle,
-                        name: "${myCoursesList[0].data![index].firstName}",
-                        description: myCoursesList[0].data![index].name,
-                        slug: myCoursesList[0].data![index].name,
-                        seat: myCoursesList[0].data![index].totalSeat,
-                        registermethod:
-                            myCoursesList[0].data![index].registrationMethod,
-                        buttonText: 'View Detail >',
-                      ),
-                    );
-                  })
-              : Center(
-                  child: Text('No data available'),
-                )
-          : Center(
-              child: CircularProgressIndicator(),
-            ),
+          ? Center(
+        child: CircularProgressIndicator(),
+      )
+          : myCoursesList.isEmpty
+          ? const Center(
+        child: Text('No Course available'),
+      )
+          : ListView.builder(
+          shrinkWrap: true,
+          itemCount: myCoursesList.length,
+          itemBuilder: (context, index) {
+            return InkWell(
+              onTap: () {
+                Get.to(() => MyAlbum(myCoursesList[index].courseId!));
+              },
+              child: DashbaordCardTwo(
+                group: myCoursesList[index].course_code,
+                id: myCoursesList[index].name,
+                catName: myCoursesList[index].courseTitle,
+                name: "${myCoursesList[index].firstName}",
+                description: myCoursesList[index].name,
+                slug: myCoursesList[index].name,
+                seat: myCoursesList[index].totalSeat,
+                registermethod:
+                myCoursesList[index].registrationMethod,
+                buttonText: 'View Detail >',
+              ),
+            );
+          }),
     );
   }
 
@@ -76,12 +74,6 @@ class _MyCoursesState extends State<MyCourses> {
 
   void getMyCourseAPI() async {
     try {
-      // final Map<String, dynamic> requestData = {
-      //   "invoice_id": widget.invoice_id,
-      // };
-
-      // final String requestBody = jsonEncode(requestData);
-
       final res = await http.get(
         Uri.parse(AuthApi.getstudentCourse),
         headers: {
@@ -94,21 +86,25 @@ class _MyCoursesState extends State<MyCourses> {
       print('Response Body: ${res.body}');
 
       if (res.statusCode == 200) {
-        if (res.body.isNotEmpty) {
-          final mydata = jsonDecode(res.body);
-          print('Parsed Data: $mydata');
-          myCoursesList.add(MyCoursesModel.fromJson(mydata));
-          setState(() {
-            boolData = true;
-          });
-        } else {
-          throw Exception('Empty response');
-        }
+        final mydata = jsonDecode(res.body);
+        print('Parsed Data: $mydata');
+        final course = MyCoursesModel.fromJson(mydata);
+        setState(() {
+          boolData = false; // Set to false after receiving response
+          myCoursesList = course.data!;
+        });
       } else {
+        setState(() {
+          boolData = false; // Set to false in case of error too
+        });
         print('Error: ${res.statusCode}');
+        throw Exception('Failed to fetch courses');
       }
     } catch (e) {
-      print(e.toString());
+      setState(() {
+        boolData = false; // Set to false in case of exception
+      });
+      print('Exception: $e');
     }
   }
 }

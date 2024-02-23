@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:splashapp/values/auth_api.dart';
+import 'package:splashapp/values/my_imgs.dart';
 import 'package:splashapp/view/payment/Invoice_payment.dart';
 import 'package:splashapp/widget/customcard_widget2.dart';
 import '../../Controller/login_controller.dart';
@@ -18,7 +19,7 @@ class Payment extends StatefulWidget {
 }
 
 class _PaymentState extends State<Payment> {
-  List<PaymentModel> paymentList = [];
+  List<Data> paymentList = [];
   bool boolData = false;
 
   @override
@@ -29,6 +30,10 @@ class _PaymentState extends State<Payment> {
   }
 
   void getPaymentAPI() async {
+
+    setState(() {
+      boolData =true;
+    });
     final String? token = await LoginController().getTokenFromHive();
     print('Token: $token');
 
@@ -50,17 +55,27 @@ class _PaymentState extends State<Payment> {
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);
           print('Parsed Data: $mydata');
-          paymentList.add(PaymentModel.fromJson(mydata));
-          setState(() {
-            boolData = true;
+          setState(() {boolData = false;
+            print(boolData.toString());
+            final d= PaymentModel.fromJson(mydata);
+            paymentList=d.data!;
           });
-        } else {
+
+
+        } else {          setState(() {
+          boolData = false;
+        });
           throw Exception('Empty response');
         }
-      } else {
+      } else {          setState(() {
+        boolData = false;
+      });
         print('Error: ${res.statusCode}');
       }
     } catch (e) {
+      setState(() {
+        boolData =false;
+      });
       print(e.toString());
     }
   }
@@ -71,15 +86,25 @@ class _PaymentState extends State<Payment> {
       appBar: AppBar(
         title: const Text("My Payments"),
       ),
-      body: paymentList.isEmpty
+      body: boolData==true
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : paymentList.isNotEmpty ? ListView.builder(
-              itemCount: paymentList[0].data?.length ?? 0,
+          : paymentList.isEmpty ?Center(
+        child:  Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+
+            Image.asset(MyImgs.payment,
+              width: 60,height: 70,),
+            Text("No Payment Required"),
+          ],
+        ),
+      ): ListView.builder(
+              itemCount: paymentList.length ?? 0,
               itemBuilder: (context, index) {
-                if (paymentList[0].data != null) {
-                  String? createDateStr = paymentList[0].data![index].createdAt;
+
+                  String? createDateStr = paymentList[index].createdAt;
                   DateTime createDate =
                       DateTime.tryParse(createDateStr!) ?? DateTime.now();
 
@@ -89,7 +114,7 @@ class _PaymentState extends State<Payment> {
                   // Calculate the total price by summing up all prices in invoiceDetil
                   double totalAmount = 0.0;
                   for (var invoice
-                      in paymentList[0].data![index].invoiceDetil!) {
+                      in paymentList[index].invoiceDetil!) {
                     totalAmount +=
                         double.tryParse(invoice.price.toString()) ?? 0.0;
                   }
@@ -101,39 +126,32 @@ class _PaymentState extends State<Payment> {
                           onPressed: () {
                             Get.to(
                               () => InvoicePayment(
-                                ref_id: paymentList[0]
-                                    .data![index]
+                                ref_id: paymentList[index]
                                     .refId
                                     .toString(),
                                 invoice_id:
-                                    paymentList[0].data![index].id.toString(),
+                                    paymentList[index].id.toString(),
                               ),
                             );
                           },
                           title: '${index + 1}',
-                          inv: paymentList[0].data![index].id.toString(),
-                          refid: paymentList[0]
-                              .data![index]
+                          inv: paymentList[index].id.toString(),
+                          refid: paymentList[index]
                               .refId
                               .toString(), // Display the formatted date as the invoice
                           Amount: totalAmount
                               .toStringAsFixed(2), // Display the total amount
                           createDate:
                               formattedDate, // Display the formatted date
-                          Status: paymentList[0].data![index].status.toString(),
+                          Status: paymentList[index].status.toString(),
                           Attachment: 'Show',
                         ),
                       ),
                     ],
                   );
-                } else {
-                  return const SizedBox
-                      .shrink(); // Return an empty container or nothing
-                }
+
               },
-            ):Center(
-        child: Text("No Data found"),
-      ),
+            )
     );
   }
 }
