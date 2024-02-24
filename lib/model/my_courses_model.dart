@@ -1,5 +1,3 @@
-
-
 class MyCoursesModel {
   bool? success;
   String? message;
@@ -13,15 +11,15 @@ class MyCoursesModel {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['success'] = success;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -31,91 +29,94 @@ class MyCoursesModel {
 
 class Data {
   String? courseId;
-  String? groupname;
+  String? courseCode;
   String? id;
+  String? groupCode;
   String? name;
   String? registrationMethod;
-  var description;
+  dynamic description;
   String? isActive;
   String? totalSeat;
-  var expireOn;
+  dynamic expireOn;
+  String? groupType;
+  String? groupName;
   String? masterCategoryId;
   String? groupId;
-  String? course_code;
   String? slug;
-  var iconClass;
-  var createdAt;
-  var updatedAt;
+  dynamic iconClass;
+  dynamic createdAt;
+  String? updatedAt;
   String? courseTitle;
   String? firstName;
-  String? lastName;
 
-  Data(
-
-      {
-        this.groupname,
-        this.courseId,
-        this.id,
-        this.name,
-        this.registrationMethod,
-        this.description,
-        this.isActive,
-        this.totalSeat,
-        this.expireOn,
-        this.masterCategoryId,
-        this.groupId,
-        this.course_code,
-        this.slug,
-        this.iconClass,
-        this.createdAt,
-        this.updatedAt,
-        this.courseTitle,
-        this.firstName,
-        this.lastName});
+  Data({
+    this.courseId,
+    this.courseCode,
+    this.id,
+    this.groupCode,
+    this.name,
+    this.registrationMethod,
+    this.description,
+    this.isActive,
+    this.totalSeat,
+    this.expireOn,
+    this.groupType,
+    this.groupName,
+    this.masterCategoryId,
+    this.groupId,
+    this.slug,
+    this.iconClass,
+    this.createdAt,
+    this.updatedAt,
+    this.courseTitle,
+    this.firstName,
+  });
 
   Data.fromJson(Map<String, dynamic> json) {
-    courseId = json['course_id'];
-    groupname =json['group_name'];
-    id = json['id'];
-    name = json['name'];
-    registrationMethod = json['registration_method'];
-    description = json['description'];
-    isActive = json['is_active'];
-    totalSeat = json['total_seat'];
-    expireOn = json['expire_on'];
-    masterCategoryId = json['master_category_id'];
-    groupId = json['group_id'];
-    course_code = json['course_code'];
-    slug = json['slug'];
-    iconClass = json['icon_class'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    courseTitle = json['course_title'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
+    courseId = json['course_id']??'empty';
+    courseCode = json['course_code']??'empty';
+    id = json['id']??'empty';
+    groupCode = json['group_code']??'empty';
+    name = json['name']??'empty';
+    registrationMethod = json['registration_method']??'empty';
+    description = json['description']??'empty';
+    isActive = json['is_active']??'empty';
+    totalSeat = json['total_seat']??'empty';
+    expireOn = json['expire_on']??'empty';
+    groupType = json['group_type']??'empty';
+    groupName = json['group_name']??'empty';
+    masterCategoryId = json['master_category_id']??'empty';
+    groupId = json['group_id']??'empty';
+    slug = json['slug']??'empty';
+    iconClass = json['icon_class']??'empty';
+    createdAt = json['created_at']??'empty';
+    updatedAt = json['updated_at']??'empty';
+    courseTitle = json['course_title']??'empty';
+    firstName = json['first_name']??'empty';
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['course_id'] = this.courseId;
-    data['group_name']=this.groupname;
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['registration_method'] = this.registrationMethod;
-    data['description'] = this.description;
-    data['is_active'] = this.isActive;
-    data['total_seat'] = this.totalSeat;
-    data['expire_on'] = this.expireOn;
-    data['master_category_id'] = this.masterCategoryId;
-    data['group_id'] = this.groupId;
-    data['course_code'] = this.course_code;
-    data['slug'] = this.slug;
-    data['icon_class'] = this.iconClass;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['course_title'] = this.courseTitle;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['course_id'] = courseId;
+    data['course_code'] = courseCode;
+    data['id'] = id;
+    data['group_code'] = groupCode;
+    data['name'] = name;
+    data['registration_method'] = registrationMethod;
+    data['description'] = description;
+    data['is_active'] = isActive;
+    data['total_seat'] = totalSeat;
+    data['expire_on'] = expireOn;
+    data['group_type'] = groupType;
+    data['group_name'] = groupName;
+    data['master_category_id'] = masterCategoryId;
+    data['group_id'] = groupId;
+    data['slug'] = slug;
+    data['icon_class'] = iconClass;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['course_title'] = courseTitle;
+    data['first_name'] = firstName;
     return data;
   }
 }

@@ -40,14 +40,14 @@ class _MyCoursesState extends State<MyCourses> {
                     Get.to(()=>MyVideos(myCoursesList[0].data![index].courseId!));
                   },
                   child: DashbaordCardTwo(
-                    group: myCoursesList[0].data![index].groupname,
-                    id: myCoursesList[0].data![index].name,
-                    catName: myCoursesList[0].data![index].courseTitle,
-                    name:"${myCoursesList[0].data![index].firstName} ",
-                    description: myCoursesList[0].data![index].name,
-                    slug: myCoursesList[0].data![index].name,
-                    seat: myCoursesList[0].data![index].totalSeat,
-                    registermethod: myCoursesList[0].data![index].registrationMethod,
+                    group: myCoursesList[0].data![index].groupName.toString(),
+                    id: myCoursesList[0].data![index].name.toString(),
+                    catName: myCoursesList[0].data![index].courseTitle.toString(),
+                    name:"${myCoursesList[0].data![index].firstName..toString()} ",
+                    description: myCoursesList[0].data![index].name.toString(),
+                    slug: myCoursesList[0].data![index].name.toString(),
+                    seat: myCoursesList[0].data![index].totalSeat.toString(),
+                    registermethod: myCoursesList[0].data![index].registrationMethod.toString(),
                     buttonText:     'Video Lectures >',
                   ),
                 );

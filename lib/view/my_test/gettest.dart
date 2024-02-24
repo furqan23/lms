@@ -238,7 +238,7 @@ class _GetTestState extends State<GetTest> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
-                            "Total Time:",
+                            "Total Amount:",
                           ),
                           Text(
                             "$currency $test_amount",

@@ -44,7 +44,7 @@ class _MyCoursesState extends State<MyCourses> {
                 Get.to(() => MyAlbum(myCoursesList[index].courseId!));
               },
               child: DashbaordCardTwo(
-                group: myCoursesList[index].course_code,
+                group: myCoursesList[index].courseCode,
                 id: myCoursesList[index].name,
                 catName: myCoursesList[index].courseTitle,
                 name: "${myCoursesList[index].firstName}",
