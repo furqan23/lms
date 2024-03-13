@@ -155,7 +155,7 @@ class _lsitState extends State<lsit> {
                               ],
                             ),
 
-                            const SizedBox(width: 50),
+                            const SizedBox(width:50),
                             Text(
                               "Rs.${widget.map![index].price!}",
                               style:
@@ -200,7 +200,7 @@ class _lsitState extends State<lsit> {
                         ),
 
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 36,vertical: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

@@ -23,7 +23,6 @@ class _MyCoursesState extends State<MyCourses> {
   List<MyCoursesModel> myCoursesList = [];
   bool boolData = false;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,28 +30,43 @@ class _MyCoursesState extends State<MyCourses> {
         title: const Text("My Courses"),
       ),
       body: boolData
-          ? myCoursesList[0].data?.length==0?const Center(child: Text("No Record Found"),): ListView.builder(
-              shrinkWrap: true,
-              itemCount: myCoursesList[0].data?.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: (){
-                    Get.to(()=>MyVideos(myCoursesList[0].data![index].courseId!));
-                  },
-                  child: DashbaordCardTwo(
-                    group: myCoursesList[0].data![index].groupName.toString(),
-                    id: myCoursesList[0].data![index].name.toString(),
-                    catName: myCoursesList[0].data![index].courseTitle.toString(),
-                    name:"${myCoursesList[0].data![index].firstName..toString()} ",
-                    description: myCoursesList[0].data![index].name.toString(),
-                    slug: myCoursesList[0].data![index].name.toString(),
-                    seat: myCoursesList[0].data![index].totalSeat.toString(),
-                    registermethod: myCoursesList[0].data![index].registrationMethod.toString(),
-                    buttonText:     'Video Lectures >',
-                  ),
-                );
-              })
-          :const Center(
+          ? myCoursesList[0].data?.length == 0
+              ? const Center(
+                  child: Text("No Record Found"),
+                )
+              : ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: myCoursesList[0].data?.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        Get.to(() =>
+                            MyVideos(myCoursesList[0].data![index].courseId!));
+                      },
+                      child: DashbaordCardTwo(
+                        group:
+                            myCoursesList[0].data![index].groupName.toString(),
+                        id: myCoursesList[0].data![index].name.toString(),
+                        catName: myCoursesList[0]
+                            .data![index]
+                            .courseTitle
+                            .toString(),
+                        name:
+                            "${myCoursesList[0].data![index].firstName..toString()} ",
+                        description:
+                            myCoursesList[0].data![index].name.toString(),
+                        slug: myCoursesList[0].data![index].name.toString(),
+                        seat:
+                            myCoursesList[0].data![index].totalSeat.toString(),
+                        registermethod: myCoursesList[0]
+                            .data![index]
+                            .registrationMethod
+                            .toString(),
+                        buttonText: 'Video Lectures >',
+                      ),
+                    );
+                  },)
+          : const Center(
               child: CircularProgressIndicator(),
             ),
     );

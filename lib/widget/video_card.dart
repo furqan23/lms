@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:splashapp/values/colors.dart';
+import 'package:splashapp/widget/mybutton_widget.dart';
 
 class VideoCard extends StatefulWidget {
   String? id,
@@ -36,164 +37,81 @@ class _DashbaordCardState extends State<VideoCard> {
         elevation: 5,
         child: Container(
           width: double.infinity,
-          height: 160,
+          height:  MediaQuery.of(context).size.height*.24,
           decoration: BoxDecoration(
               color: Colors.white12,
               borderRadius: BorderRadius.circular(5),
               border: Border.all(
                 color: Colors.green.shade500,
               )),
-          child: Row(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Container(
-                  alignment: Alignment.center,
-                  width: 100,
-                  height: 130,
-                  decoration: BoxDecoration(
-                    color: AppColors.lightColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    children: [
-                      // SizedBox(
-                      //     height: MediaQuery.of(context).size.height * 0.05),
-                      // Center(
-                      //     child: Text(
-                      //   widget.slug.toString(),
-                      //   style: const TextStyle(
-                      //       color: Colors.black, fontWeight: FontWeight.w700),
-                      // )),
-                      // Align(
-                      //     alignment: Alignment.topCenter,
-                      //     child: Text(widget.catName.toString(),
-                      //         style: const TextStyle(
-                      //             color: Colors.black,
-                      //             fontWeight: FontWeight.w700))),
-
-                      Center(
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(6.0),
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: 100,
+                      height: MediaQuery.of(context).size.height*.2,
+                      decoration: BoxDecoration(
+                        color: AppColors.lightColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
                         child: Image.network(
                           "https://dav.binshaharts.com/frontend/img/learning.png",
                           errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-                            // Returning a local image if the network image fails to load
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Image.asset(
-                                'assets/images/logo.png', // Replace 'local_image.png' with your local image asset path
-                                width: 100, // Adjust width and height as needed
+                                'assets/images/logo.png',
+                                width: 100,
                                 height: 100,
-                                fit: BoxFit.contain, // Adjust the fit property as per your requirement
+                                fit: BoxFit.contain,
                               ),
                             );
                           },
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: Row(
-                        children: [
-                          const Text(
-                            "Title : ",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-
-                        ],
-                      ),
-                    ),
-                    Text(widget.videotitle!,
-                    ),
-                    // const Padding(
-                    //   padding: EdgeInsets.only(top: 8),
-                    //   child: Row(
-                    //     children: [
-                    //       Text(
-                    //         "Video Type: ",
-                    //         style: TextStyle(fontWeight: FontWeight.bold),
-                    //       ),
-                    //       Text(
-                    //         "",
-                    //         style: TextStyle(fontWeight: FontWeight.bold),
-                    //       )
-                    //     ],
-                    //   ),
-                    // ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(top: 8),
-                    //   child: Row(
-                    //     children: [
-                    //       const Text(
-                    //         "Duration: ",
-                    //         style: TextStyle(color: Colors.grey, fontSize: 14),
-                    //       ),
-                    //       Text(
-                    //         widget.slug!,
-                    //         style: const TextStyle(fontWeight: FontWeight.bold),
-                    //       )
-                    //     ],
-                    //   ),
-                    // ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(top: 10),
-                    //   child: Row(
-                    //     children: [
-                    //       const Text(
-                    //         "Registration Method:   ",
-                    //         style: TextStyle(color: Colors.grey, fontSize: 14),
-                    //       ),
-                    //       Text(
-                    //         widget.registermethod!,
-                    //         style: TextStyle(fontWeight: FontWeight.bold),
-                    //       )
-                    //     ],
-                    //   ),
-                    // ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          // const Text(
-                          //   "Total Seat:  ",
-                          //   style: TextStyle(color: Colors.grey, fontSize: 14),
-                          // ),
-                          // Text(
-                          //   widget.seat!,
-                          //   style: TextStyle(fontWeight: FontWeight.bold),
-                          // ),
-                          const SizedBox(width: 20),
-                          SizedBox(height: MediaQuery.of(context).size.height*.1),
-                          Container(
-                            alignment: Alignment.center,
-                            width: 140,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(14),
-                              color: AppColors.primaryColor,
-                            ),
-                            child: const Text(
-                              'Play Video >',
-                              style: TextStyle(
-                                color: Colors.white,
+                  Padding(
+                    padding: const EdgeInsets.all(6.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(top: 8),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Title : ",
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                            ),
+
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                          width: 200,
+                          child: Text(widget.videotitle!,
+                          ),
+                        ),
+
+
+                        SizedBox(height: MediaQuery.of(context).size.height*.04),
+
+                        const MyButtonWidget(btntitle: "Play Video >"),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+
+
             ],
           ),
         ),

@@ -171,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         )
                       else
-                        Center(
+                        const Center(
                           child:Text("No Data")
                         ),
                       const SizedBox(height: 10),
