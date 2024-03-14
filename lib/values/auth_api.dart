@@ -1,6 +1,7 @@
 class AuthApi {
   // base url of image folders
   static const String baseUrlSliderImage = "https://qca.com.pk/slide/";
+  static const String imageUrl = "https://qca.com.pk/frontend/img/learning.png";
 
   static const String _name = "name";
 

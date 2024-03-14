@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:splashapp/Controller/signup_controller.dart';
@@ -109,6 +110,7 @@ class _SignUpViewState extends State<SignUpView> {
                                     border: OutlineInputBorder(),
                                   ),
                                   validator: (value)=>ValidationUtils.validateName(value!),
+                                  textInputAction: TextInputAction.next,
                                 ),
                               ),
                               SizedBox(
@@ -123,6 +125,8 @@ class _SignUpViewState extends State<SignUpView> {
                                       hintText: 'Email ID',
                                       border: OutlineInputBorder()),
                                   validator: (value)=>ValidationUtils.validateEmail(value!),
+                                  textInputAction: TextInputAction.next,
+                                  keyboardType: TextInputType.emailAddress
                                 ),
                               ),
                               SizedBox(
@@ -151,6 +155,7 @@ class _SignUpViewState extends State<SignUpView> {
                                     border: const OutlineInputBorder(),
                                   ),
                                   validator: (value)=>ValidationUtils.validatePassword(value!),
+                                  textInputAction: TextInputAction.next,
                                 ),
                               ),
                               SizedBox(
@@ -180,6 +185,7 @@ class _SignUpViewState extends State<SignUpView> {
                                     border: const OutlineInputBorder(),
                                   ),
                                   validator: (value) => ValidationUtils.validatePassword(value!),
+                                  textInputAction: TextInputAction.done,
                                 ),
                               ),
                               SizedBox(

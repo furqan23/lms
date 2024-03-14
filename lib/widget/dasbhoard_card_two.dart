@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/values/colors.dart';
 
 class DashbaordCardTwo extends StatefulWidget {
@@ -71,7 +72,7 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
 
                       Center(
                         child: Image.network(
-                          "https://dav.binshaharts.com/frontend/img/learning.png",
+                          AuthApi.imageUrl,
                           errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
                             // Returning a local image if the network image fails to load
                             return Padding(

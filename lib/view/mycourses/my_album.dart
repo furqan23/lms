@@ -32,7 +32,7 @@ class _MyCoursesState extends State<MyAlbum> {
         title:const Text("Course Albums"),
       ),
       body: boolData
-          ? ListView.builder(
+          ? myCoursesList[0].data!.isEmpty?Center(child: Text("No Courses Available"),):ListView.builder(
               shrinkWrap: true,
               itemCount: myCoursesList[0].data?.length,
               itemBuilder: (context, index) {
