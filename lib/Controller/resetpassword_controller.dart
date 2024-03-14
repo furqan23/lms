@@ -22,7 +22,7 @@ class ResetpasswordController extends GetxController {
     Get.snackbar(otp, email);
 
     try {
-      final res = await http.post(Uri.parse(AuthApi.loginApi), body: {
+      final res = await http.post(Uri.parse(AuthApi.resetpasswordApi), body: {
         "code": otp,
         "password": passwordController.text,
         "password_confirmation": confrimpasswordController.text,

@@ -37,7 +37,7 @@ class _DashbaordCardState extends State<VideoCard> {
         elevation: 5,
         child: Container(
           width: double.infinity,
-          height:  MediaQuery.of(context).size.height*.24,
+          height:  MediaQuery.of(context).size.height*.28,
           decoration: BoxDecoration(
               color: Colors.white12,
               borderRadius: BorderRadius.circular(5),

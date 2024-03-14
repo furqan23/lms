@@ -10,106 +10,112 @@ import 'package:splashapp/view/mycourses/onlinevideo/playvideo.dart';
 import 'package:splashapp/widget/video_card.dart';
 
 class MyVideos extends StatefulWidget {
-  String id;
-  MyVideos( this.id, {super.key});
+  final String id;
+
+  const MyVideos(this.id, {Key? key}) : super(key: key);
 
   @override
-  State<MyVideos> createState() => _MyCoursesState();
+  State<MyVideos> createState() => _MyVideosState();
 }
 
-class _MyCoursesState extends State<MyVideos> {
-  String? token;
-  List<VideoModel> myCoursesList = [];
-  bool boolData = false;
+class _MyVideosState extends State<MyVideos> {
+  late String token;
+  List<Data> myVideoList = [];
+  bool isLoading = true;
 
+  @override
+  void initState() {
+    super.initState();
+    getTokenAndFetchVideos();
+  }
+
+  Future<void> getTokenAndFetchVideos() async {
+    token = (await LoginController().getTokenFromHive())!;
+    print('Token: $token');
+    fetchVideos();
+  }
+
+  Future<void> fetchVideos() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final response = await http.post(
+        Uri.parse(AuthApi.videoLecturesApi),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+        body: {'album_id': widget.id},
+      );
+
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        print('Parsed Data: $responseData');
+
+        setState(() {
+          final videoModel = VideoModel.fromJson(responseData);
+          myVideoList = videoModel.data ?? [];
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+      setState(() {
+        isLoading = false;
+      });
+      // Show error message to the user
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Failed to fetch videos. Please try again later.'),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Video Lectures"),
+        title: const Text("Video Lectures"),
       ),
-      body: boolData
-          ? ListView.builder(
-              shrinkWrap: true,
-              itemCount: myCoursesList[0].data?.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: (){
-                    // Get.to(()=>YoutubePlayerDemo(urll:myCoursesList[0].data![index].videoName!));
-                    Get.to(()=>PlayVideo(type:"ok",id:myCoursesList[0].data![index].videoName!,
-                    listvideo: myCoursesList[0].data!,));
-                  },
-                  child: VideoCard(
-                    id: myCoursesList[0].data![index].id,
-                    catName: myCoursesList[0].data![index].videoTitle.toString(),
-                     videotitle: myCoursesList[0].data![index].videoTitle.toString(),
-                     name:myCoursesList[0].data![index].videoName,
-                    description: myCoursesList[0].data![index].uploaderId,
-                    slug: myCoursesList[0].data![index].uploaderId,
-                    seat: myCoursesList[0].data![index].videoName,
-                    registermethod: myCoursesList[0].data![index].videoName,
-                  ),
-                );
-              })
-          :const Center(
-              child: CircularProgressIndicator(),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : myVideoList.isEmpty
+          ? const Center(child: Text('No videos available'))
+          : ListView.builder(
+        itemCount: myVideoList.length,
+        itemBuilder: (context, index) {
+          final video = myVideoList[index];
+          return InkWell(
+            onTap: () {
+              Get.to(() => PlayVideo(
+                type: "ok",
+                id: video.videoName!,
+                listvideo: myVideoList, // Pass the entire list
+              ));
+            },
+            child: VideoCard(
+              id: video.id,
+              catName: video.videoTitle.toString(),
+              videotitle: video.videoTitle.toString(),
+              name: video.videoName,
+              description: video.uploaderId,
+              slug: video.uploaderId,
+              seat: video.videoName,
+              registermethod: video.videoName,
             ),
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getTokenAndFetchInvoice();
-  }
-
-  Future<void> getTokenAndFetchInvoice() async {
-    token = await LoginController().getTokenFromHive();
-    print('Token: $token');
-    getMyCourseAPI();
-  }
-
-  void getMyCourseAPI() async {
-    try {
-      // final Map<String, dynamic> requestData = {
-      //   "invoice_id": widget.invoice_id,
-      // };
-
-
-
-      // final String requestBody = jsonEncode(requestData);
-
-      final res = await http.post(
-        Uri.parse(AuthApi.videoLecturesApi),
-        headers: {
-          'Authorization': 'Bearer $token', // Use the retrieved token
-
+          );
         },
-        body: {
-          "album_id":widget.id,
-        }
-      );
-
-      print('Response Status Code: ${res.statusCode}');
-      print('Response Body: ${res.body}');
-
-      if (res.statusCode == 200) {
-        if (res.body.isNotEmpty) {
-          final mydata = jsonDecode(res.body);
-          print('Parsed Data: $mydata');
-          myCoursesList.add(VideoModel.fromJson(mydata));
-          setState(() {
-            boolData = true;
-          });
-        } else {
-          throw Exception('Empty response');
-        }
-      } else {
-        print('Error: ${res.statusCode}');
-      }
-    } catch (e) {
-      print(e.toString());
-    }
+      ),
+    );
   }
 }
