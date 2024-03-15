@@ -28,7 +28,7 @@ class _DashbaordCardState extends State<AlbumCard> {
         child:
         Container(
           width: double.infinity,
-          height: MediaQuery.of(context).size.height* 0.16,
+          height: MediaQuery.of(context).size.height* 0.18,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             color: Colors.white12,
