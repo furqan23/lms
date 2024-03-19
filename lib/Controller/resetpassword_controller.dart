@@ -1,12 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-
 import '../values/auth_api.dart';
 import 'package:http/http.dart' as http;
-
 import '../view/auth/login/login_view.dart';
 class ResetpasswordController extends GetxController {
   final TextEditingController otpsController = TextEditingController();
@@ -22,7 +18,7 @@ class ResetpasswordController extends GetxController {
     Get.snackbar(otp, email);
 
     try {
-      final res = await http.post(Uri.parse(AuthApi.resetpasswordApi), body: {
+      final res = await http.post(Uri.parse(AuthApi.resetspasswordApi), body: {
         "code": otp,
         "password": passwordController.text,
         "password_confirmation": confrimpasswordController.text,

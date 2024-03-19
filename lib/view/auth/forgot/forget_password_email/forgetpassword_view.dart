@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-
 import '../../../../Controller/forget_controller.dart';
 import '../../../../values/colors.dart';
 import '../../../../values/myimage.dart';
@@ -41,7 +39,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     heightBetween: 40.0,
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
                   TextField(
                     controller: _forgetPassword.emailController.value,
@@ -50,14 +48,14 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         hintText: 'Email ID',
                         border: OutlineInputBorder()),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Obx(() {
                     return InkWell(
                       onTap: () {
                         _forgetPassword.forgetApi();
                       },
                       child: _forgetPassword.loading.value
-                          ? Center(
+                          ? const Center(
                               child: CircularProgressIndicator(),
                             )
                           : Container(

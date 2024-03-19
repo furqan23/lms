@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:splashapp/view/auth/forgot/forget_password_email/forgetpassword_view.dart';
 import 'package:splashapp/view/auth/forgot/forget_password_otp/otp_view.dart';
 import '../values/auth_api.dart';
 
