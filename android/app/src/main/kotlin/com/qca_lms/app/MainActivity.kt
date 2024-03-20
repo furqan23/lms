@@ -1,4 +1,4 @@
-package com.qca.app
+package com.qca_lms.app
 
 import io.flutter.embedding.android.FlutterActivity
 

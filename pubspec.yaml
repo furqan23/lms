@@ -52,8 +52,6 @@ dependencies:
   youtube_player_iframe: ^4.0.4
   flutter_html:
   flutter_launcher_icons: ^0.13.1
-  device_info_plus: ^9.1.1
-  device_information: ^0.0.4
   permission_handler:
   youtube_player_flutter: ^8.1.2
   timer_count_down: ^2.2.2
@@ -71,6 +69,8 @@ dev_dependencies:
   path_provider:
 
   # The "flutter_lints" package below contains a set of recommended lints to
+  #  device_info_plus: ^9.1.1
+  #  device_information: ^0.0.4
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint

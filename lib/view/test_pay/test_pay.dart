@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:device_information/device_information.dart';
+// import 'package:device_information/device_information.dart';
 import 'package:get/get.dart';
 import 'package:splashapp/Controller/login_controller.dart';
 class TestApp extends StatefulWidget {

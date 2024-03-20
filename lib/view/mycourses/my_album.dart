@@ -67,9 +67,9 @@ class _MyCoursesState extends State<MyAlbum> {
   }
 
   void getMyCourseAPI() async {
-    setState(() {
-      boolData = true;
-    });
+    // setState(() {
+    //   boolData = true;
+    // });
     try {
       // final Map<String, dynamic> requestData = {
       //   "invoice_id": widget.invoice_id,
@@ -96,26 +96,26 @@ class _MyCoursesState extends State<MyAlbum> {
           print('Parsed Data: $mydata');
 
           setState(() {
-            boolData = false;
+            boolData = true;
             print(boolData.toString());
             final couselist = AlbumModel.fromJson(mydata);
             albumList = couselist.data!;
           });
         } else {
           setState(() {
-            boolData = false;
+            boolData = true;
           });
           throw Exception('Empty response');
         }
       } else {
         setState(() {
-          boolData = false;
+          boolData = true;
         });
         print('Error: ${res.statusCode}');
       }
     } catch (e) {
       setState(() {
-        boolData = false;
+        boolData = true;
       });
       print(e.toString());
     }

@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:permission_handler/permission_handler.dart';
+// import 'package:permission_handler/permission_handler.dart';
 import 'package:splashapp/Controller/login_controller.dart';
 import 'package:splashapp/values/colors.dart';
 import 'package:splashapp/values/constants.dart';
@@ -30,27 +30,27 @@ class _LoginViewState extends State<LoginView> {
   @override
   void initState() {
     super.initState();
-    _requestPermissions();
+    // _requestPermissions();
   }
 
-  Future<void> _requestPermissions() async {
-    final PermissionStatus cameraPermissionStatus =
-    await Permission.camera.status;
-    final PermissionStatus storagePermissionStatus =
-    await Permission.storage.status;
-    final PermissionStatus phonePermissionStatus = await Permission.phone.status;
-
-    if (!cameraPermissionStatus.isGranted) {
-      await Permission.camera.request();
-    }
-
-    if (!storagePermissionStatus.isGranted) {
-      await Permission.storage.request();
-    }
-    if (!phonePermissionStatus.isGranted) {
-      await Permission.phone.request();
-    }
-  }
+  // Future<void> _requestPermissions() async {
+  //   final PermissionStatus cameraPermissionStatus =
+  //   await Permission.camera.status;
+  //   final PermissionStatus storagePermissionStatus =
+  //   await Permission.storage.status;
+  //   final PermissionStatus phonePermissionStatus = await Permission.phone.status;
+  //
+  //   if (!cameraPermissionStatus.isGranted) {
+  //     await Permission.camera.request();
+  //   }
+  //
+  //   if (!storagePermissionStatus.isGranted) {
+  //     await Permission.storage.request();
+  //   }
+  //   if (!phonePermissionStatus.isGranted) {
+  //     await Permission.phone.request();
+  //   }
+  // }
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   LoginController _loginController = Get.put(LoginController());
   bool _obscureText = true;
