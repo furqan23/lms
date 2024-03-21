@@ -27,11 +27,11 @@ class _DashbaordCardState extends State<DashbaordCard> {
         child: Column(
           children: [
             Center(
-              child:widget.image==null?Image(
+              child:widget.image==null || widget.image=="null"?Image(
           image: AssetImage(tOnBoardingImage3),
           width: 45,
           height: 45,
-        ):Image.network("${AuthApi.dashboardImagesBaseUrl}/${widget.image}")
+        ):SizedBox(height:45,width:45,child: Image.network("${AuthApi.dashboardImagesBaseUrl}/${widget.image}"))
             ),
             Text(widget.catName.toString(),style: TextStyle(
               fontSize: 17,letterSpacing: -1,

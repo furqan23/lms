@@ -25,30 +25,33 @@ class _MyCoursesState extends State<MyAlbum> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Course Albums"),
-        ),
-        body: boolData == true
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : albumList.isEmpty
-                ? const Center(child: Text("No Course "))
-                : ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: albumList.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Get.to(() => MyVideos(albumList[index].id!));
-                        },
-                        child: AlbumCard(
-                          id: albumList[index].id,
-                          albam_title: albumList[index].albumTitle,
-                          albam_code: "${albumList[index].albamCode}",
-                        ),
-                      );
-                    }));
+      appBar: AppBar(
+        title:const Text("Course Albums"),
+      ),
+      body: boolData
+          ? albumList.isEmpty?Center(child: Text("No Courses Available"),):ListView.builder(
+              shrinkWrap: true,
+              itemCount: albumList.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
+                    Get.to(() => MyVideos(
+                        albumList[index].id!));
+                  },
+                  child: AlbumCard(
+                    id: albumList[index].id,
+                    albam_title: albumList[index].albumTitle,
+                    albam_code:
+                        "${albumList[index].albamCode}",
+
+                  ),
+                );
+              })
+          : const Center(
+              child: CircularProgressIndicator(),
+            ),
+    );
+
   }
 
   @override
@@ -64,9 +67,9 @@ class _MyCoursesState extends State<MyAlbum> {
   }
 
   void getMyCourseAPI() async {
-    setState(() {
-      boolData = true;
-    });
+    // setState(() {
+    //   boolData = true;
+    // });
     try {
       // final Map<String, dynamic> requestData = {
       //   "invoice_id": widget.invoice_id,
@@ -93,26 +96,26 @@ class _MyCoursesState extends State<MyAlbum> {
           print('Parsed Data: $mydata');
 
           setState(() {
-            boolData = false;
+            boolData = true;
             print(boolData.toString());
             final couselist = AlbumModel.fromJson(mydata);
             albumList = couselist.data!;
           });
         } else {
           setState(() {
-            boolData = false;
+            boolData = true;
           });
           throw Exception('Empty response');
         }
       } else {
         setState(() {
-          boolData = false;
+          boolData = true;
         });
         print('Error: ${res.statusCode}');
       }
     } catch (e) {
       setState(() {
-        boolData = false;
+        boolData = true;
       });
       print(e.toString());
     }

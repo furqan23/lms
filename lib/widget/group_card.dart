@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/values/colors.dart';
 
 class GroupsCard extends StatefulWidget {
@@ -38,7 +39,7 @@ class _DashbaordCardState extends State<GroupsCard> {
         elevation: 3,
         child: Container(
           width: double.infinity,
-          height: 130,
+          height: 160,
           decoration: BoxDecoration(
               color: Colors.white12,
               borderRadius: BorderRadius.circular(5),
@@ -78,7 +79,7 @@ class _DashbaordCardState extends State<GroupsCard> {
 
                       Center(
                         child: Image.network(
-                          "https://dav.binshaharts.com/frontend/img/learning.png",
+                          AuthApi.imageUrl,
                           errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
                             // Returning a local image if the network image fails to load
                             return Padding(

@@ -1,6 +1,8 @@
 class AuthApi {
   // base url of image folders
   static const String baseUrlSliderImage = "https://qca.com.pk/slide/";
+  static const String imageUrl = "https://qca.com.pk/frontend/img/learning.png";
+  static const String dashboardImagesBaseUrl="https://qca.com.pk/category";
 
   static const String _name = "name";
 
@@ -15,8 +17,7 @@ class AuthApi {
   static const String getDashboardApi =
       "https://qca.com.pk/api/v1/dashboard";
 
-  static const String dashboardImagesBaseUrl=
-      "https://qca.com.pk/api/v1/baseurl/category/";
+
   static const String courseApi = "https://qca.com.pk/api/v1/courseList";
   static const String getPayApi =
       "https://qca.com.pk/api/v1/student/myPayments";

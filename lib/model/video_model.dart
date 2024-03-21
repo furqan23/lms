@@ -31,12 +31,12 @@ class Data {
   String? id;
   String? videoTitle;
   String? videoName;
-  Null? videoType;
+  var videoType;
   String? courseAlbumId;
-  Null? duration;
-  Null? imageName;
-  Null? videoTag;
-  Null? uploaderId;
+  var duration;
+  var imageName;
+  var videoTag;
+  var uploaderId;
   String? processed;
   String? createdAt;
   String? updatedAt;

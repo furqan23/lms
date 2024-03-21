@@ -34,7 +34,7 @@ class _MyCoursesState extends State<MyGroups> {
         title: const Text("Groups"),
       ),
       body: boolData
-          ? _myCoursesList[0].data?.length==0?const Center(child: Text("No Record Found"),): ListView.builder(
+          ? _myCoursesList[0].data?.length==0?const Center(child: Text("No Groups Found"),): ListView.builder(
               shrinkWrap: true,
               itemCount: _myCoursesList[0].data?.length,
               itemBuilder: (context, index) {

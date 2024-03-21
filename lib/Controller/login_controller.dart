@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:device_information/device_information.dart';
+// import 'package:device_information/device_information.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
@@ -22,7 +22,7 @@ class LoginController extends GetxController {
   void onInit() {
     super.onInit();
     checkLoginStatus();
-    initPlatformState();
+    // initPlatformState();
   }
 
   void checkLoginStatus() async {
@@ -120,19 +120,19 @@ class LoginController extends GetxController {
 
 
 
-  Future<void> initPlatformState() async {
-    try {
-      platformVersion.value = await DeviceInformation.platformVersion;
-      imeiNo.value = await DeviceInformation.deviceIMEINumber;
-      // modelName.value = await DeviceInformation.deviceModel;
-      // manufacturerName.value = await DeviceInformation.deviceManufacturer;
-      // apiLevel.value = await DeviceInformation.apiLevel;
-      // deviceName.value = await DeviceInformation.deviceName;
-      // productName.value = await DeviceInformation.productName;
-      // cpuType.value = await DeviceInformation.cpuName;
-      // hardware.value = await DeviceInformation.hardware;
-    } on PlatformException catch (e) {
-      platformVersion.value = '${e.message}';
-    }
-  }
+  // Future<void> initPlatformState() async {
+  //   try {
+  //     platformVersion.value = await DeviceInformation.platformVersion;
+  //     imeiNo.value = await DeviceInformation.deviceIMEINumber;
+  //     // modelName.value = await DeviceInformation.deviceModel;
+  //     // manufacturerName.value = await DeviceInformation.deviceManufacturer;
+  //     // apiLevel.value = await DeviceInformation.apiLevel;
+  //     // deviceName.value = await DeviceInformation.deviceName;
+  //     // productName.value = await DeviceInformation.productName;
+  //     // cpuType.value = await DeviceInformation.cpuName;
+  //     // hardware.value = await DeviceInformation.hardware;
+  //   } on PlatformException catch (e) {
+  //     platformVersion.value = '${e.message}';
+  //   }
+  // }
 }

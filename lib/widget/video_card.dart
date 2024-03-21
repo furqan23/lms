@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/values/colors.dart';
 import 'package:splashapp/widget/mybutton_widget.dart';
 
@@ -62,7 +63,7 @@ class _DashbaordCardState extends State<VideoCard> {
                       ),
                       child: Center(
                         child: Image.network(
-                          "https://dav.binshaharts.com/frontend/img/learning.png",
+                          AuthApi.imageUrl,
                           errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
                             return Padding(
                               padding: const EdgeInsets.all(8.0),

@@ -220,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 image: dashboardList[0]
                                     .data!
                                     .category![index]
-                                    .image??null,
+                                    .image,
                               ),
                             );
                           }

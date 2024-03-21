@@ -19,10 +19,10 @@ class SignUpController extends GetxController {
     loading.value = true;
     try {
       var bodyy = {
-        "email": emailController.value.text,
-        "name": nameController.value.text,
-        "password": passwordController.value.text,
-        "password_confirmation": confirmpasswordController.value.text,
+        "email": emailController.value.text.trim(),
+        "name": nameController.value.text.trim(),
+        "password": passwordController.value.text.trim(),
+        "password_confirmation": confirmpasswordController.value.text.trim(),
       };
       print(bodyy);
 
