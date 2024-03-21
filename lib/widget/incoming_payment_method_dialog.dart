@@ -1,6 +1,5 @@
+import 'dart:async';
 import 'dart:developer';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:splashapp/model/get_invoice_id_model.dart';
@@ -35,6 +34,19 @@ class _IncomingJobState extends State<IncomingPaymentMethodDialog> {
 
 
   @override
+  void initState() {
+    super.initState();
+    // Call the function to close the dialog after 5 seconds
+    closeDialogAfterDelay();
+  }
+
+  void closeDialogAfterDelay() {
+    Timer(Duration(seconds: 5), () {
+      Navigator.of(context).pop(); // Close the dialog
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var textTheme = theme.textTheme;
@@ -65,7 +77,7 @@ class _IncomingJobState extends State<IncomingPaymentMethodDialog> {
     return Dialog(
       child: Container(
           padding: const EdgeInsets.all(20),
-          height: mediaQuery.height * 0.60,
+          height: mediaQuery.height * 0.50,
           width: mediaQuery.width * 0.85,
           decoration: BoxDecoration(
             color: widget.color,
@@ -75,6 +87,8 @@ class _IncomingJobState extends State<IncomingPaymentMethodDialog> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+
+                SizedBox(height: MediaQuery.of(context).size.height * .10),
                 Text(
                   "invoice Id ${widget.invoiceByIdList[0].data?.inv!.invoiceDetil?[0].invoiceId}",
                   textAlign: TextAlign.center,

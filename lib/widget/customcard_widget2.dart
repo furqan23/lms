@@ -11,8 +11,11 @@ class CustomCardWidget2 extends StatelessWidget {
   final String Attachment;
   void Function() onPressed;
 
+  void Function() onClcik;
+
   CustomCardWidget2({
     super.key,
+    required this.onClcik,
     required this.title,
     required this.inv,
     required this.refid,
@@ -187,30 +190,33 @@ class CustomCardWidget2 extends StatelessWidget {
                           children: [
 
 
-                            Container(
-                              alignment: Alignment.center,
-                              width: 150,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(14),
-                                color: AppColors.primaryColor,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    "View Details",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                            InkWell(
+                              onTap: onClcik,
+                              child: Container(
+                                alignment: Alignment.center,
+                                width: 150,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(14),
+                                  color: AppColors.primaryColor,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      "View Details",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(width: w * 0.02),
-                                  const Icon(
-                                    Icons.note,
-                                    color: AppColors.whiteColor,
-                                  ),
-                                ],
+                                    SizedBox(width: w * 0.02),
+                                    const Icon(
+                                      Icons.note,
+                                      color: AppColors.whiteColor,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
 

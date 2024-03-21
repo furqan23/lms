@@ -25,7 +25,7 @@ class CarouselWidget extends StatelessWidget {
             color: color, borderRadius: BorderRadius.circular(20)),
         child:
             Container(
-              padding: const EdgeInsets.fromLTRB(2,2,2,2),
+              padding: const EdgeInsets.fromLTRB(2,1,2,2),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -33,9 +33,9 @@ class CarouselWidget extends StatelessWidget {
                   Text(
                     title,
                     style: const TextStyle(
-                        fontWeight: FontWeight.w600, fontSize: 15),
+                        fontWeight: FontWeight.w600, fontSize: 14),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                   // Container(
                   //   alignment: Alignment.center,
                   //   width: 130,
@@ -49,7 +49,7 @@ class CarouselWidget extends StatelessWidget {
                   child: Image.network(
                     image,
                     // width: 100,
-                      height: 130,
+                      height: 123,
                   ),),
                 ],
               ),
