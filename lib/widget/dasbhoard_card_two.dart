@@ -105,9 +105,12 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                       child: Row(
                         children: [
 
-                          Text(
-                            "${widget.catName!}/${widget.slug}",
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          SizedBox(
+                            width:200,
+                            child: Text(
+                              "${widget.catName!}/${widget.slug}",
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                            ),
                           ),
                           // Text(
                           //   widget.name!,

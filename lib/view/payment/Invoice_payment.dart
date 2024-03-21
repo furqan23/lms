@@ -152,24 +152,24 @@ class _InvoicePaymentState extends State<InvoicePayment> {
                   children: [
                     const Text('Payment Status: '),
                     Container(
-                        alignment: Alignment.center,
-                        width: w.width * .18,
-                        height: w.height * .030,
-                        decoration: BoxDecoration(
-                          color: (data.inv?['status'] as String?) == "un-paid"
-                              ? AppColors.redColor
-                              : Colors.green,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Text(
-                          data.inv?['status']?.toString() ?? 'N/A',
-                          style: const TextStyle(color: Colors.white),
-                        ),
+                      alignment: Alignment.center,
+                      width: w.width * .18,
+                      height: w.height * .030,
+                      decoration: BoxDecoration(
+                        color: (data.inv?['status'] as String?) == "un-paid"
+                            ? AppColors.redColor
+                            : Colors.green,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        data.inv?['status']?.toString() ?? 'N/A',
+                        style: const TextStyle(color: Colors.white),
+                      ),
                     ),
                   ],
                 ),
               ),
-             // Text('User ID: ${data.inv!.invoiceDetil![0].id}'),
+              // Text('User ID: ${data.inv!.invoiceDetil![0].id}'),
               //Text('price: ${data.inv!.invoiceDetil![0].price}'),
               //Text('price: ${data.inv!.invoiceDetil![0].course!.masterCourse..toString()}'),
               // Padding(

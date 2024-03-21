@@ -44,7 +44,9 @@ class _DashbaordCardState extends State<AlbumCard> {
               children: [
                 SizedBox(height: MediaQuery.of(context).size.height*.01),
                 MyTextWidget(title: "Code:", subtitle:widget.albam_code!),
-                MyTextWidget(title: "Title:", subtitle: widget.albam_title!),
+                SizedBox(
+                    width: double.infinity,
+                    child: MyTextWidget(title: "Title:", subtitle: widget.albam_title!)),
 
                 SizedBox(height: MediaQuery.of(context).size.height*.02),
              const MyButtonWidget(btntitle: "Video lectures"),
@@ -78,7 +80,7 @@ class MyTextWidget extends StatelessWidget {
         const SizedBox(width: 4),
         Text(
           subtitle,
-          style: const TextStyle(fontSize: 11.5,fontWeight: FontWeight.w900),
+          style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w900),
         )
       ],
     );

@@ -9,7 +9,6 @@ import 'package:splashapp/view/payment/Invoice_payment.dart';
 import 'package:splashapp/widget/customcard_widget2.dart';
 import '../../Controller/login_controller.dart';
 import '../../model/payment_model.dart';
-import '../../widget/customcard_widget.dart';
 
 class Payment extends StatefulWidget {
   const Payment({super.key});
@@ -56,21 +55,21 @@ class _PaymentState extends State<Payment> {
           final mydata = jsonDecode(res.body);
           print('Parsed Data: $mydata');
           setState(() {boolData = false;
-            print(boolData.toString());
-            final d= PaymentModel.fromJson(mydata);
-            paymentList=d.data!;
+          print(boolData.toString());
+          final d= PaymentModel.fromJson(mydata);
+          paymentList=d.data!;
           });
 
 
         } else {          setState(() {
           boolData = false;
         });
-          throw Exception('Empty response');
+        throw Exception('Empty response');
         }
       } else {          setState(() {
         boolData = false;
       });
-        print('Error: ${res.statusCode}');
+      print('Error: ${res.statusCode}');
       }
     } catch (e) {
       setState(() {
@@ -83,75 +82,75 @@ class _PaymentState extends State<Payment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("My Payments"),
-      ),
-      body: boolData==true
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : paymentList.isEmpty ?Center(
-        child:  Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-
-            Image.asset(MyImgs.payment,
-              width: 60,height: 70,),
-            Text("No Payment Required"),
-          ],
+        appBar: AppBar(
+          title: const Text("My Payments"),
         ),
-      ): ListView.builder(
-              itemCount: paymentList.length ?? 0,
-              itemBuilder: (context, index) {
+        body: boolData==true
+            ? const Center(
+          child: CircularProgressIndicator(),
+        )
+            : paymentList.isEmpty ?Center(
+          child:  Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
 
-                  String? createDateStr = paymentList[index].createdAt;
-                  DateTime createDate =
-                      DateTime.tryParse(createDateStr!) ?? DateTime.now();
+              Image.asset(MyImgs.payment,
+                width: 60,height: 70,),
+              Text("No Payment Required"),
+            ],
+          ),
+        ): ListView.builder(
+          itemCount: paymentList.length ?? 0,
+          itemBuilder: (context, index) {
 
-                  // Format the date to show only the date portion
-                  String formattedDate =
-                      DateFormat('yyyy-MM-dd').format(createDate);
-                  // Calculate the total price by summing up all prices in invoiceDetil
-                  double totalAmount = 0.0;
-                  for (var invoice
-                      in paymentList[index].invoiceDetil!) {
-                    totalAmount +=
-                        double.tryParse(invoice.price.toString()) ?? 0.0;
-                  }
-                  return Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CustomCardWidget2(
-                          onPressed: () {
-                            Get.to(
-                              () => InvoicePayment(
-                                ref_id: paymentList[index]
-                                    .refId
-                                    .toString(),
-                                invoice_id:
-                                    paymentList[index].id.toString(),
-                              ),
-                            );
-                          },
-                          title: '${index + 1}',
-                          inv: paymentList[index].id.toString(),
-                          refid: paymentList[index]
+            String? createDateStr = paymentList[index].createdAt;
+            DateTime createDate =
+                DateTime.tryParse(createDateStr!) ?? DateTime.now();
+
+            // Format the date to show only the date portion
+            String formattedDate =
+            DateFormat('yyyy-MM-dd').format(createDate);
+            // Calculate the total price by summing up all prices in invoiceDetil
+            double totalAmount = 0.0;
+            for (var invoice
+            in paymentList[index].invoiceDetil!) {
+              totalAmount +=
+                  double.tryParse(invoice.price.toString()) ?? 0.0;
+            }
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CustomCardWidget2(
+                    onPressed: () {
+                      Get.to(
+                            () => InvoicePayment(
+                          ref_id: paymentList[index]
                               .refId
-                              .toString(), // Display the formatted date as the invoice
-                          Amount: totalAmount
-                              .toStringAsFixed(2), // Display the total amount
-                          createDate:
-                              formattedDate, // Display the formatted date
-                          Status: paymentList[index].status.toString(),
-                          Attachment: 'Show',
+                              .toString(),
+                          invoice_id:
+                          paymentList[index].id.toString(),
                         ),
-                      ),
-                    ],
-                  );
+                      );
+                    },
+                    title: '${index + 1}',
+                    inv: paymentList[index].id.toString(),
+                    refid: paymentList[index]
+                        .refId
+                        .toString(), // Display the formatted date as the invoice
+                    Amount: totalAmount
+                        .toStringAsFixed(2), // Display the total amount
+                    createDate:
+                    formattedDate, // Display the formatted date
+                    Status: paymentList[index].status.toString(),
+                    Attachment: 'Show',
+                  ),
+                ),
+              ],
+            );
 
-              },
-            )
+          },
+        )
     );
   }
 }

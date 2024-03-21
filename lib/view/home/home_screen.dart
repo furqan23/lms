@@ -1,7 +1,6 @@
 // ignore_for_file: deprecated_member_use
-
 import 'dart:convert';
-
+import 'package:splashapp/view/payment/payment.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,14 +16,9 @@ import 'package:splashapp/view/home/my_wallet.dart';
 import 'package:splashapp/view/home_detail/home_detail.dart';
 import 'package:splashapp/view/my_test/my_groups.dart';
 import 'package:splashapp/view/mycourses/my_courses.dart';
-import 'package:splashapp/view/payment/payment.dart';
-import 'package:splashapp/view/quizz/getcoursetest_view.dart';
-import 'package:splashapp/view/results/myresultcourse_view.dart';
-import 'package:splashapp/view/test_pay/test_pay.dart';
-import 'package:splashapp/widget/carousel_widget.dart';
-import 'package:splashapp/widget/timer_two.dart';
-import 'package:splashapp/widget/timer_widget.dart';
 
+import 'package:splashapp/view/results/myresultcourse_view.dart';
+import 'package:splashapp/widget/carousel_widget.dart';
 import '../../model/cart_model.dart';
 import '../../values/colors.dart';
 import '../../widget/customlisttile_widget.dart';
@@ -335,7 +329,7 @@ class _HomeScreenState extends State<HomeScreen> {
               titleText: 'Payments',
               color: Colors.green.shade300,
               onTap: () {
-                Get.to(() => const Payment());
+                Get.to(() => Payment());
               },
             ),
             CustomListTile(

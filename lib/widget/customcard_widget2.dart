@@ -185,21 +185,32 @@ class CustomCardWidget2 extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 10),
                         child: Row(
                           children: [
-                            const Text(
-                              "Actions :",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            SizedBox(width: w * 0.02),
+
+
                             Container(
-                              width: 30,
+                              alignment: Alignment.center,
+                              width: 150,
                               height: 30,
-                              color: Colors.green,
-                              child: const Icon(
-                                Icons.note,
-                                color: AppColors.whiteColor,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(14),
+                                color: AppColors.primaryColor,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    "View Details",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  SizedBox(width: w * 0.02),
+                                  const Icon(
+                                    Icons.note,
+                                    color: AppColors.whiteColor,
+                                  ),
+                                ],
                               ),
                             ),
 

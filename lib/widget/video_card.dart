@@ -97,7 +97,7 @@ class _DashbaordCardState extends State<VideoCard> {
                           ),
                         ),
                         SizedBox(
-                          width: 200,
+                          width: double.infinity,
                           child: Text(widget.videotitle!,
                           ),
                         ),
