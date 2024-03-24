@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:splashapp/values/colors.dart';
 import 'package:splashapp/widget/mybutton_widget.dart';
@@ -44,10 +45,7 @@ class _DashbaordCardState extends State<AlbumCard> {
               children: [
                 SizedBox(height: MediaQuery.of(context).size.height*.01),
                 MyTextWidget(title: "Code:", subtitle:widget.albam_code!),
-                SizedBox(
-                    width: double.infinity,
-                    child: MyTextWidget(title: "Title:", subtitle: widget.albam_title!)),
-
+                MyTextWidget(title: "Title:", subtitle: widget.albam_title!),
                 SizedBox(height: MediaQuery.of(context).size.height*.02),
              const MyButtonWidget(btntitle: "Video lectures"),
 
@@ -78,9 +76,12 @@ class MyTextWidget extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.w400,color:Colors.grey),
         ),
         const SizedBox(width: 4),
-        Text(
-          subtitle,
-          style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w900),
+        Flexible(
+          child: Text(
+            subtitle,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w900,),
+          ),
         )
       ],
     );

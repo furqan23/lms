@@ -37,14 +37,14 @@ class _IncomingJobState extends State<IncomingPaymentMethodDialog> {
   void initState() {
     super.initState();
     // Call the function to close the dialog after 5 seconds
-    closeDialogAfterDelay();
+    // closeDialogAfterDelay();
   }
 
-  void closeDialogAfterDelay() {
-    Timer(Duration(seconds: 5), () {
-      Navigator.of(context).pop(); // Close the dialog
-    });
-  }
+  // void closeDialogAfterDelay() {
+  //   Timer(Duration(seconds: 5), () {
+  //     Navigator.of(context).pop(); // Close the dialog
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +66,7 @@ class _IncomingJobState extends State<IncomingPaymentMethodDialog> {
             colorOne: AppColors.tbtn1,
             colorTwo: AppColors.tbtn2,
             onPressed: () {
+              Get.back();
               Get.to(() => ConfirmationMesg(
                 data: paymentMethod.description ?? "na",
               ));

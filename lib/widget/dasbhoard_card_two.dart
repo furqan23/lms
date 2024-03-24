@@ -32,7 +32,7 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
         elevation: 5,
         child: Container(
           width: double.infinity,
-          height: 150,
+
           decoration: BoxDecoration(
               color: Colors.white12,
               borderRadius: BorderRadius.circular(5),

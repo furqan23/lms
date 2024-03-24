@@ -9,7 +9,7 @@ class CustomCardWidget2 extends StatelessWidget {
   final String Amount;
   final Status;
   final String Attachment;
-  void Function() onPressed;
+  // void Function() onPressed;
 
   void Function() onClcik;
 
@@ -23,7 +23,7 @@ class CustomCardWidget2 extends StatelessWidget {
     required this.createDate,
     required this.Status,
     required this.Attachment,
-    required this.onPressed,
+    // required this.onPressed,
   });
 
   Container getStatusContainer(String status, double w, double h) {
@@ -53,170 +53,169 @@ class CustomCardWidget2 extends StatelessWidget {
     final w = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.all(12.0),
-      child: Card(
-        elevation: 5,
-        child: Container(
-          width: double.infinity,
-          height: h * .3,
-          decoration: BoxDecoration(
-            color: Colors.white12,
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(
-              color: Colors.green.shade500,
+      child: InkWell(
+        onTap:
+        onClcik
+        ,
+        child: Card(
+          elevation: 5,
+          child: Container(
+            width: double.infinity,
+            height: h * .3,
+            decoration: BoxDecoration(
+              color: Colors.white12,
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(
+                color: Colors.green.shade500,
+              ),
             ),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: 40,
-                    height: 40,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.grey,
-                    ),
-                    child: Text(
-                      title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: 40,
+                      height: 40,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.grey,
+                      ),
+                      child: Text(
+                        title,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: Row(
-                        children: [
-                          const Text(
-                            "Id : ",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Row(
+                          children: [
+                            const Text(
+                              "Id : ",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                              ),
                             ),
-                          ),
-                          Text(
-                            "$inv",
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: Row(
-                        children: [
-                          const Text(
-                            "Ref Id : ",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey,
+                            Text(
+                              "$inv",
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
-                          ),
-                          Text(
-                            "$refid",
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: Row(
-                        children: [
-                          const Text(
-                            "createDate : ",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Row(
+                          children: [
+                            const Text(
+                              "Ref Id : ",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                              ),
                             ),
-                          ),
-                          Text(
-                            "$createDate",
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: Row(
-                        children: [
-                          const Text(
-                            "Amount : ",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey,
+                            Text(
+                              "$refid",
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
-                          ),
-                          Text(
-                            "$Amount",
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: Row(
-                        children: [
-                          const Text(
-                            "Status :",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Row(
+                          children: [
+                            const Text(
+                              "createDate : ",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: w * 0.02),
-                          getStatusContainer(Status, w, h),
-                        ],
+                            Text(
+                              "$createDate",
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    InkWell(
-                      onTap: onPressed,
-                      child: Padding(
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Row(
+                          children: [
+                            const Text(
+                              "Amount : ",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            Text(
+                              "$Amount",
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Row(
+                          children: [
+                            const Text(
+                              "Status :",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            SizedBox(width: w * 0.02),
+                            getStatusContainer(Status, w, h),
+                          ],
+                        ),
+                      ),
+                      Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Row(
                           children: [
 
 
-                            InkWell(
-                              onTap: onClcik,
-                              child: Container(
-                                alignment: Alignment.center,
-                                width: 150,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(14),
-                                  color: AppColors.primaryColor,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Text(
-                                      "View Details",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
+                            Container(
+                              alignment: Alignment.center,
+                              width: 150,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(14),
+                                color: AppColors.primaryColor,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    "View Details",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
                                     ),
-                                    SizedBox(width: w * 0.02),
-                                    const Icon(
-                                      Icons.note,
-                                      color: AppColors.whiteColor,
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                  SizedBox(width: w * 0.02),
+                                  const Icon(
+                                    Icons.note,
+                                    color: AppColors.whiteColor,
+                                  ),
+                                ],
                               ),
                             ),
 
@@ -224,11 +223,11 @@ class CustomCardWidget2 extends StatelessWidget {
                           ],
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

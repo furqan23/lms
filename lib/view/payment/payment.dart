@@ -7,6 +7,7 @@ import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/values/my_imgs.dart';
 import 'package:splashapp/view/payment/Invoice_payment.dart';
 import 'package:splashapp/widget/customcard_widget2.dart';
+import 'package:splashapp/widget/show_load_indicator.dart';
 import '../../Controller/login_controller.dart';
 import '../../model/invoice_model.dart' as data;
 import '../../model/payment_model.dart';
@@ -34,7 +35,7 @@ class _PaymentState extends State<Payment> {
   void initState() {
     // TODO: implement initState
     getPaymentAPI();
-    getTokenAndFetchInvoice();
+    // getTokenAndFetchInvoice();
     super.initState();
   }
 
@@ -135,18 +136,19 @@ class _PaymentState extends State<Payment> {
                             padding: const EdgeInsets.all(8.0),
                             child: CustomCardWidget2(
                               onClcik: (){
+                                print("click for dialog");
                                 getShowBankInvoiceApi(
                                     paymentList[index].id.toString());
                               },
-                              onPressed: () {
-                                Get.to(
-                                  () => InvoicePayment(
-                                    ref_id: paymentList[index].refId.toString(),
-                                    invoice_id:
-                                        paymentList[index].id.toString(),
-                                  ),
-                                );
-                              },
+                              // onPressed: () {
+                              //   Get.to(
+                              //     () => InvoicePayment(
+                              //       ref_id: paymentList[index].refId.toString(),
+                              //       invoice_id:
+                              //           paymentList[index].id.toString(),
+                              //     ),
+                              //   );
+                              // },
                               title: '${index + 1}',
                               inv: paymentList[index].id.toString(),
                               refid: paymentList[index]
@@ -212,6 +214,12 @@ class _PaymentState extends State<Payment> {
   }
 
   void getShowBankInvoiceApi(String _invoiceId) async {
+
+    showLoadingIndicator(context);
+      token = await LoginController().getTokenFromHive();
+      print('Token dialog api: $token');
+
+
     try {
       final bodyy = {
         'invoice_id': _invoiceId,
@@ -235,6 +243,7 @@ class _PaymentState extends State<Payment> {
           final mydata = jsonDecode(res.body);
           // print('Parsed Data: $mydata');
           invoiceByIdList.add(getinvoice.GetInvoiceByIdModel.fromJson(mydata));
+          Get.back();
           Get.dialog(IncomingPaymentMethodDialog(
             invoiceId: mydata["id"],
             status: mydata["status"],
