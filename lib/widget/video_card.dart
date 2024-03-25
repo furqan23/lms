@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/values/colors.dart';
 import 'package:splashapp/widget/mybutton_widget.dart';
@@ -38,81 +40,64 @@ class _DashbaordCardState extends State<VideoCard> {
         elevation: 5,
         child: Container(
           width: double.infinity,
-          height:  MediaQuery.of(context).size.height*.28,
           decoration: BoxDecoration(
               color: Colors.white12,
               borderRadius: BorderRadius.circular(5),
               border: Border.all(
                 color: Colors.green.shade500,
               )),
-          child: Column(
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(6.0),
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: 100,
-                      height: MediaQuery.of(context).size.height*.2,
-                      decoration: BoxDecoration(
-                        color: AppColors.lightColor,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: Image.network(
-                          AuthApi.imageUrl,
-                          errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset(
-                                'assets/images/logo.png',
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.contain,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+              Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: Container(
+                  alignment: Alignment.center,
+                  width: 100,
+                  height: MediaQuery.of(context).size.height*.2,
+                  decoration: BoxDecoration(
+                    color: AppColors.lightColor,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Image.network(
+                      AuthApi.imageUrl,
+                      errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset(
+                            'assets/images/logo.png',
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.contain,
+                          ),
+                        );
+                      },
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(6.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(top: 8),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Title : ",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: Text(widget.videotitle!,
-                          ),
-                        ),
-
-
-                        SizedBox(height: MediaQuery.of(context).size.height*.04),
-
-                        const MyButtonWidget(btntitle: "Play Video >"),
-                      ],
-                    ),
-                  ),
-                ],
+                ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: Column(mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                  const  Text(
+                      "Title : ",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+
+                    SizedBox(width: MediaQuery.of(context).size.width*.52,
+                        child: Text(widget.videotitle!,overflow: TextOverflow.ellipsis,)),
+                    // Text("okoko",),
 
 
+                    SizedBox(height: MediaQuery.of(context).size.height*.04),
+
+                    const MyButtonWidget(btntitle: "Play Video >"),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

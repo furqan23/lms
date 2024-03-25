@@ -254,11 +254,11 @@ class _SignUpViewState extends State<SignUpView> {
 
 
 
-                              TextButton(
-                                  onPressed: () {
-                                    Get.to(() => const TestScreen());
-                                  },
-                                  child: const Text('.',style: textPrimaryStyle,)),
+                              // TextButton(
+                              //     onPressed: () {
+                              //       Get.to(() => const TestScreen());
+                              //     },
+                              //     child: const Text('.',style: textPrimaryStyle,)),
 
                             ]
                         )
