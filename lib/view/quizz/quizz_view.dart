@@ -53,6 +53,9 @@ class _QuizzViewState extends State<QuizzView> {
     // Check the saved data
     checkSavedData();
   }
+
+
+  List<String> skippedQuestionsIds = [];
   List<Map<String, dynamic>> _getSkippedQuestions() {
     List<Map<String, dynamic>> skippedQuestions = [];
     for (var i = 0; i < skippedQuestionsBox.length; i++) {
@@ -104,39 +107,54 @@ class _QuizzViewState extends State<QuizzView> {
   List<String> givenAnswerList = [];
   List<String> CorrectAnswerList = [];
 
-  void handleRadioValueChange(int? value) {
-    setState(() {
-      selectedRadio = value;
-      print(selectedRadio);
-      String? slted;
-      if (selectedRadio == 1) {
-        slted = "opt_1";
-      } else if (selectedRadio == 2) {
-        slted = "opt_2";
-      } else if (selectedRadio == 3) {
-        slted = "opt_3";
-      } else if (selectedRadio == 4) {
-        slted = "opt_4";
-      }
-
-      print(slted);
-      question_id.add(getquestionTestList[0].data!.id.toString());
-      givenAnswerList.add(slted ?? "D");
-      CorrectAnswerList.add(
-          getquestionTestList[0].data!.correctAnswer.toString());
+  void handleRadioValueChange(int? value,bool skipBool) {
+    if(skipBool){
       int aaa =
           int.parse(getquestionTestList[0].data!.questionNo.toString()) + 1;
       print("aaaaaaaaaaaaaaaa  $aaa");
-      widget.totalQuestions--;
-      print("total question     ${widget.totalQuestions}");
-      if (widget.totalQuestions == 0) {
-        postAnswerAPI();
+      getTestQuestionAPI(aaa);
 
-        print("*********** here post answer");
-      } else {
-        getTestQuestionAPI(aaa);
-      }
-    });
+    }else {
+      setState(() {
+        selectedRadio = value;
+        print(selectedRadio);
+        String? slted;
+        if (selectedRadio == 1) {
+          slted = "opt_1";
+        } else if (selectedRadio == 2) {
+          slted = "opt_2";
+        } else if (selectedRadio == 3) {
+          slted = "opt_3";
+        } else if (selectedRadio == 4) {
+          slted = "opt_4";
+        }
+
+        print(slted);
+        question_id.add(getquestionTestList[0].data!.id.toString());
+        givenAnswerList.add(slted ?? "opt_1");
+        CorrectAnswerList.add(
+            getquestionTestList[0].data!.correctAnswer.toString());
+        int aaa =
+            int.parse(getquestionTestList[0].data!.questionNo.toString()) + 1;
+        print("aaaaaaaaaaaaaaaa  $aaa");
+        widget.totalQuestions--;
+        print("total question     ${widget.totalQuestions}");
+        if (widget.totalQuestions <= 0) {
+          if (skippedQuestionsIds.isNotEmpty) {
+            int _aaa =
+                int.parse(skippedQuestionsIds.toString()) + 1;
+            print("skip id  $_aaa");
+            getTestQuestionAPI(_aaa);
+          } else {
+            postAnswerAPI();
+          }
+
+          print("*********** here post answer");
+        } else {
+          getTestQuestionAPI(aaa);
+        }
+      });
+    }
   }
 
 
@@ -167,7 +185,6 @@ class _QuizzViewState extends State<QuizzView> {
                 TimerWidgett(timee:  120),
                 const SizedBox(height: 15),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.5,
                   padding: const EdgeInsets.all(10),
                   child: Html(data: """
                
@@ -189,7 +206,7 @@ class _QuizzViewState extends State<QuizzView> {
                         title: "Option A",
                         isSelected: selectedRadio == 1,
                         onSelect: (bool selected) {
-                          handleRadioValueChange(selected ? 1 : null);
+                          handleRadioValueChange(selected ? 1 : null,false);
                         },
                       ),
                       const SizedBox(width: 20),
@@ -197,7 +214,7 @@ class _QuizzViewState extends State<QuizzView> {
                         title: "Option B",
                         isSelected: selectedRadio == 2,
                         onSelect: (bool selected) {
-                          handleRadioValueChange(selected ? 2 : null);
+                          handleRadioValueChange(selected ? 2 : null,false);
                         },
                       ),
                     ],
@@ -212,7 +229,7 @@ class _QuizzViewState extends State<QuizzView> {
                         title: "Option C",
                         isSelected: selectedRadio == 3,
                         onSelect: (bool selected) {
-                          handleRadioValueChange(selected ? 3 : null);
+                          handleRadioValueChange(selected ? 3 : null,false);
                         },
                       ),
                       const SizedBox(width: 20),
@@ -220,20 +237,34 @@ class _QuizzViewState extends State<QuizzView> {
                         title: "Option D",
                         isSelected: selectedRadio == 4,
                         onSelect: (bool selected) {
-                          handleRadioValueChange(selected ? 4 : null);
+                          handleRadioValueChange(selected ? 4 : null,false);
                         },
                       ),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      postAnswerAPI();
-                    },
-                    child: const Text("Submit"),
-                  ),
+                Row(mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          postAnswerAPI();
+                        },
+                        child: const Text("Submit"),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                         skippedQuestionsIds.add(getquestionTestList[0].data!.questionNo!.toString());
+                         handleRadioValueChange( 4 ,true);
+                        },
+                        child: const Text("Skip"),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             );

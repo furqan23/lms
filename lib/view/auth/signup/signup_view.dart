@@ -24,6 +24,7 @@ class _SignUpViewState extends State<SignUpView> {
   bool _obscureText1 = true;
   bool? _isChecked = false;
 
+
   void _toggleCheckBox(bool? value) {
     setState(() {
       _isChecked = value;
@@ -106,13 +107,93 @@ class _SignUpViewState extends State<SignUpView> {
                                   controller: _signupController.nameController.value,
                                   decoration: const InputDecoration(
                                     contentPadding: EdgeInsets.all(9),
-                                    hintText: 'First Name',
+                                    hintText: 'Full Name',
                                     border: OutlineInputBorder(),
                                   ),
                                   validator: (value)=>ValidationUtils.validateName(value!),
                                   textInputAction: TextInputAction.next,
                                 ),
                               ),
+
+                              SizedBox(
+                                height: size.width * 0.02,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: TextFormField(
+                                  controller: _signupController.fNameController.value,
+                                  decoration: const InputDecoration(
+                                    contentPadding: EdgeInsets.all(9),
+                                    hintText: 'Father Name',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  validator: (value)=>ValidationUtils.validateName(value!),
+                                  textInputAction: TextInputAction.next,
+                                ),
+                              ),
+                              SizedBox(
+                                height: size.height * 0.01,
+                              ),
+
+                              Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: TextFormField(
+                                  controller: _signupController.phoneNumberController.value,
+                                  decoration: const InputDecoration(
+                                    contentPadding: EdgeInsets.all(9),
+                                    hintText: 'Contact Number',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  validator: (value){
+                                    if (value!.isEmpty) {
+                                      return 'Contact Number is required';
+                                    }
+                                  },
+                                  textInputAction: TextInputAction.next,
+                                  keyboardType: TextInputType.number,
+                                  maxLength: 11,
+
+                                ),
+                              ),
+                              SizedBox(
+                                height: size.width * 0.02,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 9.0,right: 9),
+                                child: Container(
+
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(color: Colors.grey, width: 1),
+                                  ),
+                                  child: DropdownButton<String>(
+                                    padding: EdgeInsets.only(left: 9),
+                                    underline: Container(),
+                                    isExpanded: true,
+                                    value: _signupController.selectedGender,
+                                    hint: Text('Select Gender'),
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        _signupController.selectedGender = newValue;
+                                        print(_signupController.selectedGender);
+                                      });
+                                    },
+
+                                    items: <String>['Male', 'Female'].map((String value) {
+                                      return DropdownMenuItem<String>(
+
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              ),
+
+
+
                               SizedBox(
                                 height: size.width * 0.02,
                               ),
@@ -197,7 +278,14 @@ class _SignUpViewState extends State<SignUpView> {
                                     if (_validateAllFields()) {
                                       if (_signupController.passwordController.value.text ==
                                           _signupController.confirmpasswordController.value.text) {
-                                        _signupController.signupApi();
+                                        if(_signupController.selectedGender==null){
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(
+                                              content: Text("Please select Gender"),
+                                            ),
+                                          );
+                                        }else{
+                                        _signupController.signupApi();}
                                       } else {
                                         ScaffoldMessenger.of(context).showSnackBar(
                                           const SnackBar(

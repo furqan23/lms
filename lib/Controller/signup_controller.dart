@@ -8,6 +8,9 @@ import '../view/auth/login/login_view.dart';
 
 class SignUpController extends GetxController {
   final nameController = TextEditingController().obs;
+  final fNameController = TextEditingController().obs;
+  final phoneNumberController = TextEditingController().obs;
+  String? selectedGender;
 
   final emailController = TextEditingController().obs;
   final passwordController = TextEditingController().obs;
@@ -21,6 +24,9 @@ class SignUpController extends GetxController {
       var bodyy = {
         "email": emailController.value.text.trim(),
         "name": nameController.value.text.trim(),
+        "fname": fNameController.value.text.trim(),
+        "contact": phoneNumberController.value.text.trim(),
+        "gender": selectedGender,
         "password": passwordController.value.text.trim(),
         "password_confirmation": confirmpasswordController.value.text.trim(),
       };
