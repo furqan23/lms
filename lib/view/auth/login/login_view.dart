@@ -127,7 +127,7 @@ class _LoginViewState extends State<LoginView> {
                                   hintText: 'Email ID',
                                   border: OutlineInputBorder()),
                               validator: (value) =>
-                                  ValidationUtils.validateEmail(value!),
+                                  ValidationUtils.validateEmail(value!.trim()),
                             ),
                           ),
                           SizedBox(

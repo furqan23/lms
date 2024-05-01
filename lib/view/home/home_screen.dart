@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:convert';
+import 'package:splashapp/values/constants.dart';
 import 'package:splashapp/view/payment/payment.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -244,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               margin: const EdgeInsets.only(top: 30),
               width: 400,
-              height: 140,
+              height: 155,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -276,6 +277,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontWeight: FontWeight.w600,
                       fontSize: 14,
                       color: AppColors.orangeColor,
+                    ),
+                  ),
+                  const Text(
+                    "${Appverison}3 ",
+                    style: TextStyle(
+                      fontFamily: 'BandaBold',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 11,
+                      color: AppColors.greyshade100,
                     ),
                   ),
                 ],

@@ -22,13 +22,13 @@ class SignUpController extends GetxController {
     loading.value = true;
     try {
       var bodyy = {
-        "email": emailController.value.text.trim(),
-        "name": nameController.value.text.trim(),
-        "fname": fNameController.value.text.trim(),
-        "contact": phoneNumberController.value.text.trim(),
+        "email": emailController.value.text.trim().toString(),
+        "name": nameController.value.text.trim().toString(),
+        "fname": fNameController.value.text.trim().toString(),
+        "contact": phoneNumberController.value.text.trim().toString(),
         "gender": selectedGender,
-        "password": passwordController.value.text.trim(),
-        "password_confirmation": confirmpasswordController.value.text.trim(),
+        "password": passwordController.value.text.trim().toString(),
+        "password_confirmation": confirmpasswordController.value.text.trim().toString(),
       };
       print(bodyy);
 
@@ -38,7 +38,12 @@ class SignUpController extends GetxController {
       print(res.body);
       if (res.statusCode == 200) {
         loading.value = false;
-        Get.snackbar('SignUp Successful', 'Congratulations');
+        if(data['success']==true){
+        Get.snackbar('SignUp Successful',"User Created Successfully", );
+        }else{
+          Get.snackbar('SignUp Successful',"${res.statusCode} \n ${res.body}", );
+        }
+
         Get.to(()=> LoginView());
       } else if (res.statusCode == 400) {
         loading.value = false;

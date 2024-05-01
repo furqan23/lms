@@ -110,7 +110,7 @@ class _QuizzViewState extends State<QuizzView> {
   void handleRadioValueChange(int? value,bool skipBool) {
     if(skipBool){
       int aaa =
-          int.parse(getquestionTestList[0].data!.questionNo.toString()) + 1;
+          int.parse(getquestionTestList[0].data!.questionNo.toString()) ;
       print("aaaaaaaaaaaaaaaa  $aaa");
       getTestQuestionAPI(aaa);
 
@@ -142,7 +142,7 @@ class _QuizzViewState extends State<QuizzView> {
         if (widget.totalQuestions <= 0) {
           if (skippedQuestionsIds.isNotEmpty) {
             int _aaa =
-                int.parse(skippedQuestionsIds.toString()) + 1;
+                int.parse(skippedQuestionsIds.toString()) ;
             print("skip id  $_aaa");
             getTestQuestionAPI(_aaa);
           } else {
