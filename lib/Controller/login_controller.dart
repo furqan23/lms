@@ -17,6 +17,8 @@ class LoginController extends GetxController {
   final passwordController = TextEditingController().obs;
   RxBool loading = false.obs;
   String? tokenString;
+  var platformVersion = 'Unknown'.obs;
+  var imeiNo = ''.obs;
 
   @override
   void onInit() {
@@ -108,8 +110,7 @@ class LoginController extends GetxController {
   }
 
 
-  var platformVersion = 'Unknown'.obs;
-  var imeiNo = ''.obs;
+
   // var modelName = ''.obs;
   // var manufacturerName = ''.obs;
   // var apiLevel = ''.obs;

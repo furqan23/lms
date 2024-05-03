@@ -280,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const Text(
-                    "${Appverison}3 ",
+                    "${Appverison}.0 ",
                     style: TextStyle(
                       fontFamily: 'BandaBold',
                       fontWeight: FontWeight.w600,

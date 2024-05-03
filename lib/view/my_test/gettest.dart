@@ -281,7 +281,7 @@ class _GetTestState extends State<GetTest> {
                                 getTestinfoAPI(id.toString());
                               } else {
                                 Get.back();
-                                Get.to(() => QuizzView(
+                                Get.off(() => QuizzView(
                                     id: id.toString(),
                                     totalTime: total_time,
                                     totalQuestions: total_question));
@@ -375,7 +375,7 @@ class _GetTestState extends State<GetTest> {
           int total_time = int.parse(mydata['data']['total_time']);
           int total_question = mydata['data']['total_question'];
           String test_title = mydata['data']['test_title'];
-          Get.to(() => QuizzView(
+          Get.off(() => QuizzView(
               id: id.toString(),
               totalTime: total_time,
               totalQuestions: total_question));

@@ -155,7 +155,7 @@ class _lsitState extends State<lsit> {
                               ],
                             ),
 
-                            const SizedBox(width:50),
+
                             Text(
                               "Rs.${widget.map![index].price!}",
                               style:

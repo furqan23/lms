@@ -125,9 +125,9 @@ class _MyResultsCourseState extends State<MyResultsCourse> {
                                           ),
                                           Text(
                                             getresultsModelList[0]
-                                                .data![index]
+                                                .data?[index]
                                                 .courseTitle
-                                                .toString(),
+                                                ??"N/A",
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),

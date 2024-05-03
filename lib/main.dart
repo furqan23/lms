@@ -6,6 +6,7 @@ import 'package:splashapp/Controller/cart_controller.dart';
 import 'package:splashapp/values/colors.dart';
 import 'package:splashapp/view/auth/login/login_view.dart';
 import 'package:splashapp/view/home/home_screen.dart';
+import 'package:splashapp/view/my_test/my_courses.dart';
 import 'package:splashapp/view/splash/splach_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:developer' as developer;
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
         '/main': (context) => const HomeScreen(),
         '/splachScreen': (context) => const SplachScreen(),
         '/login': (context) => LoginView(),
+        '/myCourses': (context) => MyCourses(),
       },
       debugShowCheckedModeBanner: false,
     );
