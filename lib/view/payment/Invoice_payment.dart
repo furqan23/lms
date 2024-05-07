@@ -4,20 +4,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:splashapp/values/constants.dart';
+import 'package:splashapp/res/color/appcolor.dart';
 import 'package:splashapp/widget/incoming_payment_method_dialog.dart';
-
-import '../../Controller/login_controller.dart';
+import 'package:splashapp/view_model/Controller/login_controller.dart';
 import '../../model/invoice_model.dart';
 import '../../model/get_invoice_id_model.dart' as getinvoice;
 import '../../values/auth_api.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
-import '../../values/colors.dart';
-import '../../values/logs.dart';
+import '../../res/logs/logs.dart';
 
 class InvoicePayment extends StatefulWidget {
   final String invoice_id;

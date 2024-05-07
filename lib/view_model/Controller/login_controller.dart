@@ -5,9 +5,10 @@ import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:splashapp/res/app_url/app_url.dart';
 import 'package:splashapp/view/auth/login/login_view.dart';
 import 'package:splashapp/view/home/home_screen.dart';
-import '../values/auth_api.dart';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,8 +18,6 @@ class LoginController extends GetxController {
   final passwordController = TextEditingController().obs;
   RxBool loading = false.obs;
   String? tokenString;
-  var platformVersion = 'Unknown'.obs;
-  var imeiNo = ''.obs;
 
   @override
   void onInit() {
@@ -47,7 +46,7 @@ class LoginController extends GetxController {
       print('Email: $email');
       print('Password: $password');
       print('IMEI: $imei');
-      final res = await http.post(Uri.parse(AuthApi.loginApi), body: {
+      final res = await http.post(Uri.parse(AppUrl.loginApi), body: {
         'email': email,
         'password': password,
        //'device_imei': imei,
@@ -73,7 +72,7 @@ class LoginController extends GetxController {
           loading.value = false;
           Get.snackbar('Login Successful', 'Congratulations');
 
-          Get.offAll(() => const HomeScreen());
+          Get.offAll(() => HomeScreen());
         } else {
           loading.value = false;
           Get.snackbar('Login Failed', data['message']['name']);
@@ -100,7 +99,7 @@ class LoginController extends GetxController {
     ////////////token///////////////////
     final box = await Hive.openBox<String>('tokenBox');
     await box.delete('token');
-    Get.offAll(() => LoginView(), transition: Transition.fade);
+    Get.offAll(() => const LoginView(), transition: Transition.fade);
   }
 
   //// get Hive token from hive
@@ -110,14 +109,9 @@ class LoginController extends GetxController {
   }
 
 
+  var platformVersion = 'Unknown'.obs;
+  var imeiNo = ''.obs;
 
-  // var modelName = ''.obs;
-  // var manufacturerName = ''.obs;
-  // var apiLevel = ''.obs;
-  // var deviceName = ''.obs;
-  // var productName = ''.obs;
-  // var cpuType = ''.obs;
-  // var hardware = ''.obs;
 
 
 

@@ -1,21 +1,12 @@
 // ignore_for_file: deprecated_member_use
-
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
-// import 'package:permission_handler/permission_handler.dart';
-import 'package:splashapp/Controller/login_controller.dart';
-import 'package:splashapp/values/colors.dart';
-import 'package:splashapp/values/constants.dart';
-import 'package:splashapp/values/my_imgs.dart';
-import 'package:splashapp/values/valdation.dart';
-import 'package:splashapp/view/home/home_screen.dart';
+import 'package:splashapp/res/color/appcolor.dart';
+import 'package:splashapp/res/constants/constants.dart';
+import 'package:splashapp/res/valdations/valdation.dart';
 import 'package:splashapp/view/auth/signup/signup_view.dart';
-
-import '../../../values/auth_api.dart';
-import '../../../values/myimage.dart';
+import 'package:splashapp/view_model/Controller/login_controller.dart';
+import '../../../res/assetsimages/myimage.dart';
 import '../forgot/forget_password_email/forgetpassword_view.dart';
 
 class LoginView extends StatefulWidget {
@@ -26,7 +17,6 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-
   @override
   void initState() {
     super.initState();
@@ -70,7 +60,6 @@ class _LoginViewState extends State<LoginView> {
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Container(
-
                     margin: const EdgeInsets.only(bottom: 0),
                     child: Image(
                       image: AssetImage(tSplachLogo),
@@ -121,7 +110,8 @@ class _LoginViewState extends State<LoginView> {
                           Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: TextFormField(
-                              controller: _loginController.emailController.value,
+                              controller:
+                                  _loginController.emailController.value,
                               decoration: const InputDecoration(
                                   contentPadding: EdgeInsets.all(9),
                                   hintText: 'Email ID',

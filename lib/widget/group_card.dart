@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:splashapp/res/color/appcolor.dart';
 import 'package:splashapp/values/auth_api.dart';
-import 'package:splashapp/values/colors.dart';
+
 
 class GroupsCard extends StatefulWidget {
 
@@ -158,15 +159,6 @@ class _DashbaordCardState extends State<GroupsCard> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          // const Text(
-                          //   "Total Seat:  ",
-                          //   style: TextStyle(color: Colors.grey, fontSize: 14),
-                          // ),
-                          // Text(
-                          //   widget.seat!,
-                          //   style: TextStyle(fontWeight: FontWeight.bold),
-                          // ),
-
                           const SizedBox(width: 20),
                           Container(
                             alignment: Alignment.center,

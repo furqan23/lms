@@ -3,16 +3,17 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:splashapp/res/assets/images_assets.dart';
 import 'package:splashapp/values/auth_api.dart';
-import 'package:splashapp/values/my_imgs.dart';
+
 import 'package:splashapp/view/payment/Invoice_payment.dart';
 import 'package:splashapp/widget/customcard_widget2.dart';
 import 'package:splashapp/widget/show_load_indicator.dart';
-import '../../Controller/login_controller.dart';
+import 'package:splashapp/view_model/Controller/login_controller.dart';
 import '../../model/invoice_model.dart' as data;
 import '../../model/payment_model.dart';
 import '../../model/get_invoice_id_model.dart' as getinvoice;
-import '../../values/logs.dart';
+import '../../res/logs/logs.dart';
 import '../../widget/incoming_payment_method_dialog.dart';
 
 class Payment extends StatefulWidget {

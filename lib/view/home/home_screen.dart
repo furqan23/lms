@@ -1,6 +1,9 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:convert';
-import 'package:splashapp/values/constants.dart';
+import 'package:splashapp/res/assets/images_assets.dart';
+import 'package:splashapp/res/constants/constants.dart';
+import 'package:splashapp/view/home/components/buildheader_home.dart';
+import 'package:splashapp/view/home/components/buildmenu_home.dart';
 import 'package:splashapp/view/payment/payment.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -8,20 +11,18 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
-import 'package:splashapp/Controller/login_controller.dart';
 import 'package:splashapp/model/DashboardModelWithSlider.dart';
 import 'package:splashapp/values/auth_api.dart';
-import 'package:splashapp/values/logs.dart';
-import 'package:splashapp/values/my_imgs.dart';
+import 'package:splashapp/res/logs/logs.dart';
 import 'package:splashapp/view/home/my_wallet.dart';
 import 'package:splashapp/view/home_detail/home_detail.dart';
 import 'package:splashapp/view/my_test/my_groups.dart';
 import 'package:splashapp/view/mycourses/my_courses.dart';
-
 import 'package:splashapp/view/results/myresultcourse_view.dart';
+import 'package:splashapp/view_model/Controller/login_controller.dart';
 import 'package:splashapp/widget/carousel_widget.dart';
 import '../../model/cart_model.dart';
-import '../../values/colors.dart';
+import 'package:splashapp/res/color/appcolor.dart';
 import '../../widget/customlisttile_widget.dart';
 import '../../widget/dasbhoard_card.dart';
 
@@ -116,8 +117,8 @@ class _HomeScreenState extends State<HomeScreen> {
               child: SingleChildScrollView(
             child: Column(
               children: [
-                buildHeader(context),
-                buildMenu(context),
+                BuildHeader(userName: userName, emaill: emaill, context: context),
+                BuildMenu(loginController: _loginController, context: context),
               ],
             ),
           )),
@@ -234,165 +235,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget buildHeader(BuildContext context) => Container(
-        width: double.infinity,
-        color: Colors.white,
-        padding: EdgeInsets.only(
-          top: MediaQuery.of(context).padding.top,
-        ),
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 30),
-              width: 400,
-              height: 155,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 70,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      color: Colors.greenAccent,
-                      borderRadius: BorderRadius.circular(50),
-                      image: const DecorationImage(
-                        image: AssetImage(MyImgs.profileImage2),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    userName,
-                    style: const TextStyle(
-                      fontFamily: 'BandaBold',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 25,
-                      color: AppColors.blackColor,
-                    ),
-                  ),
-                  Text(
-                    emaill,
-                    style: const TextStyle(
-                      fontFamily: 'BandaBold',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                      color: AppColors.orangeColor,
-                    ),
-                  ),
-                  const Text(
-                    "${Appverison}.0 ",
-                    style: TextStyle(
-                      fontFamily: 'BandaBold',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 11,
-                      color: AppColors.greyshade100,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-
-  Widget buildMenu(BuildContext context) => Container(
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-            color: const Color(0xffFFFFFF),
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: const [
-              BoxShadow(
-                offset: Offset(2, 2),
-                blurRadius: 2,
-                color: Color(0xffBDC6D3),
-              )
-            ]),
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            CustomListTile(
-              leadingIcon: Icons.person_outline,
-              titleText: 'My Courses',
-              color: Colors.green.shade300,
-              onTap: () {
-                Get.to(() => const MyCourses());
-              },
-            ),
-            CustomListTile(
-              leadingIcon: Icons.bookmark_outline_rounded,
-              color: Colors.green.shade300,
-              titleText: 'My Result',
-              onTap: () {
-                Get.to(() => const MyResultsCourse());
-              },
-            ),
-            CustomListTile(
-                leadingIcon: Icons.quiz_outlined,
-                titleText: 'My Test',
-                color: Colors.green.shade300,
-                onTap: () {
-                  Get.to(() => const MyGroups());
-                }),
-            CustomListTile(
-              leadingIcon: Icons.payments_outlined,
-              titleText: 'Payments',
-              color: Colors.green.shade300,
-              onTap: () {
-                Get.to(() => Payment());
-              },
-            ),
-            CustomListTile(
-                leadingIcon: Icons.exit_to_app,
-                titleText: 'Logout',
-                color: Colors.red.shade400,
-                onTap: () {
-                  Get.dialog(AlertDialog(
-                    backgroundColor: Colors.white,
-                    title: const Text('Are you Sure you want to Logout!'),
-                    content: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            _loginController.logout();
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            width: 90,
-                            height: 40,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.blueAccent),
-                            child: const Text(
-                              'Yes',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            width: 90,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.blueAccent,
-                            ),
-                            child: const Text(
-                              'No',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ));
-                }),
-          ],
-        ),
-      );
 }
+

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:splashapp/values/colors.dart';
+import 'package:splashapp/res/color/appcolor.dart';
 import 'package:splashapp/view/walk.dart';
 import '../../main.dart';
 import '../auth/login/login_view.dart';

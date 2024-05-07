@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:splashapp/values/colors.dart';
+import 'package:splashapp/res/color/appcolor.dart';
 import '../model/cart_model.dart';
 import '../model/course_model.dart';
 

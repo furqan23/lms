@@ -2,12 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-import 'package:splashapp/Controller/login_controller.dart';
-import 'package:splashapp/model/video_model.dart';
+import 'package:splashapp/data/response/status.dart';
+import 'package:splashapp/res/color/appcolor.dart';
+import 'package:splashapp/res/components/mybutton_widget.dart';
+import 'package:splashapp/res/components/video_card.dart';
 import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/view/mycourses/onlinevideo/playvideo.dart';
-import 'package:splashapp/widget/video_card.dart';
+import 'package:splashapp/view_model/Controller/detail_controller.dart';
+import 'package:splashapp/view_model/Controller/login_controller.dart';
+import 'package:splashapp/model/video_model.dart';
 
 class MyVideos extends StatefulWidget {
   final String id;
@@ -19,6 +22,7 @@ class MyVideos extends StatefulWidget {
 }
 
 class _MyVideosState extends State<MyVideos> {
+  final MyCourseController detailController = Get.put(MyCourseController());
   late String token;
   List<Data> myVideoList = [];
   bool isLoading = true;
@@ -32,53 +36,7 @@ class _MyVideosState extends State<MyVideos> {
   Future<void> getTokenAndFetchVideos() async {
     token = (await LoginController().getTokenFromHive())!;
     print('Token: $token');
-    fetchVideos();
-  }
-
-  Future<void> fetchVideos() async {
-    setState(() {
-      isLoading = true;
-    });
-
-    try {
-      final response = await http.post(
-        Uri.parse(AuthApi.videoLecturesApi),
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
-        body: {'album_id': widget.id},
-      );
-
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Body: ${response.body}');
-
-      if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        print('Parsed Data: $responseData');
-
-        setState(() {
-          final videoModel = VideoModel.fromJson(responseData);
-          myVideoList = videoModel.data ?? [];
-          isLoading = false;
-        });
-      } else {
-        setState(() {
-          isLoading = false;
-        });
-        print('Error: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error: $e');
-      setState(() {
-        isLoading = false;
-      });
-      // Show error message to the user
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Failed to fetch videos. Please try again later.'),
-        ),
-      );
-    }
+    detailController.categoryApi(widget.id, token);
   }
 
   @override
@@ -87,35 +45,32 @@ class _MyVideosState extends State<MyVideos> {
       appBar: AppBar(
         title: const Text("Video Lectures"),
       ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : myVideoList.isEmpty
-          ? const Center(child: Text('No videos available'))
-          : ListView.builder(
-        itemCount: myVideoList.length,
-        itemBuilder: (context, index) {
-          final video = myVideoList[index];
-          return InkWell(
-            onTap: () {
-              Get.to(() => PlayVideo(
-                type: "ok",
-                id: video.videoName!,
-                listvideo: myVideoList, // Pass the entire list
-              ));
+      body: Obx(() {
+        if (detailController.reRequestStatus.value == Status.LOADING) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (detailController.categories.value == null ||
+            detailController.categories.value!.isEmpty) {
+          return const Center(child: Text("No Data Available"));
+        } else {
+          return ListView.builder(
+            itemCount: detailController.categories.value!.length,
+            itemBuilder: (context, index) {
+              final category = detailController.categories.value![index];
+              return InkWell(
+                  onTap: () {
+                    Get.to(() => PlayVideo(
+                      type: "ok",
+                      id: category.videoName.toString(),
+                      listvideo: myVideoList, // Pass the entire list
+                    ));
+                  },
+                  child: VideoCard(
+                      id: category.id.toString(),
+                      title: category.videoTitle.toString()));
             },
-            child: VideoCard(
-              id: video.id,
-              catName: video.videoTitle.toString(),
-              videotitle: video.videoTitle.toString(),
-              name: video.videoName,
-              description: video.uploaderId,
-              slug: video.uploaderId,
-              seat: video.videoName,
-              registermethod: video.videoName,
-            ),
           );
-        },
-      ),
+        }
+      }),
     );
   }
 }

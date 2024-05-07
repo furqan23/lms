@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../values/auth_api.dart';
 import 'package:http/http.dart' as http;
-import '../view/auth/login/login_view.dart';
+import 'package:splashapp/view/auth/login/login_view.dart';
+
+import '../../values/auth_api.dart';
+
 class ResetpasswordController extends GetxController {
   final TextEditingController otpsController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();

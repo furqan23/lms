@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:splashapp/values/colors.dart';
+import 'package:splashapp/res/color/appcolor.dart';
+
 
 
 import 'custom_button.dart';

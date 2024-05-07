@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:splashapp/values/colors.dart';
+import 'package:splashapp/res/color/appcolor.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';

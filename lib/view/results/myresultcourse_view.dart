@@ -1,16 +1,14 @@
 // ignore_for_file: deprecated_member_use
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:splashapp/model/myresult.dart';
 import 'package:splashapp/view/results/myresult_test_view.dart';
-import 'package:splashapp/widget/testcard_widget.dart';
-import '../../Controller/login_controller.dart';
+import 'package:splashapp/view_model/Controller/login_controller.dart';
 import '../../values/auth_api.dart';
-import '../../values/colors.dart';
+import 'package:splashapp/res/color/appcolor.dart';
 
 class MyResultsCourse extends StatefulWidget {
   const MyResultsCourse({

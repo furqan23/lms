@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:splashapp/values/colors.dart';
-import 'package:splashapp/values/my_imgs.dart';
+import 'package:splashapp/res/color/appcolor.dart';
+
+
 
 class CustomCardWidget extends StatelessWidget {
   final String title;

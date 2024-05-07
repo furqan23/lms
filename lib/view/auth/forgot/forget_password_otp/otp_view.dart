@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pinput/pinput.dart';
-import 'package:splashapp/values/colors.dart';
-import '../../../../Controller/opt_controller.dart';
+import 'package:splashapp/res/components/mybutton_widget.dart';
 import 'package:get/get.dart';
-
-import '../../../../values/text_string.dart';
+import 'package:splashapp/res/color/appcolor.dart';
+import 'package:splashapp/res/stringstext/text_string.dart';
+import 'package:splashapp/view_model/Controller/opt_controller.dart';
 
 class OtpView extends StatefulWidget {
   String _email;
@@ -25,15 +25,16 @@ class _OtpViewState extends State<OtpView> {
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: SafeArea(
         child: Scaffold(
-
           body: Container(
             padding: const EdgeInsets.all(15),
-
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Image(image: AssetImage('assets/images/forget-password.png'),width: 150,  ),
+                  const Image(
+                    image: AssetImage('assets/images/forget-password.png'),
+                    width: 150,
+                  ),
                   const SizedBox(height: 10),
                   const Text(
                     tOtpSubTitle,
@@ -55,8 +56,7 @@ class _OtpViewState extends State<OtpView> {
                         width: 60,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: AppColors.primaryColor)
-                        ),
+                            border: Border.all(color: AppColors.primaryColor)),
                         textStyle: const TextStyle(
                           fontSize: 24,
                           color: Colors.black,
@@ -68,26 +68,12 @@ class _OtpViewState extends State<OtpView> {
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                   Obx(() {
-                    return InkWell(
-                      onTap: () {
-                        _otpController.otpApi(widget._email);
-                      },
-                      child: _otpController.loading.value
-                          ? const Center(child: CircularProgressIndicator())
-                          : Container(
-                              alignment: Alignment.center,
-                              width: double.infinity,
-                              height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),  color: AppColors.primaryColor,
-                        ),
-                              child: const Text(
-                                'Verify', // Corrected the text here
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 20),
-                              ),
-                            ),
-                    );
+                    return MyButtonWidget(
+                        btntitle: "Verify",
+                        onpressed: () {
+                          _otpController.otp(widget._email);
+                        },
+                        isLoading: _otpController.loading.value);
                   })
                 ],
               ),

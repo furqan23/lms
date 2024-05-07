@@ -1,22 +1,20 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:splashapp/Controller/cart_controller.dart';
-import 'package:splashapp/Controller/login_controller.dart';
 import 'package:splashapp/model/cart_model.dart';
 import 'package:splashapp/model/createinvoice_model.dart';
 import 'package:splashapp/model/get_invoice_id_model.dart';
 import 'package:splashapp/model/testfee_model.dart';
 import 'package:splashapp/values/auth_api.dart';
-import 'package:splashapp/values/colors.dart';
-import 'package:splashapp/values/constants.dart';
-import 'package:splashapp/values/my_imgs.dart';
-import 'package:splashapp/values/text_string.dart';
+import 'package:splashapp/res/color/appcolor.dart';
+import 'package:splashapp/res/constants/constants.dart';
+import 'package:splashapp/res/stringstext/text_string.dart';
+import 'package:splashapp/view_model/Controller/cart_controller.dart';
+import 'package:splashapp/view_model/Controller/login_controller.dart';
 import 'package:splashapp/widget/incoming_payment_method_dialog.dart';
 import 'package:splashapp/widget/show_load_indicator.dart';
 

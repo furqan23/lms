@@ -3,9 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:splashapp/model/get_invoice_id_model.dart';
-import 'package:splashapp/values/colors.dart';
+import 'package:splashapp/res/color/appcolor.dart';
 import 'package:splashapp/view/cart/confirmation_mesg.dart';
-
 import 'custom_button.dart';
 
 class IncomingPaymentMethodDialog extends StatefulWidget {

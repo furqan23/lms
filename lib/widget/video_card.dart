@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:splashapp/values/auth_api.dart';
-import 'package:splashapp/values/colors.dart';
+import 'package:splashapp/res/color/appcolor.dart';
 import 'package:splashapp/widget/mybutton_widget.dart';
 
 class VideoCard extends StatefulWidget {

@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:splashapp/values/colors.dart';
 import 'package:splashapp/widget/mybutton_widget.dart';
 
 class AlbumCard extends StatefulWidget {

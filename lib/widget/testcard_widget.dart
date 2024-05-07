@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-
-import '../values/colors.dart';
+import 'package:splashapp/res/color/appcolor.dart';
 
 class TestCard extends StatelessWidget {
-  final String id, title, start,total,test_code;
+  final String id, title, start, total, test_code;
 
   const TestCard(
-      {super.key, required this.id, required this.title, required this.start,  required this.test_code, required this.total});
+      {super.key,
+      required this.id,
+      required this.title,
+      required this.start,
+      required this.test_code,
+      required this.total});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +50,7 @@ class TestCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                  Padding(
+                    Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Row(
                         children: [

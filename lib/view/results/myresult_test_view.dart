@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/view/results/myfinal_result_view.dart';
-import '../../Controller/login_controller.dart';
+import 'package:splashapp/view_model/Controller/login_controller.dart';
 import '../../model/mytest_results_model.dart';
 
 class MyResultsTest extends StatefulWidget {

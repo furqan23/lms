@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../values/colors.dart';
+import 'package:splashapp/res/color/appcolor.dart';
 
 class MyButtonWidget extends StatelessWidget {
   final String btntitle;

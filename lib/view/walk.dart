@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:splashapp/values/colors.dart';
-import 'package:splashapp/values/my_imgs.dart';
+import 'package:splashapp/res/assets/images_assets.dart';
+import 'package:splashapp/res/color/appcolor.dart';
 import 'package:splashapp/view/home/home_screen.dart';
 import '../main.dart';
-import '../values/dimens.dart';
+import '../res/dimens/dimens.dart';
 import 'auth/login/login_view.dart';
-
 
 // Define your onboarding pages and content here
 final List<Widget> onboardingPages = [
@@ -21,7 +20,8 @@ final List<Widget> onboardingPages = [
   const OnboardingPage(
       photo: MyImgs.onBoardingtwo,
       headline: 'Prepare you ETEA and MDCAT Test',
-      subtitle: 'Prepare for all competative test ETEA and MDCAT with highly tranined staff'),
+      subtitle:
+          'Prepare for all competative test ETEA and MDCAT with highly tranined staff'),
   const OnboardingPage(
       photo: MyImgs.onBoardingthree,
       headline: 'Online',
@@ -81,7 +81,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       Get.offAll(() => HomeScreen());
       print('User is in the Home screen');
     } else {
-      Get.offAll(() =>   const LoginView());
+      Get.offAll(() => const LoginView());
       print('User is in the Login screen');
     }
   }
@@ -110,64 +110,64 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
                 _currentPage == _numPages - 1
                     ? Align(
-                  alignment: Alignment.bottomRight,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: _buildPageIndicator(),
-                        ),
-                        if (_currentPage == onboardingPages.length - 1)
-                          SizedBox(
-                            height: 48,
-                            child: FloatingActionButton(
-                              onPressed: _onGetStartedPressed,
-                              backgroundColor: AppColors.blackColor,
-                              child: const Icon(
-                                Icons.arrow_forward,
-                                color: AppColors.whiteColor,
+                        alignment: Alignment.bottomRight,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: _buildPageIndicator(),
                               ),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                )
-                    : Align(
-                    alignment: Alignment.bottomRight,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: _buildPageIndicator(),
-                          ),
-                          if (_currentPage != onboardingPages.length - 1)
-                            SizedBox(
-                              height: 48,
-                              child: FloatingActionButton(
-                                onPressed: () {
-                                  _pageController.nextPage(
-                                    duration:
-                                    const Duration(milliseconds: 500),
-                                    curve: Curves.ease,
-                                  );
-                                },
-                                backgroundColor: AppColors.blackColor,
-                                child: const Icon(
-                                  Icons.arrow_forward,
-                                  color: AppColors.whiteColor,
+                              if (_currentPage == onboardingPages.length - 1)
+                                SizedBox(
+                                  height: 48,
+                                  child: FloatingActionButton(
+                                    onPressed: _onGetStartedPressed,
+                                    backgroundColor: AppColors.blackColor,
+                                    child: const Icon(
+                                      Icons.arrow_forward,
+                                      color: AppColors.whiteColor,
+                                    ),
+                                  ),
                                 ),
+                            ],
+                          ),
+                        ),
+                      )
+                    : Align(
+                        alignment: Alignment.bottomRight,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: _buildPageIndicator(),
                               ),
-                            ),
-                        ],
-                      ),
-                    )),
+                              if (_currentPage != onboardingPages.length - 1)
+                                SizedBox(
+                                  height: 48,
+                                  child: FloatingActionButton(
+                                    onPressed: () {
+                                      _pageController.nextPage(
+                                        duration:
+                                            const Duration(milliseconds: 500),
+                                        curve: Curves.ease,
+                                      );
+                                    },
+                                    backgroundColor: AppColors.blackColor,
+                                    child: const Icon(
+                                      Icons.arrow_forward,
+                                      color: AppColors.whiteColor,
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        )),
               ],
             ),
           )),
@@ -193,16 +193,16 @@ class OnboardingPage extends StatelessWidget {
           Container(
             height: MediaQuery.of(context).size.height / 2,
             decoration: BoxDecoration(
-              //  borderRadius: BorderRadius.only(
-              // //   bottomLeft: Radius.circular(120),
-              // //   bottomRight:  Radius.circular(120),
-              //  ),
+                //  borderRadius: BorderRadius.only(
+                // //   bottomLeft: Radius.circular(120),
+                // //   bottomRight:  Radius.circular(120),
+                //  ),
                 image: DecorationImage(
-                  image: AssetImage(
-                    photo,
-                  ),
-                  fit: BoxFit.fill,
-                )),
+              image: AssetImage(
+                photo,
+              ),
+              fit: BoxFit.fill,
+            )),
           ),
           const SizedBox(height: Dimens.size30),
           Padding(

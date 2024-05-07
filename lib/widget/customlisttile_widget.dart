@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:splashapp/res/color/appcolor.dart';
 
-import '../values/colors.dart';
+
 class CustomListTile extends StatelessWidget {
   final IconData leadingIcon;
   final String titleText;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../Controller/forget_controller.dart';
-import '../../../../values/colors.dart';
-import '../../../../values/myimage.dart';
-import '../../../../values/text_string.dart';
-import '../../../../widget/form_header_widget.dart';
+import 'package:splashapp/res/components/form_header_widget.dart';
+import 'package:splashapp/res/components/mybutton_widget.dart';
+import 'package:splashapp/res/assetsimages/myimage.dart';
+import 'package:splashapp/res/stringstext/text_string.dart';
+import 'package:splashapp/view_model/Controller/forget_controller.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({super.key});
@@ -30,8 +30,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(height: 10),
-
-                  const  FormHeaderWidget(
+                  const FormHeaderWidget(
                     image: tForgetPasswordImage,
                     title: tForgetPassword,
                     subtitle: tForgetPasswordSubTitle,
@@ -40,7 +39,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 20),
-
                   TextField(
                     controller: _forgetPassword.emailController.value,
                     decoration: const InputDecoration(
@@ -50,31 +48,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   ),
                   const SizedBox(height: 20),
                   Obx(() {
-                    return InkWell(
-                      onTap: () {
-                        _forgetPassword.forgetApi();
+                    return MyButtonWidget(
+                      btntitle: "Reset",
+                      isLoading: _forgetPassword.loading.value,
+                      onpressed: () {
+                        _forgetPassword.fogetsapi();
                       },
-                      child: _forgetPassword.loading.value
-                          ? const Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : Container(
-                              alignment: Alignment.center,
-                              width: double.infinity,
-                              height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: AppColors.primaryColor,
-                        ),
-                              child: const Text(
-                                'Reset',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  letterSpacing: 4,
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
                     );
                   }),
                 ],

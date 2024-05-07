@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:splashapp/Controller/cart_controller.dart';
-import 'package:splashapp/values/colors.dart';
+import 'package:splashapp/res/color/appcolor.dart';
 import 'package:splashapp/view/auth/login/login_view.dart';
 import 'package:splashapp/view/home/home_screen.dart';
-import 'package:splashapp/view/my_test/my_courses.dart';
+import 'package:splashapp/view/mycourses/my_courses.dart';
 import 'package:splashapp/view/splash/splach_screen.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'dart:developer' as developer;
+
+import 'package:splashapp/view_model/Controller/cart_controller.dart';
 
 class HiveBoxes {
   static const String settingsBox = 'settingsBox';
@@ -28,11 +28,7 @@ Future<void> initializeApp() async {
   await Hive.openBox(HiveBoxes.settingsBox);
   await Hive.openBox<String>('tokenBox');
   Get.put(CartController());
-
-
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -57,8 +53,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/main': (context) => const HomeScreen(),
         '/splachScreen': (context) => const SplachScreen(),
-        '/login': (context) => LoginView(),
-        '/myCourses': (context) => MyCourses(),
+        '/login': (context) => const LoginView(),
+        '/myCourses': (context) => const MyCourses(),
       },
       debugShowCheckedModeBanner: false,
     );

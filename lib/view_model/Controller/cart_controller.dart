@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:splashapp/model/cart_model.dart';
 
-import '../model/cart_model.dart';
 
 class CartController extends GetxController {
   RxList<CartModel> cartList = <CartModel>[].obs;

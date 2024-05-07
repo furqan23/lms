@@ -5,17 +5,15 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:splashapp/model/get_test_model.dart';
-import 'package:splashapp/demo.dart';
 import 'package:splashapp/model/my_courses_model.dart';
-import 'package:splashapp/values/colors.dart';
-import 'package:splashapp/values/constants.dart';
-import 'package:splashapp/values/my_imgs.dart';
-import 'package:splashapp/values/text_string.dart';
+import 'package:splashapp/res/assets/images_assets.dart';
+import 'package:splashapp/res/color/appcolor.dart';
+import 'package:splashapp/res/constants/constants.dart';
+import 'package:splashapp/res/stringstext/text_string.dart';
 import 'package:splashapp/view/quizz/quizz_view.dart';
 import 'package:splashapp/widget/incoming_job_dialog.dart';
 import 'package:splashapp/widget/testcard_widget.dart';
-
-import '../../Controller/login_controller.dart';
+import 'package:splashapp/view_model/Controller/login_controller.dart';
 import '../../values/auth_api.dart';
 
 class GetTest extends StatefulWidget {

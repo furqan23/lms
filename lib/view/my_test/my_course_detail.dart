@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:splashapp/Controller/login_controller.dart';
+import 'package:splashapp/view_model/Controller/login_controller.dart';
 import 'package:splashapp/model/course_by_id_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:splashapp/values/auth_api.dart';

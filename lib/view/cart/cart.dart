@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:splashapp/model/createinvoice_model.dart';
 import 'package:splashapp/model/get_invoice_id_model.dart';
-import 'package:splashapp/values/colors.dart';
-import 'package:splashapp/values/text_string.dart';
+import 'package:splashapp/res/color/appcolor.dart';
+import 'package:splashapp/res/stringstext/text_string.dart';
 import 'package:splashapp/view/home_detail/home_detail.dart';
+import 'package:splashapp/view_model/Controller/login_controller.dart';
 import 'package:splashapp/widget/incoming_payment_method_dialog.dart';
 import 'package:splashapp/widget/show_load_indicator.dart';
-import '../../Controller/login_controller.dart';
 import '../../model/cart_model.dart';
 import '../../values/auth_api.dart';
 
