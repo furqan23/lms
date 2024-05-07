@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:splashapp/view_model/Controller/album_controller.dart';
 import 'package:splashapp/view_model/Controller/login_controller.dart';
 import 'package:splashapp/model/album_model.dart';
 import 'package:splashapp/values/auth_api.dart';
@@ -17,7 +18,8 @@ class MyAlbum extends StatefulWidget {
 }
 
 class _MyCoursesState extends State<MyAlbum> {
-  String? token;
+  final AlbumController albumController = Get.put(AlbumController());
+ late String token;
   List<Data> albumList = [];
   bool boolData = false;
 
@@ -27,28 +29,21 @@ class _MyCoursesState extends State<MyAlbum> {
       appBar: AppBar(
         title:const Text("Course Albums"),
       ),
-      body: boolData
-          ? albumList.isEmpty?Center(child: Text("No Courses Available"),):ListView.builder(
-              shrinkWrap: true,
-              itemCount: albumList.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Get.to(() => MyVideos(
-                        albumList[index].id!));
-                  },
-                  child: AlbumCard(
-                    id: albumList[index].id,
-                    albam_title: albumList[index].albumTitle,
-                    albam_code:
-                        "${albumList[index].albamCode}",
+      body:Obx(() {
 
-                  ),
-                );
-              })
-          : const Center(
-              child: CircularProgressIndicator(),
-            ),
+        return ListView.builder(
+          itemCount: albumController.album.value!.length,
+          itemBuilder: (context, index) {
+            final category = albumController.album.value![index];
+            return InkWell(
+                onTap: () {Get.to(() => MyVideos(category.id.toString()));
+                },
+                child: AlbumCard(id: category.id.toString(), albam_code: category.albamCode.toString(), albam_title: category.albumTitle.toString())
+            );
+          },
+        );
+
+      }),
     );
 
   }
@@ -56,13 +51,13 @@ class _MyCoursesState extends State<MyAlbum> {
   @override
   void initState() {
     super.initState();
-    getTokenAndFetchInvoice();
+    getTokenAndFetchVideos();
   }
 
-  Future<void> getTokenAndFetchInvoice() async {
-    token = await LoginController().getTokenFromHive();
+  Future<void> getTokenAndFetchVideos() async {
+    token = (await LoginController().getTokenFromHive())!;
     print('Token: $token');
-    getMyCourseAPI();
+   albumController.courseAlbumApi(widget.id, token);
   }
 
   void getMyCourseAPI() async {

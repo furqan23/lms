@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:splashapp/res/assetsimages/myimage.dart';
 import 'package:splashapp/values/auth_api.dart';
-import '../assetsimages/myimage.dart';
+
 
 class DashbaordCard extends StatefulWidget {
   String? id, catName, description, slug, seat, name, registermethod,image;

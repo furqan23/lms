@@ -22,12 +22,12 @@ class _DashbaordCardState extends State<VideoCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(11.0),
+      padding: const EdgeInsets.all(12.0),
       child: Card(
         elevation: 5,
         child: Container(
           width: double.infinity,
-          height: MediaQuery.of(context).size.height * .30,
+          height: MediaQuery.of(context).size.height * .27,
           decoration: BoxDecoration(
               color: Colors.white12,
               borderRadius: BorderRadius.circular(5),
@@ -85,18 +85,16 @@ class _DashbaordCardState extends State<VideoCard> {
                             ],
                           ),
                         ),
-                        SizedBox(
+                         SizedBox(
                           width: MediaQuery.of(context).size.width * .52,
-                          child: Text(
-                            widget.title,
-                            style: const TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
+                           child: Text(widget.title,
+                          style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+                         ),
                         ),
-                        SizedBox(height: 5),
+
                         SizedBox(
-                            width: MediaQuery.of(context).size.width * .52,
-                            child: MyButtonWidgets(btntitle: "Play Video >"))
+                            height: MediaQuery.of(context).size.height * .04),
+                        const MyButtonWidget(btntitle: "Play Video >"),
                       ],
                     ),
                   ),
@@ -104,44 +102,6 @@ class _DashbaordCardState extends State<VideoCard> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class MyButtonWidgets extends StatelessWidget {
-  final VoidCallback? onpressed;
-  final bool isLoading;
-  final String btntitle;
-  const MyButtonWidgets({
-    Key? key,
-    required this.btntitle,
-    this.onpressed,
-    this.isLoading = false,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: isLoading || onpressed == null ? null : onpressed,
-      child: Padding(
-        padding: const EdgeInsets.all(7.0),
-        child: Container(
-          alignment: Alignment.center,
-          height: 40,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: AppColors.primaryColor,
-          ),
-          child: isLoading
-              ? const CircularProgressIndicator()
-              : Text(
-                  btntitle,
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
         ),
       ),
     );

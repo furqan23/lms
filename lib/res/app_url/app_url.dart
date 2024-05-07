@@ -11,4 +11,6 @@ class AppUrl {
   static const String coursedetailapi = "$baseurl/api/v1/student/getCourseById";
 
   static const String videoapi = "$baseurl/api/v1/student/getCourseVideos";
+
+  static const String coursealbum = "$baseurl/api/v1/student/getCourseAlbums";
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:splashapp/res/constants/constants.dart';
+
 import 'package:timer_count_down/timer_count_down.dart';
 
 class TimerWidgett extends StatelessWidget {
