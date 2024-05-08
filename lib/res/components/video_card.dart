@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:splashapp/res/components/mybutton_widget.dart';
 import 'package:splashapp/values/auth_api.dart';
-
 import '../color/appcolor.dart';
 
 class VideoCard extends StatefulWidget {
@@ -85,16 +84,22 @@ class _DashbaordCardState extends State<VideoCard> {
                             ],
                           ),
                         ),
-                         SizedBox(
-                          width: MediaQuery.of(context).size.width * .52,
-                           child: Text(widget.title,
-                          style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
-                         ),
-                        ),
-
                         SizedBox(
-                            height: MediaQuery.of(context).size.height * .04),
-                        const MyButtonWidget(btntitle: "Play Video >"),
+                          width: MediaQuery.of(context).size.width * .55,
+                          child: Text(
+                            widget.title,
+                            style: const TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * .45,
+                          height: 50,
+                          child: const MyButtonWidget(btntitle: "Play Video >"),
+                        ),
                       ],
                     ),
                   ),

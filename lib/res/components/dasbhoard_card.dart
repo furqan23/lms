@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:splashapp/res/assetsimages/myimage.dart';
 import 'package:splashapp/values/auth_api.dart';
 
-
 class DashbaordCard extends StatefulWidget {
-  String? id, catName, description, slug, seat, name, registermethod,image;
+  String? id, catName, description, slug, seat, name, registermethod, image;
 
   DashbaordCard({
     super.key,
@@ -26,15 +25,27 @@ class _DashbaordCardState extends State<DashbaordCard> {
         child: Column(
           children: [
             Center(
-              child:widget.image==null || widget.image=="null"?Image(
-          image: AssetImage(tOnBoardingImage3),
-          width: 45,
-          height: 45,
-        ):SizedBox(height:45,width:45,child: Image.network("${AuthApi.dashboardImagesBaseUrl}/${widget.image}"))
+              child: widget.image == null || widget.image == "null"
+                  ? Image(
+                      image: AssetImage(tOnBoardingImage3),
+                      width: 45,
+                      height: 45,
+                    )
+                  : SizedBox(
+                      height: 45,
+                      width: 45,
+                      child: Image.network(
+                        "${AuthApi.dashboardImagesBaseUrl}/${widget.image}",
+                      ),
+                    ),
             ),
-            Text(widget.catName.toString(),style: const TextStyle(
-              fontSize: 17,letterSpacing: -1,
-            ),),
+            Text(
+              widget.catName.toString(),
+              style: const TextStyle(
+                fontSize: 17,
+                letterSpacing: -1,
+              ),
+            ),
           ],
         ),
       ),

@@ -1,10 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:convert';
-import 'package:splashapp/res/assets/images_assets.dart';
-import 'package:splashapp/res/constants/constants.dart';
 import 'package:splashapp/view/home/components/buildheader_home.dart';
 import 'package:splashapp/view/home/components/buildmenu_home.dart';
-import 'package:splashapp/view/payment/payment.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,14 +13,10 @@ import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/res/logs/logs.dart';
 import 'package:splashapp/view/home/my_wallet.dart';
 import 'package:splashapp/view/home_detail/home_detail.dart';
-import 'package:splashapp/view/my_test/my_groups.dart';
-import 'package:splashapp/view/mycourses/my_courses.dart';
-import 'package:splashapp/view/results/myresultcourse_view.dart';
 import 'package:splashapp/view_model/Controller/login_controller.dart';
 import 'package:splashapp/widget/carousel_widget.dart';
 import '../../model/cart_model.dart';
 import 'package:splashapp/res/color/appcolor.dart';
-import '../../widget/customlisttile_widget.dart';
 import '../../widget/dasbhoard_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -49,16 +42,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     namee = Hive.box("tokenBox");
     userName = namee!.get('username') ?? " ";
     emaill = namee!.get('email') ?? " ";
-
-
-
-
-
-
     // final String? token = box.get('token');
     getDashboardAPI();
   }

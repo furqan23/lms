@@ -20,7 +20,7 @@ class TestCard extends StatelessWidget {
         elevation: 5,
         child: Container(
           width: double.infinity,
-          height: 155,
+          height: 169,
           decoration: BoxDecoration(
               color: Colors.white12,
               borderRadius: BorderRadius.circular(5),
@@ -73,10 +73,13 @@ class TestCard extends StatelessWidget {
                             "Title: ",
                             style: TextStyle(color: Colors.grey, fontSize: 14),
                           ),
-                          Text(
-                            title,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * .65,
+                            child: Text(title,
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                            ),
                           ),
+
                         ],
                       ),
                     ),

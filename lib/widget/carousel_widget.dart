@@ -26,8 +26,8 @@ class CarouselWidget extends StatelessWidget {
         child:
             Container(
               padding: const EdgeInsets.fromLTRB(2,1,2,2),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: ListView(
+                //crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                   Text(
