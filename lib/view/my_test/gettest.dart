@@ -13,7 +13,7 @@ import 'package:splashapp/res/stringstext/text_string.dart';
 import 'package:splashapp/view/quizz/quizz_view.dart';
 import 'package:splashapp/widget/incoming_job_dialog.dart';
 import 'package:splashapp/widget/testcard_widget.dart';
-import 'package:splashapp/view_model/Controller/login_controller.dart';
+import 'package:splashapp/view_model/Controller/auth/login_controller.dart';
 import '../../values/auth_api.dart';
 
 class GetTest extends StatefulWidget {

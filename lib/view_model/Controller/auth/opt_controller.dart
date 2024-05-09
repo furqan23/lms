@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:splashapp/repository/login_repository.dart';
 import 'package:splashapp/utiles/utiles.dart';
-import '../../view/auth/forgot/reset_password/resetpassword_view.dart';
+import '../../../view/auth/forgot/reset_password/resetpassword_view.dart';
 import 'package:http/http.dart' as http;
 class OtpController extends GetxController {
   final _api = AuthRepository();

@@ -4,7 +4,7 @@ import 'package:splashapp/res/components/form_header_widget.dart';
 import 'package:splashapp/res/components/mybutton_widget.dart';
 import 'package:splashapp/res/assetsimages/myimage.dart';
 import 'package:splashapp/res/stringstext/text_string.dart';
-import 'package:splashapp/view_model/Controller/forget_controller.dart';
+import 'package:splashapp/view_model/Controller/auth/forget_controller.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({super.key});

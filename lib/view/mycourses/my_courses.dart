@@ -1,9 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:splashapp/view_model/Controller/login_controller.dart';
+import 'package:splashapp/view_model/Controller/auth/login_controller.dart';
 import 'package:splashapp/model/my_courses_model.dart';
 import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/view/mycourses/my_album.dart';

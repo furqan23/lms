@@ -13,7 +13,7 @@ import 'package:splashapp/widget/show_load_indicator.dart';
 import 'package:splashapp/widget/timer_widget.dart';
 import '../../values/auth_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:splashapp/view_model/Controller/login_controller.dart';
+import 'package:splashapp/view_model/Controller/auth/login_controller.dart';
 
 class QuizzView extends StatefulWidget {
   final String id;

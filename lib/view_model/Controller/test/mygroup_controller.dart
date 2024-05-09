@@ -1,34 +1,32 @@
 import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:splashapp/data/response/status.dart';
-import 'package:splashapp/model/video_model.dart';
+import 'package:splashapp/model/get_groups_model.dart';
 import 'package:splashapp/repository/home_repository.dart';
 
-class MyCourseController extends GetxController {
+class MygroupController extends GetxController {
   final _api = HomeRepository();
-  Rx<List<Data>?> categories = Rx<List<Data>?>([]);
+  Rx<List<Data>?> groupmodel = Rx<List<Data>?>([]);
   final reRequestStatus = Status.LOADING.obs;
 
   void setRxRequestStatus(Status _value) => reRequestStatus.value = _value;
 
-  void setcategoryMod(List<Data> _value) => categories.value = _value;
+  void setcategoryMod(List<Data> _value) => groupmodel.value = _value;
 
-  Future<void> categoryApi(String album_id, String token) async {
+  Future<void> getMyCourseAPI(String token) async {
     var header = {
-      'Authorization': 'Bearer $token',
+      'Authorization': 'Bearer $token', // Use the retrieved token
+      'Content-Type': 'application/json',
     };
-    var data = {
-      "album_id": album_id,
-    };
+
     try {
       setRxRequestStatus(Status.LOADING);
-      await _api.coursedetails(data, header).then((value) {
+      await _api.getMyCoursesAPI(header).then((value) {
         // log(value['data'].toString() + " my data");
         if (value['success'].toString() == 'true') {
           //  log('success');
-          VideoModel categoriesModel = VideoModel.fromJson(value);
-          setcategoryMod(categoriesModel.data!);
+          GetGroupsModel groups = GetGroupsModel.fromJson(value);
+          setcategoryMod(groups.data!);
           //    log(categories.value!.length.toString() + " my list");
           setRxRequestStatus(Status.COMPLETED);
         } else {
@@ -37,9 +35,11 @@ class MyCourseController extends GetxController {
         }
       }).onError((error, stackTrace) {
         setRxRequestStatus(Status.ERROR);
+        log('Error fetching home details: $error');
       });
     } catch (e) {
-      log(e.toString());
+      log('Exception caught: $e');
+      setRxRequestStatus(Status.ERROR);
     }
   }
 }

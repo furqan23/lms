@@ -5,7 +5,7 @@ import 'package:splashapp/view/my_test/my_groups.dart';
 import 'package:splashapp/view/mycourses/my_courses.dart';
 import 'package:splashapp/view/payment/payment.dart';
 import 'package:splashapp/view/results/myresultcourse_view.dart';
-import 'package:splashapp/view_model/Controller/login_controller.dart';
+import 'package:splashapp/view_model/Controller/auth/login_controller.dart';
 
 class BuildMenu extends StatelessWidget {
   const BuildMenu({

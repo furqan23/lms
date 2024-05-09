@@ -5,7 +5,7 @@ import 'package:splashapp/res/color/appcolor.dart';
 import 'package:splashapp/res/constants/constants.dart';
 import 'package:splashapp/res/valdations/valdation.dart';
 import 'package:splashapp/view/auth/signup/signup_view.dart';
-import 'package:splashapp/view_model/Controller/login_controller.dart';
+import 'package:splashapp/view_model/Controller/auth/login_controller.dart';
 import '../../../res/assetsimages/myimage.dart';
 import '../forgot/forget_password_email/forgetpassword_view.dart';
 

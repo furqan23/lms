@@ -4,16 +4,42 @@ import 'package:splashapp/res/app_url/app_url.dart';
 class HomeRepository {
   final _apiService = NetworkApiService();
 
+  /// HomeDetails
+  Future<dynamic> homedetails(
+    var data,
+  ) async {
+    dynamic response = _apiService.postApi(data, AppUrl.courseApi);
+    return response;
+  }
+
+  ///  coursealbumapi
   Future<dynamic> coursealbum(var data, header) async {
     dynamic response =
-    _apiService.postApi(data, headers: header, AppUrl.coursealbum);
+        _apiService.postApi(data, headers: header, AppUrl.coursealbum);
     return response;
   }
 
-
-  Future<dynamic> coursedetails(var data, header) async {
+  /// coursevideo api
+  Future<dynamic> coursevideo(var data, header) async {
     dynamic response =
-    _apiService.postApi(data, headers: header, AppUrl.videoapi);
+        _apiService.postApi(data, headers: header, AppUrl.videoapi);
     return response;
   }
+
+  /// MyResults Api
+  Future<dynamic> finalResutAPI(var data, header) async {
+    dynamic response =
+        _apiService.postApi(data, headers: header, AppUrl.finalResultApi);
+    return response;
+  }
+
+   /// My Test Data
+  Future<dynamic> getMyCoursesAPI( header) async {
+    dynamic response =
+        _apiService.getApi(AppUrl.getGroupsText, headers: header);
+    return response;
+  }
+
+
+
 }

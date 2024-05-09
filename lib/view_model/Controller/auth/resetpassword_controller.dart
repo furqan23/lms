@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:splashapp/view/auth/login/login_view.dart';
 
-import '../../values/auth_api.dart';
+import '../../../values/auth_api.dart';
 
 class ResetpasswordController extends GetxController {
   final TextEditingController otpsController = TextEditingController();

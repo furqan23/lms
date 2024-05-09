@@ -3,17 +3,14 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:splashapp/model/course_model.dart';
-import 'package:http/http.dart' as http;
-import 'package:splashapp/res/color/appcolor.dart';
-import 'package:splashapp/res/logs/logs.dart';
+import 'package:splashapp/view_model/Controller/homedetail_controller.dart';
 import 'package:splashapp/widget/lsit.dart';
 import '../../model/cart_model.dart';
-import '../../values/auth_api.dart';
 import '../cart/cart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+RxString cartInt = "".obs;
 
-RxString cartInt="".obs;
 class HomeDetail extends StatefulWidget {
   final String mscatId;
 
@@ -27,23 +24,23 @@ class HomeDetail extends StatefulWidget {
 }
 
 class _VideoViewState extends State<HomeDetail> {
+  final HomeDetailsController homeDetailsController =
+      Get.put(HomeDetailsController());
   List<CourseModel> courseList = [];
   List<CartModel> cartList = [];
   bool boolData = false;
   int singleCartIndex = 0;
   bool isAdded = false;
 
-
   @override
   void initState() {
     super.initState();
-    getCourseAPI();
-    getCartData();
+    homeDetailsController.homedetailsApi(widget.mscatId);
   }
 
   @override
   Widget build(BuildContext context) {
-    cartInt.value=cartList.length.toString();
+    cartInt.value = cartList.length.toString();
     final textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
@@ -54,11 +51,12 @@ class _VideoViewState extends State<HomeDetail> {
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Badge(
-                label:  Obx(
-                      () =>Text(
-                  cartInt.value,
-                  style: const TextStyle(color: Colors.white),
-                ),),
+                label: Obx(
+                  () => Text(
+                    cartInt.value,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
                 backgroundColor: Colors.red,
                 isLabelVisible:
                     cartList.isNotEmpty, // Show badge if cartList is not empty
@@ -70,6 +68,7 @@ class _VideoViewState extends State<HomeDetail> {
                     if (updatedCartList != null) {
                       setState(() {
                         cartList = updatedCartList;
+                        print(updatedCartList);
                       });
                     }
                   },
@@ -79,60 +78,33 @@ class _VideoViewState extends State<HomeDetail> {
             ),
           ],
         ),
-        body: boolData
-            ? courseList.isNotEmpty
-                ? ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: courseList[0].data?.length ?? 0,
-                    itemBuilder: (context, index) {
-                      final selectedItem =
-                          courseList[0].data![index].courses![0];
-
-                      return lsit(
-                        regMethod: courseList[0]
-                            .data![index]
-                            .registrationMethod
-                            .toString(),
-                        ePass: courseList[0].data![index].catName.toString(),
-                        status: courseList[0].data![index].name.toString(),
-                        groupcode:
-                            courseList[0].data![index].groupcode.toString(),
-                        dateAndTime:
-                            courseList[0].data![index].courses![0].classtime!,
-                        teacher: courseList[0]
-                            .data![index]
-                            .courses![0]
-                            .firstName
-                            .toString(),
-                        price: courseList[0]
-                            .data![index]
-                            .courses![0]
-                            .price
-                            .toString(),
-                        map: courseList[0].data![index].courses,
-                        onAddToCart: () {
-                          if (courseList[0].data![index].registrationMethod ==
-                              "whole") {
-                            onAddToCart(index);
-                          } else if (courseList[0]
-                                  .data![index]
-                                  .registrationMethod ==
-                              "single") {
-                            onAddToSingleCart(index, singleCartIndex);
-                            singleCartIndex++;
-                          }
-                        },
-                      );
-                    },
-                  )
-                : const Center(
-                    child: Text('No courses available'),
-                  )
-            : const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.primaryColor,
-                ),
-              ),
+        body: Obx(() {
+          return ListView.builder(
+            itemCount: homeDetailsController.coursemodel.value!.length,
+            itemBuilder: (context, index) {
+              final category = homeDetailsController.coursemodel.value![index];
+              return lsit(
+                regMethod: category.registrationMethod.toString(),
+                ePass: category.catName.toString(),
+                status: category.name.toString(),
+                groupcode: category.groupcode.toString(),
+                dateAndTime: category.courses![0].classtime.toString(),
+                teacher: category.courses![0].firstName.toString(),
+                price: category.courses![0].price.toString(),
+                map: category.courses,
+                onAddToCart: () {
+                  if (category.registrationMethod.toString() == "whole") {
+                    onAddToCart(index);
+                  } else if (category.registrationMethod.toString() ==
+                      "single") {
+                    onAddToSingleCart(index, singleCartIndex);
+                    singleCartIndex++;
+                  }
+                },
+              );
+            },
+          );
+        }),
       ),
     );
   }
@@ -152,73 +124,29 @@ class _VideoViewState extends State<HomeDetail> {
     print(cartData);
   }
 
-  Future<void> getCartData() async {
-    final prefs = await SharedPreferences.getInstance();
-    final cartDataString = prefs.getString('cartData');
+  void onAddToSingleCart(int index, int courseIndex) {
+    // Retrieve the course model using the provided index
+    Data courseToAdds = homeDetailsController.coursemodel.value![index];
 
-    setState(() {
-      if (cartDataString != null) {
-        List<dynamic> decodedList = json.decode(cartDataString);
-        cartList = decodedList.map((item) => CartModel.fromJson(item)).toList();
-      }
-    });
-  }
-
-  void getCourseAPI() async {
-    try {
-      final res = await http.post(Uri.parse(AuthApi.courseApi), body: {
-        "category_id": widget.mscatId,
-      });
-      print('Response Status Code: ${res.statusCode}');
-//  print('Response Body: ${res.body.toString()}');
-      print('Response Body long');
-      LogPrint(res.body.toString());
-      if (res.statusCode == 200) {
-        if (res.body.isNotEmpty) {
-          final mydata = jsonDecode(res.body);
-          courseList.add(CourseModel.fromJson(mydata));
-          setState(() {
-            boolData = true;
-          });
-        } else {
-          setState(() {
-            boolData = false; // Set boolData to false as there is no data
-          });
-          throw Exception('Empty response');
-        }
-      } else {
-        setState(() {
-          boolData = false; // Set boolData to false as loading failed
-        });
-        throw Exception('Failed to load data');
-      }
-    } catch (e) {
-      print('Error: $e');
-      setState(() {
-        boolData = false; // Set boolData to false in case of any error
-      });
-      throw Exception('Failed to load data');
-    }
-  }
-
-  void onAddToSingleCart(int Index, int courseIndex) {
-    final dataEntry = courseList[0].data![Index];
-
-    if (dataEntry.registrationMethod == "single") {
-      if (courseIndex >= 0 && courseIndex < dataEntry.courses!.length) {
-        final course = dataEntry.courses![courseIndex];
+    // Check if the registration method is "single"
+    if (courseToAdds.registrationMethod == "single") {
+      // Ensure courseToAdds is not null and courseIndex is within bounds
+      if (courseToAdds != null &&
+          courseIndex >= 1 &&
+          courseIndex < courseToAdds.courses!.length) {
+        final course = courseToAdds.courses![courseIndex];
         final cartItem = CartModel(
-          registrationMethod: dataEntry.registrationMethod.toString(),
-          categoryname: dataEntry.catName.toString(),
-          groupname: dataEntry.name.toString(),
-          groupId: dataEntry.id.toString(),
+          registrationMethod: courseToAdds.registrationMethod.toString(),
+          categoryname: courseToAdds.catName.toString(),
+          groupname: courseToAdds.name.toString(),
+          groupId: courseToAdds.id.toString(),
           categoryid: course.categoryId.toString(),
           courseId: course.id.toString(),
           courseTitle: course.courseTitle.toString(),
           price: double.parse(course.price.toString()),
         );
 
-// Check if the cartItem already exists in cartList
+        // Check if the cartItem already exists in cartList
         if (!cartList.any((item) => item.courseId == cartItem.courseId)) {
           setState(() {
             cartList.add(cartItem);
@@ -236,20 +164,20 @@ class _VideoViewState extends State<HomeDetail> {
           );
         }
       }
-      saveCartData();
     }
+    saveCartData();
   }
 
   void onAddToCart(int dataIndex) {
-    final dataEntry = courseList[0].data![dataIndex];
+    Data courseToAdd = homeDetailsController.coursemodel.value![dataIndex];
 
-    if (dataEntry.registrationMethod == "whole") {
-      for (final course in dataEntry.courses!) {
+    if (courseToAdd.registrationMethod == "whole") {
+      for (final course in courseToAdd.courses!) {
         final cartItem = CartModel(
-          registrationMethod: dataEntry.registrationMethod.toString(),
-          categoryname: dataEntry.catName.toString(),
-          groupname: dataEntry.name.toString(),
-          groupId: dataEntry.id.toString(),
+          registrationMethod: courseToAdd.registrationMethod.toString(),
+          categoryname: courseToAdd.catName.toString(),
+          groupname: courseToAdd.name.toString(),
+          groupId: courseToAdd.id.toString(),
           categoryid: course.categoryId.toString(),
           courseId: course.id.toString(),
           courseTitle: course.courseTitle.toString(),
@@ -270,10 +198,6 @@ class _VideoViewState extends State<HomeDetail> {
           content: Text('Items added to cart'),
         ),
       );
-    } else if (dataEntry.registrationMethod == "single") {
-// Implement logic for handling single item addition
-// This section should be based on your requirement for adding a single item
-// For example, display a dialog to choose a specific item and then add it to the cart
-    }
+    } else if (courseToAdd.registrationMethod == "single") {}
   }
 }

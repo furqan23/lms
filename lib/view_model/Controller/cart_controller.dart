@@ -3,11 +3,8 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:splashapp/model/cart_model.dart';
 
-
 class CartController extends GetxController {
   RxList<CartModel> cartList = <CartModel>[].obs;
-
-
 
   RxInt quantity = 0.obs;
   RxInt totalBalance = 0.obs;
@@ -19,16 +16,16 @@ class CartController extends GetxController {
     update();
     totalBalance.value = price * quantity.value;
     log(quantity.value.toString());
+
     update();
   }
 
   // Function to decrement the quantity and update the total price
   void decrementQuantity(int price) {
-    if (quantity.value >=1) {
+    if (quantity.value >= 1) {
       quantity.value--;
       totalBalance.value = price * quantity.value;
       update();
     }
   }
-
 }

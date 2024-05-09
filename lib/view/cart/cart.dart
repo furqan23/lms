@@ -8,7 +8,7 @@ import 'package:splashapp/model/get_invoice_id_model.dart';
 import 'package:splashapp/res/color/appcolor.dart';
 import 'package:splashapp/res/stringstext/text_string.dart';
 import 'package:splashapp/view/home_detail/home_detail.dart';
-import 'package:splashapp/view_model/Controller/login_controller.dart';
+import 'package:splashapp/view_model/Controller/auth/login_controller.dart';
 import 'package:splashapp/widget/incoming_payment_method_dialog.dart';
 import 'package:splashapp/widget/show_load_indicator.dart';
 import '../../model/cart_model.dart';
@@ -49,6 +49,9 @@ class _CartScreenState extends State<CartScreen> {
       } else {
         // If no data found in SharedPreferences, use the data from the widget
         cartList = widget.cartList;
+        setState(() {
+          clearCartData();
+        });
       }
     });
   }
@@ -81,8 +84,16 @@ class _CartScreenState extends State<CartScreen> {
       // Remove all items with the same category name
       cartList.removeWhere((item) => item.groupname == groupNameToRemove);
       cartInt.value = cartList.length.toString();
+      setState(() {
+        clearCartData();
+      });
       saveCartData();
     });
+  }
+
+  Future<void> clearCartData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('cartData');
   }
 
   Future<void> saveCartData() async {

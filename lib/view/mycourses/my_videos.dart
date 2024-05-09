@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:splashapp/res/components/video_card.dart';
 import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/view/mycourses/onlinevideo/playvideo.dart';
-import 'package:splashapp/view_model/Controller/detail_controller.dart';
-import 'package:splashapp/view_model/Controller/login_controller.dart';
+import 'package:splashapp/view_model/Controller/mycourse/video_controller.dart';
+import 'package:splashapp/view_model/Controller/auth/login_controller.dart';
 import 'package:splashapp/model/video_model.dart';
 
 class MyVideos extends StatefulWidget {
@@ -19,7 +19,7 @@ class MyVideos extends StatefulWidget {
 }
 
 class _MyVideosState extends State<MyVideos> {
-  final MyCourseController detailController = Get.put(MyCourseController());
+  final VideoController videoController = Get.put(VideoController());
   late String token;
   List<Data> myVideoList = [];
   bool isLoading = true;
@@ -33,7 +33,7 @@ class _MyVideosState extends State<MyVideos> {
   Future<void> getTokenAndFetchVideos() async {
     token = (await LoginController().getTokenFromHive())!;
     print('Token: $token');
-    detailController.categoryApi(widget.id, token);
+    videoController.categoryApi(widget.id, token);
   }
 
   @override
@@ -44,24 +44,32 @@ class _MyVideosState extends State<MyVideos> {
       ),
       body: Obx(() {
 
-          return ListView.builder(
-            itemCount: detailController.categories.value!.length,
-            itemBuilder: (context, index) {
-              final category = detailController.categories.value![index];
-              return InkWell(
-                  onTap: () {
-                    Get.to(() => PlayVideo(
+      if (videoController.categories.value == null || videoController.categories.value!.isEmpty) {
+        return const Center(
+          child: CircularProgressIndicator(), // Show circular progress indicator
+        );
+      } else {
+        return ListView.builder(
+          itemCount: videoController.categories.value!.length,
+          itemBuilder: (context, index) {
+            final category = videoController.categories.value![index];
+            return InkWell(
+              onTap: () {
+                Get.to(() =>
+                    PlayVideo(
                       type: "ok",
                       id: category.videoName.toString(),
                       listvideo: myVideoList, // Pass the entire list
                     ));
-                  },
-                  child: VideoCard(
-                      id: category.id.toString(),
-                      title: category.videoTitle.toString()));
-            },
-          );
-
+              },
+              child: VideoCard(
+                id: category.id.toString(),
+                title: category.videoTitle.toString(),
+              ),
+            );
+          },
+        );
+      }
       }),
     );
   }

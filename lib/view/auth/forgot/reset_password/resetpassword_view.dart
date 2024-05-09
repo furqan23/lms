@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:splashapp/res/components/customfield_components.dart';
 import 'package:splashapp/res/components/mybutton_widget.dart';
-import 'package:splashapp/view_model/Controller/forget_controller.dart';
-import 'package:splashapp/view_model/Controller/resetpassword_controller.dart';
+import 'package:splashapp/view_model/Controller/auth/forget_controller.dart';
+import 'package:splashapp/view_model/Controller/auth/resetpassword_controller.dart';
 
 class ResetPasswordView extends StatefulWidget {
   String otp, email;

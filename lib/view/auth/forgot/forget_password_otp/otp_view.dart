@@ -5,7 +5,7 @@ import 'package:splashapp/res/components/mybutton_widget.dart';
 import 'package:get/get.dart';
 import 'package:splashapp/res/color/appcolor.dart';
 import 'package:splashapp/res/stringstext/text_string.dart';
-import 'package:splashapp/view_model/Controller/opt_controller.dart';
+import 'package:splashapp/view_model/Controller/auth/opt_controller.dart';
 
 class OtpView extends StatefulWidget {
   String _email;

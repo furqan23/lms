@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:splashapp/res/color/appcolor.dart';
 import 'package:splashapp/widget/incoming_payment_method_dialog.dart';
-import 'package:splashapp/view_model/Controller/login_controller.dart';
+import 'package:splashapp/view_model/Controller/auth/login_controller.dart';
 import '../../model/invoice_model.dart';
 import '../../model/get_invoice_id_model.dart' as getinvoice;
 import '../../values/auth_api.dart';

@@ -9,7 +9,7 @@ import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/view/payment/Invoice_payment.dart';
 import 'package:splashapp/widget/customcard_widget2.dart';
 import 'package:splashapp/widget/show_load_indicator.dart';
-import 'package:splashapp/view_model/Controller/login_controller.dart';
+import 'package:splashapp/view_model/Controller/auth/login_controller.dart';
 import '../../model/invoice_model.dart' as data;
 import '../../model/payment_model.dart';
 import '../../model/get_invoice_id_model.dart' as getinvoice;

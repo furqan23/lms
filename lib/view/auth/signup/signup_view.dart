@@ -5,7 +5,7 @@ import 'package:splashapp/res/components/mybutton_widget.dart';
 import 'package:splashapp/test_screen.dart';
 import 'package:splashapp/res/constants/constants.dart';
 import 'package:splashapp/view/auth/login/login_view.dart';
-import 'package:splashapp/view_model/Controller/signup_controller.dart';
+import 'package:splashapp/view_model/Controller/auth/signup_controller.dart';
 import '../../../res/assetsimages/myimage.dart';
 import '../../../res/valdations/valdation.dart';
 

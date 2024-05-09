@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:splashapp/res/constants/constants.dart';
 import 'package:splashapp/view/home/home_screen.dart';
 import 'package:splashapp/view/quizz/viewanswer_view.dart';
-import 'package:splashapp/view_model/Controller/login_controller.dart';
+import 'package:splashapp/view_model/Controller/auth/login_controller.dart';
 import '../../model/finalresult_model.dart';
 import '../../values/auth_api.dart';
 

@@ -13,7 +13,7 @@ import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/res/logs/logs.dart';
 import 'package:splashapp/view/home/my_wallet.dart';
 import 'package:splashapp/view/home_detail/home_detail.dart';
-import 'package:splashapp/view_model/Controller/login_controller.dart';
+import 'package:splashapp/view_model/Controller/auth/login_controller.dart';
 import 'package:splashapp/widget/carousel_widget.dart';
 import '../../model/cart_model.dart';
 import 'package:splashapp/res/color/appcolor.dart';
