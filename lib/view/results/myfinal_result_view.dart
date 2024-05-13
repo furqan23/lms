@@ -73,91 +73,96 @@ class _MyFinalResultState extends State<MyFinalResult> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-leading: IconButton(onPressed: (){
-  Get.to(()=>HomeScreen());
-}, icon: Icon(Icons.arrow_back)),
+        leading: IconButton(
+            onPressed: () {
+              Get.to(() => const HomeScreen());
+            },
+            icon: const Icon(Icons.arrow_back)),
         title: const Text('Result'),
-        
       ),
       body: boolData
           ? ListView.builder(
-        itemCount: getfinalresultList.length,
-        itemBuilder: (context, index) {
-          final result = getfinalresultList[index].data!;
+              itemCount: getfinalresultList.length,
+              itemBuilder: (context, index) {
+                final result = getfinalresultList[index].data!;
 
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Card(
-                  elevation: 5,
-                  child: Container(
-                    width: double.infinity,
-                    height: 130,
-                    decoration: BoxDecoration(
-                        color: Colors.white12,
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(
-                          color: Colors.green.shade500,
-                        )),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Card(
+                        elevation: 5,
+                        child: Container(
+                          width: double.infinity,
+                          height: 130,
+                          decoration: BoxDecoration(
+                              color: Colors.white12,
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                color: Colors.green.shade500,
+                              )),
+                          child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(top: 10),
-                                child: Row(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text(
-                                      "Category Name : ",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      result.testDetails?.catName ?? '',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 10),
-                                child: Row(
-                                  children: [
-                                    const Text(
-                                      "Group Name : ",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      result.testDetails?.name ?? '',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.end,
-                                  children: [
-                                    const Text(
-                                      "Course Title  : ",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Row(
+                                        children: [
+                                          const Text(
+                                            "Category Name : ",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            result.testDetails?.catName ?? '',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    Text(
-                                      result.testDetails?.courseTitle ?? '',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Row(
+                                        children: [
+                                          const Text(
+                                            "Group Name : ",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            result.testDetails?.name ?? '',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          const Text(
+                                            "Course Title  : ",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            result.testDetails?.courseTitle ??
+                                                '',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -165,102 +170,110 @@ leading: IconButton(onPressed: (){
                             ],
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Card(
-                  elevation: 5,
-                  child: Container(
-                    width: double.infinity,
-                    height: 160,
-                    decoration: BoxDecoration(
-                        color: Colors.white12,
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(
-                          color: Colors.green.shade500,
-                        )),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Card(
+                        elevation: 5,
+                        child: Container(
+                          width: double.infinity,
+                          height: 160,
+                          decoration: BoxDecoration(
+                              color: Colors.white12,
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                color: Colors.green.shade500,
+                              )),
+                          child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(top: 10),
-                                child: Row(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text(
-                                      "Total Questions : ",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      result.resultSummery?.totalQuestions ?? '',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 10),
-                                child: Row(
-                                  children: [
-                                    const Text(
-                                      "Given Answers : ",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      result.resultSummery?.givenAnswers ?? '',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.end,
-                                  children: [
-                                    const Text(
-                                      "Corrected Answers  : ",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Row(
+                                        children: [
+                                          const Text(
+                                            "Total Questions : ",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            result.resultSummery
+                                                    ?.totalQuestions ??
+                                                '',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    Text(
-                                      result.resultSummery?.correctedAnswers ?? '',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.end,
-                                  children: [
-                                    const Text(
-                                      "Wrong Answers : ",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Row(
+                                        children: [
+                                          const Text(
+                                            "Given Answers : ",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            result.resultSummery
+                                                    ?.givenAnswers ??
+                                                '',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    Text(
-                                      result.resultSummery?.wrongAnswers ?? '',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          const Text(
+                                            "Corrected Answers  : ",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            result.resultSummery
+                                                    ?.correctedAnswers ??
+                                                '',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          const Text(
+                                            "Wrong Answers : ",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            result.resultSummery
+                                                    ?.wrongAnswers ??
+                                                '',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -268,34 +281,32 @@ leading: IconButton(onPressed: (){
                             ],
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              InkWell(
-                onTap: () {
-                  Get.to(() =>
-                      ViewAnswer(finalResultList: getfinalresultList));
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  width: 280,
-                  height: 60,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.green),
-                  child: const Text("View Test Answer", style: textwhiteColorStyle),
-                ),
-              )
-            ],
-          );
-        },
-      )
+                    const SizedBox(height: 20),
+                    InkWell(
+                      onTap: () {
+                        Get.to(() =>
+                            ViewAnswer(finalResultList: getfinalresultList));
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: 280,
+                        height: 60,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.green),
+                        child: const Text("View Test Answer",
+                            style: textwhiteColorStyle),
+                      ),
+                    )
+                  ],
+                );
+              },
+            )
           : const Center(
-        child: CircularProgressIndicator(),
-      ),
+              child: CircularProgressIndicator(),
+            ),
     );
   }
 }

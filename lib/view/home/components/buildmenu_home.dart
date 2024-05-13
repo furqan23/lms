@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:splashapp/res/components/customlisttile_widget.dart';
+import 'package:splashapp/view/dropdown.dart';
 import 'package:splashapp/view/my_test/my_groups.dart';
 import 'package:splashapp/view/mycourses/my_courses.dart';
 import 'package:splashapp/view/payment/payment.dart';
@@ -63,6 +64,14 @@ class BuildMenu extends StatelessWidget {
               color: Colors.green.shade300,
               onTap: () {
                 Get.to(() => Payment());
+              },
+            ),
+            CustomListTile(
+              leadingIcon: Icons.payments_outlined,
+              titleText: 'Dropdown',
+              color: Colors.green.shade300,
+              onTap: () {
+                Get.to(() => DropDownScreen());
               },
             ),
             CustomListTile(

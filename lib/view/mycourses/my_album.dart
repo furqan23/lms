@@ -29,9 +29,11 @@ class _MyCoursesState extends State<MyAlbum> {
       ),
       body: Obx(() {
         // Check if the album list is empty or null
-        if (albumController.album.value == null || albumController.album.value!.isEmpty) {
+        if (albumController.album.value == null ||
+            albumController.album.value!.isEmpty) {
           return const Center(
-            child: CircularProgressIndicator(), // Show circular progress indicator
+            child:
+                CircularProgressIndicator(), // Show circular progress indicator
           );
         } else {
           return ListView.builder(
@@ -40,7 +42,11 @@ class _MyCoursesState extends State<MyAlbum> {
               final category = albumController.album.value![index];
               return InkWell(
                 onTap: () {
-                  Get.to(() => MyVideos(category.id.toString()));
+                  Get.to(
+                    () => MyVideos(
+                      category.id.toString(),
+                    ),
+                  );
                 },
                 child: AlbumCard(
                   id: category.id.toString(),

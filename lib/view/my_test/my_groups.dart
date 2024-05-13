@@ -1,4 +1,3 @@
-
 import 'package:splashapp/model/get_groups_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -76,43 +75,4 @@ class _MyCoursesState extends State<MyGroups> {
     print('Token: $token');
     mygroupController.getMyCourseAPI(token);
   }
-
-// void getMyCourseAPI() async {
-//   try {
-//     // final Map<String, dynamic> requestData = {
-//     //   "invoice_id": widget.invoice_id,
-//     // };
-//
-//     // final String requestBody = jsonEncode(requestData);
-//
-//     final res = await http.get(
-//       Uri.parse(AuthApi.getGroupsText),
-//       headers: {
-//         'Authorization': 'Bearer $token', // Use the retrieved token
-//         'Content-Type': 'application/json',
-//       },
-//     );
-//
-//     print('Response Status Code: ${res.statusCode}');
-//     print('Response groups data long');
-//     LogPrint(res.body.toString());
-//
-//     if (res.statusCode == 200) {
-//       if (res.body.isNotEmpty) {
-//         final mydata = jsonDecode(res.body);
-//         // print('Parsed Data: $mydata');
-//         _myCoursesList.add(GetGroupsModel.fromJson(mydata));
-//         setState(() {
-//           boolData = true;
-//         });
-//       } else {
-//         throw Exception('Empty response');
-//       }
-//     } else {
-//       print('Error: ${res.statusCode}');
-//     }
-//   } catch (e) {
-//     print(e.toString());
-//   }
-// }
 }

@@ -27,19 +27,28 @@ class HomeRepository {
   }
 
   /// MyResults Api
-  Future<dynamic> finalResutAPI(var data, header) async {
-    dynamic response =
-        _apiService.postApi(data, headers: header, AppUrl.finalResultApi);
+
+  Future<dynamic> getMyTestAPI(header) async {
+    dynamic response = _apiService.getApi(headers: header, AppUrl.getMyResult1);
     return response;
   }
 
-   /// My Test Data
-  Future<dynamic> getMyCoursesAPI( header) async {
+  Future<dynamic> getresultsApi(var data, header) async {
+    dynamic response =
+    _apiService.postApi(data, headers: header, AppUrl.getMyResultsTestApi);
+    return response;
+  }
+
+  /// My Test Data
+  Future<dynamic> getMyCoursesAPI(header) async {
     dynamic response =
         _apiService.getApi(AppUrl.getGroupsText, headers: header);
     return response;
   }
 
-
-
+  Future<dynamic> getdropapi() async {
+    dynamic response =
+        _apiService.getApi("http://167.71.58.227/api/v1/governorates");
+    return response;
+  }
 }

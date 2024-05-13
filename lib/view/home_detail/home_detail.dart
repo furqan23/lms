@@ -78,33 +78,44 @@ class _VideoViewState extends State<HomeDetail> {
             ),
           ],
         ),
-        body: Obx(() {
-          return ListView.builder(
-            itemCount: homeDetailsController.coursemodel.value!.length,
-            itemBuilder: (context, index) {
-              final category = homeDetailsController.coursemodel.value![index];
-              return lsit(
-                regMethod: category.registrationMethod.toString(),
-                ePass: category.catName.toString(),
-                status: category.name.toString(),
-                groupcode: category.groupcode.toString(),
-                dateAndTime: category.courses![0].classtime.toString(),
-                teacher: category.courses![0].firstName.toString(),
-                price: category.courses![0].price.toString(),
-                map: category.courses,
-                onAddToCart: () {
-                  if (category.registrationMethod.toString() == "whole") {
-                    onAddToCart(index);
-                  } else if (category.registrationMethod.toString() ==
-                      "single") {
-                    onAddToSingleCart(index, singleCartIndex);
-                    singleCartIndex++;
-                  }
+        body: Obx(
+          () {
+            if (homeDetailsController.coursemodel.value == null ||
+                homeDetailsController.coursemodel.value!.isEmpty) {
+              return const Center(
+                child:
+                    CircularProgressIndicator(), // Show circular progress indicator
+              );
+            } else {
+              return ListView.builder(
+                itemCount: homeDetailsController.coursemodel.value!.length,
+                itemBuilder: (context, index) {
+                  final category =
+                      homeDetailsController.coursemodel.value![index];
+                  return lsit(
+                    regMethod: category.registrationMethod.toString(),
+                    ePass: category.catName.toString(),
+                    status: category.name.toString(),
+                    groupcode: category.groupcode.toString(),
+                    dateAndTime: category.courses![0].classtime.toString(),
+                    teacher: category.courses![0].firstName.toString(),
+                    price: category.courses![0].price.toString(),
+                    map: category.courses,
+                    onAddToCart: () {
+                      if (category.registrationMethod.toString() == "whole") {
+                        onAddToCart(index);
+                      } else if (category.registrationMethod.toString() ==
+                          "single") {
+                        onAddToSingleCart(index, singleCartIndex);
+                        singleCartIndex++;
+                      }
+                    },
+                  );
                 },
               );
-            },
-          );
-        }),
+            }
+          },
+        ),
       ),
     );
   }

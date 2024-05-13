@@ -58,6 +58,7 @@ dependencies:
   flutter_countdown_timer: ^4.1.0
   flutter_screenutil: ^5.9.0
   fluttertoast: ^8.2.4
+  shimmer: ^3.0.0
 
 
 
