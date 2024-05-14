@@ -63,17 +63,17 @@ class BuildMenu extends StatelessWidget {
               titleText: 'Payments',
               color: Colors.green.shade300,
               onTap: () {
-                Get.to(() => Payment());
+                Get.to(() => const Payment());
               },
             ),
-            CustomListTile(
-              leadingIcon: Icons.payments_outlined,
-              titleText: 'Dropdown',
-              color: Colors.green.shade300,
-              onTap: () {
-                Get.to(() => DropDownScreen());
-              },
-            ),
+            // CustomListTile(
+            //   leadingIcon: Icons.payments_outlined,
+            //   titleText: 'Dropdown',
+            //   color: Colors.green.shade300,
+            //   onTap: () {
+            //     Get.to(() => DropDownScreen());
+            //   },
+            // ),
             CustomListTile(
                 leadingIcon: Icons.exit_to_app,
                 titleText: 'Logout',

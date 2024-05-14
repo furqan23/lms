@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:splashapp/res/color/appcolor.dart';
+import 'package:splashapp/res/constants/constants.dart';
 import '../model/cart_model.dart';
 import '../model/course_model.dart';
 
@@ -163,6 +164,7 @@ class _lsitState extends State<lsit> {
                             widget.regMethod == "single"
                                 ? InkWell(
                                     onTap: () {
+                                      singleButtnCartindexG=index;
                                       widget.onAddToCart();
                                     },
                                     child: Container(

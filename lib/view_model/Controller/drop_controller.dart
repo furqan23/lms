@@ -5,8 +5,6 @@ import 'package:splashapp/model/governorates_model.dart';
 import 'package:splashapp/repository/home_repository.dart';
 
 class DropController extends GetxController {
-
-
   final _api = HomeRepository();
   Rx<List<GovernoratesData>?> coursemodel = Rx<List<GovernoratesData>?>([]);
   final reRequestStatus = Status.LOADING.obs;
@@ -40,5 +38,4 @@ class DropController extends GetxController {
       setRxRequestStatus(Status.ERROR);
     }
   }
-
 }

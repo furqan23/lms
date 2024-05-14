@@ -13,10 +13,10 @@ class DropDownScreen extends StatefulWidget {
 
 class _DropDownScreenState extends State<DropDownScreen> {
   late final DropController dropController;
-  Rx<GovernoratesData?> selectedType =
-      Rx<GovernoratesData?>(null); // Make selectedType reactive
-  Rx<String?> selectedProperty =
-      Rx<String?>(null); // Make selectedProperty reactive
+  Rx<GovernoratesData?> selectedType = Rx<GovernoratesData?>(null);
+  Rx<String?> selectedProperty = Rx<String?>(null);
+  Rx<int?> selectedPropertyId =
+      Rx<int?>(null); // New reactive variable for the ID
 
   @override
   void initState() {
@@ -86,9 +86,8 @@ class _DropDownScreenState extends State<DropDownScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 Obx(() {
-                  // Conditionally render the second dropdown
                   if (selectedType.value != null) {
                     return Container(
                       decoration: BoxDecoration(
@@ -106,12 +105,14 @@ class _DropDownScreenState extends State<DropDownScreen> {
                             value: property,
                           );
                         }).toList(),
-                        value: selectedProperty
-                            .value, // Use.value to access the current value
+                        value: selectedProperty.value,
                         onChanged: (value) {
                           setState(() {
-                            selectedProperty.value =
-                                value; // Update selectedProperty reactively
+                            selectedProperty.value = value;
+                            // Assuming GovernoratesData has an 'id' field
+                            selectedPropertyId.value = selectedType.value?.zones
+                                ?.firstWhere((zone) => zone.title == value)
+                                ?.id;
                           });
                         },
                         hint: const Padding(
@@ -124,7 +125,15 @@ class _DropDownScreenState extends State<DropDownScreen> {
                       ),
                     );
                   } else {
-                    return Container(); // Return an empty container if no selection is made
+                    return Container();
+                  }
+                }),
+                // Display the selected property ID below the dropdown
+                Obx(() {
+                  if (selectedPropertyId.value != null) {
+                    return Text('ID: ${selectedPropertyId.value}');
+                  } else {
+                    return Container();
                   }
                 }),
               ],
@@ -149,7 +158,7 @@ class ShimmerLoading extends StatelessWidget {
             height: 50,
             color: Colors.white,
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           Container(
             width: double.infinity,
             height: 50,

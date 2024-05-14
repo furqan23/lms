@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:splashapp/model/course_model.dart';
+import 'package:splashapp/res/constants/constants.dart';
 import 'package:splashapp/view_model/Controller/homedetail_controller.dart';
 import 'package:splashapp/widget/lsit.dart';
 import '../../model/cart_model.dart';
@@ -25,7 +26,7 @@ class HomeDetail extends StatefulWidget {
 
 class _VideoViewState extends State<HomeDetail> {
   final HomeDetailsController homeDetailsController =
-      Get.put(HomeDetailsController());
+  Get.put(HomeDetailsController());
   List<CourseModel> courseList = [];
   List<CartModel> cartList = [];
   bool boolData = false;
@@ -52,18 +53,18 @@ class _VideoViewState extends State<HomeDetail> {
               padding: const EdgeInsets.all(15.0),
               child: Badge(
                 label: Obx(
-                  () => Text(
+                      () => Text(
                     cartInt.value,
                     style: const TextStyle(color: Colors.white),
                   ),
                 ),
                 backgroundColor: Colors.red,
                 isLabelVisible:
-                    cartList.isNotEmpty, // Show badge if cartList is not empty
+                cartList.isNotEmpty, // Show badge if cartList is not empty
                 child: IconButton(
                   onPressed: () async {
                     var updatedCartList =
-                        await Get.to(() => CartScreen(cartList: cartList));
+                    await Get.to(() => CartScreen(cartList: cartList));
 
                     if (updatedCartList != null) {
                       setState(() {
@@ -79,19 +80,19 @@ class _VideoViewState extends State<HomeDetail> {
           ],
         ),
         body: Obx(
-          () {
+              () {
             if (homeDetailsController.coursemodel.value == null ||
                 homeDetailsController.coursemodel.value!.isEmpty) {
               return const Center(
                 child:
-                    CircularProgressIndicator(), // Show circular progress indicator
+                CircularProgressIndicator(), // Show circular progress indicator
               );
             } else {
               return ListView.builder(
                 itemCount: homeDetailsController.coursemodel.value!.length,
                 itemBuilder: (context, index) {
                   final category =
-                      homeDetailsController.coursemodel.value![index];
+                  homeDetailsController.coursemodel.value![index];
                   return lsit(
                     regMethod: category.registrationMethod.toString(),
                     ePass: category.catName.toString(),
@@ -106,6 +107,8 @@ class _VideoViewState extends State<HomeDetail> {
                         onAddToCart(index);
                       } else if (category.registrationMethod.toString() ==
                           "single") {
+                        singleCartIndex= singleButtnCartindexG;
+                        print('single car  $singleButtnCartindexG');
                         onAddToSingleCart(index, singleCartIndex);
                         singleCartIndex++;
                       }
@@ -143,7 +146,7 @@ class _VideoViewState extends State<HomeDetail> {
     if (courseToAdds.registrationMethod == "single") {
       // Ensure courseToAdds is not null and courseIndex is within bounds
       if (courseToAdds != null &&
-          courseIndex >= 1 &&
+          courseIndex >= 0 &&
           courseIndex < courseToAdds.courses!.length) {
         final course = courseToAdds.courses![courseIndex];
         final cartItem = CartModel(

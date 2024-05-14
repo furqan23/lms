@@ -12,3 +12,5 @@ const textBoldStyleTimer = TextStyle(
     color: AppColors.redColor, fontWeight: FontWeight.bold, fontSize: 25);
 
 const String Appverison = "Version: 3.0";
+
+int singleButtnCartindexG=0;
