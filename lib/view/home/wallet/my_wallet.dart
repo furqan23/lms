@@ -13,8 +13,8 @@ import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/res/color/appcolor.dart';
 import 'package:splashapp/res/constants/constants.dart';
 import 'package:splashapp/res/stringstext/text_string.dart';
-import 'package:splashapp/view_model/Controller/cart_controller.dart';
 import 'package:splashapp/view_model/Controller/auth/login_controller.dart';
+import 'package:splashapp/view_model/Controller/cart/cart_controller.dart';
 import 'package:splashapp/widget/incoming_payment_method_dialog.dart';
 import 'package:splashapp/widget/show_load_indicator.dart';
 

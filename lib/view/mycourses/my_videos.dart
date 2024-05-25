@@ -43,33 +43,38 @@ class _MyVideosState extends State<MyVideos> {
         title: const Text("Video Lectures"),
       ),
       body: Obx(() {
-
-      if (videoController.categories.value == null || videoController.categories.value!.isEmpty) {
-        return const Center(
-          child: CircularProgressIndicator(), // Show circular progress indicator
-        );
-      } else {
-        return ListView.builder(
-          itemCount: videoController.categories.value!.length,
-          itemBuilder: (context, index) {
-            final category = videoController.categories.value![index];
-            return InkWell(
-              onTap: () {
-                Get.to(() =>
-                    PlayVideo(
-                      type: "ok",
-                      id: category.videoName.toString(),
-                      listvideo: myVideoList, // Pass the entire list
-                    ));
-              },
-              child: VideoCard(
-                id: category.id.toString(),
-                title: category.videoTitle.toString(),
-              ),
-            );
-          },
-        );
-      }
+        // Check if the album list is empty or null
+        if (videoController.categories.value == null ||
+            videoController.categories.value!.isEmpty) {
+          return const Center(
+            child:
+                CircularProgressIndicator(), // Show circular progress indicator
+          );
+        } else if (videoController.categories.value!.isEmpty) {
+          return const Center(
+            child: Text('No Video available.'),
+          );
+        } else {
+          return ListView.builder(
+            itemCount: videoController.categories.value!.length,
+            itemBuilder: (context, index) {
+              final category = videoController.categories.value![index];
+              return InkWell(
+                onTap: () {
+                  Get.to(() => PlayVideo(
+                        type: "ok",
+                        id: category.videoName.toString(),
+                        listvideo: myVideoList, // Pass the entire list
+                      ));
+                },
+                child: VideoCard(
+                  id: category.id.toString(),
+                  title: category.videoTitle.toString(),
+                ),
+              );
+            },
+          );
+        }
       }),
     );
   }

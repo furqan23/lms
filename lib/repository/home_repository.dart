@@ -1,6 +1,8 @@
 import 'package:splashapp/data/network/network_api_service.dart';
 import 'package:splashapp/res/app_url/app_url.dart';
 
+import '../values/auth_api.dart';
+
 class HomeRepository {
   final _apiService = NetworkApiService();
 
@@ -12,7 +14,13 @@ class HomeRepository {
     return response;
   }
 
-  ///  coursealbumapi
+  ///  MyCouese Api
+
+  Future<dynamic> getMyCourseAPI(header) async {
+    dynamic response = _apiService.getApi(AuthApi.getstudentCourse,headers: header);
+    return response;
+  }
+
   Future<dynamic> coursealbum(var data, header) async {
     dynamic response =
         _apiService.postApi(data, headers: header, AppUrl.coursealbum);
@@ -35,7 +43,7 @@ class HomeRepository {
 
   Future<dynamic> getresultsApi(var data, header) async {
     dynamic response =
-    _apiService.postApi(data, headers: header, AppUrl.getMyResultsTestApi);
+        _apiService.postApi(data, headers: header, AppUrl.getMyResultsTestApi);
     return response;
   }
 
@@ -46,9 +54,9 @@ class HomeRepository {
     return response;
   }
 
-  Future<dynamic> getdropapi() async {
-    dynamic response =
-        _apiService.getApi("http://167.71.58.227/api/v1/governorates");
-    return response;
+   Future<dynamic> getdropapi() async {
+     dynamic response =
+         _apiService.getApi("http://167.71.58.227/api/v1/governorates");
+     return response;
   }
 }

@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:splashapp/data/response/status.dart';
+import 'package:splashapp/model/cart_model.dart';
 import 'package:splashapp/model/course_model.dart';
 import 'package:splashapp/repository/home_repository.dart';
 
@@ -41,6 +44,23 @@ class HomeDetailsController extends GetxController {
     } catch (e) {
       log('Exception caught: $e');
       setRxRequestStatus(Status.ERROR);
+    }
+  }
+
+  List<CartModel> cartList = [];
+  Future<void> saveCartData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final cartData = cartList.map((cart) => cart.toJson()).toList();
+    await prefs.setString('cartData', json.encode(cartData));
+    print("Cart data saved successfully.");
+  }
+
+  Future<void> loadCartData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final cartDataJson = prefs.getString('cartData');
+    if (cartDataJson != null) {
+      final cartData = json.decode(cartDataJson) as List<dynamic>;
+      cartList = cartData.map((json) => CartModel.fromJson(json)).toList();
     }
   }
 }

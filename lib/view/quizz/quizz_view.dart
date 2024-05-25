@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use, non_constant_identifier_names, must_be_immutable
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
@@ -63,6 +64,7 @@ class _QuizzViewState extends State<QuizzView> {
     super.initState();
     selectedRadio = null;
     getTokenAndFetchInvoice();
+   print("${widget.totalTime}");
   }
 
 
@@ -175,7 +177,8 @@ class _QuizzViewState extends State<QuizzView> {
           SingleChildScrollView(
             child: Column(
                 children: [
-                  TimerWidgett(timee:  120),
+                  TimerWidgett(timee:  widget.totalTime),
+
                   const SizedBox(height: 15),
 
                   Container(

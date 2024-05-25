@@ -1,11 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:splashapp/view_model/Controller/auth/login_controller.dart';
 import 'package:splashapp/model/my_courses_model.dart';
-import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/view/mycourses/my_album.dart';
+import 'package:splashapp/view_model/Controller/mycourse/mycourse_controller.dart';
 import 'package:splashapp/widget/dasbhoard_card_two.dart';
 
 class MyCourses extends StatefulWidget {
@@ -16,9 +14,21 @@ class MyCourses extends StatefulWidget {
 }
 
 class _MyCoursesState extends State<MyCourses> {
-  String? token;
-  List<Data> myCoursesList = [];
-  bool boolData = true; // Initialize to true for showing loading indicator
+  final MyCourseController myCourseController = Get.put(MyCourseController());
+  late String token;
+
+
+  @override
+  void initState() {
+    super.initState();
+    getTokenAndFetchVideos();
+  }
+
+  Future<void> getTokenAndFetchVideos() async {
+    token = (await LoginController().getTokenFromHive())!;
+    print('Token: $token');
+    myCourseController.mycoursesApi(token);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,84 +36,47 @@ class _MyCoursesState extends State<MyCourses> {
       appBar: AppBar(
         title: const Text("My Courses"),
       ),
-      body: boolData
-          ? Center(
-        child: CircularProgressIndicator(),
-      )
-          : myCoursesList.isEmpty
-          ? const Center(
-        child: Text('No Course available'),
-      )
-          : ListView.builder(
-          shrinkWrap: true,
-          itemCount: myCoursesList.length,
-          itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () {
-                Get.to(() => MyAlbum(myCoursesList[index].courseId!));
-              },
-              child: DashbaordCardTwo(
-                group: myCoursesList[index].courseCode,
-                id: myCoursesList[index].name,
-                catName: myCoursesList[index].courseTitle,
-                name: "${myCoursesList[index].firstName}",
-                description: myCoursesList[index].name,
-                slug: myCoursesList[index].name,
-                seat: myCoursesList[index].totalSeat,
-                registermethod:
-                myCoursesList[index].registrationMethod,
-                buttonText: 'View Detail >',
-              ),
-            );
-          }),
+      body: Obx(() {
+        // Check if the album list is empty or null
+        if (myCourseController.coursedata.value == null ||
+            myCourseController.coursedata.value!.isEmpty) {
+          return const Center(
+            child:
+            CircularProgressIndicator(), // Show circular progress indicator
+          );
+        } else if (myCourseController.coursedata.value!.isEmpty) {
+          return const Center(
+            child: Text('No courses available.'),
+          );
+        } else {
+          return ListView.builder(
+              shrinkWrap: true,
+              itemCount: myCourseController.coursedata.value!.length,
+              itemBuilder: (context, index) {
+                final category = myCourseController.coursedata.value![index];
+                return InkWell(
+                  onTap: () {
+                    Get.to(
+                          () => MyAlbum(
+                        category.courseId.toString(),
+                      ),
+                    );
+                  },
+                  child: DashbaordCardTwo(
+                    group: category.courseCode.toString(),
+                    id: category.name.toString(),
+                    catName: category.courseTitle,
+                    name: "${category.firstName}",
+                    description: category.name,
+                    slug: category.name,
+                    seat: category.totalSeat,
+                    registermethod: category.registrationMethod,
+                    buttonText: 'View Detail >',
+                  ),
+                );
+              });
+        }
+      }),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getTokenAndFetchInvoice();
-  }
-
-  Future<void> getTokenAndFetchInvoice() async {
-    token = await LoginController().getTokenFromHive();
-    print('Token: $token');
-    getMyCourseAPI();
-  }
-
-  void getMyCourseAPI() async {
-    try {
-      final res = await http.get(
-        Uri.parse(AuthApi.getstudentCourse),
-        headers: {
-          'Authorization': 'Bearer $token', // Use the retrieved token
-          'Content-Type': 'application/json',
-        },
-      );
-
-      print('Response Status Code: ${res.statusCode}');
-      print('Response Body: ${res.body}');
-
-      if (res.statusCode == 200) {
-        final mydata = jsonDecode(res.body);
-        print('Parsed Data: $mydata');
-        final course = MyCoursesModel.fromJson(mydata);
-        setState(() {
-          boolData = false; // Set to false after receiving response
-          myCoursesList = course.data!;
-        });
-      } else {
-        setState(() {
-          boolData = false; // Set to false in case of error too
-        });
-        print('Error: ${res.statusCode}');
-        throw Exception('Failed to fetch courses');
-      }
-    } catch (e) {
-      setState(() {
-        boolData = false; // Set to false in case of exception
-      });
-      print('Exception: $e');
-    }
   }
 }

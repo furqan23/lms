@@ -49,65 +49,19 @@ class _CartScreenState extends State<CartScreen> {
       } else {
         // If no data found in SharedPreferences, use the data from the widget
         cartList = widget.cartList;
-        setState(() {
-          clearCartData();
-        });
       }
     });
-  }
-
-  Map<String, List<CartModel>> groupCartItemsByName() {
-    Map<String, List<CartModel>> groupedItems = {};
-
-    for (var item in cartList) {
-      if (!groupedItems.containsKey(item.groupname)) {
-        groupedItems[item.groupname] = [item];
-      } else {
-        groupedItems[item.groupname]!.add(item);
-      }
-    }
-
-    return groupedItems;
-  }
-
-  double calculateTotalBalance() {
-    return cartList.fold(0.0, (double sum, CartModel cartItem) {
-      return sum + cartItem.price;
-    });
-  }
-
-  void deleteCartItem(int index) {
-    setState(() {
-      String groupNameToRemove = cartList[index].groupname;
-      cartList.removeAt(index);
-
-      // Remove all items with the same category name
-      cartList.removeWhere((item) => item.groupname == groupNameToRemove);
-      cartInt.value = cartList.length.toString();
-      setState(() {
-        clearCartData();
-      });
-      saveCartData();
-    });
-  }
-
-  Future<void> clearCartData() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('cartData');
   }
 
   Future<void> saveCartData() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('cartData', json.encode(cartList));
+    final cartData = widget.cartList.map((cart) => cart.toJson()).toList();
+    await prefs.setString('cartData', json.encode(cartData));
+    print(cartData);
   }
 
   @override
   Widget build(BuildContext context) {
-    // Calculate the total balance by summing up the prices of all items in the cart
-
-    double totalBalance = calculateTotalBalance();
-    Map<String, List<CartModel>> groupedCartItems = groupCartItemsByName();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cart'),
@@ -115,89 +69,89 @@ class _CartScreenState extends State<CartScreen> {
       body: Column(
         children: <Widget>[
           Expanded(
-            flex: 6,
-            child: Container(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: groupedCartItems.length,
-                itemBuilder: (context, index) {
-                  var groupName = groupedCartItems.keys.toList()[index];
-                  print("tettstst ${groupName}");
-                  var groupItems = groupedCartItems[groupName]!;
-
-                  return Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('Group Name: $groupName'),
-                          ),
-                          Column(
-                            children: groupItems.map((item) {
-                              return Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Card(
-                                    color: AppColors.whiteshade100,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                              "Category Name: ${item.categoryname}"),
-                                          Text(
-                                              "Course title: ${item.courseTitle}"),
-                                          Text(
-                                              'Price: ${item.price.toStringAsFixed(2)} $currency'),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  deleteCartItem(index);
-                                },
-                                icon: const Icon(
-                                  Icons.delete,
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+            child: ListView.separated(
+              itemCount: widget.cartList.length,
+              itemBuilder: (context, index) {
+                final cartItem = widget.cartList[index];
+                return Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Group Name: ${cartItem.groupname}'),
+                        Text("Category Name: ${cartItem.categoryname}"),
+                        Text("Course title: ${cartItem.courseTitle}"),
+                        Text('Price: ${cartItem.price.toStringAsFixed(2)}'),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  if (cartItem.registrationMethod == 'single') {
+                                    widget.cartList
+                                        .removeAt(index); // Remove single item
+                                  } else if (cartItem.registrationMethod ==
+                                      'whole') {
+                                    widget.cartList.removeWhere((item) =>
+                                        item.registrationMethod ==
+                                        'whole');
+                                  }
+                                });
+                                saveCartData(); // Save the updated cart data
+                              },
+                              icon: cartItem.registrationMethod == 'single'
+                                  ? const Icon(
+                                      Icons.delete,
+                                      color: Colors.red,
+                                    )
+                                  : cartItem.registrationMethod == 'whole' &&
+                                          index ==
+                                              widget.cartList
+                                                      .where((item) =>
+                                                          item.registrationMethod ==
+                                                          'whole')
+                                                      .length -
+                                                  1
+                                      ? InkWell(
+                                          onTap: () {},
+                                          child: const Icon(
+                                            Icons.delete,
+                                            color: Colors.green,
+                                          ),
+                                        )
+                                      : SizedBox(),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
+              separatorBuilder: (context, index) {
+                if (index % 4 == 3 &&
+                    widget.cartList[index].registrationMethod == "whole") {
+                  return const Divider(
+                    color: Colors.grey,
+                    thickness: 5,
+                  ); // Show divider for whole items
+                }
+                return const SizedBox.shrink(); // No divider for other items
+              },
             ),
           ),
-          // Display the total balance at the bottom of the screen
-
           Padding(
             padding: const EdgeInsets.all(1.0),
             child: Text(
-              'Total Amount: $currency ${totalBalance.toStringAsFixed(2)}',
+              'Total Price: $currency ${widget.cartList.fold<double>(0, (total, item) => total + item.price)}',
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-
           InkWell(
             onTap: () {
               //  getInvoiceID();

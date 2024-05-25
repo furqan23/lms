@@ -22,6 +22,18 @@ class _MyCoursesState extends State<MyAlbum> {
   bool isLoading = false;
 
   @override
+  void initState() {
+    super.initState();
+    getTokenAndFetchVideos();
+  }
+
+  Future<void> getTokenAndFetchVideos() async {
+    token = (await LoginController().getTokenFromHive())!;
+    print('Token: $token');
+    albumController.courseAlbumApi(widget.id, token);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -34,6 +46,10 @@ class _MyCoursesState extends State<MyAlbum> {
           return const Center(
             child:
                 CircularProgressIndicator(), // Show circular progress indicator
+          );
+        } else if (albumController.album.value!.isEmpty) {
+          return const Center(
+            child: Text('No courses Album  available.'),
           );
         } else {
           return ListView.builder(
@@ -59,17 +75,5 @@ class _MyCoursesState extends State<MyAlbum> {
         }
       }),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getTokenAndFetchVideos();
-  }
-
-  Future<void> getTokenAndFetchVideos() async {
-    token = (await LoginController().getTokenFromHive())!;
-    print('Token: $token');
-    albumController.courseAlbumApi(widget.id, token);
   }
 }

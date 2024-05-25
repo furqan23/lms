@@ -9,7 +9,7 @@ import 'package:splashapp/view/mycourses/my_courses.dart';
 import 'package:splashapp/view/splash/splach_screen.dart';
 import 'dart:developer' as developer;
 
-import 'package:splashapp/view_model/Controller/cart_controller.dart';
+import 'package:splashapp/view_model/Controller/cart/cart_controller.dart';
 
 class HiveBoxes {
   static const String settingsBox = 'settingsBox';

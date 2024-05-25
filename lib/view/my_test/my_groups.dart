@@ -1,4 +1,3 @@
-import 'package:splashapp/model/get_groups_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:splashapp/view_model/Controller/auth/login_controller.dart';
@@ -16,8 +15,19 @@ class MyGroups extends StatefulWidget {
 class _MyCoursesState extends State<MyGroups> {
   final MygroupController mygroupController = Get.put(MygroupController());
   late String token;
-  List<GetGroupsModel> _myCoursesList = [];
   bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getTokenAndFetchVideos();
+  }
+
+  Future<void> getTokenAndFetchVideos() async {
+    token = (await LoginController().getTokenFromHive())!;
+    print('Token: $token');
+    mygroupController.getMyCourseAPI(token);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +40,8 @@ class _MyCoursesState extends State<MyGroups> {
           if (isLoading) {
             return const Center(
               child: Text(
-                  'No tests available'), // Show text when there are no albums
+                'No tests available',
+              ), // Show text when there are no albums
             );
           } else if (mygroupController.groupmodel.value == null ||
               mygroupController.groupmodel.value!.isEmpty) {
@@ -62,17 +73,5 @@ class _MyCoursesState extends State<MyGroups> {
         },
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getTokenAndFetchVideos();
-  }
-
-  Future<void> getTokenAndFetchVideos() async {
-    token = (await LoginController().getTokenFromHive())!;
-    print('Token: $token');
-    mygroupController.getMyCourseAPI(token);
   }
 }

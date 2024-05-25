@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:splashapp/model/DashboardModelWithSlider.dart';
 import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/res/logs/logs.dart';
-import 'package:splashapp/view/home/my_wallet.dart';
+import 'package:splashapp/view/home/wallet/my_wallet.dart';
 import 'package:splashapp/view/home_detail/home_detail.dart';
 import 'package:splashapp/view_model/Controller/auth/login_controller.dart';
 import 'package:splashapp/widget/carousel_widget.dart';
