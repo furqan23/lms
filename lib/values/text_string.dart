@@ -12,6 +12,7 @@ const String tPassword = "Password";
 const String tName = "Name";
 const String tForgetPassword = "Forget Password";
 const String currency = "PKR";
+const String currencyui = "PKRddd";
 
 
 
