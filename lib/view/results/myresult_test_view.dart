@@ -65,10 +65,17 @@ class _MyResultsTestState extends State<MyResultsTest> {
                         child: Row(
                           children: [
                             const Text("TestTile : "),
-                            Text(getresultList[0]
-                                .data![index]
-                                .testTitle
-                                .toString()),
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width * .74,
+                                child: Text(
+                                  getresultList[0]
+                                      .data![index]
+                                      .testTitle
+                                      .toString(),
+                                  style:
+                                  TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                                )),
+
                           ],
                         ),
                       ),

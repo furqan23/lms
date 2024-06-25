@@ -49,7 +49,7 @@ class CarouselWidget extends StatelessWidget {
                   child: Image.network(
                     image,
                     // width: 100,
-                      height: 123,
+                      height: 120,
                   ),),
                 ],
               ),

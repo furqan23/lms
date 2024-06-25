@@ -175,7 +175,7 @@ class _QuizzViewState extends State<QuizzView> {
           SingleChildScrollView(
             child: Column(
                 children: [
-                  TimerWidgett(timee:  120),
+                  TimerWidgett(timee:  widget.totalTime),
                   const SizedBox(height: 15),
 
                   Container(
