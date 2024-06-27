@@ -97,6 +97,7 @@ class _QuizzViewState extends State<QuizzView> {
 
 
           if (skippedQuestionsIds.isNotEmpty) {
+
             print('skip skip quesiton not empty');
 
               skipOnceSnackbarBool=true;
@@ -110,6 +111,10 @@ class _QuizzViewState extends State<QuizzView> {
               givenAnswerList.add(slted ?? "opt_1");
               CorrectAnswerList.add(
                   getquestionTestList[0].data!.correctAnswer.toString());
+
+              // for (String id in question_id) {
+              //   print("skip question id list $id");
+              // }
               int _aaa =
               int.parse(skippedQuestionsIds[skipQLngth - 1].toString());
               print("skip id  $_aaa");
@@ -198,7 +203,7 @@ class _QuizzViewState extends State<QuizzView> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CustomRadioButton(
-                          title: "Option A",
+                          title: "   Option A   ",
                           isSelected: selectedRadio == 1,
                           onSelect: (bool selected) {
                             handleRadioValueChange(selected ? 1 : null,false);
@@ -206,7 +211,7 @@ class _QuizzViewState extends State<QuizzView> {
                         ),
                         const SizedBox(width: 20),
                         CustomRadioButton(
-                          title: "Option B",
+                          title: "   Option B   ",
                           isSelected: selectedRadio == 2,
                           onSelect: (bool selected) {
                             handleRadioValueChange(selected ? 2 : null,false);
@@ -221,7 +226,7 @@ class _QuizzViewState extends State<QuizzView> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CustomRadioButton(
-                          title: "Option C",
+                          title: "   Option C   ",
                           isSelected: selectedRadio == 3,
                           onSelect: (bool selected) {
                             handleRadioValueChange(selected ? 3 : null,false);
@@ -229,7 +234,7 @@ class _QuizzViewState extends State<QuizzView> {
                         ),
                         const SizedBox(width: 20),
                         CustomRadioButton(
-                          title: "Option D",
+                          title: "   Option D   ",
                           isSelected: selectedRadio == 4,
                           onSelect: (bool selected) {
                             handleRadioValueChange(selected ? 4 : null,false);
@@ -246,7 +251,7 @@ class _QuizzViewState extends State<QuizzView> {
                           onPressed: () {
                             postAnswerAPI();
                           },
-                          child: const Text("Submit"),
+                          child: const Text("  Submit  "),
                         ),
                       ),
                       skipOnceSnackbarBool? const Text("Skip Questions Started \n No more skipping allowed",style: TextStyle(color: Colors.red,),):
@@ -260,7 +265,7 @@ class _QuizzViewState extends State<QuizzView> {
                             skipQLngth++;
                            handleRadioValueChange( 44 ,true);
                           },
-                          child:  Text( "Skip"),
+                          child:  Text( "  Skip  "),
                         ),
                       ),
                     ],
@@ -385,7 +390,7 @@ class _QuizzViewState extends State<QuizzView> {
               backgroundColor: Colors.green,
               titleStyle: const TextStyle(color: Colors.white),
               middleTextStyle: const TextStyle(color: Colors.white),
-              textConfirm: "      okay      ",
+              textConfirm: "      OKAY      ",
               // textCancel: "Cancel",
               // cancelTextColor: Colors.white,
               confirmTextColor: Colors.green,
@@ -429,55 +434,55 @@ class _QuizzViewState extends State<QuizzView> {
       print(e.toString());
     }
   }
-  List<Map<String, dynamic>> _getSkippedQuestions() {
-    List<Map<String, dynamic>> skippedQuestions = [];
-    for (var i = 0; i < skippedQuestionsBox.length; i++) {
-      var questionInfo = skippedQuestionsBox.getAt(i);
-      if (questionInfo != null) {
-        skippedQuestions.add(questionInfo as Map<String, dynamic>);
-      }
-    }
-    return skippedQuestions;
-  }
-  void printSkippedQuestions() {
-    List<Map<String, dynamic>> skippedQuestions = _getSkippedQuestions();
-    for (var i = 0; i < skippedQuestions.length; i++) {
-      var questionData = skippedQuestions[i]['questionData'];
-      var givenAnswers = skippedQuestions[i]['givenAnswerList'];
-      var correctAnswers = skippedQuestions[i]['correctAnswerList'];
+  // List<Map<String, dynamic>> _getSkippedQuestions() {
+  //   List<Map<String, dynamic>> skippedQuestions = [];
+  //   for (var i = 0; i < skippedQuestionsBox.length; i++) {
+  //     var questionInfo = skippedQuestionsBox.getAt(i);
+  //     if (questionInfo != null) {
+  //       skippedQuestions.add(questionInfo as Map<String, dynamic>);
+  //     }
+  //   }
+  //   return skippedQuestions;
+  // }
+  // void printSkippedQuestions() {
+  //   List<Map<String, dynamic>> skippedQuestions = _getSkippedQuestions();
+  //   for (var i = 0; i < skippedQuestions.length; i++) {
+  //     var questionData = skippedQuestions[i]['questionData'];
+  //     var givenAnswers = skippedQuestions[i]['givenAnswerList'];
+  //     var correctAnswers = skippedQuestions[i]['correctAnswerList'];
+  //
+  //     print('Skipped Question ${i + 1}:');
+  //     print('Question: ${questionData['questionName']}');
+  //     print('Given Answers: $givenAnswers');
+  //     print('Correct Answers: $correctAnswers');
+  //     print('\n');
+  //   }
+  // }
 
-      print('Skipped Question ${i + 1}:');
-      print('Question: ${questionData['questionName']}');
-      print('Given Answers: $givenAnswers');
-      print('Correct Answers: $correctAnswers');
-      print('\n');
-    }
-  }
 
-
-  void checkSavedData() {
-    print('Number of items in skippedQuestionsBox: ${skippedQuestionsBox.length}');
-    for (var i = 0; i < skippedQuestionsBox.length; i++) {
-      var questionInfo = skippedQuestionsBox.getAt(i);
-      print('Item $i:');
-      print(questionInfo);
-    }
-  }
-  void _skipQuestion() {
-    var questionData = getquestionTestList[0].data;
-    // Create a map containing all necessary information
-    Map<String, dynamic> questionInfo = {
-      'questionData': questionData,
-      'givenAnswerList': givenAnswerList,
-      'correctAnswerList': CorrectAnswerList,
-    };
-
-    // Add the map to the Hive box
-    skippedQuestionsBox.add(questionInfo);
-
-    // Check the saved data
-    checkSavedData();
-  }
+  // void checkSavedData() {
+  //   print('Number of items in skippedQuestionsBox: ${skippedQuestionsBox.length}');
+  //   for (var i = 0; i < skippedQuestionsBox.length; i++) {
+  //     var questionInfo = skippedQuestionsBox.getAt(i);
+  //     print('Item $i:');
+  //     print(questionInfo);
+  //   }
+  // }
+  // void _skipQuestion() {
+  //   var questionData = getquestionTestList[0].data;
+  //   // Create a map containing all necessary information
+  //   Map<String, dynamic> questionInfo = {
+  //     'questionData': questionData,
+  //     'givenAnswerList': givenAnswerList,
+  //     'correctAnswerList': CorrectAnswerList,
+  //   };
+  //
+  //   // Add the map to the Hive box
+  //   skippedQuestionsBox.add(questionInfo);
+  //
+  //   // Check the saved data
+  //   checkSavedData();
+  // }
 
 }
 

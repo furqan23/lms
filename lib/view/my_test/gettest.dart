@@ -187,6 +187,13 @@ class _GetTestState extends State<GetTest> {
                         height: 20,
                       ),
                       // Image.asset(AppImage.internetConnection,height:30),
+                      const Text(
+                        "Before starting test increase your screen timout to 10 minutes in mobile settings/display/screen timeout",
+                        style: textBoldStyleDialogRed,
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
