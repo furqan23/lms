@@ -157,125 +157,129 @@ class _QuizzViewState extends State<QuizzView> {
   Widget build(BuildContext context) {
     print("total question ${widget.totalQuestions}");
     final textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Quiz'),
-          // actions: [
-            // IconButton(
-            //   onPressed: () {
-            //     // _skipQuestion();
-            //   },
-            //   icon: const Icon(Icons.skip_next),
-            // ),
-          // ],
-        ),
-        body: boolData
-            ?
-        // ListView.builder(
-        //   itemCount: getquestionTestList.length,
-        //   itemBuilder: (context, index) {
-        //     return
-          SingleChildScrollView(
-            child: Column(
-                children: [
-                  TimerWidgett(timee:  widget.totalTime),
-                  const SizedBox(height: 15),
+    return WillPopScope(
 
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    child: Html(data: """
-               
-        <h2>Question No ${getquestionTestList[0].data!.questionNo!}</h2>
-       
-        <p>${getquestionTestList[0].data!.questionName!}</p>
-         ${getquestionTestList[0].data!.opt1!}
-         ${getquestionTestList[0].data!.opt2!}
-         ${getquestionTestList[0].data!.opt3!}
-         ${getquestionTestList[0].data!.opt4!}
-      
-"""),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      onWillPop:  () async => false,
+      child: MediaQuery(
+        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Quiz'),
+            // actions: [
+              // IconButton(
+              //   onPressed: () {
+              //     // _skipQuestion();
+              //   },
+              //   icon: const Icon(Icons.skip_next),
+              // ),
+            // ],
+          ),
+          body: boolData
+              ?
+          // ListView.builder(
+          //   itemCount: getquestionTestList.length,
+          //   itemBuilder: (context, index) {
+          //     return
+            SingleChildScrollView(
+              child: Column(
+                  children: [
+                    TimerWidgett(timee:  widget.totalTime),
+                    const SizedBox(height: 15),
+
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      child: Html(data: """
+                 
+          <h2>Question No ${getquestionTestList[0].data!.questionNo!}</h2>
+         
+          <p>${getquestionTestList[0].data!.questionName!}</p>
+           ${getquestionTestList[0].data!.opt1!}
+           ${getquestionTestList[0].data!.opt2!}
+           ${getquestionTestList[0].data!.opt3!}
+           ${getquestionTestList[0].data!.opt4!}
+        
+      """),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomRadioButton(
+                            title: "   Option A   ",
+                            isSelected: selectedRadio == 1,
+                            onSelect: (bool selected) {
+                              handleRadioValueChange(selected ? 1 : null,false);
+                            },
+                          ),
+                          const SizedBox(width: 20),
+                          CustomRadioButton(
+                            title: "   Option B   ",
+                            isSelected: selectedRadio == 2,
+                            onSelect: (bool selected) {
+                              handleRadioValueChange(selected ? 2 : null,false);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomRadioButton(
+                            title: "   Option C   ",
+                            isSelected: selectedRadio == 3,
+                            onSelect: (bool selected) {
+                              handleRadioValueChange(selected ? 3 : null,false);
+                            },
+                          ),
+                          const SizedBox(width: 20),
+                          CustomRadioButton(
+                            title: "   Option D   ",
+                            isSelected: selectedRadio == 4,
+                            onSelect: (bool selected) {
+                              handleRadioValueChange(selected ? 4 : null,false);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CustomRadioButton(
-                          title: "   Option A   ",
-                          isSelected: selectedRadio == 1,
-                          onSelect: (bool selected) {
-                            handleRadioValueChange(selected ? 1 : null,false);
-                          },
+                        Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              postAnswerAPI();
+                            },
+                            child: const Text("  Submit  "),
+                          ),
                         ),
-                        const SizedBox(width: 20),
-                        CustomRadioButton(
-                          title: "   Option B   ",
-                          isSelected: selectedRadio == 2,
-                          onSelect: (bool selected) {
-                            handleRadioValueChange(selected ? 2 : null,false);
-                          },
+                        skipOnceSnackbarBool? const Text("Skip Questions Started \n No more skipping allowed",style: TextStyle(color: Colors.red,),):
+                        Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              int _aaa =
+                                  int.parse(getquestionTestList[0].data!.questionNo.toString()) ;
+                              skippedQuestionsIds.add(_aaa);
+                              skipQLngth++;
+                             handleRadioValueChange( 44 ,true);
+                            },
+                            child:  Text( "  Skip  "),
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CustomRadioButton(
-                          title: "   Option C   ",
-                          isSelected: selectedRadio == 3,
-                          onSelect: (bool selected) {
-                            handleRadioValueChange(selected ? 3 : null,false);
-                          },
-                        ),
-                        const SizedBox(width: 20),
-                        CustomRadioButton(
-                          title: "   Option D   ",
-                          isSelected: selectedRadio == 4,
-                          onSelect: (bool selected) {
-                            handleRadioValueChange(selected ? 4 : null,false);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  Row(mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            postAnswerAPI();
-                          },
-                          child: const Text("  Submit  "),
-                        ),
-                      ),
-                      skipOnceSnackbarBool? const Text("Skip Questions Started \n No more skipping allowed",style: TextStyle(color: Colors.red,),):
-                      Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            int _aaa =
-                                int.parse(getquestionTestList[0].data!.questionNo.toString()) ;
-                            skippedQuestionsIds.add(_aaa);
-                            skipQLngth++;
-                           handleRadioValueChange( 44 ,true);
-                          },
-                          child:  Text( "  Skip  "),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-          )
+                  ],
+                ),
+            )
 
-            : const Center(
-          child: CircularProgressIndicator(),
+              : const Center(
+            child: CircularProgressIndicator(),
+          ),
         ),
       ),
     );
