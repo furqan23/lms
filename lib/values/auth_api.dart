@@ -8,6 +8,8 @@ class AuthApi {
 
   static const String loginApi = "https://qca.com.pk/api/v1/login";
   static const String registerApi = "https://qca.com.pk/api/v1/register";
+
+  static const String deleteApi = "https://qca.com.pk/api/v1/student/deleteAccount";
   static const String resetpasswordApi =
       "https://qca.com.pk/api/v1/password/email";
   static const String otpApi =

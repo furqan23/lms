@@ -52,14 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
     namee = Hive.box("tokenBox");
     userName = namee!.get('username') ?? " ";
     emaill = namee!.get('email') ?? " ";
-
-
-
-
-
-
     // final String? token = box.get('token');
     getDashboardAPI();
+
   }
 
   void getDashboardAPI() async {
@@ -356,6 +351,56 @@ class _HomeScreenState extends State<HomeScreen> {
                         InkWell(
                           onTap: () {
                             _loginController.logout();
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            width: 90,
+                            height: 40,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.blueAccent),
+                            child: const Text(
+                              'Yes',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            width: 90,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.blueAccent,
+                            ),
+                            child: const Text(
+                              'No',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ));
+                }),
+            CustomListTile(
+                leadingIcon: Icons.delete_outlined,
+                titleText: 'Delete Account',
+                color: Colors.red.shade400,
+                onTap: () {
+                  Get.dialog(AlertDialog(
+                    backgroundColor: Colors.white,
+                    title: const Text('Are you Sure you want to Delete Account!'),
+                    content: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            _loginController.deleteAPI();
                           },
                           child: Container(
                             alignment: Alignment.center,
