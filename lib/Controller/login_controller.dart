@@ -11,8 +11,10 @@ import '../values/auth_api.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginController extends GetxController {
+import '../values/logs.dart';
 
+class LoginController extends GetxController {
+  String? token;
   final emailController = TextEditingController().obs;
   final passwordController = TextEditingController().obs;
   RxBool loading = false.obs;
@@ -27,6 +29,12 @@ class LoginController extends GetxController {
     // initPlatformState();
   }
 
+
+  Future<void> getTokenAndFetchInvoice() async {
+    token = await LoginController().getTokenFromHive();
+    print('Token: $token');
+
+  }
   void checkLoginStatus() async {
     final box = await Hive.openBox<String>('tokenBox');
     final String? token = box.get('token');
@@ -50,7 +58,7 @@ class LoginController extends GetxController {
       final res = await http.post(Uri.parse(AuthApi.loginApi), body: {
         'email': email,
         'password': password,
-       //'device_imei': imei,
+        //'device_imei': imei,
 
       });
 
@@ -110,7 +118,6 @@ class LoginController extends GetxController {
   }
 
 
-
   // var modelName = ''.obs;
   // var manufacturerName = ''.obs;
   // var apiLevel = ''.obs;
@@ -118,7 +125,6 @@ class LoginController extends GetxController {
   // var productName = ''.obs;
   // var cpuType = ''.obs;
   // var hardware = ''.obs;
-
 
 
   // Future<void> initPlatformState() async {
@@ -136,4 +142,49 @@ class LoginController extends GetxController {
   //     platformVersion.value = '${e.message}';
   //   }
   // }
+
+
+
+
+  void deleteAPI() async {
+    loading.value = true;
+
+    try {
+      await getTokenAndFetchInvoice();
+      final res = await http.post(
+        Uri.parse(AuthApi.deleteApi),
+        headers: {
+          'Authorization': 'Bearer $token', // Use the retrieved token
+          'Content-Type': 'application/json',
+        },
+      );
+
+      print('Response Status Code: ${res.statusCode}');
+      print('Response Body: ${res.body}');
+
+      if (res.statusCode == 200) {
+        final data = jsonDecode(res.body);
+        if (data['success'] == true) {
+          loading.value = false;
+          Get.snackbar('Account Deleted', 'Account deleted successfully.');
+          logout(); // Log out the user after deleting the account
+        } else {
+          loading.value = false;
+          Get.snackbar('Delete Failed', data['message']);
+        }
+      } else if (res.statusCode == 400) {
+        loading.value = false;
+        final data = jsonDecode(res.body);
+        Get.snackbar('Delete Failed', data['message']);
+      } else {
+        loading.value = false;
+        Get.snackbar('Delete Failed', 'Unable to delete the account. Please try again.');
+      }
+    } catch (e) {
+      loading.value = false;
+      print(e.toString());
+      Get.snackbar('Exception', e.toString());
+    }
+  }
+
 }
