@@ -161,41 +161,41 @@ class _lsitState extends State<lsit> {
                               style:
                               const TextStyle(fontWeight: FontWeight.w500),
                             ),
-                            widget.regMethod == "single"
-                                ? InkWell(
-                                    onTap: () {
-                                      widget.onAddToCart();
-                                    },
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      width: 80,
-                                      height: 30,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(14),
-                                        color: AppColors.primaryColor
-                                            .withOpacity(.8),
-                                      ),
-                                      child: const Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'Add',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                          SizedBox(width: 5),
-                                          Icon(
-                                            Icons.shopping_cart,
-                                            size: 18,
-                                            color: Colors.white,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                : Container(),
+                            // widget.regMethod == "single"
+                            //     ? InkWell(
+                            //         onTap: () {
+                            //           widget.onAddToCart();
+                            //         },
+                            //         child: Container(
+                            //           alignment: Alignment.center,
+                            //           width: 80,
+                            //           height: 30,
+                            //           decoration: BoxDecoration(
+                            //             borderRadius: BorderRadius.circular(14),
+                            //             color: AppColors.primaryColor
+                            //                 .withOpacity(.8),
+                            //           ),
+                            //           child: const Row(
+                            //             mainAxisAlignment:
+                            //                 MainAxisAlignment.center,
+                            //             children: [
+                            //               Text(
+                            //                 'Add',
+                            //                 style: TextStyle(
+                            //                   color: Colors.white,
+                            //                 ),
+                            //               ),
+                            //               SizedBox(width: 5),
+                            //               Icon(
+                            //                 Icons.shopping_cart,
+                            //                 size: 18,
+                            //                 color: Colors.white,
+                            //               )
+                            //             ],
+                            //           ),
+                            //         ),
+                            //       )
+                            //     : Container(),
                           ],
                         ),
 
@@ -224,30 +224,30 @@ class _lsitState extends State<lsit> {
               ),
 
               const SizedBox(height: 10),
-              widget.regMethod == "whole"
-                  ? Center(
-                      child: InkWell(
-                        onTap: () {
-                          widget.onAddToCart();
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          width: 150,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(22),
-                            color: AppColors.primaryColor.withOpacity(.8),
-                          ),
-                          child: const Text(
-                            'Add To Cart',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  : Container(),
+              // widget.regMethod == "whole"
+              //     ? Center(
+              //         child: InkWell(
+              //           onTap: () {
+              //             widget.onAddToCart();
+              //           },
+              //           child: Container(
+              //             alignment: Alignment.center,
+              //             width: 150,
+              //             height: 40,
+              //             decoration: BoxDecoration(
+              //               borderRadius: BorderRadius.circular(22),
+              //               color: AppColors.primaryColor.withOpacity(.8),
+              //             ),
+              //             child: const Text(
+              //               'Add To Cart',
+              //               style: TextStyle(
+              //                 color: Colors.white,
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       )
+              //     : Container(),
 
               // Center(child: SizedBox(width:300,child: Container(height:55, decoration: new BoxDecoration(
               //     color: MyColors.primaryColor,

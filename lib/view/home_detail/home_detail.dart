@@ -51,32 +51,32 @@ class _VideoViewState extends State<HomeDetail> {
         appBar: AppBar(
           title: const Text('Details'),
           actions: [
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Badge(
-                label:  Obx(
-                      () =>Text(
-                  cartInt.value,
-                  style: const TextStyle(color: Colors.white),
-                ),),
-                backgroundColor: Colors.red,
-                isLabelVisible:
-                    cartList.isNotEmpty, // Show badge if cartList is not empty
-                child: IconButton(
-                  onPressed: () async {
-                    var updatedCartList =
-                        await Get.to(() => CartScreen(cartList: cartList));
-
-                    if (updatedCartList != null) {
-                      setState(() {
-                        cartList = updatedCartList;
-                      });
-                    }
-                  },
-                  icon: const Icon(Icons.shopping_cart),
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(15.0),
+            //   child: Badge(
+            //     label:  Obx(
+            //           () =>Text(
+            //       cartInt.value,
+            //       style: const TextStyle(color: Colors.white),
+            //     ),),
+            //     backgroundColor: Colors.red,
+            //     isLabelVisible:
+            //         cartList.isNotEmpty, // Show badge if cartList is not empty
+            //     child: IconButton(
+            //       onPressed: () async {
+            //         var updatedCartList =
+            //             await Get.to(() => CartScreen(cartList: cartList));
+            //
+            //         if (updatedCartList != null) {
+            //           setState(() {
+            //             cartList = updatedCartList;
+            //           });
+            //         }
+            //       },
+            //       icon: const Icon(Icons.shopping_cart),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
         body: boolData

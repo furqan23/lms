@@ -165,17 +165,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           child:Text("No Data")
                         ),
                       const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: ElevatedButton(
-                              onPressed: () {
-                                Get.to(() => const MyWallet());
-                              },
-                              child: const Text("My Wallet")),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: SizedBox(
+                      //     width: MediaQuery.of(context).size.width,
+                      //     child: ElevatedButton(
+                      //         onPressed: () {
+                      //           Get.to(() => const MyWallet());
+                      //         },
+                      //         child: const Text("My Wallet")),
+                      //   ),
+                      // ),
 
                       GridView.builder(
                         physics: const NeverScrollableScrollPhysics(),
@@ -329,14 +329,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: () {
                   Get.to(() => const MyGroups());
                 }),
-            CustomListTile(
-              leadingIcon: Icons.payments_outlined,
-              titleText: 'Payments',
-              color: Colors.green.shade300,
-              onTap: () {
-                Get.to(() => Payment());
-              },
-            ),
+            // CustomListTile(
+            //   leadingIcon: Icons.payments_outlined,
+            //   titleText: 'Payments',
+            //   color: Colors.green.shade300,
+            //   onTap: () {
+            //     Get.to(() => Payment());
+            //   },
+            // ),
             CustomListTile(
                 leadingIcon: Icons.exit_to_app,
                 titleText: 'Logout',
