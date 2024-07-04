@@ -69,7 +69,7 @@ class LoginController extends GetxController {
 
   void loginApi() async {
     loading.value = true;
-
+// okay test
     try {
       final email = emailController.value.text.toString().trim();
       final password = passwordController.value.text.toString().trim();
