@@ -1,17 +1,14 @@
 import 'dart:convert';
-// import 'package:device_information/device_information.dart';
-import 'package:flutter/services.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:splashapp/view/auth/login/login_view.dart';
 import 'package:splashapp/view/home/home_screen.dart';
 import '../values/auth_api.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../values/logs.dart';
 
 class LoginController extends GetxController {
   String? token;
@@ -26,15 +23,41 @@ class LoginController extends GetxController {
   void onInit() {
     super.onInit();
     checkLoginStatus();
-    // initPlatformState();
+    requestPermissionsAndFetchIMEI();
   }
 
+  Future<void> requestPermissionsAndFetchIMEI() async {
+    var status = await Permission.phone.status;
+    if (!status.isGranted) {
+      status = await Permission.phone.request();
+    }
+    if (status.isGranted) {
+      await initPlatformState();
+    } else {
+      Get.snackbar('Permission Denied', 'Phone state permission is required to fetch the IMEI number.');
+    }
+  }
+
+  Future<void> initPlatformState() async {
+    final deviceInfoPlugin = DeviceInfoPlugin();
+    try {
+      if (GetPlatform.isAndroid) {
+        var androidInfo = await deviceInfoPlugin.androidInfo;
+        imeiNo.value = androidInfo.serialNumber!;
+        print("this phone imei${imeiNo.value}");
+      } else {
+        Get.snackbar('Unsupported Platform', 'This functionality is only available on Android devices.');
+      }
+    } catch (e) {
+      print('Failed to get platform version: $e');
+    }
+  }
 
   Future<void> getTokenAndFetchInvoice() async {
-    token = await LoginController().getTokenFromHive();
+    token = await getTokenFromHive();
     print('Token: $token');
-
   }
+
   void checkLoginStatus() async {
     final box = await Hive.openBox<String>('tokenBox');
     final String? token = box.get('token');
@@ -58,8 +81,7 @@ class LoginController extends GetxController {
       final res = await http.post(Uri.parse(AuthApi.loginApi), body: {
         'email': email,
         'password': password,
-        //'device_imei': imei,
-
+        'device_imei': imei,
       });
 
       var data = jsonDecode(res.body);
@@ -75,12 +97,9 @@ class LoginController extends GetxController {
           await box.put('token', token);
           await box.put('email', emailController.value.text.toString().trim());
           await box.put('username', userName);
-          // Print the saved token
-          // print('Token saved: $token');
-          print('Token saved: $userName     ');
+          print('Token saved: $userName');
           loading.value = false;
           Get.snackbar('Login Successful', 'Congratulations');
-
           Get.offAll(() => const HomeScreen());
         } else {
           loading.value = false;
@@ -101,50 +120,18 @@ class LoginController extends GetxController {
   }
 
   void logout() async {
-    // Clear the email and password fields
     emailController.value.clear();
     passwordController.value.clear();
 
-    ////////////token///////////////////
     final box = await Hive.openBox<String>('tokenBox');
     await box.delete('token');
     Get.offAll(() => LoginView(), transition: Transition.fade);
   }
 
-  //// get Hive token from hive
   Future<String?> getTokenFromHive() async {
     final box = await Hive.openBox<String>('tokenBox');
     return box.get('token');
   }
-
-
-  // var modelName = ''.obs;
-  // var manufacturerName = ''.obs;
-  // var apiLevel = ''.obs;
-  // var deviceName = ''.obs;
-  // var productName = ''.obs;
-  // var cpuType = ''.obs;
-  // var hardware = ''.obs;
-
-
-  // Future<void> initPlatformState() async {
-  //   try {
-  //     platformVersion.value = await DeviceInformation.platformVersion;
-  //     imeiNo.value = await DeviceInformation.deviceIMEINumber;
-  //     // modelName.value = await DeviceInformation.deviceModel;
-  //     // manufacturerName.value = await DeviceInformation.deviceManufacturer;
-  //     // apiLevel.value = await DeviceInformation.apiLevel;
-  //     // deviceName.value = await DeviceInformation.deviceName;
-  //     // productName.value = await DeviceInformation.productName;
-  //     // cpuType.value = await DeviceInformation.cpuName;
-  //     // hardware.value = await DeviceInformation.hardware;
-  //   } on PlatformException catch (e) {
-  //     platformVersion.value = '${e.message}';
-  //   }
-  // }
-
-
-
 
   void deleteAPI() async {
     loading.value = true;
@@ -154,7 +141,7 @@ class LoginController extends GetxController {
       final res = await http.post(
         Uri.parse(AuthApi.deleteApi),
         headers: {
-          'Authorization': 'Bearer $token', // Use the retrieved token
+          'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',
         },
       );
@@ -167,7 +154,7 @@ class LoginController extends GetxController {
         if (data['success'] == true) {
           loading.value = false;
           Get.snackbar('Account Deleted', 'Account deleted successfully.');
-          logout(); // Log out the user after deleting the account
+          logout();
         } else {
           loading.value = false;
           Get.snackbar('Delete Failed', data['message']);
@@ -186,5 +173,4 @@ class LoginController extends GetxController {
       Get.snackbar('Exception', e.toString());
     }
   }
-
 }
