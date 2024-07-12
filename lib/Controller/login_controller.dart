@@ -45,7 +45,10 @@ class LoginController extends GetxController {
         var androidInfo = await deviceInfoPlugin.androidInfo;
         imeiNo.value = androidInfo.serialNumber!;
         print("this phone imei${imeiNo.value}");
-      } else {
+      }else if(GetPlatform.isMacOS){
+        var iosInfo=await deviceInfoPlugin.iosInfo;
+        imeiNo.value=iosInfo.identifierForVendor!;
+      }else {
         Get.snackbar('Unsupported Platform', 'This functionality is only available on Android devices.');
       }
     } catch (e) {
