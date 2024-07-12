@@ -43,7 +43,7 @@ class LoginController extends GetxController {
     try {
       if (GetPlatform.isAndroid) {
         var androidInfo = await deviceInfoPlugin.androidInfo;
-        imeiNo.value = androidInfo.serialNumber!;
+        imeiNo.value = androidInfo.id;
         print("this phone imei${imeiNo.value}");
       }else if(GetPlatform.isMacOS){
         var iosInfo=await deviceInfoPlugin.iosInfo;
