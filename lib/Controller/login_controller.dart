@@ -18,6 +18,7 @@ class LoginController extends GetxController {
   String? tokenString;
   var platformVersion = 'Unknown'.obs;
   var imeiNo = ''.obs;
+  RxBool isPermissionGranted = false.obs;
 
   @override
   void onInit() {
@@ -26,6 +27,7 @@ class LoginController extends GetxController {
     requestPermissionsAndFetchIMEI();
   }
 
+
   Future<void> requestPermissionsAndFetchIMEI() async {
     var status = await Permission.phone.status;
     if (!status.isGranted) {
@@ -33,10 +35,13 @@ class LoginController extends GetxController {
     }
     if (status.isGranted) {
       await initPlatformState();
+      isPermissionGranted.value = true;
     } else {
+      isPermissionGranted.value = false;
       Get.snackbar('Permission Denied', 'Phone state permission is required to fetch the IMEI number.');
     }
   }
+
 
   Future<void> initPlatformState() async {
     final deviceInfoPlugin = DeviceInfoPlugin();
@@ -71,6 +76,11 @@ class LoginController extends GetxController {
   }
 
   void loginApi() async {
+    if (!isPermissionGranted.value) {
+      requestPermissionsAndFetchIMEI();
+      Get.snackbar('Permission Required', 'Phone state permission is required to proceed.');
+      return;
+    }
     loading.value = true;
 
     try {
