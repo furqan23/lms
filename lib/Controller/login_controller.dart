@@ -27,7 +27,6 @@ class LoginController extends GetxController {
     requestPermissionsAndFetchIMEI();
   }
 
-
   Future<void> requestPermissionsAndFetchIMEI() async {
     var status = await Permission.phone.status;
     if (!status.isGranted) {
@@ -38,10 +37,10 @@ class LoginController extends GetxController {
       isPermissionGranted.value = true;
     } else {
       isPermissionGranted.value = false;
-      Get.snackbar('Permission Denied', 'Phone state permission is required to fetch the IMEI number.');
+      Get.snackbar('Permission Denied',
+          'Phone state permission is required to fetch the IMEI number.');
     }
   }
-
 
   Future<void> initPlatformState() async {
     final deviceInfoPlugin = DeviceInfoPlugin();
@@ -50,11 +49,12 @@ class LoginController extends GetxController {
         var androidInfo = await deviceInfoPlugin.androidInfo;
         imeiNo.value = androidInfo.id;
         print("this phone imei${imeiNo.value}");
-      }else if(GetPlatform.isMacOS){
-        var iosInfo=await deviceInfoPlugin.iosInfo;
-        imeiNo.value=iosInfo.identifierForVendor!;
-      }else {
-        Get.snackbar('Unsupported Platform', 'This functionality is only available on Android devices.');
+      } else if (GetPlatform.isMacOS) {
+        var iosInfo = await deviceInfoPlugin.iosInfo;
+        imeiNo.value = iosInfo.identifierForVendor!;
+      } else {
+        Get.snackbar('Unsupported Platform',
+            'This functionality is only available on Android devices.');
       }
     } catch (e) {
       print('Failed to get platform version: $e');
@@ -78,7 +78,8 @@ class LoginController extends GetxController {
   void loginApi() async {
     if (!isPermissionGranted.value) {
       requestPermissionsAndFetchIMEI();
-      Get.snackbar('Permission Required', 'Phone state permission is required to proceed.');
+      Get.snackbar('Permission Required',
+          'Phone state permission is required to proceed.');
       return;
     }
     loading.value = true;
@@ -178,7 +179,8 @@ class LoginController extends GetxController {
         Get.snackbar('Delete Failed', data['message']);
       } else {
         loading.value = false;
-        Get.snackbar('Delete Failed', 'Unable to delete the account. Please try again.');
+        Get.snackbar(
+            'Delete Failed', 'Unable to delete the account. Please try again.');
       }
     } catch (e) {
       loading.value = false;
