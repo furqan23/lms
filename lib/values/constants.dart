@@ -11,4 +11,4 @@ const textBoldStyleDialog=TextStyle(color: AppColors.primaryColor,fontWeight: Fo
 const textBoldStyleDialogRed=TextStyle(color: AppColors.redColor,fontWeight: FontWeight.bold,fontSize: 12);
 const textBoldStyleTimer=TextStyle(color: AppColors.redColor,fontWeight: FontWeight.bold,fontSize: 25);
 
-const String Appverison="Version: 5.0";
+const String Appverison="Version: 6.0";

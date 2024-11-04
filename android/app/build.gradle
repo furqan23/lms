@@ -55,7 +55,7 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file('E:/1_Workspace/keys/qca/qca_artificer.jks')
+            storeFile file('K:/keys/qca_artificer.jks')
             storePassword '12345678'
             keyAlias = 'qca'
             keyPassword '12345678'

@@ -18,6 +18,7 @@ class LoginController extends GetxController {
   String? tokenString;
   var platformVersion = 'Unknown'.obs;
   var imeiNo = ''.obs;
+  RxBool isPermissionGranted = false.obs;
 
   @override
   void onInit() {
@@ -33,8 +34,11 @@ class LoginController extends GetxController {
     }
     if (status.isGranted) {
       await initPlatformState();
+      isPermissionGranted.value = true;
     } else {
-      Get.snackbar('Permission Denied', 'Phone state permission is required to fetch the IMEI number.');
+      isPermissionGranted.value = false;
+      Get.snackbar('Permission Denied',
+          'Phone state permission is required to fetch the IMEI number.');
     }
   }
 
@@ -43,13 +47,14 @@ class LoginController extends GetxController {
     try {
       if (GetPlatform.isAndroid) {
         var androidInfo = await deviceInfoPlugin.androidInfo;
-        imeiNo.value = androidInfo.serialNumber!;
+        imeiNo.value = androidInfo.id;
         print("this phone imei${imeiNo.value}");
-      }else if(GetPlatform.isMacOS){
-        var iosInfo=await deviceInfoPlugin.iosInfo;
-        imeiNo.value=iosInfo.identifierForVendor!;
-      }else {
-        Get.snackbar('Unsupported Platform', 'This functionality is only available on Android devices.');
+      } else if (GetPlatform.isMacOS) {
+        var iosInfo = await deviceInfoPlugin.iosInfo;
+        imeiNo.value = iosInfo.identifierForVendor!;
+      } else {
+        Get.snackbar('Unsupported Platform',
+            'This functionality is only available on Android devices.');
       }
     } catch (e) {
       print('Failed to get platform version: $e');
@@ -71,6 +76,12 @@ class LoginController extends GetxController {
   }
 
   void loginApi() async {
+    if (!isPermissionGranted.value) {
+      requestPermissionsAndFetchIMEI();
+      Get.snackbar('Permission Required',
+          'Phone state permission is required to proceed.');
+      return;
+    }
     loading.value = true;
 
     try {
@@ -168,7 +179,8 @@ class LoginController extends GetxController {
         Get.snackbar('Delete Failed', data['message']);
       } else {
         loading.value = false;
-        Get.snackbar('Delete Failed', 'Unable to delete the account. Please try again.');
+        Get.snackbar(
+            'Delete Failed', 'Unable to delete the account. Please try again.');
       }
     } catch (e) {
       loading.value = false;
