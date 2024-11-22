@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:convert';
+import 'dart:io';
 import 'package:splashapp/values/constants.dart';
 import 'package:splashapp/view/payment/payment.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -33,16 +34,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   final LoginController _loginController = Get.put(LoginController());
 
   List<DashboardModelWithSlider> dashboardList = [];
-  bool boolData = false;
+  bool isLoading = true;
   List<CartModel> cartList = [];
   Box<String>? namee;
   String userName = "";
   String emaill = "";
-
+  String errorMessage = "";
 
   @override
   void initState() {
@@ -54,11 +54,18 @@ class _HomeScreenState extends State<HomeScreen> {
     emaill = namee!.get('email') ?? " ";
     // final String? token = box.get('token');
     getDashboardAPI();
-
   }
 
   void getDashboardAPI() async {
     try {
+      setState(() {
+        isLoading = true; // Start loading state
+        errorMessage = ""; // Clear previous errors
+      });
+
+      // Clear old data to avoid appending duplicates
+      dashboardList.clear();
+
       final res = await http.get(Uri.parse(AuthApi.getDashboardApi));
       print('Response Status Code: ${res.statusCode}');
       print('Response Body long');
@@ -69,18 +76,37 @@ class _HomeScreenState extends State<HomeScreen> {
           final mydata = jsonDecode(res.body);
           dashboardList.add(DashboardModelWithSlider.fromJson(mydata));
           // print("${dashboardList[0].data!.slides!.length}");
-          setState(() {
-            boolData = true;
-          });
         } else {
           throw Exception('Empty response');
         }
       } else {
         throw Exception('Failed to load data');
       }
+    } on SocketException catch (_) {
+      setState(() {
+        errorMessage = "Check your internet connection, restart the app.";
+      });
     } catch (e) {
       print('Error: $e');
+      setState(() {
+        errorMessage = 'Failed to load data: $e';
+      });
       throw Exception('Failed to load data $e');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  /// Simulate Data Refresh
+  Future<void> _refreshData() async {
+    try {
+      getDashboardAPI();
+    } catch (e) {
+      setState(() {
+        errorMessage = 'Failed to refresh data. Please try again.';
+      });
     }
   }
 
@@ -98,10 +124,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: WillPopScope(
-      onWillPop: ()async{
-        SystemNavigator.pop();
-        return true;
-      },
+        onWillPop: () async {
+          SystemNavigator.pop();
+          return true;
+        },
         child: Scaffold(
           appBar: AppBar(
             title: const Text("Dashboard"),
@@ -116,114 +142,148 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           )),
-          body: boolData
-              ? SingleChildScrollView(
-                  child: Column(
+          body: RefreshIndicator(
+            onRefresh: _refreshData,
+            child: isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryColor,
+                    ),
+                  )
+                : Column(
                     children: [
-                      const SizedBox(height: 5),
-                      // TimerWidgett(timee: 120),
-                      // CountdownTimerDemo(),
-                      // ElevatedButton(onPressed: (){
-                      //   Get.to(()=>const TestApp());
-                      // }, child: const Text("data")),
-                      if (dashboardList.isNotEmpty &&
-                          dashboardList[0].data != null &&
-                          dashboardList[0].data!.slides != null &&
-                          dashboardList[0].data!.slides!.isNotEmpty)
-                        CarouselSlider.builder(
-                          itemCount: dashboardList[0].data!.slides!.length,
-                          itemBuilder: (BuildContext context, int itemIndex,
-                                  int pageViewIndex) =>
-                              CarouselWidget(
-                            title:
-                                "${dashboardList[0].data!.slides![itemIndex].title.toString()}",
-                            // ${dashboardList[0].data!.slides!.length}
+                      Expanded(
+                        child: SingleChildScrollView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(height: 5),
+                              // TimerWidgett(timee: 120),
+                              // CountdownTimerDemo(),
+                              // ElevatedButton(onPressed: (){
+                              //   Get.to(()=>const TestApp());
+                              // }, child: const Text("data")),
+                              (dashboardList.isNotEmpty &&
+                                      dashboardList[0].data != null &&
+                                      dashboardList[0].data!.slides != null &&
+                                      dashboardList[0].data!.slides!.isNotEmpty)
+                                  ? CarouselSlider.builder(
+                                      itemCount:
+                                          dashboardList[0].data!.slides!.length,
+                                      itemBuilder: (BuildContext context,
+                                              int itemIndex,
+                                              int pageViewIndex) =>
+                                          CarouselWidget(
+                                        title:
+                                            "${dashboardList[0].data!.slides![itemIndex].title.toString()}",
+                                        // ${dashboardList[0].data!.slides!.length}
 
-                            image: AuthApi.baseUrlSliderImage +
-                                "${dashboardList[0].data!.slides![itemIndex].filePath.toString()}",
-                            btntitle: '',
-                            color: const Color(0xffFFCAA6),
-                          ),
-                          options: CarouselOptions(
-                            aspectRatio: 15 / 9,
-                            viewportFraction: 0.8,
-                            initialPage: 0,
-                            enableInfiniteScroll: true,
-                            reverse: false,
-                            autoPlay: true,
-                            autoPlayInterval: const Duration(seconds: 3),
-                            autoPlayAnimationDuration:
-                                const Duration(milliseconds: 800),
-                            autoPlayCurve: Curves.fastOutSlowIn,
-                            enlargeCenterPage: true,
-                            enlargeFactor: 0.3,
-                            scrollDirection: Axis.horizontal,
-                          ),
-                        )
-                      else
-                        const Center(
-                          child:Text("No Data")
-                        ),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: ElevatedButton(
-                              onPressed: () {
-                                Get.to(() => const MyWallet());
-                              },
-                              child: const Text("My Wallet")),
-                        ),
-                      ),
-
-                      GridView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: dashboardList.isNotEmpty
-                            ? dashboardList[0].data?.category?.length ?? 0
-                            : 0,
-                        gridDelegate:
-                             SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                              childAspectRatio: (itemWidth / itemHeight),
-                        ),
-                        itemBuilder: (context, index) {
-                          if (dashboardList.isEmpty) {
-                            return const Center(child: Text('No data'));
-                          } else {
-                            return InkWell(
-                              onTap: () {
-                                Get.to(() => HomeDetail(
-                                      mscatId: dashboardList[0]
-                                          .data!
-                                          .category![index]
-                                          .mscatId!,
-                                    ));
-                              },
-                              child: DashbaordCard(
-                                id: dashboardList[0].data!.category![index].id!,
-                                catName: dashboardList[0]
-                                    .data!
-                                    .category![index]
-                                    .catName!,
-                                image: dashboardList[0]
-                                    .data!
-                                    .category![index]
-                                    .image,
+                                        image: AuthApi.baseUrlSliderImage +
+                                            "${dashboardList[0].data!.slides![itemIndex].filePath.toString()}",
+                                        btntitle: '',
+                                        color: const Color(0xffFFCAA6),
+                                      ),
+                                      options: CarouselOptions(
+                                        aspectRatio: 15 / 9,
+                                        viewportFraction: 0.8,
+                                        initialPage: 0,
+                                        enableInfiniteScroll: true,
+                                        reverse: false,
+                                        autoPlay: false,
+                                        autoPlayInterval:
+                                            const Duration(seconds: 3),
+                                        autoPlayAnimationDuration:
+                                            const Duration(milliseconds: 800),
+                                        autoPlayCurve: Curves.fastOutSlowIn,
+                                        enlargeCenterPage: true,
+                                        enlargeFactor: 0.3,
+                                        scrollDirection: Axis.horizontal,
+                                      ),
+                                    )
+                                  : const Center(
+                                      child: Text(
+                                        "No data available!",
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                    ),
+                              const SizedBox(height: 10),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        Get.to(() => const MyWallet());
+                                      },
+                                      child: const Text("My Wallet")),
+                                ),
                               ),
-                            );
-                          }
-                        },
+                              dashboardList.isNotEmpty &&
+                                      dashboardList[0]
+                                              .data
+                                              ?.category
+                                              ?.isNotEmpty ==
+                                          true
+                                  ? GridView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: dashboardList.isNotEmpty
+                                          ? dashboardList[0]
+                                                  .data
+                                                  ?.category
+                                                  ?.length ??
+                                              0
+                                          : 0,
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        childAspectRatio:
+                                            (itemWidth / itemHeight),
+                                      ),
+                                      itemBuilder: (context, index) {
+                                        if (dashboardList.isEmpty) {
+                                          return const Center(
+                                              child: Text('No data'));
+                                        } else {
+                                          return InkWell(
+                                            onTap: () {
+                                              Get.to(() => HomeDetail(
+                                                    mscatId: dashboardList[0]
+                                                        .data!
+                                                        .category![index]
+                                                        .mscatId!,
+                                                  ));
+                                            },
+                                            child: DashboardCard(
+                                              id: dashboardList[0]
+                                                  .data!
+                                                  .category![index]
+                                                  .id!,
+                                              catName: dashboardList[0]
+                                                  .data!
+                                                  .category![index]
+                                                  .catName!,
+                                              image: dashboardList[0]
+                                                  .data!
+                                                  .category![index]
+                                                  .image,
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    )
+                                  : Center(
+                                      child: Text(errorMessage),
+                                    ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                )
-              : const Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.primaryColor,
-                  ),
-                ),
+          ),
         ),
       ),
     );
@@ -394,7 +454,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: () {
                   Get.dialog(AlertDialog(
                     backgroundColor: Colors.white,
-                    title: const Text('Are you Sure you want to Delete Account!'),
+                    title:
+                        const Text('Are you Sure you want to Delete Account!'),
                     content: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

@@ -7,20 +7,19 @@ import 'package:flutter/services.dart';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 
-
 class PlayVideo extends StatefulWidget {
   // const PlayVideo({super.key});
-  final String type,id;
+  final String type, id;
   final List listvideo;
-  PlayVideo({required this.type , required this.id,required this.listvideo});
+  PlayVideo({required this.type, required this.id, required this.listvideo});
 
   @override
   State<PlayVideo> createState() => _PlayVideoState();
 }
 
-
 class _PlayVideoState extends State<PlayVideo> {
-
+  late bool _isAutoScreenEnabled; // To store if auto-rotation is enabled or not
+  late Orientation _currentOrientation;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   late YoutubePlayerController _controller;
@@ -38,8 +37,10 @@ class _PlayVideoState extends State<PlayVideo> {
   @override
   void initState() {
     super.initState();
+    _currentOrientation = MediaQuery.of(context).orientation;
+    _isAutoScreenEnabled =
+        true; // For now, we assume auto-rotation is enabled (can be linked to settings)
     print("List of all video is ${widget.listvideo}");
-
 
     String videoId;
     videoId = YoutubePlayer.convertUrlToId(widget.id)!;
@@ -60,6 +61,36 @@ class _PlayVideoState extends State<PlayVideo> {
     _seekToController = TextEditingController();
     _videoMetaData = const YoutubeMetaData();
     _playerState = PlayerState.unknown;
+  }
+
+  void _setFullScreen(bool enable) {
+    if (enable) {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+          overlays: []); // Hide status and navigation bar (fullscreen)
+      setState(() {
+        _isAutoScreenEnabled = true;
+      });
+    } else {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+          overlays: SystemUiOverlay.values); // Show system bars (normal screen)
+      setState(() {
+        _isAutoScreenEnabled = false;
+      });
+    }
+  }
+
+  void _checkAndEnableFullScreen() {
+    if (_isAutoScreenEnabled) {
+      // Auto-rotation enabled, enable fullscreen
+      _setFullScreen(true);
+    } else {
+      // Show Snackbar asking the user to enable auto-rotation
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(
+                'Please enable auto-rotation in settings for full-screen mode.')),
+      );
+    }
   }
 
   void listener() {
@@ -116,9 +147,7 @@ class _PlayVideoState extends State<PlayVideo> {
               color: Colors.white,
               size: 25.0,
             ),
-            onPressed: () {
-
-            },
+            onPressed: () {},
           ),
         ],
         onReady: () {
@@ -132,7 +161,6 @@ class _PlayVideoState extends State<PlayVideo> {
       ),
       builder: (context, player) => Scaffold(
         key: _scaffoldKey,
-
         body: ListView(
           children: [
             player,
@@ -196,9 +224,9 @@ class _PlayVideoState extends State<PlayVideo> {
                         icon: const Icon(Icons.skip_previous),
                         onPressed: _isPlayerReady
                             ? () => _controller.load(_ids[
-                        (_ids.indexOf(_controller.metadata.videoId) -
-                            1) %
-                            _ids.length])
+                                (_ids.indexOf(_controller.metadata.videoId) -
+                                        1) %
+                                    _ids.length])
                             : null,
                       ),
                       IconButton(
@@ -209,37 +237,45 @@ class _PlayVideoState extends State<PlayVideo> {
                         ),
                         onPressed: _isPlayerReady
                             ? () {
-                          _controller.value.isPlaying
-                              ? _controller.pause()
-                              : _controller.play();
-                          setState(() {});
-                        }
+                                _controller.value.isPlaying
+                                    ? _controller.pause()
+                                    : _controller.play();
+                                setState(() {});
+                              }
                             : null,
                       ),
                       IconButton(
                         icon: Icon(_muted ? Icons.volume_off : Icons.volume_up),
                         onPressed: _isPlayerReady
                             ? () {
-                          _muted
-                              ? _controller.unMute()
-                              : _controller.mute();
-                          setState(() {
-                            _muted = !_muted;
-                          });
-                        }
+                                _muted
+                                    ? _controller.unMute()
+                                    : _controller.mute();
+                                setState(() {
+                                  _muted = !_muted;
+                                });
+                              }
                             : null,
                       ),
-                      FullScreenButton(
-                        controller: _controller,
-                        color: AppColors.primaryColor,
+                      // FullScreenButton(
+                      //   controller: _controller,
+                      //   color: AppColors.primaryColor,
+                      // ),
+                      ElevatedButton(
+                        onPressed: _checkAndEnableFullScreen,
+                        child: Text(
+                          _isAutoScreenEnabled
+                              ? 'Enable Full-Screen Mode'
+                              : 'Enable Auto-Rotation to Use Full-Screen',
+                        ),
                       ),
                       IconButton(
                         icon: const Icon(Icons.skip_next),
                         onPressed: _isPlayerReady
                             ? () => _controller.load(_ids[
-                        (_ids.indexOf(_controller.metadata.videoId) +
-                            1) %
-                            _ids.length])
+                                (_ids.indexOf(_controller.metadata.videoId) +
+                                        1) %
+                                    _ids.length])
                             : null,
                       ),
                     ],
@@ -261,11 +297,11 @@ class _PlayVideoState extends State<PlayVideo> {
                           label: '${(_volume).round()}',
                           onChanged: _isPlayerReady
                               ? (value) {
-                            setState(() {
-                              _volume = value;
-                            });
-                            _controller.setVolume(_volume.round());
-                          }
+                                  setState(() {
+                                    _volume = value;
+                                  });
+                                  _controller.setVolume(_volume.round());
+                                }
                               : null,
                         ),
                       ),
@@ -295,7 +331,7 @@ class _PlayVideoState extends State<PlayVideo> {
         ),
       ),
     );
-}
+  }
 
   Widget _text(String title, String value) {
     return RichText(
@@ -347,17 +383,17 @@ class _PlayVideoState extends State<PlayVideo> {
         color: AppColors.primaryColor,
         onPressed: _isPlayerReady
             ? () {
-          if (_idController.text.isNotEmpty) {
-            var id = YoutubePlayer.convertUrlToId(
-              _idController.text,
-            );
-            if (action == 'LOAD') _controller.load(widget.id);
-            if (action == 'CUE') _controller.cue(widget.id);
-            FocusScope.of(context).requestFocus(FocusNode());
-          } else {
-            _showSnackBar('Source can\'t be empty!');
-          }
-        }
+                if (_idController.text.isNotEmpty) {
+                  var id = YoutubePlayer.convertUrlToId(
+                    _idController.text,
+                  );
+                  if (action == 'LOAD') _controller.load(widget.id);
+                  if (action == 'CUE') _controller.cue(widget.id);
+                  FocusScope.of(context).requestFocus(FocusNode());
+                } else {
+                  _showSnackBar('Source can\'t be empty!');
+                }
+              }
             : null,
         disabledColor: Colors.grey,
         disabledTextColor: Colors.black,
