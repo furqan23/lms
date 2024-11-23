@@ -20,6 +20,7 @@ import 'package:splashapp/view/my_test/my_groups.dart';
 import 'package:splashapp/view/mycourses/my_courses.dart';
 
 import 'package:splashapp/view/results/myresultcourse_view.dart';
+import 'package:splashapp/view/results/resultByRoll/result_roll_screen.dart';
 import 'package:splashapp/widget/carousel_widget.dart';
 import '../../model/cart_model.dart';
 import '../../values/colors.dart';
@@ -66,7 +67,14 @@ class _HomeScreenState extends State<HomeScreen> {
       // Clear old data to avoid appending duplicates
       dashboardList.clear();
 
-      final res = await http.get(Uri.parse(AuthApi.getDashboardApi));
+      final res = await http.get(
+        Uri.parse(AuthApi.getDashboardApi),
+        headers: {
+          // 'Authorization': 'Bearer $tokenn', // Use the retrieved token
+          'Content-Type': 'application/json',
+          'version': Appverison, // Static version
+        },
+      );
       print('Response Status Code: ${res.statusCode}');
       print('Response Body long');
       LogPrint(res.body.toString());
@@ -74,7 +82,12 @@ class _HomeScreenState extends State<HomeScreen> {
       if (res.statusCode == 200) {
         if (res.body.isNotEmpty) {
           final mydata = jsonDecode(res.body);
-          dashboardList.add(DashboardModelWithSlider.fromJson(mydata));
+          if (mydata["success"] == false) {
+            errorMessage = mydata["message"];
+          } else {
+            dashboardList.add(DashboardModelWithSlider.fromJson(mydata));
+          }
+
           // print("${dashboardList[0].data!.slides!.length}");
         } else {
           throw Exception('Empty response');
@@ -211,14 +224,39 @@ class _HomeScreenState extends State<HomeScreen> {
                               dashboardList.isNotEmpty
                                   ? Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: ElevatedButton(
-                                            onPressed: () {
-                                              Get.to(() => const MyWallet());
-                                            },
-                                            child: const Text("My Wallet")),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: SizedBox(
+                                              child: ElevatedButton(
+                                                  onPressed: () {
+                                                    Get.to(
+                                                        () => const MyWallet());
+                                                  },
+                                                  child:
+                                                      const Text("My Wallet")),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Expanded(
+                                            child: SizedBox(
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  Get.to(
+                                                      () => ResultRollScreen());
+                                                },
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: const Text(
+                                                      "Search Result \nby Roll"),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     )
                                   : SizedBox(),
@@ -340,7 +378,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const Text(
-                    "${Appverison}.0 ",
+                    "App Version: ${Appverison}",
                     style: TextStyle(
                       fontFamily: 'BandaBold',
                       fontWeight: FontWeight.w600,

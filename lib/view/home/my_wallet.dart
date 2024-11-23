@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:splashapp/Controller/cart_controller.dart';
 import 'package:splashapp/Controller/login_controller.dart';
@@ -58,24 +59,23 @@ class _MyWallletState extends State<MyWallet> {
 
     if (cartData != null && cartData.isNotEmpty) {
       Iterable decoded = json.decode(cartData);
-      List<CartModel> cartItems = decoded.map((item) => CartModel.fromJson(item)).toList();
+      List<CartModel> cartItems =
+          decoded.map((item) => CartModel.fromJson(item)).toList();
 
       setState(() {
         cartList = cartItems;
       });
       print('Fetched Cart Data: $cartList');
     }
-
   }
+
   void getInvoiceID2() async {
     showLoadingIndicator(context);
     try {
       List<Map<String, dynamic>> requestDataList = [];
 
-
       // log("cartlenht: $cartList.length.toString()");
       for (int i = 0; i < 1; i++) {
-
         Map<String, dynamic> cartData = {
           'fee_type': _test,
           "qty": cartController!.quantity.value.toString(),
@@ -192,7 +192,6 @@ class _MyWallletState extends State<MyWallet> {
     // print('Token: $token');
     // getInvoiceID();
     getInvoiceID2();
-
   }
 
   @override
@@ -224,14 +223,16 @@ class _MyWallletState extends State<MyWallet> {
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
                               children: [
-                                 Text(
+                                Text(
                                   'Per Test Fee: $currency $testfee',
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(height: 13,),
+                                SizedBox(
+                                  height: 13,
+                                ),
                                 const Text(
                                   'Total Amount',
                                   style: TextStyle(
@@ -240,16 +241,16 @@ class _MyWallletState extends State<MyWallet> {
                                   ),
                                 ),
                                 Obx(
-                                      () => Align(
-                                        alignment: Alignment.topCenter,
-                                        child: Text(
-                                    ' ${currency} ${cartController!.totalBalance.value}',
-                                    style: const TextStyle(
+                                  () => Align(
+                                    alignment: Alignment.topCenter,
+                                    child: Text(
+                                      ' ${currency} ${cartController!.totalBalance.value}',
+                                      style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                      ),
                                 ),
 
                                 // Text( 'Total Amount: ${currency}${_cartController.totalBalance.value.toStringAsFixed(0)}'),
@@ -271,11 +272,13 @@ class _MyWallletState extends State<MyWallet> {
                                           shape: BoxShape.circle,
                                           color: AppColors.primaryColor,
                                         ),
-                                        child: const Icon(Icons.remove,color: AppColors.whiteColor),
+                                        child: const Icon(Icons.remove,
+                                            color: AppColors.whiteColor),
                                       ),
                                     ),
                                     Obx(
-                                      () => Text(cartController!.quantity.value.toString()),
+                                      () => Text(cartController!.quantity.value
+                                          .toString()),
                                     ), // Display the quantity from the controller
                                     InkWell(
                                       onTap: () {
@@ -290,7 +293,10 @@ class _MyWallletState extends State<MyWallet> {
                                           shape: BoxShape.circle,
                                           color: AppColors.primaryColor,
                                         ),
-                                        child: const Icon(Icons.add,color: AppColors.whiteColor,),
+                                        child: const Icon(
+                                          Icons.add,
+                                          color: AppColors.whiteColor,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -309,7 +315,10 @@ class _MyWallletState extends State<MyWallet> {
                                         color: AppColors.primaryColor,
                                         borderRadius:
                                             BorderRadius.circular(10)),
-                                    child: const Text("create",style: textwhiteColorStyle,),
+                                    child: const Text(
+                                      "create",
+                                      style: textwhiteColorStyle,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -353,21 +362,23 @@ class _MyWallletState extends State<MyWallet> {
           ),
           isLoading
               ? const Center(
-            child: CircularProgressIndicator(), // Show loading indicator while data is being fetched
-          )
+                  child:
+                      CircularProgressIndicator(), // Show loading indicator while data is being fetched
+                )
               : SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Card(
-              elevation: 1,
-              child: Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: Text(
-                  "Current Balance $currency ${walletBalanceStr.isEmpty ? 'Loading...' : walletBalanceStr}",
-                  style: const TextStyle(color: Colors.green, fontSize: 20),
+                  width: MediaQuery.of(context).size.width,
+                  child: Card(
+                    elevation: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Text(
+                        "Current Balance $currency ${walletBalanceStr.isEmpty ? 'Loading...' : walletBalanceStr}",
+                        style:
+                            const TextStyle(color: Colors.green, fontSize: 20),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
         ],
       ),
     );
@@ -383,13 +394,13 @@ class _MyWallletState extends State<MyWallet> {
   }
 
   void getWalletApi() async {
-
     try {
       final res = await http.get(
         Uri.parse(AuthApi.getMyWalletApi),
         headers: {
           'Authorization': 'Bearer $tokenn', // Use the retrieved token
           'Content-Type': 'application/json',
+          'version': Appverison, // Static version
         },
       );
       print('Response Status Code: ${res.statusCode}');
@@ -432,7 +443,8 @@ class _MyWallletState extends State<MyWallet> {
           final mydata = jsonDecode(res.body);
           // courseList.add(CourseModel.fromJson(mydata));
           testfee = mydata['data']["test_fee"];
-          cartController!.totalBalance.value = testfee * cartController!.quantity.value;
+          cartController!.totalBalance.value =
+              testfee * cartController!.quantity.value;
           setState(() {
             // boolData = true;
           });

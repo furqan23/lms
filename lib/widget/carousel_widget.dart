@@ -48,7 +48,7 @@ class CarouselWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                   child: Image.network(
                     image,
-                    height: 130,
+                    height: screenHeight * 0.15,
                     fit: BoxFit.contain,
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) return child;

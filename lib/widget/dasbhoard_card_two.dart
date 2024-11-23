@@ -81,7 +81,7 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
 
                       Center(
                         child: Image.network(
-                          "${AuthApi.imagesBaseUrl}/course/${widget.courseImage}",
+                          "${AuthApi.baseUrlWeb}/course/${widget.courseImage}",
                           errorBuilder: (BuildContext context, Object exception,
                               StackTrace? stackTrace) {
                             // Returning a local image if the network image fails to load
