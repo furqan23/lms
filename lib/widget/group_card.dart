@@ -3,17 +3,12 @@ import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/values/colors.dart';
 
 class GroupsCard extends StatefulWidget {
-
-
   String id;
   String groupCode;
   String name;
   String registrationMethod;
   String catName;
   String buttonText;
-
-
-
 
   GroupsCard({
     super.key,
@@ -23,7 +18,6 @@ class GroupsCard extends StatefulWidget {
     required this.groupCode,
     required this.registrationMethod,
     required this.buttonText,
-
   });
 
   @override
@@ -34,7 +28,7 @@ class _DashbaordCardState extends State<GroupsCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 12.0,right: 12,top: 8),
+      padding: const EdgeInsets.only(left: 12.0, right: 12, top: 8),
       child: Card(
         elevation: 3,
         child: Container(
@@ -61,7 +55,6 @@ class _DashbaordCardState extends State<GroupsCard> {
                   ),
                   child: Column(
                     children: [
-
                       // SizedBox(
                       //     height: MediaQuery.of(context).size.height * 0.05),
                       // Center(
@@ -80,7 +73,8 @@ class _DashbaordCardState extends State<GroupsCard> {
                       Center(
                         child: Image.network(
                           AuthApi.imageUrl,
-                          errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                          errorBuilder: (BuildContext context, Object exception,
+                              StackTrace? stackTrace) {
                             // Returning a local image if the network image fails to load
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -88,7 +82,8 @@ class _DashbaordCardState extends State<GroupsCard> {
                                 'assets/images/logo.png', // Replace 'local_image.png' with your local image asset path
                                 width: 100, // Adjust width and height as needed
                                 height: 100,
-                                fit: BoxFit.fitHeight, // Adjust the fit property as per your requirement
+                                fit: BoxFit
+                                    .fitHeight, // Adjust the fit property as per your requirement
                               ),
                             );
                           },
@@ -105,13 +100,14 @@ class _DashbaordCardState extends State<GroupsCard> {
                   children: [
                     Text(
                       "${widget.id!}",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Row(
                         children: [
-
                           Text(
                             "${widget.catName!}",
                             style: const TextStyle(fontWeight: FontWeight.bold),
@@ -123,7 +119,7 @@ class _DashbaordCardState extends State<GroupsCard> {
                         ],
                       ),
                     ),
-                   const Padding(
+                    const Padding(
                       padding: const EdgeInsets.only(top: 0),
                       child: Row(
                         children: [
@@ -176,8 +172,8 @@ class _DashbaordCardState extends State<GroupsCard> {
                               borderRadius: BorderRadius.circular(14),
                               color: AppColors.primaryColor,
                             ),
-                            child:  Text(
-                          widget.buttonText!,
+                            child: Text(
+                              widget.buttonText!,
                               style: const TextStyle(
                                 color: Colors.white,
                               ),

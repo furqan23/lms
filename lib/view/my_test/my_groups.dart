@@ -1,31 +1,107 @@
 import 'dart:convert';
-import 'package:splashapp/model/get_groups_model.dart';
-import 'package:splashapp/values/logs.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:splashapp/Controller/login_controller.dart';
-import 'package:splashapp/model/my_courses_model.dart';
 import 'package:splashapp/values/auth_api.dart';
+import 'package:splashapp/values/logs.dart';
+import '../../widget/group_card.dart';
+import '../../view/my_test/gettest.dart';
+import '../../model/aanewmodel.dart';
 import 'package:http/http.dart' as http;
-import 'package:splashapp/view/my_test/gettest.dart';
-import 'package:splashapp/view/mycourses/my_course_detail.dart';
-import 'package:splashapp/view/mycourses/my_videos.dart';
-import 'package:splashapp/widget/dasbhoard_card.dart';
-import 'package:splashapp/widget/dasbhoard_card_two.dart';
-import 'package:splashapp/widget/group_card.dart';
 
 class MyGroups extends StatefulWidget {
   const MyGroups({super.key});
 
   @override
-  State<MyGroups> createState() => _MyCoursesState();
+  State<MyGroups> createState() => _MyGroupsState();
 }
 
-class _MyCoursesState extends State<MyGroups> {
+class _MyGroupsState extends State<MyGroups> {
   String? token;
-  List<GetGroupsModel> _myCoursesList = [];
-  bool boolData = false;
 
+  Map<String, List<Data>> groupsByYear = {};
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchGroups();
+  }
+
+  Future<void> fetchGroups() async {
+    token = await LoginController().getTokenFromHive();
+    if (token != null) {
+      getGroupsAPI();
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> getGroupsAPI() async {
+    try {
+      final res = await http.get(
+        Uri.parse(AuthApi.getGroupsText),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      LogPrint('Response Status Code: ${res.statusCode}');
+      LogPrint('Response Body: ${res.body}');
+
+      if (res.statusCode == 200) {
+        final responseJson = jsonDecode(res.body);
+        if (responseJson['success'] == true) {
+          final model = GetGroupsModel.fromJson(responseJson);
+          setState(() {
+            groupsByYear = model.data ?? {};
+            isLoading = false;
+          });
+        } else {
+          setState(() {
+            isLoading = false;
+          });
+        }
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      LogPrint(e.toString());
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  // Future<void> fetchGroups() async {
+  //   try {
+  //     final String jsonString =
+  //         await rootBundle.loadString('lib/model/aajson.json');
+  //     final Map<String, dynamic> jsonResponse = jsonDecode(jsonString);
+
+  //     final Map<String, List<Data>> parsedGroups = {};
+  //     jsonResponse.forEach((year, groups) {
+  //       parsedGroups[year] =
+  //           (groups as List).map((e) => Data.fromJson(e)).toList();
+  //     });
+
+  //     setState(() {
+  //       groupsByYear = parsedGroups;
+  //       isLoading = false;
+  //     });
+  //   } catch (e) {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //     debugPrint("Error loading static groups data: $e");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -33,78 +109,68 @@ class _MyCoursesState extends State<MyGroups> {
       appBar: AppBar(
         title: const Text("Groups"),
       ),
-      body: boolData
-          ? _myCoursesList[0].data?.length==0?const Center(child: Text("No Groups Found"),): ListView.builder(
-              shrinkWrap: true,
-              itemCount: _myCoursesList[0].data?.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: (){
-                    Get.to(()=>GetTest(id:_myCoursesList[0].data![index].id.toString()));
-                  },
-                  child: GroupsCard(
-                    id: "${_myCoursesList[0].data![index].groupCode}-${_myCoursesList[0].data![index].name}",
-                    catName: _myCoursesList[0].data![index].catName?.toString()??"N/A",
-                    name:"${_myCoursesList[0].data![index].description.toString()} ",
-                    buttonText:  _myCoursesList[0].data![index].group_type.toString()   , groupCode: 'aa', registrationMethod: 'aa',
-                  ),
-
-                );
-              })
-          :const Center(
+      body: isLoading
+          ? const Center(
               child: CircularProgressIndicator(),
-            ),
+            )
+          : groupsByYear.isEmpty
+              ? const Center(
+                  child: Text("No Groups Found"),
+                )
+              : ListView.builder(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 16.0),
+                  itemCount: groupsByYear.keys.length,
+                  itemBuilder: (context, yearIndex) {
+                    String year = groupsByYear.keys.elementAt(yearIndex);
+                    List<Data> groups = groupsByYear[year] ?? [];
+
+                    return Card(
+                      elevation: 4,
+                      margin: const EdgeInsets.only(bottom: 16.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: ExpansionTile(
+                        title: Text(
+                          year,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        leading: const Icon(
+                          Icons.calendar_today,
+                          color: Colors.blue,
+                        ),
+                        children: groups.map((group) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 2.0, horizontal: 2.0),
+                            child: InkWell(
+                              onTap: () {
+                                Get.to(() => GetTest(
+                                      id: group.id.toString(),
+                                    ));
+                              },
+                              child: GroupsCard(
+                                id: "${group.groupCode}-${group.name} ",
+                                catName: group.catName ?? "N/A",
+                                name: group.description ?? "No Description",
+                                buttonText:
+                                    group.group_type?.toString() ?? "N/A",
+                                groupCode: group.groupCode ?? "",
+                                registrationMethod:
+                                    group.registrationMethod ?? "",
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    );
+                  },
+                ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getTokenAndFetchInvoice();
-  }
-
-  Future<void> getTokenAndFetchInvoice() async {
-    token = await LoginController().getTokenFromHive();
-    print('Token: $token');
-    getMyCourseAPI();
-  }
-
-  void getMyCourseAPI() async {
-    try {
-      // final Map<String, dynamic> requestData = {
-      //   "invoice_id": widget.invoice_id,
-      // };
-
-      // final String requestBody = jsonEncode(requestData);
-
-      final res = await http.get(
-        Uri.parse(AuthApi.getGroupsText),
-        headers: {
-          'Authorization': 'Bearer $token', // Use the retrieved token
-          'Content-Type': 'application/json',
-        },
-      );
-
-      print('Response Status Code: ${res.statusCode}');
-      print('Response groups data long');
-      LogPrint(res.body.toString());
-
-      if (res.statusCode == 200) {
-        if (res.body.isNotEmpty) {
-          final mydata = jsonDecode(res.body);
-          // print('Parsed Data: $mydata');
-          _myCoursesList.add(GetGroupsModel.fromJson(mydata));
-          setState(() {
-            boolData = true;
-          });
-        } else {
-          throw Exception('Empty response');
-        }
-      } else {
-        print('Error: ${res.statusCode}');
-      }
-    } catch (e) {
-      print(e.toString());
-    }
   }
 }

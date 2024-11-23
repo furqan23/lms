@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:splashapp/Controller/login_controller.dart';
 import 'package:splashapp/model/my_courses_model.dart';
 import 'package:splashapp/values/auth_api.dart';
+import 'package:splashapp/view/auth/login/login_view.dart';
 import 'package:splashapp/view/mycourses/my_album.dart';
 import 'package:splashapp/widget/dasbhoard_card_two.dart';
 
@@ -79,6 +80,7 @@ class _MyCoursesState extends State<MyCourses> {
         headers: {
           'Authorization': 'Bearer $token', // Use the retrieved token
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
       );
 
@@ -93,6 +95,11 @@ class _MyCoursesState extends State<MyCourses> {
           boolData = false; // Set to false after receiving response
           myCoursesList = course.data!;
         });
+      } else if (res.statusCode == 401) {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return LoginView();
+        }));
       } else {
         setState(() {
           boolData = false; // Set to false in case of error too

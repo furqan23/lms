@@ -38,6 +38,7 @@ class _GetTestState extends State<GetTest> {
   void initState() {
     super.initState();
     getTokenAndFetchInvoice();
+    print(widget.id);
   }
 
   Future<void> getTokenAndFetchInvoice() async {

@@ -99,6 +99,7 @@ flutter:
     - assets/images/
     - assets/images/on_boarding_image/
     - assets/images/splach/
+    - lib/model/aajson.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
