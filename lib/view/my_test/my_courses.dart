@@ -47,6 +47,7 @@ class _MyCoursesState extends State<MyCourses> {
                         group:
                             myCoursesList[0].data![index].groupName.toString(),
                         id: myCoursesList[0].data![index].name.toString(),
+                        courseImage: "",
                         catName: myCoursesList[0]
                             .data![index]
                             .courseTitle

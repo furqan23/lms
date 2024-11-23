@@ -43,7 +43,7 @@ class _DashboardCardState extends State<DashboardCard> {
                           return Center(
                             child: const Icon(
                               Icons.error_outline,
-                              size: 60,
+                              size: 45,
                               color: Colors.red,
                             ),
                           );

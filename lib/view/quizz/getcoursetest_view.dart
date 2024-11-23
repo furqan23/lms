@@ -37,30 +37,34 @@ class _GetCourseTestState extends State<GetCourseTest> {
         title: const Text("My Test Courses"),
       ),
       body: boolData
-          ? myCoursesList[0].data?.length==0?const Center(child: Text("No Record Found"),): ListView.builder(
-              shrinkWrap: true,
-              itemCount: myCoursesList[0].data?.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Get.to(() =>
-                        GetTest(id: myCoursesList[0].data![index].courseId!));
-                  },
-                  child: DashbaordCardTwo(
-                    group: myCoursesList[0].data![index].courseCode,
-                    id: myCoursesList[0].data![index].name,
-                    catName: myCoursesList[0].data![index].courseTitle,
-                    name:
-                        "${myCoursesList[0].data![index].firstName} ",
-                    description: myCoursesList[0].data![index].name,
-                    slug: myCoursesList[0].data![index].name,
-                    seat: myCoursesList[0].data![index].totalSeat,
-                    registermethod:
-                        myCoursesList[0].data![index].registrationMethod,
-                    buttonText: 'Process',
-                  ),
-                );
-              })
+          ? myCoursesList[0].data?.length == 0
+              ? const Center(
+                  child: Text("No Record Found"),
+                )
+              : ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: myCoursesList[0].data?.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        Get.to(() => GetTest(
+                            id: myCoursesList[0].data![index].courseId!));
+                      },
+                      child: DashbaordCardTwo(
+                        group: myCoursesList[0].data![index].courseCode,
+                        id: myCoursesList[0].data![index].name,
+                        courseImage: "",
+                        catName: myCoursesList[0].data![index].courseTitle,
+                        name: "${myCoursesList[0].data![index].firstName} ",
+                        description: myCoursesList[0].data![index].name,
+                        slug: myCoursesList[0].data![index].name,
+                        seat: myCoursesList[0].data![index].totalSeat,
+                        registermethod:
+                            myCoursesList[0].data![index].registrationMethod,
+                        buttonText: 'Process',
+                      ),
+                    );
+                  })
           : const Center(
               child: CircularProgressIndicator(),
             ),

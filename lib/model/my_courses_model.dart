@@ -29,6 +29,7 @@ class MyCoursesModel {
 
 class Data {
   String? courseId;
+  String? courseImage;
   String? courseCode;
   String? id;
   String? groupCode;
@@ -51,6 +52,7 @@ class Data {
 
   Data({
     this.courseId,
+    this.courseImage,
     this.courseCode,
     this.id,
     this.groupCode,
@@ -73,31 +75,33 @@ class Data {
   });
 
   Data.fromJson(Map<String, dynamic> json) {
-    courseId = json['course_id']??'empty';
-    courseCode = json['course_code']??'empty';
-    id = json['id']??'empty';
-    groupCode = json['group_code']??'empty';
-    name = json['name']??'empty';
-    registrationMethod = json['registration_method']??'empty';
-    description = json['description']??'empty';
-    isActive = json['is_active']??'empty';
-    totalSeat = json['total_seat']??'empty';
-    expireOn = json['expire_on']??'empty';
-    groupType = json['group_type']??'empty';
-    groupName = json['group_name']??'empty';
-    masterCategoryId = json['master_category_id']??'empty';
-    groupId = json['group_id']??'empty';
-    slug = json['slug']??'empty';
-    iconClass = json['icon_class']??'empty';
-    createdAt = json['created_at']??'empty';
-    updatedAt = json['updated_at']??'empty';
-    courseTitle = json['course_title']??'empty';
-    firstName = json['first_name']??'empty';
+    courseId = json['course_id'] ?? 'empty';
+    courseImage = json["course_image"] ?? "emptyy";
+    courseCode = json['course_code'] ?? 'empty';
+    id = json['id'] ?? 'empty';
+    groupCode = json['group_code'] ?? 'empty';
+    name = json['name'] ?? 'empty';
+    registrationMethod = json['registration_method'] ?? 'empty';
+    description = json['description'] ?? 'empty';
+    isActive = json['is_active'] ?? 'empty';
+    totalSeat = json['total_seat'] ?? 'empty';
+    expireOn = json['expire_on'] ?? 'empty';
+    groupType = json['group_type'] ?? 'empty';
+    groupName = json['group_name'] ?? 'empty';
+    masterCategoryId = json['master_category_id'] ?? 'empty';
+    groupId = json['group_id'] ?? 'empty';
+    slug = json['slug'] ?? 'empty';
+    iconClass = json['icon_class'] ?? 'empty';
+    createdAt = json['created_at'] ?? 'empty';
+    updatedAt = json['updated_at'] ?? 'empty';
+    courseTitle = json['course_title'] ?? 'empty';
+    firstName = json['first_name'] ?? 'empty';
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['course_id'] = courseId;
+    data['course_image'] = courseImage;
     data['course_code'] = courseCode;
     data['id'] = id;
     data['group_code'] = groupCode;

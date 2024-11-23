@@ -1,24 +1,23 @@
 class AuthApi {
   // base url of image folders
-  static const String baseUrlSliderImage = "https://qca.com.pk/slide/";
-  static const String imageUrl = "https://qca.com.pk/frontend/img/learning.png";
-  static const String dashboardImagesBaseUrl="https://qca.com.pk/category";
+  static const String imagesBaseUrl = "https://qca.com.pk";
+  static const String baseUrlSliderImage = "$imagesBaseUrl/slide/";
+  static const String imageUrl = "$imagesBaseUrl/frontend/img/learning.png";
+  static const String dashboardImagesBaseUrl = "$imagesBaseUrl/category";
 
   static const String _name = "name";
 
   static const String loginApi = "https://qca.com.pk/api/v1/login";
   static const String registerApi = "https://qca.com.pk/api/v1/register";
 
-  static const String deleteApi = "https://qca.com.pk/api/v1/student/deleteAccount";
+  static const String deleteApi =
+      "https://qca.com.pk/api/v1/student/deleteAccount";
   static const String resetpasswordApi =
       "https://qca.com.pk/api/v1/password/email";
-  static const String otpApi =
-      "https://qca.com.pk/api/v1/password/code/check";
+  static const String otpApi = "https://qca.com.pk/api/v1/password/code/check";
   static const String resetspasswordApi =
       "https://qca.com.pk/api/v1/password/reset";
-  static const String getDashboardApi =
-      "https://qca.com.pk/api/v1/dashboard";
-
+  static const String getDashboardApi = "https://qca.com.pk/api/v1/dashboard";
 
   static const String courseApi = "https://qca.com.pk/api/v1/courseList";
   static const String getPayApi =
@@ -27,9 +26,9 @@ class AuthApi {
       "https://qca.com.pk/api/v1/student/getInvoiceById";
   static const String getstudentCourse =
       "https://qca.com.pk/api/v1/student/myCourses";
-    static const String getGroupsText =
+  static const String getGroupsText =
       "https://qca.com.pk/api/v1/student/getGroups";
-   static const String getCourseAlbum =
+  static const String getCourseAlbum =
       "https://qca.com.pk/api/v1/student/getCourseAlbums";
   static const String getstudentCourseById =
       "https://qca.com.pk/api/v1/student/getCourseById";
@@ -41,8 +40,7 @@ class AuthApi {
       "https://qca.com.pk/api/v1/student/getCourseTests";
   static const String startTestApi =
       "https://qca.com.pk/api/v1/student/testInfo";
-  static const String testinfo =
-      "https://qca.com.pk/api/v1/student/startTest";
+  static const String testinfo = "https://qca.com.pk/api/v1/student/startTest";
   static const String getQuestionTestApi =
       "https://qca.com.pk/api/v1/student/getTestQuestions";
   static const String postAnswerApi =
@@ -63,11 +61,9 @@ class AuthApi {
       'https://qca.com.pk/api/v1/student/paymentGateWay/posting_url/';
   static const String getInvoiceByIdApi =
       'https://qca.com.pk/api/v1/student/getInvoiceById';
-  static const String billInquiryApi =
-      "https://qca.com.pk/api/v1/BillInquiry";
+  static const String billInquiryApi = "https://qca.com.pk/api/v1/BillInquiry";
 
-  static const String billPaymentApi =
-      "https://qca.com.pk/api/v1/BillPayment";
+  static const String billPaymentApi = "https://qca.com.pk/api/v1/BillPayment";
 
   static const String getTestfee =
       "https://qca.com.pk/api/v1/student/getTestFee";

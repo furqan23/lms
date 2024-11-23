@@ -48,20 +48,36 @@ class CarouselWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                   child: Image.network(
                     image,
-                    height: 120,
-                    fit: BoxFit.cover,
+                    height: 130,
+                    fit: BoxFit.contain,
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) return child;
-                      return const Center(
-                        child: CircularProgressIndicator(),
+                      return Center(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 40,
+                            ),
+                            const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ],
+                        ),
                       );
                     },
                     errorBuilder: (context, error, stackTrace) {
                       return Center(
-                        child: const Icon(
-                          Icons.error_outline,
-                          size: 60,
-                          color: Colors.red,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 40,
+                            ),
+                            const Icon(
+                              Icons.error_outline,
+                              size: 60,
+                              color: Colors.red,
+                            ),
+                          ],
                         ),
                       );
                     },

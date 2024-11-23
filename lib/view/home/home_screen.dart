@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     } on SocketException catch (_) {
       setState(() {
-        errorMessage = "Check your internet connection, restart the app.";
+        errorMessage = "Check your internet connection!";
       });
     } catch (e) {
       print('Error: $e');
@@ -203,22 +203,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                     )
                                   : const Center(
                                       child: Text(
-                                        "No data available!",
+                                        "Failed to load data!",
                                         style: TextStyle(fontSize: 16),
                                       ),
                                     ),
                               const SizedBox(height: 10),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: ElevatedButton(
-                                      onPressed: () {
-                                        Get.to(() => const MyWallet());
-                                      },
-                                      child: const Text("My Wallet")),
-                                ),
-                              ),
+                              dashboardList.isNotEmpty
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: ElevatedButton(
+                                            onPressed: () {
+                                              Get.to(() => const MyWallet());
+                                            },
+                                            child: const Text("My Wallet")),
+                                      ),
+                                    )
+                                  : SizedBox(),
                               dashboardList.isNotEmpty &&
                                       dashboardList[0]
                                               .data
@@ -275,7 +278,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       },
                                     )
                                   : Center(
-                                      child: Text(errorMessage),
+                                      child: Text(
+                                        errorMessage,
+                                      ),
                                     ),
                             ],
                           ),

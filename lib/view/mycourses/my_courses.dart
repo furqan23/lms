@@ -29,34 +29,34 @@ class _MyCoursesState extends State<MyCourses> {
       ),
       body: boolData
           ? Center(
-        child: CircularProgressIndicator(),
-      )
+              child: CircularProgressIndicator(),
+            )
           : myCoursesList.isEmpty
-          ? const Center(
-        child: Text('No Course available'),
-      )
-          : ListView.builder(
-          shrinkWrap: true,
-          itemCount: myCoursesList.length,
-          itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () {
-                Get.to(() => MyAlbum(myCoursesList[index].courseId!));
-              },
-              child: DashbaordCardTwo(
-                group: myCoursesList[index].courseCode,
-                id: myCoursesList[index].name,
-                catName: myCoursesList[index].courseTitle,
-                name: "${myCoursesList[index].firstName}",
-                description: myCoursesList[index].name,
-                slug: myCoursesList[index].name,
-                seat: myCoursesList[index].totalSeat,
-                registermethod:
-                myCoursesList[index].registrationMethod,
-                buttonText: 'View Detail >',
-              ),
-            );
-          }),
+              ? const Center(
+                  child: Text('No Course available'),
+                )
+              : ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: myCoursesList.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        Get.to(() => MyAlbum(myCoursesList[index].courseId!));
+                      },
+                      child: DashbaordCardTwo(
+                        group: myCoursesList[index].courseCode,
+                        id: myCoursesList[index].name,
+                        courseImage: myCoursesList[index].courseImage,
+                        catName: myCoursesList[index].courseTitle,
+                        name: "${myCoursesList[index].firstName}",
+                        description: myCoursesList[index].name,
+                        slug: myCoursesList[index].name,
+                        seat: myCoursesList[index].totalSeat,
+                        registermethod: myCoursesList[index].registrationMethod,
+                        buttonText: 'View Detail >',
+                      ),
+                    );
+                  }),
     );
   }
 

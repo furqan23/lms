@@ -3,11 +3,21 @@ import 'package:splashapp/values/auth_api.dart';
 import 'package:splashapp/values/colors.dart';
 
 class DashbaordCardTwo extends StatefulWidget {
-  String? id, catName, description, slug, seat, name, registermethod, buttonText,group;
+  String? id,
+      courseImage,
+      catName,
+      description,
+      slug,
+      seat,
+      name,
+      registermethod,
+      buttonText,
+      group;
 
   DashbaordCardTwo({
     super.key,
     required this.id,
+    required this.courseImage,
     required this.name,
     required this.description,
     required this.catName,
@@ -16,7 +26,6 @@ class DashbaordCardTwo extends StatefulWidget {
     required this.registermethod,
     required this.group,
     required this.buttonText,
-
   });
 
   @override
@@ -26,13 +35,14 @@ class DashbaordCardTwo extends StatefulWidget {
 class _DashbaordCardState extends State<DashbaordCardTwo> {
   @override
   Widget build(BuildContext context) {
+    print(widget.courseImage);
+    print(widget.courseImage is String);
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Card(
         elevation: 5,
         child: Container(
           width: double.infinity,
-
           decoration: BoxDecoration(
               color: Colors.white12,
               borderRadius: BorderRadius.circular(5),
@@ -54,7 +64,6 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                   ),
                   child: Column(
                     children: [
-
                       // SizedBox(
                       //     height: MediaQuery.of(context).size.height * 0.05),
                       // Center(
@@ -72,8 +81,9 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
 
                       Center(
                         child: Image.network(
-                          AuthApi.imageUrl,
-                          errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                          "${AuthApi.imagesBaseUrl}/course/${widget.courseImage}",
+                          errorBuilder: (BuildContext context, Object exception,
+                              StackTrace? stackTrace) {
                             // Returning a local image if the network image fails to load
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -81,7 +91,8 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                                 'assets/images/logo.png', // Replace 'local_image.png' with your local image asset path
                                 width: 100, // Adjust width and height as needed
                                 height: 100,
-                                fit: BoxFit.contain, // Adjust the fit property as per your requirement
+                                fit: BoxFit
+                                    .contain, // Adjust the fit property as per your requirement
                               ),
                             );
                           },
@@ -104,12 +115,12 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                       padding: const EdgeInsets.only(top: 10),
                       child: Row(
                         children: [
-
                           SizedBox(
-                            width:200,
+                            width: 200,
                             child: Text(
                               "${widget.catName!}/${widget.slug}",
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
                           // Text(
@@ -172,8 +183,8 @@ class _DashbaordCardState extends State<DashbaordCardTwo> {
                               borderRadius: BorderRadius.circular(14),
                               color: AppColors.primaryColor,
                             ),
-                            child:  Text(
-                          widget.buttonText!,
+                            child: Text(
+                              widget.buttonText!,
                               style: const TextStyle(
                                 color: Colors.white,
                               ),
