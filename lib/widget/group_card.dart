@@ -27,6 +27,7 @@ class GroupsCard extends StatefulWidget {
 class _DashbaordCardState extends State<GroupsCard> {
   @override
   Widget build(BuildContext context) {
+    int maxChars = MediaQuery.of(context).size.width ~/ 20;
     return Padding(
       padding: const EdgeInsets.only(left: 12.0, right: 12, top: 8),
       child: Card(
@@ -99,8 +100,8 @@ class _DashbaordCardState extends State<GroupsCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.id.length > 20
-                          ? "${widget.id.substring(0, 20)}..."
+                      widget.id.length > maxChars
+                          ? "${widget.id.substring(0, maxChars)}..."
                           : widget
                               .id, // Truncate text to 10 characters if necessary
                       style: TextStyle(
