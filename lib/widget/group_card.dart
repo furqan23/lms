@@ -99,10 +99,16 @@ class _DashbaordCardState extends State<GroupsCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${widget.id!}",
+                      widget.id.length > 20
+                          ? "${widget.id.substring(0, 20)}..."
+                          : widget
+                              .id, // Truncate text to 10 characters if necessary
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
+                      overflow:
+                          TextOverflow.ellipsis, // Ensures "..." for overflow
+                      maxLines: 1, // Restricts text to one line
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
