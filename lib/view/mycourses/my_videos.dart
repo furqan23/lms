@@ -90,32 +90,50 @@ class _MyVideosState extends State<MyVideos> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : myVideoList.isEmpty
-          ? const Center(child: Text('No videos available'))
-          : ListView.builder(
-        itemCount: myVideoList.length,
-        itemBuilder: (context, index) {
-          final video = myVideoList[index];
-          return InkWell(
-            onTap: () {
-              Get.to(() => PlayVideo(
-                type: "ok",
-                id: video.videoName!,
-                listvideo: myVideoList, // Pass the entire list
-              ));
-            },
-            child: VideoCard(
-              id: video.id,
-              catName: video.videoTitle.toString(),
-              videotitle: video.videoTitle.toString(),
-              name: video.videoName,
-              description: video.uploaderId,
-              slug: video.uploaderId,
-              seat: video.videoName,
-              registermethod: video.videoName,
-            ),
-          );
-        },
-      ),
+              ? const Center(child: Text('No videos available'))
+              : ListView.builder(
+                  itemCount: myVideoList.length,
+                  itemBuilder: (context, index) {
+                    final video = myVideoList[index];
+                    return InkWell(
+                      onTap: () {
+                        // Extract video IDs from the video list
+                        List<String> videoIds = myVideoList
+                            .map((video) => video.videoName ?? '')
+                            .where((id) => id.isNotEmpty)
+                            .toList();
+                        
+                        print("Extracted video IDs: $videoIds");
+                        print("Selected video: ${video.videoName}");
+                        
+                        if (videoIds.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('No valid videos available'),
+                            ),
+                          );
+                          return;
+                        }
+                        
+                        Get.to(() => PlayVideo(
+                              type: "ok",
+                              id: video.videoName!,
+                              listvideo: videoIds,
+                            ));
+                      },
+                      child: VideoCard(
+                        id: video.id.toString(),
+                        catName: video.videoTitle.toString(),
+                        videotitle: video.videoTitle.toString(),
+                        name: video.videoName.toString(),
+                        description: video.uploaderId.toString(),
+                        slug: video.uploaderId.toString(),
+                        seat: video.videoName.toString(),
+                        registermethod: video.videoName.toString(),
+                      ),
+                    );
+                  },
+                ),
     );
   }
 }

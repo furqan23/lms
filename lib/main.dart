@@ -8,6 +8,7 @@ import 'package:splashapp/view/auth/login/login_view.dart';
 import 'package:splashapp/view/home/home_screen.dart';
 import 'package:splashapp/view/my_test/my_courses.dart';
 import 'package:splashapp/view/splash/splach_screen.dart';
+import 'package:splashapp/view/mycourses/onlinevideo/playvideo.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:developer' as developer;
 
@@ -59,6 +60,13 @@ class MyApp extends StatelessWidget {
         '/splachScreen': (context) => const SplachScreen(),
         '/login': (context) => LoginView(),
         '/myCourses': (context) => MyCourses(),
+        '/PlayVideo': (context) => PlayVideo(
+              type: Get.parameters['type'] ?? '',
+              id: Get.parameters['id'] ?? '',
+              listvideo: Get.parameters['listvideo'] != null 
+                  ? List.from(Get.parameters['listvideo']!.split(','))
+                  : [],
+            ),
       },
       debugShowCheckedModeBanner: false,
     );
